@@ -38,9 +38,10 @@ public class _query
 	private String qty_chk = "null", total_qtychk_rez, wt_chk = "null", total_wtchk_rez;
 	private String a_date, a_date1, a_hours1, a_hours2;
 	private String _num_ps, _company_ps, _plant_ps, _shops_ps, _groups_ps, _lines_ps, _oss_ps, _equips_ps, _shop_ps, _line_ps, _linerus_ps,
-					_os_ps, _osrus_ps, _equip_ps, _description_ps, _subnumber_ps, _passport_ps, _manual_ps, _stsupplier_ps, _location_ps, _room_ps,
+					_os_ps, _osrus_ps, _equip_ps, _description_ps, _manual_ps, _stsupplier_ps, _location_ps,
 					_coord_ps, _alt_ps, _cham_ps, _trcu_ps, _trcul_ps, _hazardous_ps, _keyequip_ps, _type_ps, _sn_ps, _manuf_ps, _mtc_ps, _respons_ps,
-					_melec_ps, _mair_ps, _mwater_ps, _mcwater_ps, _mhwater_ps, _rowater_ps, _mgas_ps, total_rez_ps;
+					_melec_ps, _mair_ps, _mwater_ps, _mcwater_ps, _mhwater_ps, _rowater_ps, _mgas_ps, total_rez_ps, _group_eng, _shop_rus,
+					_group_rus, _equip_rus, _group_otv, _inv_num, _os_num, _start_date, _cost_centre;
 	private String lst_id;
 	private String numpm_pmplan, data_pmplan, oft_pmplan, total_rez_pmplan;
 	private String id_prior, name_prior, desc_prior, icon_prior, total_rez_prior;
@@ -377,7 +378,9 @@ public class _query
 	       }
 		return list;
 	}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	//*********************************** PLANT STRUCTURE **********************************************************************
 	/**
 	 * Заполняем данными таблицу при открытии окна редактирования
 	 * Plant Structure
@@ -390,7 +393,7 @@ public class _query
 		ObservableList<hmmr_ps_model> list = FXCollections.observableArrayList();
 		
 		try {
-			String query = "select id,Company,Plant,Shop_s,Group_PM,Line_Machine_s,Operation_Station_s,Equipment_s,Shop,Line_Machine,Line_Machine_RUS,Operation_Station,Operation_Station_RUS,Equipment,Description,Sub_Number,Equip_label,Station_Label,passport,manual,Station_Supplier,Location,Room_category,Coordinates,Altitude,CHAMBER,TR_CU,TR_CU_Link,Hazardous,Key_equipment,Type,S_N,Manuf,Main_Technical_Characteristic,Responsobility,M_Electric,M_Air,M_Water,M_Cold_water,M_Hot_water,RO_Water,M_Gas from hmmr_plant_structure where del_rec = 0;";
+			String query = "select id, FL01_Company, FL02_Plant, FL03_Shop_s, FL04_Group_s, FL05_Line_s, FL06_Station_s, FL07_Equipment_s, FL03_Shop_ENG, FL04_Group_ENG, FL05_Line_ENG, FL06_Station_ENG, FL07_Equipment_ENG, FL03_Shop_RUS, FL04_Group_RUS, FL05_Line_RUS, FL06_Station_RUS, FL07_Equipment_RUS, Description_RUS, Equip_label, Station_Label, Equipment_Folder_Link, Resp_Planner_Group, Assets_Inventory_Number, Assets_OS1_Number, Assets_Start_up_Date, Cost_Center, Site_Location, Site_CHAMBER, Site_Coordinates, Site_Altitude, TR_CU, TR_CU_Link, Hazardous, Key_equipment, EQ_Integrator, EQ_Manufacture, EQ_Type, EQ_Serial_Number, EQ_Technical_Characteristic, Responsobility, M_Electric, M_Air, M_Water, M_Cold_Water, M_Hot_Water, M_RO_Water, M_Gas from hmmr_plant_structure where Status = 0;";
 			
 			cn.ConToDb();
 			stmt12 = cn.con.createStatement();
@@ -408,39 +411,45 @@ public class _query
 	        		hpm.Operation_Station_s.set(rs12.getString(7));
 	        		hpm.Equipment_s.set(rs12.getString(8));
 	        		hpm.Shop.set(rs12.getString(9));
-	        		hpm.Line_Machine.set(rs12.getString(10));
-	        		hpm.Line_Machine_RUS.set(rs12.getString(11));
+	        		hpm.FL04_Group_ENG.set(rs12.getString(10));
+	        		hpm.Line_Machine.set(rs12.getString(11));
 	        		hpm.Operation_Station.set(rs12.getString(12));
-	        		hpm.Operation_Station_RUS.set(rs12.getString(13));
-	        		hpm.Equipment.set(rs12.getString(14));
-	        		hpm.Description.set(rs12.getString(15));
-	        		hpm.Sub_number.set(rs12.getString(16));
-	        		hpm.Equip_label.set(rs12.getString(17));
-	        		hpm.Station_label.set(rs12.getString(18));
-	        		hpm.passport.set(rs12.getString(19));
-	        		hpm.manual.set(rs12.getString(20));
-	        		hpm.Station_Supplier.set(rs12.getString(21));
-	        		hpm.Location.set(rs12.getString(22));
-	        		hpm.Room_category.set(rs12.getString(23));
-	        		hpm.Coordinates.set(rs12.getString(24));
-	        		hpm.Altitude.set(rs12.getString(25));
-	        		hpm.CHAMBER.set(rs12.getString(26));
-	        		hpm.TR_CU.set(rs12.getString(27));
-	        		hpm.TR_CU_Link.set(rs12.getString(28));
-	        		hpm.Hazardous.set(rs12.getString(29));
-	        		hpm.Key_equipment.set(rs12.getString(30));
-	        		hpm.Type.set(rs12.getString(31));
-	        		hpm.S_N.set(rs12.getString(32));
-	        		hpm.Manuf.set(rs12.getString(33));
-	        		hpm.MTC.set(rs12.getString(34));
-	        		hpm.Resp.set(rs12.getString(35));
-	        		hpm.M_Electric.set(rs12.getString(36));
-	        		hpm.M_Air.set(rs12.getString(37));
-	        		hpm.M_Water.set(rs12.getString(38));
-	        		hpm.M_Cold_water.set(rs12.getString(39));
-	        		hpm.M_Hot_water.set(rs12.getString(40));
-	        		hpm.RO_Water.set(rs12.getString(41));
-	        		hpm.M_Gas.set(rs12.getString(42));
+	        		hpm.Equipment.set(rs12.getString(13));
+	        		hpm.FL03_Shop_RUS.set(rs12.getString(14));
+	        		hpm.FL04_Group_RUS.set(rs12.getString(15));
+	        		hpm.Line_Machine_RUS.set(rs12.getString(16));
+	        		hpm.Operation_Station_RUS.set(rs12.getString(17));
+	        		hpm.FL07_Equipment_RUS.set(rs12.getString(18));
+	        		hpm.Description.set(rs12.getString(19));
+	        		hpm.Equip_label.set(rs12.getString(20));
+	        		hpm.Station_label.set(rs12.getString(21));
+	        		hpm.manual.set(rs12.getString(22));
+	        		hpm.RespPlannerGroup.set(rs12.getString(23));
+	        		hpm.AssetsInvNum.set(rs12.getString(24));
+	        		hpm.AssetsOsNum.set(rs12.getString(25));
+	        		hpm.AssetsStartDate.set(rs12.getString(26));
+	        		hpm.CostCenter.set(rs12.getString(27));
+	        		hpm.Location.set(rs12.getString(28));
+	        		hpm.CHAMBER.set(rs12.getString(29));
+	        		hpm.Coordinates.set(rs12.getString(30));
+	        		hpm.Altitude.set(rs12.getString(31));
+	        		hpm.TR_CU.set(rs12.getString(32));
+	        		hpm.TR_CU_Link.set(rs12.getString(33));
+	        		hpm.Hazardous.set(rs12.getString(34));
+	        		hpm.Key_equipment.set(rs12.getString(35));
+	        		hpm.Station_Supplier.set(rs12.getString(36));
+	        		hpm.Manuf.set(rs12.getString(37));
+	        		hpm.Type.set(rs12.getString(38));
+	        		hpm.S_N.set(rs12.getString(39));
+	        		hpm.MTC.set(rs12.getString(40));
+	        		hpm.Resp.set(rs12.getString(41));
+	        		hpm.M_Electric.set(rs12.getString(42));
+	        		hpm.M_Air.set(rs12.getString(43));
+	        		hpm.M_Water.set(rs12.getString(44));
+	        		hpm.M_Cold_water.set(rs12.getString(45));
+	        		hpm.M_Hot_water.set(rs12.getString(46));
+	        		hpm.RO_Water.set(rs12.getString(47));
+	        		hpm.M_Gas.set(rs12.getString(48));
 	        						        				            
 		            list.add(hpm);
 	        	}    
@@ -456,6 +465,8 @@ public class _query
 	       }
 		return list;
 	}
+//******************************************************************************************************************************	
+	
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!WORK RECORDING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	/**
 	 * Заполняем данными таблицу Work Recording при открытии окна 
@@ -933,6 +944,7 @@ public class _query
 
 		return list;
 	}
+	
 	/**
 	 * Запрос для заполнения ComboBox двойным значением через - например
 	 * ABA - Баранов Алексей для записи в таблицу Plant Structure
@@ -947,6 +959,7 @@ public class _query
 	 * 			отсортированных по дате и заполняет ими 
 	 * 			ComboBox.
 	 */
+	//********************************************************* PLANT STRUCTURE **********************************************************
 	@SuppressWarnings({ "static-access"})
 	public ObservableList<String> _select_shop_ps(String str_s, String str, String str_where, String str_znach)
 	{
@@ -977,7 +990,9 @@ public class _query
 
 		return list;
 	}
+//******************************************************************************************************************************
 	
+	//*********************************************************** PLANT STRUCTURE **********************************************
 	/**
 	 * Запрос для заполнения ComboBox значением, перегруженный 
 	 * аналог предыдущего запроса, только с одним параметром для
@@ -1023,6 +1038,9 @@ public class _query
 
 		return list;
 	}
+//******************************************************************************************************************************
+	
+//*********************************** PLANT STRUCTURE **************************************************************************	
 	/**
 	 * !!!!!!!!!!!!!!!!!!!!Похожа на предыдущую!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 * Запрос для заполнения ComboBox значением, перегруженный 
@@ -1068,6 +1086,8 @@ public class _query
 
 		return list;
 	}
+//******************************************************************************************************************************	
+	
 	/**
 	 * Получаем значение, чтобы узнать какой radiobutton установлен
 	 * К10 - 10000 машин, К20 - 20000 машин и т. д.
@@ -1103,6 +1123,7 @@ public class _query
 
 		return list;
 	}
+//********************************************** PLANT STRUCTURE ***************************************************************	
 	/**
 	 * Запрос для заполнения ComboBox значением, перегруженный 
 	 * аналог предыдущего запроса, только с одним параметром для
@@ -1141,6 +1162,9 @@ public class _query
 
 		return list;
 	}
+//***************************************************************************************************************************
+	
+//*************************************** PLANT STRUCTURE *******************************************************************	
 	/**!!!!!!!!Похожа на предыдущуюю!!!!!!!!!!!!!!!!!!!!!!!!!!
 	 * Запрос для заполнения ComboBox значением, перегруженный 
 	 * аналог предыдущего запроса, только с одним параметром для
@@ -1180,6 +1204,9 @@ public class _query
 
 		return list;
 	}
+//**************************************************************************************************************************
+	
+//******************************************** PLANT STRUCTURE **************************************************************	
 	/**
 	 * Заполняем значениями ComboBox Shop
 	 * @return - Возвращаем полученный набор данных
@@ -1190,7 +1217,7 @@ public class _query
 		ObservableList<String> list = FXCollections.observableArrayList();
 		
 		try {
-			String query = "select Shop_s, Shop from hmmr_plant_structure group by Shop_s, Shop;";
+			String query = "select FL03_Shop_s, FL03_Shop_ENG from hmmr_plant_structure group by FL03_Shop_s, FL03_Shop_ENG;";
 			
 			cn.ConToDb();
 			stmt6 = cn.con.createStatement();
@@ -1215,6 +1242,9 @@ public class _query
 
 		return list;
 	}	
+//*****************************************************************************************************************************
+	
+//*************************************************** PLANT STRUCTURE *********************************************************	
 	/**
 	 * Заполняем значениями ComboBox Line Machine
 	 * @param group - параметр использующийся в сортировке по полю Group_PM
@@ -1226,7 +1256,7 @@ public class _query
 		ObservableList<String> list = FXCollections.observableArrayList();
 		
 		try {
-			String query = "select Line_Machine_s, Line_Machine from hmmr_plant_structure where Group_PM ="+"'"+group+"'"+" group by Line_Machine_s, Line_Machine;";
+			String query = "select FL05_Line_s, FL05_Line_ENG from hmmr_plant_structure where FL04_Group_s ="+"'"+group+"'"+" group by FL05_Line_s, FL05_Line_ENG;";
 			
 			cn.ConToDb();
 			stmt6 = cn.con.createStatement();
@@ -1251,6 +1281,9 @@ public class _query
 
 		return list;
 	}
+// ***************************************************************************************************************************
+	
+//************************************************ PLANT STRUCTURE *************************************************************************	
 	/**
 	 * Заполняем значениями ComboBox Group
 	 * @param shop - параметр использующийся в сортировке по полю Shop_s
@@ -1262,7 +1295,7 @@ public class _query
 		ObservableList<String> list = FXCollections.observableArrayList();
 		
 		try {
-			String query = "select Group_PM from hmmr_plant_structure where Shop_s ="+"'"+shop+"'"+" group by Group_PM;";
+			String query = "select FL04_Group_s from hmmr_plant_structure where FL03_Shop_s ="+"'"+shop+"'"+" group by FL04_Group_s;";
 			
 			cn.ConToDb();
 			stmt6 = cn.con.createStatement();
@@ -1289,7 +1322,9 @@ public class _query
 //					System.out.println("ARRAYLIST: "+list);
 					return list;
 				}
+//****************************************************************************************************************************
 	
+//************************************************ PLANT STRUCTURE ***********************************************************	
 				//Заполняем ComboBox Operation Station для таблицы PM
 				@SuppressWarnings({ "static-access"})
 				public ObservableList<String> _select_os_pm(String group, String lm)
@@ -1297,7 +1332,7 @@ public class _query
 					ObservableList<String> list = FXCollections.observableArrayList();
 					
 					try {
-						String query = "select Operation_Station_s, Operation_Station from hmmr_plant_structure where Group_PM ="+"'"+group+"'"+" AND Line_Machine_s = "+"'"+lm+"'"+" group by Operation_Station_s, Operation_Station;";
+						String query = "select FL06_Station_s, FL06_Station_ENG from hmmr_plant_structure where FL04_Group_s ="+"'"+group+"'"+" AND FL05_Line_s = "+"'"+lm+"'"+" group by FL06_Station_s, FL06_Station_ENG;";
 						
 						cn.ConToDb();
 						stmt6 = cn.con.createStatement();
@@ -1323,7 +1358,8 @@ public class _query
 			        }
 //					System.out.println("ARRAYLIST: "+list);
 					return list;
-				}	
+				}
+//*****************************************************************************************************************************				
 				//Заполняем ComboBox Equipment для таблицы PM
 				@SuppressWarnings({ "static-access"})
 				public ObservableList<String> _select_equip_pm(String os, String grp, String lm)
@@ -1331,7 +1367,7 @@ public class _query
 					ObservableList<String> list = FXCollections.observableArrayList();
 					
 					try {
-						String query = "select Equipment_s, Equipment from hmmr_plant_structure where Operation_Station_s ="+"'"+os+"'"+" AND Group_PM = "+"'"+grp+"'"+" AND Line_Machine_s = "+"'"+lm+"'"+" group by Equipment_s, Equipment;";
+						String query = "select FL07_Equipment_s, FL07_Equipment_ENG from hmmr_plant_structure where FL06_Station_s ="+"'"+os+"'"+" AND FL04_Group_s = "+"'"+grp+"'"+" AND FL05_Line_s = "+"'"+lm+"'"+" group by FL07_Equipment_s, FL07_Equipment_ENG;";
 						
 						cn.ConToDb();
 						stmt6 = cn.con.createStatement();
@@ -1358,6 +1394,9 @@ public class _query
 //					System.out.println("ARRAYLIST: "+list);
 					return list;
 				}
+//*************************************************************************************************************************
+				
+//************************************************** PLANT STRUCTURE *******************************************************				
 				//Заполняем ComboBox Group для таблицы PM
 				@SuppressWarnings({ "static-access"})
 				public ObservableList<String> _select_group_pm(String shop, String lm)
@@ -1365,7 +1404,7 @@ public class _query
 					ObservableList<String> list = FXCollections.observableArrayList();
 					
 					try {
-						String query = "select Group_PM from hmmr_plant_structure where Shop_s ="+"'"+shop+"'"+" AND Line_Machine_s = "+"'"+lm+"'"+" group by Group_PM;";
+						String query = "select FL04_Group_s from hmmr_plant_structure where FL03_Shop_s ="+"'"+shop+"'"+" AND FL05_Line_s = "+"'"+lm+"'"+" group by FL04_Group_s;";
 						
 						cn.ConToDb();
 						stmt6 = cn.con.createStatement();
@@ -1392,7 +1431,7 @@ public class _query
 //					System.out.println("ARRAYLIST: "+list);
 					return list;
 				}	
-				
+//****************************************************************************************************************************				
 				//Заполняем ComboBox Model_Type_Task для таблицы PM
 				@SuppressWarnings({ "static-access"})
 				public ObservableList<String> _select_mtt_pm(String instr)
@@ -2134,46 +2173,109 @@ public class _query
 	        }
 		}
 		
-		//Вставляем строку в таблицу Plant Struction 
-				@SuppressWarnings("static-access")
-				public void _insert_ps(String Company, String Plant, String Shop_s, String Group_PM, String Line_Machine_s, String Operation_Station_s, String Equipment_s, String Shop,
-						String Line_Machine, String Line_Machine_RUS, String Operation_Station, String Operation_Station_RUS, String Equipment, String Description, String Sub_Number, String Equip_label, 
-						String Station_label, String passport, String manual, String Station_Supplier, String Location, String Room_Category, 
-						String Coordinates, String Altitude, String CHAMBER, String TR_CU, String TR_CU_Link, String Hazardous, String Key_equipment, String Type, String S_N, String Manuf, String MTC, 
-						String Resp, String M_Electric, String M_Air, String M_Water, String M_Cold_water, String M_Hot_water, String RO_Water, String M_Gas)
-				{
-					String query = "INSERT INTO hmmr_plant_structure (user_id,Company,Plant,Shop_s,Group_PM,Line_Machine_s,Operation_Station_s,Equipment_s,Shop,Line_Machine,"
-							+ "Line_Machine_RUS,Operation_Station,Operation_Station_RUS,Equipment,Description,Sub_Number,Equip_label,Station_label,passport,manual,"
-							+ "Station_Supplier,Location,Room_Category,Coordinates,Altitude,CHAMBER,TR_CU,TR_CU_Link,Hazardous,Key_equipment,Type,S_N,Manuf,Main_Technical_Characteristic,"
-							+ "Responsobility,M_Electric,M_Air,M_Water,M_Cold_water,M_Hot_water,RO_Water,M_Gas) "
-							+ "VALUES ("+"'"+conn_connector.USER_ID+"'"+","+"'"+Company+"'"+","+"'"+Plant+"'"+","+"'"+Shop_s+"'"+","+"'"+Group_PM+"'"+","+"'"+Line_Machine_s+"'"+","
-							+ ""+"'"+Operation_Station_s+"'"+","+"'"+Equipment_s+"'"+","+"'"+Shop+"'"+","+"'"+Line_Machine+"'"+","+"'"+Line_Machine_RUS+"'"+","
-							+ ""+"'"+Operation_Station+"'"+","+"'"+Operation_Station_RUS+"'"+","+"'"+Equipment+"'"+","+"'"+Description+"'"+","+"'"+Sub_Number+"'"+","
-							+ ""+"'"+Equip_label+"'"+","+"'"+Station_label+"'"+","+"'"+passport+"'"+","+"'"+manual+"'"+","
-							+ ""+"'"+Station_Supplier+"'"+","+"'"+Location+"'"+","+"'"+Room_Category+"'"+","+"'"+Coordinates+"'"+","
-							+ ""+"'"+Altitude+"'"+","+"'"+CHAMBER+"'"+","+"'"+TR_CU+"'"+","+"'"+TR_CU_Link+"'"+","
-							+ ""+"'"+Hazardous+"'"+","+"'"+Key_equipment+"'"+","+"'"+Type+"'"+","+"'"+S_N+"'"+","
-							+ ""+"'"+Manuf+"'"+","+"'"+MTC+"'"+","+"'"+Resp+"'"+","+"'"+M_Electric+"'"+","
-							+ ""+"'"+M_Air+"'"+","+"'"+M_Water+"'"+","+"'"+M_Cold_water+"'"+","+"'"+M_Hot_water+"'"+","
-							+ ""+"'"+RO_Water+"'"+","+"'"+M_Gas+"'"+");";
-					
-					try {
-						cn.ConToDb();
-						stmt = cn.con.createStatement();
-						stmt.executeUpdate(query);
-						//log.log(Level.INFO, "ADD STRING TO DB");
-						//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
-					} catch (SQLException e) {
-						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 2116!");
-					}
-			    	finally {
-			            //close connection ,stmt and resultset here
-			        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
-			            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
-			            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
-			        }
-				}
-		
+		/**
+		 * Вставляем строку в Plant Structure 
+		 * @param user_id - id пользователя
+		 * @param FL01_Company - старое название Company
+		 * @param FL02_Plant - старое название Plant
+		 * @param FL03_Shop_s - старое название Shop_s
+		 * @param FL04_Group_s - старое название Group_PM
+		 * @param FL05_Line_s - старое название Line_Macine_s
+		 * @param FL06_Station_s - старое название Operation_Station_s
+		 * @param FL07_Equipment_s - старое название Equipmant_s
+		 * @param FL03_Shop_ENG - старое название Shop
+		 * @param FL04_Group_ENG - новое поле
+		 * @param FL05_Line_ENG - старое название Line_Machine
+		 * @param FL06_Station_ENG - старое название Operation_Station
+		 * @param FL07_Equipment_ENG - старое название Equipmant
+		 * @param FL03_Shop_RUS - новое поле
+		 * @param FL04_Group_RUS - новое поле
+		 * @param FL05_Line_RUS - старое название Line_Machine_RUS
+		 * @param FL06_Station_RUS - старое название Operation_Station_RUS
+		 * @param FL07_Equipment_RUS - новое поле
+		 * @param Description_RUS - старое название Description
+		 * @param Equip_label - старое название Equip_label
+		 * @param Station_Label - старое название Station_label
+		 * @param Equipment_Folder_Link - старое название manual
+		 * @param Resp_Planner_Group - новое поле Группа ответственных(Берем из справочника)
+		 * @param Assets_Inventory_Number - новое поле Инвентарный номер
+		 * @param Assets_OS1_Number - новое поле № Основных средств
+		 * @param Assets_Start_up_Date - новое поле Дата запуска в эксплуатацию
+		 * @param Cost_Center - новое поле Куда списали
+		 * @param Site_Location - старое название Location
+		 * @param Site_CHAMBER - старое название CHAMBER
+		 * @param Site_Coordinates - старое название Coordinates
+		 * @param Site_Altitude - старое название Altitude
+		 * @param TR_CU - не поменялось
+		 * @param TR_CU_Link - не поменялось
+		 * @param Hazardous - не поменялось
+		 * @param Key_equipment - не поменялось
+		 * @param EQ_Integrator - старое название Station Supplier
+		 * @param EQ_Manufacture - старое название Manuf
+		 * @param EQ_Type - старое название Type
+		 * @param EQ_Serial_Number - старое название S_N
+		 * @param EQ_Technical_Characteristic - старое название Main_Technical_Characteristic
+		 * @param Responsobility - не поменялось
+		 * @param M_Electric - не поменялось
+		 * @param M_Air - не поменялось
+		 * @param M_Water - не поменялось
+		 * @param M_Cold_Water - не поменялось
+		 * @param M_Hot_Water - не поменялось
+		 * @param M_RO_Water - старое название RO_Water
+		 * @param M_Gas - не поменялось
+		 * @param Status - старое название del_rec
+		 */
+		//*************************************************** PLANT STRUCTURE ******************************************************
+		@SuppressWarnings("static-access")
+		public void _insert_ps(String user_id, String FL01_Company, String FL02_Plant, String FL03_Shop_s,
+				String FL04_Group_s, String FL05_Line_s, String FL06_Station_s, String FL07_Equipment_s, 
+				String FL03_Shop_ENG, String FL04_Group_ENG, String FL05_Line_ENG, String FL06_Station_ENG, 
+				String FL07_Equipment_ENG, String FL03_Shop_RUS, String FL04_Group_RUS, String FL05_Line_RUS, 
+				String FL06_Station_RUS, String FL07_Equipment_RUS, String Description_RUS, String Equip_label, 
+				String Station_Label, String Equipment_Folder_Link, String Resp_Planner_Group, 
+				String Assets_Inventory_Number, String Assets_OS1_Number, LocalDate Assets_Start_up_Date, 
+				String Cost_Center, String Site_Location, String Site_CHAMBER, String Site_Coordinates, 
+				String Site_Altitude, String TR_CU, String TR_CU_Link, String Hazardous, String Key_equipment, 
+				String EQ_Integrator, String EQ_Manufacture, String EQ_Type, String EQ_Serial_Number, 
+				String EQ_Technical_Characteristic, String Responsobility, String M_Electric, String M_Air, 
+				String M_Water, String M_Cold_Water, String M_Hot_Water, String M_RO_Water, String M_Gas)
+		{
+			String query = "INSERT INTO hmmr_plant_structure (user_id, FL01_Company, FL02_Plant, FL03_Shop_s, FL04_Group_s, "
+					+ "FL05_Line_s, FL06_Station_s, FL07_Equipment_s, FL03_Shop_ENG, FL04_Group_ENG, FL05_Line_ENG, "
+					+ "FL06_Station_ENG, FL07_Equipment_ENG, FL03_Shop_RUS, FL04_Group_RUS, FL05_Line_RUS, FL06_Station_RUS, "
+					+ "FL07_Equipment_RUS, Description_RUS, Equip_label, Station_Label, Equipment_Folder_Link, "
+					+ "Resp_Planner_Group, Assets_Inventory_Number, Assets_OS1_Number, Assets_Start_up_Date, Cost_Center, "
+					+ "Site_Location, Site_CHAMBER, Site_Coordinates, Site_Altitude, TR_CU, TR_CU_Link, Hazardous, "
+					+ "Key_equipment, EQ_Integrator, EQ_Manufacture, EQ_Type, EQ_Serial_Number, EQ_Technical_Characteristic, "
+					+ "Responsobility, M_Electric, M_Air, M_Water, M_Cold_Water, M_Hot_Water, M_RO_Water, M_Gas) "
+					+ "VALUES ("+"'"+conn_connector.USER_ID+"'"+","+"'"+FL01_Company+"'"+","+"'"+FL02_Plant+"'"+","+"'"+FL03_Shop_s+"'"+","+"'"+FL04_Group_s+"'"+","+"'"+FL05_Line_s+"'"+","
+					+ ""+"'"+FL06_Station_s+"'"+","+"'"+FL07_Equipment_s+"'"+","+"'"+FL03_Shop_ENG+"'"+","+"'"+FL04_Group_ENG+"'"+","+"'"+FL05_Line_ENG+"'"+","
+					+ ""+"'"+FL06_Station_ENG+"'"+","+"'"+FL07_Equipment_ENG+"'"+","+"'"+FL03_Shop_RUS+"'"+","+"'"+FL04_Group_RUS+"'"+","+"'"+FL05_Line_RUS+"'"+","
+					+ ""+"'"+FL06_Station_RUS+"'"+","+"'"+FL07_Equipment_RUS+"'"+","+"'"+Description_RUS+"'"+","+"'"+Equip_label+"'"+","
+					+ ""+"'"+Station_Label+"'"+","+"'"+Equipment_Folder_Link+"'"+","+"'"+Resp_Planner_Group+"'"+","+"'"+Assets_Inventory_Number+"'"+","
+					+ ""+"'"+Assets_OS1_Number+"'"+","+"'"+Assets_Start_up_Date+"'"+","+"'"+Cost_Center+"'"+","+"'"+Site_Location+"'"+","
+					+ ""+"'"+Site_CHAMBER+"'"+","+"'"+Site_Coordinates+"'"+","+"'"+Site_Altitude+"'"+","+"'"+TR_CU+"'"+","
+					+ ""+"'"+TR_CU_Link+"'"+","+"'"+Hazardous+"'"+","+"'"+Key_equipment+"'"+","+"'"+EQ_Integrator+"'"+","
+					+ ""+"'"+EQ_Manufacture+"'"+","+"'"+EQ_Type+"'"+","+"'"+EQ_Serial_Number+"'"+","+"'"+EQ_Technical_Characteristic+"'"+","
+					+ ""+"'"+Responsobility+"'"+","+"'"+M_Electric+"'"+","+"'"+M_Air+"'"+","+"'"+M_Water+"'"+","+"'"+M_Cold_Water+"'"+","+"'"+M_Hot_Water+"'"+","+"'"+M_RO_Water+"'"+","+"'"+M_Gas+"'"+");";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "ADD STRING TO DB");
+				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 2116!");
+			}
+		   	finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+		}
+//*****************************************************************************************************************************		
 		//Вставляем строку в таблицу PM 
 				@SuppressWarnings("static-access")
 				public void _insert_pm(String ninst_pm, String shop_pm, String group_pm, String lm_pm, String os_pm, String equip_pm, String group_eq, String pmname_pm, String pmcycle_pm, String pmtype_pm, String ool_pm,
@@ -2515,14 +2617,16 @@ public class _query
 			        }
 					return total_rez_upd_wr;
 				}
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!				
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				
+//*************************************************** PLANT STRUCTURE ***********************************************************				
 				//для формы обновления таблицы PS
 				@SuppressWarnings("static-access")
 				public String _select_for_update_ps(String id)
 				{
 
 					try {
-						String query = "select id,Company,Plant,Shop_s,Group_PM,Line_Machine_s,Operation_Station_s,Equipment_s,Shop,Line_Machine,Line_Machine_RUS,Operation_Station,Operation_Station_RUS,Equipment,Description,Sub_Number,passport,manual,Station_Supplier,Location,Room_category,Coordinates,Altitude,CHAMBER,TR_CU,TR_CU_Link,Hazardous,Key_equipment,Type,S_N,Manuf,Main_Technical_Characteristic,Responsobility,M_Electric,M_Air,M_Water,M_Cold_water,M_Hot_water,RO_Water,M_Gas from hmmr_plant_structure where id = "+"'"+id+"'"+";";
+						String query = "select id,FL01_Company, FL02_Plant, FL03_Shop_s, FL04_Group_s, FL05_Line_s, FL06_Station_s, FL07_Equipment_s, FL03_Shop_ENG, FL04_Group_ENG, FL05_Line_ENG, FL06_Station_ENG, FL07_Equipment_ENG, FL03_Shop_RUS, FL04_Group_RUS, FL05_Line_RUS, FL06_Station_RUS, FL07_Equipment_RUS, Description_RUS, Equipment_Folder_Link, Resp_Planner_Group, Assets_Inventory_Number, Assets_OS1_Number, Assets_Start_up_Date, Cost_Center, Site_Location, Site_CHAMBER, Site_Coordinates, Site_Altitude, TR_CU, TR_CU_Link, Hazardous, Key_equipment, EQ_Integrator, EQ_Manufacture, EQ_Type, EQ_Serial_Number, EQ_Technical_Characteristic, Responsobility, M_Electric, M_Air, M_Water, M_Cold_Water, M_Hot_Water, M_RO_Water, M_Gas from hmmr_plant_structure where id = "+"'"+id+"'"+";";
 						cn.ConToDb();
 						stmt17 = cn.con.createStatement();
 						rs17 = stmt17.executeQuery(query);
@@ -2538,39 +2642,45 @@ public class _query
 				        	_oss_ps = rs17.getString(7);
 				        	_equips_ps = rs17.getString(8);
 				        	_shop_ps = rs17.getString(9);
-				        	_line_ps = rs17.getString(10);
-				        	_linerus_ps = rs17.getString(11);
+				        	_group_eng = rs17.getString(10);
+				        	_line_ps = rs17.getString(11);
 				        	_os_ps = rs17.getString(12);
-				        	_osrus_ps = rs17.getString(13);
-				        	_equip_ps = rs17.getString(14);
-				        	_description_ps = rs17.getString(15);
-				        	_subnumber_ps = rs17.getString(16);
-				        	_passport_ps = rs17.getString(17);
-				        	_manual_ps = rs17.getString(18);
-				        	_stsupplier_ps = rs17.getString(19);
-				        	_location_ps = rs17.getString(20);
-				        	_room_ps = rs17.getString(21);
-				        	_coord_ps = rs17.getString(22);
-				        	_alt_ps = rs17.getString(23);
-				        	_cham_ps = rs17.getString(24);
-				        	_trcu_ps = rs17.getString(25);
-				        	_trcul_ps = rs17.getString(26);
-				        	_hazardous_ps = rs17.getString(27);
-				        	_keyequip_ps = rs17.getString(28);
-				        	_type_ps = rs17.getString(29);
-				        	_sn_ps = rs17.getString(30);
-				        	_manuf_ps = rs17.getString(31);
-				        	_mtc_ps = rs17.getString(32);
-				        	_respons_ps = rs17.getString(33);
-				        	_melec_ps = rs17.getString(34);
-				        	_mair_ps = rs17.getString(35);
-				        	_mwater_ps = rs17.getString(36);
-				        	_mcwater_ps = rs17.getString(37);
-				        	_mhwater_ps = rs17.getString(38);
-				        	_rowater_ps = rs17.getString(39);
-				        	_mgas_ps = rs17.getString(40);
+				        	_equip_ps = rs17.getString(13);
+				        	_shop_rus = rs17.getString(14);
+				        	_group_rus = rs17.getString(15);
+				        	_linerus_ps = rs17.getString(16);
+				        	_osrus_ps = rs17.getString(17);
+				        	_equip_rus = rs17.getString(18);
+				        	_description_ps = rs17.getString(19);
+				        	_manual_ps = rs17.getString(20);
+				        	_group_otv = rs17.getString(21);
+				        	_inv_num = rs17.getString(22);
+				        	_os_num = rs17.getString(23);
+				        	_start_date = rs17.getString(24);
+				        	_cost_centre = rs17.getString(25);
+				        	_location_ps = rs17.getString(26);
+				        	_cham_ps = rs17.getString(27);
+				        	_coord_ps = rs17.getString(28);
+				        	_alt_ps = rs17.getString(29);
+				        	_trcu_ps = rs17.getString(30);
+				        	_trcul_ps = rs17.getString(31);
+				        	_hazardous_ps = rs17.getString(32);
+				        	_keyequip_ps = rs17.getString(33);
+				        	_stsupplier_ps = rs17.getString(34);
+				        	_manuf_ps = rs17.getString(35);
+				        	_type_ps = rs17.getString(36);
+				        	_sn_ps = rs17.getString(37);
+				        	_mtc_ps = rs17.getString(38);
+				        	_respons_ps = rs17.getString(39);
+				        	_melec_ps = rs17.getString(40);
+				        	_mair_ps = rs17.getString(41);
+				        	_mwater_ps = rs17.getString(42);
+				        	_mcwater_ps = rs17.getString(43);
+				        	_mhwater_ps = rs17.getString(44);
+				        	_rowater_ps = rs17.getString(45);
+				        	_mgas_ps = rs17.getString(46);
 				        }
-						total_rez_ps = _num_ps+";"+_company_ps+";"+_plant_ps+";"+_shops_ps+";"+_groups_ps+";"+_lines_ps+";"+_oss_ps+";"+_equips_ps+";"+_shop_ps+";"+_line_ps+";"+_linerus_ps+";"+_os_ps+";"+_osrus_ps+";"+_equip_ps+";"+_description_ps+";"+_subnumber_ps+";"+_passport_ps+";"+_manual_ps+";"+_stsupplier_ps+";"+_location_ps+";"+_room_ps+";"+_coord_ps+";"+_alt_ps+";"+_cham_ps+";"+_trcu_ps+";"+_trcul_ps+";"+_hazardous_ps+";"+_keyequip_ps+";"+_type_ps+";"+_sn_ps+";"+_manuf_ps+";"+_mtc_ps+";"+_respons_ps+";"+_melec_ps+";"+_mair_ps+";"+_mwater_ps+";"+_mcwater_ps+";"+_mhwater_ps+";"+_rowater_ps+";"+_mgas_ps;
+						total_rez_ps = _num_ps+";"+_company_ps+";"+_plant_ps+";"+_shops_ps+";"+_groups_ps+";"+_lines_ps+";"+_oss_ps+";"+_equips_ps+";"+_shop_ps+";"+_group_eng+";"+_line_ps+";"+_os_ps+";"+_equip_ps+";"+_shop_rus+";"+_group_rus+";"+_linerus_ps+";"+_osrus_ps+";"+_equip_rus+";"+_description_ps+";"+_manual_ps+";"+_group_otv+";"+_inv_num+";"+_os_num+";"+_start_date+";"+_cost_centre+";"+_location_ps+";"+_cham_ps+";"+_coord_ps+";"+_alt_ps+";"+_trcu_ps+";"+_trcul_ps+";"+_hazardous_ps+";"+_keyequip_ps+";"+_stsupplier_ps+";"+_manuf_ps+";"+_type_ps+";"+_sn_ps+";"+_mtc_ps+";"+_respons_ps+";"+_melec_ps+";"+_mair_ps+";"+_mwater_ps+";"+_mcwater_ps+";"+_mhwater_ps+";"+_rowater_ps+";"+_mgas_ps;
 //				        System.out.println("SELECT WORKED: "+total_rez);
 					}
 					catch (SQLException e) {
@@ -2583,7 +2693,7 @@ public class _query
 			        }
 					return total_rez_ps;
 				}
-				
+//*****************************************************************************************************************************				
 				//Получаем begin_date и end_date для расчета кол-ва записей и заполнения таблицы hmmr_pm_year
 				//SELECT p.id, p.PM_Cycle, ps.begin_date, ps.end_date from hmmr_pm p INNER JOIN hmmr_pm_cycle ps ON ps.Type = p.PM_Cycle where p.id = 3426
 				@SuppressWarnings("static-access")
@@ -2883,7 +2993,7 @@ public class _query
 				        }
 				     }
 					catch (SQLException e) {
-						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 2833!");
+						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 2875!");
 			        } finally {
 
 			        	try { cn.con.close(); } catch(SQLException se) { }
@@ -3382,17 +3492,34 @@ public class _query
 			            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
 			        }
 				}
-				
+//****************************************************** PLANT STRUCTURE ********************************************************				
 				//апдейтим запись в таблице PS
 				@SuppressWarnings("static-access")
-				public void _update_rec_ps(String Id, String Company, String Plant, String Shop_s, String Group_PM, String Line_Machine_s, String Operation_Station_s, String Equipment_s, String Shop,
-						String Line_Machine, String Line_Machine_RUS, String Operation_Station, String Operation_Station_RUS, String Equipment, String Description, String Sub_Number, String Equip_label,  
-						String Station_label, String passport, String manual, String Station_Supplier, String Location, String Room_Category,
-						String Coordinates, String Altitude, String CHAMBER, String TR_CU, String TR_CU_Link, String Hazardous, String Key_equipment, String Type, String S_N, String Manuf, String MTC, 
-						String Resp, String M_Electric, String M_Air, String M_Water, String M_Cold_water, String M_Hot_water, String RO_Water, String M_Gas)
+				public void _update_rec_ps(String id, String FL01_Company, String FL02_Plant, String FL03_Shop_s,
+						String FL04_Group_s, String FL05_Line_s, String FL06_Station_s, String FL07_Equipment_s, 
+						String FL03_Shop_ENG, String FL04_Group_ENG, String FL05_Line_ENG, String FL06_Station_ENG, 
+						String FL07_Equipment_ENG, String FL03_Shop_RUS, String FL04_Group_RUS, String FL05_Line_RUS, 
+						String FL06_Station_RUS, String FL07_Equipment_RUS, String Description_RUS, String Equip_label, 
+						String Station_Label, String Equipment_Folder_Link, String Resp_Planner_Group, 
+						String Assets_Inventory_Number, String Assets_OS1_Number, LocalDate Assets_Start_up_Date, 
+						String Cost_Center, String Site_Location, String Site_CHAMBER, String Site_Coordinates, 
+						String Site_Altitude, String TR_CU, String TR_CU_Link, String Hazardous, String Key_equipment, 
+						String EQ_Integrator, String EQ_Manufacture, String EQ_Type, String EQ_Serial_Number, 
+						String EQ_Technical_Characteristic, String Responsobility, String M_Electric, String M_Air, 
+						String M_Water, String M_Cold_Water, String M_Hot_Water, String M_RO_Water, String M_Gas)
 				{
 					
-					String query = "UPDATE hmmr_plant_structure SET user_id = "+"'"+conn_connector.USER_ID+"'"+",Company = "+"'"+Company+"'"+",Plant = "+"'"+Plant+"'"+",Shop_s = "+"'"+Shop_s+"'"+",Group_PM = "+"'"+Group_PM+"'"+",Line_Machine_s = "+"'"+Line_Machine_s+"'"+",Operation_Station_s = "+"'"+Operation_Station_s+"'"+",Equipment_s = "+"'"+Equipment_s+"'"+",Shop = "+"'"+Shop+"'"+",Line_Machine = "+"'"+Line_Machine+"'"+",Line_Machine_RUS = "+"'"+Line_Machine_RUS+"'"+",Operation_Station = "+"'"+Operation_Station+"'"+",Operation_Station_RUS = "+"'"+Operation_Station_RUS+"'"+",Equipment = "+"'"+Equipment+"'"+",Description = "+"'"+Description+"'"+",Sub_Number = "+"'"+Sub_Number+"'"+",Equip_label = "+"'"+Equip_label+"'"+",Station_label = "+"'"+Station_label+"'"+",passport = "+"'"+passport+"'"+",manual = "+"'"+manual+"'"+",Station_Supplier = "+"'"+Station_Supplier+"'"+",Location = "+"'"+Location+"'"+",Room_Category = "+"'"+Room_Category+"'"+",Coordinates = "+"'"+Coordinates+"'"+",Altitude = "+"'"+Altitude+"'"+",CHAMBER = "+"'"+CHAMBER+"'"+",TR_CU = "+"'"+TR_CU+"'"+",TR_CU_Link = "+"'"+TR_CU_Link+"'"+",Hazardous = "+"'"+Hazardous+"'"+",Key_equipment = "+"'"+Key_equipment+"'"+",Type = "+"'"+Type+"'"+",S_N = "+"'"+S_N+"'"+",Manuf = "+"'"+Manuf+"'"+",Main_Technical_Characteristic = "+"'"+MTC+"'"+",Responsobility = "+"'"+Resp+"'"+",M_Electric = "+"'"+M_Electric+"'"+",M_Air = "+"'"+M_Air+"'"+",M_Water = "+"'"+M_Water+"'"+",M_Cold_water = "+"'"+M_Cold_water+"'"+",M_Hot_water = "+"'"+M_Hot_water+"'"+",RO_Water = "+"'"+RO_Water+"'"+",M_Gas = "+"'"+M_Gas+"'"+" where id = "+"'"+Id+"'"+";"; //"UPDATE pm_inst SET Type_PM = "+"'"+type+"'"+", Description = "+"'"+desc+"'"+" WHERE id = "+"'"+id+"'"+";";
+					String query = "UPDATE hmmr_plant_structure SET user_id = "+"'"+conn_connector.USER_ID+"'"+",FL01_Company = "+"'"+FL01_Company+"'"+
+					",FL02_Plant = "+"'"+FL02_Plant+"'"+",FL03_Shop_s = "+"'"+FL03_Shop_s+"'"+",FL04_Group_s = "+"'"+FL04_Group_s+"'"+",FL05_Line_s = "+"'"+FL05_Line_s+"'"+
+					",FL06_Station_s = "+"'"+FL06_Station_s+"'"+",FL07_Equipment_s = "+"'"+FL07_Equipment_s+"'"+",FL03_Shop_ENG = "+"'"+FL03_Shop_ENG+"'"+",FL04_Group_ENG = "+"'"+FL04_Group_ENG+"'"+",FL05_Line_ENG = "+"'"+FL05_Line_ENG+"'"+
+					",FL06_Station_ENG = "+"'"+FL06_Station_ENG+"'"+",FL07_Equipment_ENG = "+"'"+FL07_Equipment_ENG+"'"+",FL03_Shop_RUS = "+"'"+FL03_Shop_RUS+"'"+",FL04_Group_RUS = "+"'"+FL04_Group_RUS+"'"+",FL05_Line_RUS = "+"'"+FL05_Line_RUS+"'"+",FL06_Station_RUS = "+"'"+FL06_Station_RUS+"'"+",FL07_Equipment_RUS = "+"'"+FL07_Equipment_RUS+"'"+
+					",Description_RUS = "+"'"+Description_RUS+"'"+",Equip_label = "+"'"+Equip_label+"'"+
+					",Station_Label = "+"'"+Station_Label+"'"+",Equipment_Folder_Link = "+"'"+Equipment_Folder_Link+"'"+",Resp_Planner_Group = "+"'"+Resp_Planner_Group+"'"+",Assets_Inventory_Number = "+"'"+Assets_Inventory_Number+"'"+",Assets_OS1_Number = "+"'"+Assets_OS1_Number+"'"+",Assets_Start_up_Date = "+"'"+Assets_Start_up_Date+"'"+",Cost_Center = "+"'"+Cost_Center+"'"+",EQ_Integrator = "+"'"+EQ_Integrator+"'"+
+					",Site_Location = "+"'"+Site_Location+"'"+",Site_Coordinates = "+"'"+Site_Coordinates+"'"+",Site_Altitude = "+"'"+Site_Altitude+"'"+
+					",Site_CHAMBER = "+"'"+Site_CHAMBER+"'"+",TR_CU = "+"'"+TR_CU+"'"+",TR_CU_Link = "+"'"+TR_CU_Link+"'"+",Hazardous = "+"'"+Hazardous+"'"+
+					",Key_equipment = "+"'"+Key_equipment+"'"+",EQ_Type = "+"'"+EQ_Type+"'"+",EQ_Serial_Number = "+"'"+EQ_Serial_Number+"'"+",EQ_Manufacture = "+"'"+EQ_Manufacture+"'"+",EQ_Technical_Characteristic = "+"'"+EQ_Technical_Characteristic+"'"+
+					",Responsobility = "+"'"+Responsobility+"'"+",M_Electric = "+"'"+M_Electric+"'"+",M_Air = "+"'"+M_Air+"'"+",M_Water = "+"'"+M_Water+"'"+
+					",M_Cold_Water = "+"'"+M_Cold_Water+"'"+",M_Hot_Water = "+"'"+M_Hot_Water+"'"+",M_RO_Water = "+"'"+M_RO_Water+"'"+",M_Gas = "+"'"+M_Gas+"'"+" where id = "+"'"+id+"'"+";"; //"UPDATE pm_inst SET Type_PM = "+"'"+type+"'"+", Description = "+"'"+desc+"'"+" WHERE id = "+"'"+id+"'"+";";
 					
 					try {
 						cn.ConToDb();
@@ -3409,12 +3536,14 @@ public class _query
 			            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
 			        }
 				}
+//*******************************************************************************************************************************
 				
+//********************************************** PLANT STRUCTURE ****************************************************************				
 				//апдейтим запись в таблице PS, если делаем удаление записи
 				@SuppressWarnings("static-access")
 				public void _update_rec_ps_del(String Id)
 				{
-					String query = "UPDATE hmmr_plant_structure SET del_rec = 1 where id = "+"'"+Id+"'"+";"; //"UPDATE pm_inst SET Type_PM = "+"'"+type+"'"+", Description = "+"'"+desc+"'"+" WHERE id = "+"'"+id+"'"+";";
+					String query = "UPDATE hmmr_plant_structure SET Status = 1 where id = "+"'"+Id+"'"+";"; //"UPDATE pm_inst SET Type_PM = "+"'"+type+"'"+", Description = "+"'"+desc+"'"+" WHERE id = "+"'"+id+"'"+";";
 					
 					try {
 						cn.ConToDb();
@@ -3431,7 +3560,7 @@ public class _query
 			            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
 			        }
 				}
-				
+//*******************************************************************************************************************************				
 				//апдейтим запись в таблице PM, если делаем удаление записи
 				@SuppressWarnings("static-access")
 				public void _update_rec_pm_del(String Id)
@@ -3884,5 +4013,559 @@ public class _query
 		       }
 
 			return list;
-		}	
+		}
+//******************************************************** PLANT STRUCTURE *******************************************************		
+		/**
+		 * Заполняем данными таблицу при применениии фильтра цех в
+		 * Plant Structure
+		 * @return - Возвращает набор данных типа ObservableList и 
+		 * 			заполняет ими таблицу TableView.
+		 */
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<hmmr_ps_model> _select_data_filter_ps(String shop)
+		{
+			ObservableList<hmmr_ps_model> list = FXCollections.observableArrayList();
+			
+			try {
+				//String query = "select id,Company,Plant,Shop_s,Group_PM,Line_Machine_s,Operation_Station_s,Equipment_s,Shop,Line_Machine,Line_Machine_RUS,Operation_Station,Operation_Station_RUS,Equipment,Description,Sub_Number,Equip_label,Station_Label,passport,manual,Station_Supplier,Location,Room_category,Coordinates,Altitude,CHAMBER,TR_CU,TR_CU_Link,Hazardous,Key_equipment,Type,S_N,Manuf,Main_Technical_Characteristic,Responsobility,M_Electric,M_Air,M_Water,M_Cold_water,M_Hot_water,RO_Water,M_Gas from hmmr_plant_structure where del_rec = 0 AND Shop_s = "+"'"+shop+"'"+";";
+				String query = "select id, FL01_Company, FL02_Plant, FL03_Shop_s, FL04_Group_s, FL05_Line_s, FL06_Station_s, FL07_Equipment_s, FL03_Shop_ENG, FL04_Group_ENG, FL05_Line_ENG, FL06_Station_ENG, FL07_Equipment_ENG, FL03_Shop_RUS, FL04_Group_RUS, FL05_Line_RUS, FL06_Station_RUS, FL07_Equipment_RUS, Description_RUS, Equip_label, Station_Label, Equipment_Folder_Link, Resp_Planner_Group, Assets_Inventory_Number, Assets_OS1_Number, Assets_Start_up_Date, Cost_Center, Site_Location, Site_CHAMBER, Site_Coordinates, Site_Altitude, TR_CU, TR_CU_Link, Hazardous, Key_equipment, EQ_Integrator, EQ_Manufacture, EQ_Type, EQ_Serial_Number, EQ_Technical_Characteristic, Responsobility, M_Electric, M_Air, M_Water, M_Cold_Water, M_Hot_Water, M_RO_Water, M_Gas from hmmr_plant_structure where Status = 0 AND FL03_Shop_s = "+"'"+shop+"'"+";";
+				
+				cn.ConToDb();
+				stmt12 = cn.con.createStatement();
+				rs12 = stmt12.executeQuery(query);
+							
+		        while (rs12.next()) {
+		        	hmmr_ps_model hpm = new hmmr_ps_model();
+		        	if(rs12.getString(1) != null && rs12.getString(2) != null && rs12.getString(3) != null) {
+		        		hpm.Id.set(rs12.getString(1));
+		        		hpm.Company.set(rs12.getString(2));
+		        		hpm.Plant.set(rs12.getString(3));
+		        		hpm.Shop_s.set(rs12.getString(4));
+		        		hpm.Group_PM.set(rs12.getString(5));
+		        		hpm.Line_Machine_s.set(rs12.getString(6));
+		        		hpm.Operation_Station_s.set(rs12.getString(7));
+		        		hpm.Equipment_s.set(rs12.getString(8));
+		        		hpm.Shop.set(rs12.getString(9));
+		        		hpm.FL04_Group_ENG.set(rs12.getString(10));
+		        		hpm.Line_Machine.set(rs12.getString(11));
+		        		hpm.Operation_Station.set(rs12.getString(12));
+		        		hpm.Equipment.set(rs12.getString(13));
+		        		hpm.FL03_Shop_RUS.set(rs12.getString(14));
+		        		hpm.FL04_Group_RUS.set(rs12.getString(15));
+		        		hpm.Line_Machine_RUS.set(rs12.getString(16));
+		        		hpm.Operation_Station_RUS.set(rs12.getString(17));
+		        		hpm.FL07_Equipment_RUSProperty().set(rs12.getString(18));
+		        		hpm.Description.set(rs12.getString(19));
+		        		hpm.Equip_label.set(rs12.getString(20));
+		        		hpm.Station_label.set(rs12.getString(21));
+		        		hpm.manual.set(rs12.getString(22));
+		        		hpm.RespPlannerGroup.set(rs12.getString(23));
+		        		hpm.AssetsInvNum.set(rs12.getString(24));
+		        		hpm.AssetsOsNum.set(rs12.getString(25));
+		        		hpm.AssetsStartDate.set(rs12.getString(26));
+		        		hpm.CostCenter.set(rs12.getString(27));
+		        		hpm.Location.set(rs12.getString(28));
+		        		hpm.CHAMBER.set(rs12.getString(29));
+		        		hpm.Coordinates.set(rs12.getString(30));
+		        		hpm.Altitude.set(rs12.getString(31));
+		        		hpm.TR_CU.set(rs12.getString(32));
+		        		hpm.TR_CU_Link.set(rs12.getString(33));
+		        		hpm.Hazardous.set(rs12.getString(34));
+		        		hpm.Key_equipment.set(rs12.getString(35));
+		        		hpm.Station_Supplier.set(rs12.getString(36));
+		        		hpm.Manuf.set(rs12.getString(37));
+		        		hpm.Type.set(rs12.getString(38));
+		        		hpm.S_N.set(rs12.getString(39));
+		        		hpm.MTC.set(rs12.getString(40));
+		        		hpm.Resp.set(rs12.getString(41));
+		        		hpm.M_Electric.set(rs12.getString(42));
+		        		hpm.M_Air.set(rs12.getString(43));
+		        		hpm.M_Water.set(rs12.getString(44));
+		        		hpm.M_Cold_water.set(rs12.getString(45));
+		        		hpm.M_Hot_water.set(rs12.getString(46));
+		        		hpm.RO_Water.set(rs12.getString(47));
+		        		hpm.M_Gas.set(rs12.getString(48));
+		        						        				            
+			            list.add(hpm);
+		        	}    
+		        }
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 3900!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt12.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs12.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+			return list;
+		}
+//*******************************************************************************************************************************
+		
+//*********************************************** PLANT STRUCTURE ***************************************************************		
+		/**
+		 * Заполняем данными таблицу при применениии фильтра цех и группа в
+		 * Plant Structure
+		 * @return - Возвращает набор данных типа ObservableList и 
+		 * 			заполняет ими таблицу TableView.
+		 */
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<hmmr_ps_model> _select_data_filter_ps(String shop, String eq_group)
+		{
+			ObservableList<hmmr_ps_model> list = FXCollections.observableArrayList();
+			
+			try {
+				//String query = "select id,Company,Plant,Shop_s,Group_PM,Line_Machine_s,Operation_Station_s,Equipment_s,Shop,Line_Machine,Line_Machine_RUS,Operation_Station,Operation_Station_RUS,Equipment,Description,Sub_Number,Equip_label,Station_Label,passport,manual,Station_Supplier,Location,Room_category,Coordinates,Altitude,CHAMBER,TR_CU,TR_CU_Link,Hazardous,Key_equipment,Type,S_N,Manuf,Main_Technical_Characteristic,Responsobility,M_Electric,M_Air,M_Water,M_Cold_water,M_Hot_water,RO_Water,M_Gas from hmmr_plant_structure where del_rec = 0 AND Shop_s = "+"'"+shop+"'"+" AND Group_PM = "+"'"+eq_group+"'"+";";
+				String query = "select id, FL01_Company, FL02_Plant, FL03_Shop_s, FL04_Group_s, FL05_Line_s, FL06_Station_s, FL07_Equipment_s, FL03_Shop_ENG, FL04_Group_ENG, FL05_Line_ENG, FL06_Station_ENG, FL07_Equipment_ENG, FL03_Shop_RUS, FL04_Group_RUS, FL05_Line_RUS, FL06_Station_RUS, FL07_Equipment_RUS, Description_RUS, Equip_label, Station_Label, Equipment_Folder_Link, Resp_Planner_Group, Assets_Inventory_Number, Assets_OS1_Number, Assets_Start_up_Date, Cost_Center, Site_Location, Site_CHAMBER, Site_Coordinates, Site_Altitude, TR_CU, TR_CU_Link, Hazardous, Key_equipment, EQ_Integrator, EQ_Manufacture, EQ_Type, EQ_Serial_Number, EQ_Technical_Characteristic, Responsobility, M_Electric, M_Air, M_Water, M_Cold_Water, M_Hot_Water, M_RO_Water, M_Gas from hmmr_plant_structure where Status = 0 AND FL03_Shop_s = "+"'"+shop+"'"+" AND FL04_Group_s = "+"'"+eq_group+"'"+";";
+				
+				cn.ConToDb();
+				stmt12 = cn.con.createStatement();
+				rs12 = stmt12.executeQuery(query);
+							
+		        while (rs12.next()) {
+		        	hmmr_ps_model hpm = new hmmr_ps_model();
+		        	if(rs12.getString(1) != null && rs12.getString(2) != null && rs12.getString(3) != null) {
+		        		hpm.Id.set(rs12.getString(1));
+		        		hpm.Company.set(rs12.getString(2));
+		        		hpm.Plant.set(rs12.getString(3));
+		        		hpm.Shop_s.set(rs12.getString(4));
+		        		hpm.Group_PM.set(rs12.getString(5));
+		        		hpm.Line_Machine_s.set(rs12.getString(6));
+		        		hpm.Operation_Station_s.set(rs12.getString(7));
+		        		hpm.Equipment_s.set(rs12.getString(8));
+		        		hpm.Shop.set(rs12.getString(9));
+		        		hpm.FL04_Group_ENG.set(rs12.getString(10));
+		        		hpm.Line_Machine.set(rs12.getString(11));
+		        		hpm.Operation_Station.set(rs12.getString(12));
+		        		hpm.Equipment.set(rs12.getString(13));
+		        		hpm.FL03_Shop_RUS.set(rs12.getString(14));
+		        		hpm.FL04_Group_RUS.set(rs12.getString(15));
+		        		hpm.Line_Machine_RUS.set(rs12.getString(16));
+		        		hpm.Operation_Station_RUS.set(rs12.getString(17));
+		        		hpm.FL07_Equipment_RUSProperty().set(rs12.getString(18));
+		        		hpm.Description.set(rs12.getString(19));
+		        		hpm.Equip_label.set(rs12.getString(20));
+		        		hpm.Station_label.set(rs12.getString(21));
+		        		hpm.manual.set(rs12.getString(22));
+		        		hpm.RespPlannerGroup.set(rs12.getString(23));
+		        		hpm.AssetsInvNum.set(rs12.getString(24));
+		        		hpm.AssetsOsNum.set(rs12.getString(25));
+		        		hpm.AssetsStartDate.set(rs12.getString(26));
+		        		hpm.CostCenter.set(rs12.getString(27));
+		        		hpm.Location.set(rs12.getString(28));
+		        		hpm.CHAMBER.set(rs12.getString(29));
+		        		hpm.Coordinates.set(rs12.getString(30));
+		        		hpm.Altitude.set(rs12.getString(31));
+		        		hpm.TR_CU.set(rs12.getString(32));
+		        		hpm.TR_CU_Link.set(rs12.getString(33));
+		        		hpm.Hazardous.set(rs12.getString(34));
+		        		hpm.Key_equipment.set(rs12.getString(35));
+		        		hpm.Station_Supplier.set(rs12.getString(36));
+		        		hpm.Manuf.set(rs12.getString(37));
+		        		hpm.Type.set(rs12.getString(38));
+		        		hpm.S_N.set(rs12.getString(39));
+		        		hpm.MTC.set(rs12.getString(40));
+		        		hpm.Resp.set(rs12.getString(41));
+		        		hpm.M_Electric.set(rs12.getString(42));
+		        		hpm.M_Air.set(rs12.getString(43));
+		        		hpm.M_Water.set(rs12.getString(44));
+		        		hpm.M_Cold_water.set(rs12.getString(45));
+		        		hpm.M_Hot_water.set(rs12.getString(46));
+		        		hpm.RO_Water.set(rs12.getString(47));
+		        		hpm.M_Gas.set(rs12.getString(48));
+		        						        				            
+			            list.add(hpm);
+		        	}    
+		        }
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 3978!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt12.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs12.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+			return list;
+		}
+//*******************************************************************************************************************************
+		
+//***************************************** PLANT STRUCTURE *********************************************************************		
+		/**
+		 * Заполняем данными таблицу при применениии фильтра цех, группа и линия в
+		 * Plant Structure
+		 * @return - Возвращает набор данных типа ObservableList и 
+		 * 			заполняет ими таблицу TableView.
+		 */
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<hmmr_ps_model> _select_data_filter_ps(String shop, String eq_group, String line)
+		{
+			ObservableList<hmmr_ps_model> list = FXCollections.observableArrayList();
+			
+			try {
+				//String query = "select id,Company,Plant,Shop_s,Group_PM,Line_Machine_s,Operation_Station_s,Equipment_s,Shop,Line_Machine,Line_Machine_RUS,Operation_Station,Operation_Station_RUS,Equipment,Description,Sub_Number,Equip_label,Station_Label,passport,manual,Station_Supplier,Location,Room_category,Coordinates,Altitude,CHAMBER,TR_CU,TR_CU_Link,Hazardous,Key_equipment,Type,S_N,Manuf,Main_Technical_Characteristic,Responsobility,M_Electric,M_Air,M_Water,M_Cold_water,M_Hot_water,RO_Water,M_Gas from hmmr_plant_structure where del_rec = 0 AND Shop_s = "+"'"+shop+"'"+" AND Group_PM = "+"'"+eq_group+"'"+" AND Line_Machine_s = "+"'"+line+"'"+";";
+				String query = "select id, FL01_Company, FL02_Plant, FL03_Shop_s, FL04_Group_s, FL05_Line_s, FL06_Station_s, FL07_Equipment_s, FL03_Shop_ENG, FL04_Group_ENG, FL05_Line_ENG, FL06_Station_ENG, FL07_Equipment_ENG, FL03_Shop_RUS, FL04_Group_RUS, FL05_Line_RUS, FL06_Station_RUS, FL07_Equipment_RUS, Description_RUS, Equip_label, Station_Label, Equipment_Folder_Link, Resp_Planner_Group, Assets_Inventory_Number, Assets_OS1_Number, Assets_Start_up_Date, Cost_Center, Site_Location, Site_CHAMBER, Site_Coordinates, Site_Altitude, TR_CU, TR_CU_Link, Hazardous, Key_equipment, EQ_Integrator, EQ_Manufacture, EQ_Type, EQ_Serial_Number, EQ_Technical_Characteristic, Responsobility, M_Electric, M_Air, M_Water, M_Cold_Water, M_Hot_Water, M_RO_Water, M_Gas from hmmr_plant_structure where Status = 0 AND FL03_Shop_s = "+"'"+shop+"'"+" AND FL04_Group_s = "+"'"+eq_group+"'"+" AND FL05_Line_s = "+"'"+line+"'"+";";
+				
+				cn.ConToDb();
+				stmt12 = cn.con.createStatement();
+				rs12 = stmt12.executeQuery(query);
+							
+		        while (rs12.next()) {
+		        	hmmr_ps_model hpm = new hmmr_ps_model();
+		        	if(rs12.getString(1) != null && rs12.getString(2) != null && rs12.getString(3) != null) {
+		        		hpm.Id.set(rs12.getString(1));
+		        		hpm.Company.set(rs12.getString(2));
+		        		hpm.Plant.set(rs12.getString(3));
+		        		hpm.Shop_s.set(rs12.getString(4));
+		        		hpm.Group_PM.set(rs12.getString(5));
+		        		hpm.Line_Machine_s.set(rs12.getString(6));
+		        		hpm.Operation_Station_s.set(rs12.getString(7));
+		        		hpm.Equipment_s.set(rs12.getString(8));
+		        		hpm.Shop.set(rs12.getString(9));
+		        		hpm.FL04_Group_ENG.set(rs12.getString(10));
+		        		hpm.Line_Machine.set(rs12.getString(11));
+		        		hpm.Operation_Station.set(rs12.getString(12));
+		        		hpm.Equipment.set(rs12.getString(13));
+		        		hpm.FL03_Shop_RUS.set(rs12.getString(14));
+		        		hpm.FL04_Group_RUS.set(rs12.getString(15));
+		        		hpm.Line_Machine_RUS.set(rs12.getString(16));
+		        		hpm.Operation_Station_RUS.set(rs12.getString(17));
+		        		hpm.FL07_Equipment_RUSProperty().set(rs12.getString(18));
+		        		hpm.Description.set(rs12.getString(19));
+		        		hpm.Equip_label.set(rs12.getString(20));
+		        		hpm.Station_label.set(rs12.getString(21));
+		        		hpm.manual.set(rs12.getString(22));
+		        		hpm.RespPlannerGroup.set(rs12.getString(23));
+		        		hpm.AssetsInvNum.set(rs12.getString(24));
+		        		hpm.AssetsOsNum.set(rs12.getString(25));
+		        		hpm.AssetsStartDate.set(rs12.getString(26));
+		        		hpm.CostCenter.set(rs12.getString(27));
+		        		hpm.Location.set(rs12.getString(28));
+		        		hpm.CHAMBER.set(rs12.getString(29));
+		        		hpm.Coordinates.set(rs12.getString(30));
+		        		hpm.Altitude.set(rs12.getString(31));
+		        		hpm.TR_CU.set(rs12.getString(32));
+		        		hpm.TR_CU_Link.set(rs12.getString(33));
+		        		hpm.Hazardous.set(rs12.getString(34));
+		        		hpm.Key_equipment.set(rs12.getString(35));
+		        		hpm.Station_Supplier.set(rs12.getString(36));
+		        		hpm.Manuf.set(rs12.getString(37));
+		        		hpm.Type.set(rs12.getString(38));
+		        		hpm.S_N.set(rs12.getString(39));
+		        		hpm.MTC.set(rs12.getString(40));
+		        		hpm.Resp.set(rs12.getString(41));
+		        		hpm.M_Electric.set(rs12.getString(42));
+		        		hpm.M_Air.set(rs12.getString(43));
+		        		hpm.M_Water.set(rs12.getString(44));
+		        		hpm.M_Cold_water.set(rs12.getString(45));
+		        		hpm.M_Hot_water.set(rs12.getString(46));
+		        		hpm.RO_Water.set(rs12.getString(47));
+		        		hpm.M_Gas.set(rs12.getString(48));
+		        						        				            
+			            list.add(hpm);
+		        	}    
+		        }
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4056!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt12.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs12.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+			return list;
+		}
+//*******************************************************************************************************************************
+		
+//********************************************** PLANT STRUCTURE ****************************************************************		
+		/**
+		 * Заполняем данными таблицу при применениии фильтра цех, группа, линия и станция в
+		 * Plant Structure
+		 * @return - Возвращает набор данных типа ObservableList и 
+		 * 			заполняет ими таблицу TableView.
+		 */
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<hmmr_ps_model> _select_data_filter_ps(String shop, String eq_group, String line, String os)
+		{
+			ObservableList<hmmr_ps_model> list = FXCollections.observableArrayList();
+			
+			try {
+				//String query = "select id,Company,Plant,Shop_s,Group_PM,Line_Machine_s,Operation_Station_s,Equipment_s,Shop,Line_Machine,Line_Machine_RUS,Operation_Station,Operation_Station_RUS,Equipment,Description,Sub_Number,Equip_label,Station_Label,passport,manual,Station_Supplier,Location,Room_category,Coordinates,Altitude,CHAMBER,TR_CU,TR_CU_Link,Hazardous,Key_equipment,Type,S_N,Manuf,Main_Technical_Characteristic,Responsobility,M_Electric,M_Air,M_Water,M_Cold_water,M_Hot_water,RO_Water,M_Gas from hmmr_plant_structure where del_rec = 0 AND Shop_s = "+"'"+shop+"'"+" AND Group_PM = "+"'"+eq_group+"'"+" AND Line_Machine_s = "+"'"+line+"'"+" AND Operation_Station_s = "+"'"+os+"'"+";";
+				String query = "select id, FL01_Company, FL02_Plant, FL03_Shop_s, FL04_Group_s, FL05_Line_s, FL06_Station_s, FL07_Equipment_s, FL03_Shop_ENG, FL04_Group_ENG, FL05_Line_ENG, FL06_Station_ENG, FL07_Equipment_ENG, FL03_Shop_RUS, FL04_Group_RUS, FL05_Line_RUS, FL06_Station_RUS, FL07_Equipment_RUS, Description_RUS, Equip_label, Station_Label, Equipment_Folder_Link, Resp_Planner_Group, Assets_Inventory_Number, Assets_OS1_Number, Assets_Start_up_Date, Cost_Center, Site_Location, Site_CHAMBER, Site_Coordinates, Site_Altitude, TR_CU, TR_CU_Link, Hazardous, Key_equipment, EQ_Integrator, EQ_Manufacture, EQ_Type, EQ_Serial_Number, EQ_Technical_Characteristic, Responsobility, M_Electric, M_Air, M_Water, M_Cold_Water, M_Hot_Water, M_RO_Water, M_Gas from hmmr_plant_structure where Status = 0 AND FL03_Shop_s = "+"'"+shop+"'"+" AND FL04_Group_s = "+"'"+eq_group+"'"+" AND FL05_Line_s = "+"'"+line+"'"+" AND FL06_Station_s = "+"'"+os+"'"+";";
+				
+				cn.ConToDb();
+				stmt12 = cn.con.createStatement();
+				rs12 = stmt12.executeQuery(query);
+							
+		        while (rs12.next()) {
+		        	hmmr_ps_model hpm = new hmmr_ps_model();
+		        	if(rs12.getString(1) != null && rs12.getString(2) != null && rs12.getString(3) != null) {
+		        		hpm.Id.set(rs12.getString(1));
+		        		hpm.Company.set(rs12.getString(2));
+		        		hpm.Plant.set(rs12.getString(3));
+		        		hpm.Shop_s.set(rs12.getString(4));
+		        		hpm.Group_PM.set(rs12.getString(5));
+		        		hpm.Line_Machine_s.set(rs12.getString(6));
+		        		hpm.Operation_Station_s.set(rs12.getString(7));
+		        		hpm.Equipment_s.set(rs12.getString(8));
+		        		hpm.Shop.set(rs12.getString(9));
+		        		hpm.FL04_Group_ENG.set(rs12.getString(10));
+		        		hpm.Line_Machine.set(rs12.getString(11));
+		        		hpm.Operation_Station.set(rs12.getString(12));
+		        		hpm.Equipment.set(rs12.getString(13));
+		        		hpm.FL03_Shop_RUS.set(rs12.getString(14));
+		        		hpm.FL04_Group_RUS.set(rs12.getString(15));
+		        		hpm.Line_Machine_RUS.set(rs12.getString(16));
+		        		hpm.Operation_Station_RUS.set(rs12.getString(17));
+		        		hpm.FL07_Equipment_RUSProperty().set(rs12.getString(18));
+		        		hpm.Description.set(rs12.getString(19));
+		        		hpm.Equip_label.set(rs12.getString(20));
+		        		hpm.Station_label.set(rs12.getString(21));
+		        		hpm.manual.set(rs12.getString(22));
+		        		hpm.RespPlannerGroup.set(rs12.getString(23));
+		        		hpm.AssetsInvNum.set(rs12.getString(24));
+		        		hpm.AssetsOsNum.set(rs12.getString(25));
+		        		hpm.AssetsStartDate.set(rs12.getString(26));
+		        		hpm.CostCenter.set(rs12.getString(27));
+		        		hpm.Location.set(rs12.getString(28));
+		        		hpm.CHAMBER.set(rs12.getString(29));
+		        		hpm.Coordinates.set(rs12.getString(30));
+		        		hpm.Altitude.set(rs12.getString(31));
+		        		hpm.TR_CU.set(rs12.getString(32));
+		        		hpm.TR_CU_Link.set(rs12.getString(33));
+		        		hpm.Hazardous.set(rs12.getString(34));
+		        		hpm.Key_equipment.set(rs12.getString(35));
+		        		hpm.Station_Supplier.set(rs12.getString(36));
+		        		hpm.Manuf.set(rs12.getString(37));
+		        		hpm.Type.set(rs12.getString(38));
+		        		hpm.S_N.set(rs12.getString(39));
+		        		hpm.MTC.set(rs12.getString(40));
+		        		hpm.Resp.set(rs12.getString(41));
+		        		hpm.M_Electric.set(rs12.getString(42));
+		        		hpm.M_Air.set(rs12.getString(43));
+		        		hpm.M_Water.set(rs12.getString(44));
+		        		hpm.M_Cold_water.set(rs12.getString(45));
+		        		hpm.M_Hot_water.set(rs12.getString(46));
+		        		hpm.RO_Water.set(rs12.getString(47));
+		        		hpm.M_Gas.set(rs12.getString(48));
+		        						        				            
+			            list.add(hpm);
+		        	}    
+		        }
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4134!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt12.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs12.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+			return list;
+		}
+//********************************************************************************************************************************
+		
+//********************************************** PLANT STRUCTURE *****************************************************************		
+		/**
+		 * Заполняем данными таблицу при применениии фильтра цех, группа, линия, станция и оборудование в
+		 * Plant Structure
+		 * @return - Возвращает набор данных типа ObservableList и 
+		 * 			заполняет ими таблицу TableView.
+		 */
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<hmmr_ps_model> _select_data_filter_ps(String shop, String eq_group, String line, String os, String equip)
+		{
+			ObservableList<hmmr_ps_model> list = FXCollections.observableArrayList();
+			
+			try {
+				//String query = "select id,Company,Plant,Shop_s,Group_PM,Line_Machine_s,Operation_Station_s,Equipment_s,Shop,Line_Machine,Line_Machine_RUS,Operation_Station,Operation_Station_RUS,Equipment,Description,Sub_Number,Equip_label,Station_Label,passport,manual,Station_Supplier,Location,Room_category,Coordinates,Altitude,CHAMBER,TR_CU,TR_CU_Link,Hazardous,Key_equipment,Type,S_N,Manuf,Main_Technical_Characteristic,Responsobility,M_Electric,M_Air,M_Water,M_Cold_water,M_Hot_water,RO_Water,M_Gas from hmmr_plant_structure where del_rec = 0 AND Shop_s = "+"'"+shop+"'"+" AND Group_PM = "+"'"+eq_group+"'"+" AND Line_Machine_s = "+"'"+line+"'"+" AND Operation_Station_s = "+"'"+os+"'"+" AND Equipment_s = "+"'"+equip+"'"+";";
+				String query = "select id, FL01_Company, FL02_Plant, FL03_Shop_s, FL04_Group_s, FL05_Line_s, FL06_Station_s, FL07_Equipment_s, FL03_Shop_ENG, FL04_Group_ENG, FL05_Line_ENG, FL06_Station_ENG, FL07_Equipment_ENG, FL03_Shop_RUS, FL04_Group_RUS, FL05_Line_RUS, FL06_Station_RUS, FL07_Equipment_RUS, Description_RUS, Equip_label, Station_Label, Equipment_Folder_Link, Resp_Planner_Group, Assets_Inventory_Number, Assets_OS1_Number, Assets_Start_up_Date, Cost_Center, Site_Location, Site_CHAMBER, Site_Coordinates, Site_Altitude, TR_CU, TR_CU_Link, Hazardous, Key_equipment, EQ_Integrator, EQ_Manufacture, EQ_Type, EQ_Serial_Number, EQ_Technical_Characteristic, Responsobility, M_Electric, M_Air, M_Water, M_Cold_Water, M_Hot_Water, M_RO_Water, M_Gas from hmmr_plant_structure where Status = 0 AND FL03_Shop_s = "+"'"+shop+"'"+" AND FL04_Group_s = "+"'"+eq_group+"'"+" AND FL05_Line_s = "+"'"+line+"'"+" AND FL06_Station_s = "+"'"+os+"'"+" AND FL07_Equipment_s = "+"'"+equip+"'"+";";
+				
+				cn.ConToDb();
+				stmt12 = cn.con.createStatement();
+				rs12 = stmt12.executeQuery(query);
+							
+		        while (rs12.next()) {
+		        	hmmr_ps_model hpm = new hmmr_ps_model();
+		        	if(rs12.getString(1) != null && rs12.getString(2) != null && rs12.getString(3) != null) {
+		        		hpm.Id.set(rs12.getString(1));
+		        		hpm.Company.set(rs12.getString(2));
+		        		hpm.Plant.set(rs12.getString(3));
+		        		hpm.Shop_s.set(rs12.getString(4));
+		        		hpm.Group_PM.set(rs12.getString(5));
+		        		hpm.Line_Machine_s.set(rs12.getString(6));
+		        		hpm.Operation_Station_s.set(rs12.getString(7));
+		        		hpm.Equipment_s.set(rs12.getString(8));
+		        		hpm.Shop.set(rs12.getString(9));
+		        		hpm.FL04_Group_ENG.set(rs12.getString(10));
+		        		hpm.Line_Machine.set(rs12.getString(11));
+		        		hpm.Operation_Station.set(rs12.getString(12));
+		        		hpm.Equipment.set(rs12.getString(13));
+		        		hpm.FL03_Shop_RUS.set(rs12.getString(14));
+		        		hpm.FL04_Group_RUS.set(rs12.getString(15));
+		        		hpm.Line_Machine_RUS.set(rs12.getString(16));
+		        		hpm.Operation_Station_RUS.set(rs12.getString(17));
+		        		hpm.FL07_Equipment_RUSProperty().set(rs12.getString(18));
+		        		hpm.Description.set(rs12.getString(19));
+		        		hpm.Equip_label.set(rs12.getString(20));
+		        		hpm.Station_label.set(rs12.getString(21));
+		        		hpm.manual.set(rs12.getString(22));
+		        		hpm.RespPlannerGroup.set(rs12.getString(23));
+		        		hpm.AssetsInvNum.set(rs12.getString(24));
+		        		hpm.AssetsOsNum.set(rs12.getString(25));
+		        		hpm.AssetsStartDate.set(rs12.getString(26));
+		        		hpm.CostCenter.set(rs12.getString(27));
+		        		hpm.Location.set(rs12.getString(28));
+		        		hpm.CHAMBER.set(rs12.getString(29));
+		        		hpm.Coordinates.set(rs12.getString(30));
+		        		hpm.Altitude.set(rs12.getString(31));
+		        		hpm.TR_CU.set(rs12.getString(32));
+		        		hpm.TR_CU_Link.set(rs12.getString(33));
+		        		hpm.Hazardous.set(rs12.getString(34));
+		        		hpm.Key_equipment.set(rs12.getString(35));
+		        		hpm.Station_Supplier.set(rs12.getString(36));
+		        		hpm.Manuf.set(rs12.getString(37));
+		        		hpm.Type.set(rs12.getString(38));
+		        		hpm.S_N.set(rs12.getString(39));
+		        		hpm.MTC.set(rs12.getString(40));
+		        		hpm.Resp.set(rs12.getString(41));
+		        		hpm.M_Electric.set(rs12.getString(42));
+		        		hpm.M_Air.set(rs12.getString(43));
+		        		hpm.M_Water.set(rs12.getString(44));
+		        		hpm.M_Cold_water.set(rs12.getString(45));
+		        		hpm.M_Hot_water.set(rs12.getString(46));
+		        		hpm.RO_Water.set(rs12.getString(47));
+		        		hpm.M_Gas.set(rs12.getString(48));
+		        						        				            
+			            list.add(hpm);
+		        	}    
+		        }
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4212!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt12.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs12.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+			return list;
+		}
+//******************************************************************************************************************************
+		
+//***************************************************** PLANT STRUCTURE ********************************************************		
+		/**
+		 * Вставляем последню запись в таблицу Plant Structure
+		 * @param id - id строки которую надо продублировать
+		 */
+		@SuppressWarnings("static-access")
+		public void _insert_last_ps(int id)
+		{
+			String query = "INSERT INTO hmmr_plant_structure (user_id,FL01_Company, FL02_Plant, FL03_Shop_s, FL04_Group_s, FL05_Line_s, FL06_Station_s, FL07_Equipment_s, "
+					+ "FL03_Shop_ENG, FL04_Group_ENG, FL05_Line_ENG, FL06_Station_ENG, FL07_Equipment_ENG, FL03_Shop_RUS, FL04_Group_RUS, FL05_Line_RUS, FL06_Station_RUS, "
+					+ "FL07_Equipment_RUS, Description_RUS, Equip_label, Station_Label, Equipment_Folder_Link, Resp_Planner_Group, Assets_Inventory_Number, Assets_OS1_Number, "
+					+ "Assets_Start_up_Date, Cost_Center, Site_Location, Site_CHAMBER, Site_Coordinates, Site_Altitude, TR_CU, TR_CU_Link, Hazardous, Key_equipment, EQ_Integrator, "
+					+ "EQ_Manufacture, EQ_Type, EQ_Serial_Number, EQ_Technical_Characteristic, Responsobility, M_Electric, M_Air, M_Water, M_Cold_Water, M_Hot_Water, M_RO_Water, "
+					+ "M_Gas) "
+					+ "SELECT user_id,FL01_Company, FL02_Plant, FL03_Shop_s, FL04_Group_s, FL05_Line_s, FL06_Station_s, FL07_Equipment_s, FL03_Shop_ENG, FL04_Group_ENG, "
+					+ "FL05_Line_ENG, FL06_Station_ENG, FL07_Equipment_ENG, FL03_Shop_RUS, FL04_Group_RUS, FL05_Line_RUS, FL06_Station_RUS, FL07_Equipment_RUS, Description_RUS, "
+					+ "Equip_label, Station_Label, Equipment_Folder_Link, Resp_Planner_Group, Assets_Inventory_Number, Assets_OS1_Number, Assets_Start_up_Date, Cost_Center, "
+					+ "Site_Location, Site_CHAMBER, Site_Coordinates, Site_Altitude, TR_CU, TR_CU_Link, Hazardous, Key_equipment, EQ_Integrator, EQ_Manufacture, EQ_Type, "
+					+ "EQ_Serial_Number, EQ_Technical_Characteristic, Responsobility, M_Electric, M_Air, M_Water, M_Cold_Water, M_Hot_Water, M_RO_Water, "
+					+ "M_Gas FROM hmmr_plant_structure WHERE id = "+id+";";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "ADD STRING TO DB");
+				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4285!");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+		}
+//********************************************************************************************************************************		
+		/**
+		 * Получаем id предыдущей записи для таблицы
+		 * @param id - текущее id для данной таблицы
+		 * @param table - таблица для которой необходимо получить предыдущее id
+		 * @return - возвращаем id предыдущей записи
+		 */
+		@SuppressWarnings({ "static-access"})
+		public String _select_data_prew(String id, String table)
+		{
+			String list = "null";
+			
+			try {
+				String query = "SELECT id FROM "+table+" WHERE Status = 0 AND id < "+"'"+id+"'"+" ORDER BY id DESC LIMIT 1;";
+				
+				cn.ConToDb();
+				stmt19 = cn.con.createStatement();
+				rs19 = stmt19.executeQuery(query);
+							
+		        while (rs19.next()) {
+		        	
+		        	if(rs19.getString(1) != null) {
+		        		         
+			            list = rs19.getString(1);
+		        	}    
+		        }
+
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4316!");
+	        } finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt19.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs19.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+
+			return list;
+		}
+		/**
+		 * Получаем id следующей записи для таблицы
+		 * @param id - текущее id для данной таблицы
+		 * @param table - таблица для которой необходимо получить следующее id
+		 * @return - возвращаем id слудующей записи
+		 */
+		@SuppressWarnings({ "static-access"})
+		public String _select_data_next(String id, String table)
+		{
+			String list = "null";
+			
+			try {
+				String query = "SELECT id FROM "+table+" WHERE Status = 0 AND id > "+"'"+id+"'"+" ORDER BY id LIMIT 1;";
+				
+				cn.ConToDb();
+				stmt19 = cn.con.createStatement();
+				rs19 = stmt19.executeQuery(query);
+							
+		        while (rs19.next()) {
+		        	
+		        	if(rs19.getString(1) != null) {
+		        		         
+			            list = rs19.getString(1);
+		        	}    
+		        }
+
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4360!");
+	        } finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt19.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs19.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+
+			return list;
+		}
 }

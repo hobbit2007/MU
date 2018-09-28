@@ -13,23 +13,27 @@ public class hmmr_ps_model {
 	public SimpleStringProperty Operation_Station_s = new SimpleStringProperty();
 	public SimpleStringProperty Equipment_s = new SimpleStringProperty();
 	public SimpleStringProperty Shop = new SimpleStringProperty();
+	public SimpleStringProperty FL04_Group_ENG = new SimpleStringProperty();
 	public SimpleStringProperty Line_Machine = new SimpleStringProperty();
 	public SimpleStringProperty Line_Machine_RUS = new SimpleStringProperty();
 	public SimpleStringProperty Operation_Station = new SimpleStringProperty();
 	public SimpleStringProperty Operation_Station_RUS = new SimpleStringProperty();
 	public SimpleStringProperty Equipment = new SimpleStringProperty();
+	public SimpleStringProperty FL03_Shop_RUS = new SimpleStringProperty();
+	public SimpleStringProperty FL04_Group_RUS = new SimpleStringProperty();
+	public SimpleStringProperty FL07_Equipment_RUS = new SimpleStringProperty();
 	public SimpleStringProperty Description = new SimpleStringProperty();
 	public SimpleStringProperty Equip_label = new SimpleStringProperty();
-	public SimpleStringProperty Sub_number = new SimpleStringProperty();
 	//public SimpleStringProperty Sub_Equipment = new SimpleStringProperty();
 	public SimpleStringProperty Station_label = new SimpleStringProperty();
-	public SimpleStringProperty passport = new SimpleStringProperty();
 	public SimpleStringProperty manual = new SimpleStringProperty();
-	public SimpleStringProperty act_installation = new SimpleStringProperty();
+	public SimpleStringProperty RespPlannerGroup = new SimpleStringProperty();
+	public SimpleStringProperty AssetsInvNum = new SimpleStringProperty();
+	public SimpleStringProperty AssetsOsNum = new SimpleStringProperty();
+	public SimpleStringProperty AssetsStartDate = new SimpleStringProperty();
+	public SimpleStringProperty CostCenter = new SimpleStringProperty();
 	public SimpleStringProperty Location = new SimpleStringProperty();
 	public SimpleStringProperty Station_Supplier = new SimpleStringProperty();
-	public SimpleStringProperty Room_category = new SimpleStringProperty();
-	public SimpleStringProperty Location_Full_Name = new SimpleStringProperty();
 	public SimpleStringProperty Coordinates = new SimpleStringProperty();
 	public SimpleStringProperty Altitude = new SimpleStringProperty();
 	public SimpleStringProperty CHAMBER = new SimpleStringProperty();
@@ -56,8 +60,8 @@ public class hmmr_ps_model {
 	}
 	
 	public hmmr_ps_model(String Id, String Company, String Plant, String Shop_s, String Group_PM, String Line_Machine_s, String Operation_Station_s, String Equipment_s, String Shop,
-			String Line_Machine, String Line_Machine_RUS, String Operation_Station, String Operation_Station_RUS, String Equipment, String Description, String Equip_label, String Sub_Number, 
-			String Station_label, String passport, String manual, String act_installation, String Location, String Station_Supplier, String Room_Category, String Location_Full_Name,
+			String FL04_Group_ENG, String Line_Machine, String Line_Machine_RUS, String Operation_Station, String Operation_Station_RUS, String Equipment, String FL03_Shop_RUS, String FL04_Group_RUS, String FL07_Equipment_RUS, String Description, String Equip_label, 
+			String Station_label, String manual, String RespPlannerGroup, String AssetsInvNum, String AssetsOsNum, String AssetsStartDate, String CostCenter, String Location, String Station_Supplier,
 			String Coordinates, String Altitude, String CHAMBER, String TR_CU, String TR_CU_Link, String Hazardous, String Key_equipment, String Type, String S_N, String Manuf, String MTC, 
 			String Resp, String M_Electric, String M_Air, String M_Water, String M_Cold_water, String M_Hot_water, String RO_Water, String M_Gas)
 	{
@@ -70,22 +74,26 @@ public class hmmr_ps_model {
 		this.Operation_Station_s.set(Operation_Station_s);
 		this.Equipment_s.set(Equipment_s);
 		this.Shop.set(Shop);
+		this.FL04_Group_ENG.set(FL04_Group_ENG);
 		this.Line_Machine.set(Line_Machine);
 		this.Line_Machine_RUS.set(Line_Machine_RUS);
 		this.Operation_Station.set(Operation_Station);
 		this.Operation_Station_RUS.set(Operation_Station_RUS);
 		this.Equipment.set(Equipment);
+		this.FL03_Shop_RUS.set(FL03_Shop_RUS);
+		this.FL04_Group_RUS.set(FL04_Group_RUS);
+		this.FL07_Equipment_RUS.set(FL07_Equipment_RUS);
 		this.Description.set(Description);
 		this.Equip_label.set(Equip_label);
-		this.Sub_number.set(Sub_Number);
 		this.Station_label.set(Station_label);
-		this.passport.set(passport);
 		this.manual.set(manual);
-		this.act_installation.set(act_installation);
+		this.RespPlannerGroup.set(RespPlannerGroup);
+		this.AssetsInvNum.set(AssetsInvNum);
+		this.AssetsOsNum.set(AssetsOsNum);
+		this.AssetsStartDate.set(AssetsStartDate);
+		this.CostCenter.set(CostCenter);
 		this.Location.set(Location);
 		this.Station_Supplier.set(Station_Supplier);
-		this.Room_category.set(Room_Category);
-		this.Location_Full_Name.set(Location_Full_Name);
 		this.Coordinates.set(Coordinates);
 		this.Altitude.set(Altitude);
 		this.CHAMBER.set(CHAMBER);
@@ -315,19 +323,6 @@ public class hmmr_ps_model {
         this.Equip_label.set(Equip_label);
     }
     
-    public String getSub_number() {
-        return Sub_number.get();
-    }
-
-    public SimpleStringProperty Sub_numberProperty()
-    {
-    	return Sub_number;
-    }
-    
-    public void setSub_number(String Sub_number) {
-        this.Sub_number.set(Sub_number);
-    }
-    
     public String getStation_label() {
         return Station_label.get();
     }
@@ -341,19 +336,6 @@ public class hmmr_ps_model {
         this.Station_label.set(Station_label);
     }
     
-    public String getpassport() {
-        return passport.get();
-    }
-
-    public SimpleStringProperty passportProperty()
-    {
-    	return passport;
-    }
-    
-    public void setpassport(String passport) {
-        this.passport.set(passport);
-    }
-    
     public String getmanual() {
         return manual.get();
     }
@@ -365,19 +347,6 @@ public class hmmr_ps_model {
     
     public void setmanual(String manual) {
         this.manual.set(manual);
-    }
-    
-    public String getact_installation() {
-        return act_installation.get();
-    }
-
-    public SimpleStringProperty act_installationProperty()
-    {
-    	return act_installation;
-    }
-    
-    public void setact_installation(String act_installation) {
-        this.act_installation.set(act_installation);
     }
     
     public String getLocation() {
@@ -406,33 +375,7 @@ public class hmmr_ps_model {
         this.Station_Supplier.set(Station_Supplier);
     }
     
-    public String getRoom_category() {
-        return Room_category.get();
-    }
-
-    public SimpleStringProperty Room_categoryProperty()
-    {
-    	return Room_category;
-    }
-    
-    public void setRoom_category(String Room_category) {
-        this.Room_category.set(Room_category);
-    }
-    
-    public String getLocation_Full_Name() {
-        return Location_Full_Name.get();
-    }
-
-    public SimpleStringProperty Location_Full_NameProperty()
-    {
-    	return Location_Full_Name;
-    }
-    
-    public void setLocation_Full_Name(String Location_Full_Name) {
-        this.Location_Full_Name.set(Location_Full_Name);
-    }
-    
-    public String getCoordinates() {
+   public String getCoordinates() {
         return Coordinates.get();
     }
 
@@ -677,5 +620,122 @@ public class hmmr_ps_model {
     
     public void setM_Gas(String M_Gas) {
         this.M_Gas.set(M_Gas);
+    }
+    
+    public String getFL04_Group_ENG() {
+        return FL04_Group_ENG.get();
+    }
+
+    public SimpleStringProperty FL04_Group_ENGProperty()
+    {
+    	return FL04_Group_ENG;
+    }
+    
+    public void setFL04_Group_ENG(String FL04_Group_ENG) {
+        this.FL04_Group_ENG.set(FL04_Group_ENG);
+    }
+    
+    public String getFL03_Shop_RUS() {
+        return FL03_Shop_RUS.get();
+    }
+
+    public SimpleStringProperty FL03_Shop_RUSProperty()
+    {
+    	return FL03_Shop_RUS;
+    }
+    
+    public void setFL03_Shop_RUS(String FL03_Shop_RUS) {
+        this.FL03_Shop_RUS.set(FL03_Shop_RUS);
+    }
+    
+    public String getFL04_Group_RUS() {
+        return FL04_Group_RUS.get();
+    }
+
+    public SimpleStringProperty FL04_Group_RUSProperty()
+    {
+    	return FL04_Group_RUS;
+    }
+    
+    public void setFL04_Group_RUS(String FL04_Group_RUS) {
+        this.FL04_Group_RUS.set(FL04_Group_RUS);
+    }
+    
+    public String getFL07_Equipment_RUS() {
+        return FL07_Equipment_RUS.get();
+    }
+
+    public SimpleStringProperty FL07_Equipment_RUSProperty()
+    {
+    	return FL07_Equipment_RUS;
+    }
+    
+    public void setFL07_Equipment_RUS(String FL07_Equipment_RUS) {
+        this.FL07_Equipment_RUS.set(FL07_Equipment_RUS);
+    }
+    
+    public String getRespPlannerGroup() {
+        return RespPlannerGroup.get();
+    }
+
+    public SimpleStringProperty RespPlannerGroupProperty()
+    {
+    	return RespPlannerGroup;
+    }
+    
+    public void setRespPlannerGroup(String RespPlannerGroup) {
+        this.RespPlannerGroup.set(RespPlannerGroup);
+    }
+    
+    public String getAssetsInvNum() {
+        return AssetsInvNum.get();
+    }
+
+    public SimpleStringProperty AssetsInvNumProperty()
+    {
+    	return AssetsInvNum;
+    }
+    
+    public void setAssetsInvNum(String AssetsInvNum) {
+        this.AssetsInvNum.set(AssetsInvNum);
+    }
+    
+    public String getAssetsOsNum() {
+        return AssetsOsNum.get();
+    }
+
+    public SimpleStringProperty AssetsOsNumProperty()
+    {
+    	return AssetsOsNum;
+    }
+    
+    public void setAssetsOsNum(String AssetsOsNum) {
+        this.AssetsOsNum.set(AssetsOsNum);
+    }
+    
+    public String getAssetsStartDate() {
+        return AssetsStartDate.get();
+    }
+
+    public SimpleStringProperty AssetsStartDateProperty()
+    {
+    	return AssetsStartDate;
+    }
+    
+    public void setAssetsStartDate(String AssetsStartDate) {
+        this.AssetsStartDate.set(AssetsStartDate);
+    }
+    
+    public String getCostCenter() {
+        return CostCenter.get();
+    }
+
+    public SimpleStringProperty CostCenterProperty()
+    {
+    	return CostCenter;
+    }
+    
+    public void setCostCenter(String CostCenter) {
+        this.CostCenter.set(CostCenter);
     }
 }

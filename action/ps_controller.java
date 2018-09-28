@@ -4,11 +4,12 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import com.jfoenix.controls.JFXButton;
-
 import application.conn_connector;
+import application.mu_main_controller;
 import db._query;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -17,16 +18,20 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import share_class.s_class;
@@ -38,28 +43,39 @@ public class ps_controller {
 	
 	@FXML
 	TableColumn<hmmr_ps_model, String> col_num_ps, col_company_ps, col_plant_ps, col_shops_ps, col_groups_ps, col_lines_ps, col_oss_ps, col_equips_ps, col_shop_ps, col_line_ps, col_linerus_ps,
-		col_os_ps, col_osrus_ps, col_equip_ps, col_description_ps, col_equiplabel_ps, col_stationlabel_ps, col_passport_ps, col_manual_ps, col_stsupplier_ps, col_location_ps, col_room_ps,
+		col_os_ps, col_osrus_ps, col_equip_ps, col_description_ps, col_equiplabel_ps, col_stationlabel_ps, col_manual_ps, col_stsupplier_ps, col_location_ps, 
 		col_coord_ps, col_alt_ps, col_cham_ps, col_trcu_ps, col_trcul_ps, col_hazardous_ps, col_keyequip_ps, col_type_ps, col_sn_ps, col_manuf_ps, col_mtc_ps, col_respons_ps,
-		col_melec_ps, col_mair_ps, col_mwater_ps, col_mcwater_ps, col_mhwater_ps, col_rowater_ps, col_mgas_ps;
+		col_melec_ps, col_mair_ps, col_mwater_ps, col_mcwater_ps, col_mhwater_ps, col_rowater_ps, col_mgas_ps, col_group_ps,
+		col_shoprus_ps, col_grouprus_ps, col_equiprus_ps, col_groupotv_ps, col_invnum_ps, col_numos_ps, col_startdate_ps,
+		col_cost_ps;
 	
 	@FXML
-	JFXButton add_ps, upd_ps, del_ps, upd_table;
+	JFXButton add_ps, upd_ps, del_ps, upd_table, btn_duplicate;
 	
 	@FXML
 	javafx.scene.control.ScrollPane sp_ps;
+	
+	@FXML
+	private ComboBox<String> c_shop, c_group, c_line, c_os, c_equip;
 	
 	public static ObservableList<TableColumn<hmmr_ps_model, ?>> columns_ps;
 	public static ObservableList<hmmr_ps_model> _table_update_ps = FXCollections.observableArrayList();
 	
 	_query qr = new _query();
 	s_class scl = new s_class();
+	Tooltip tip;
 	
 	public Stage stage = new Stage();
 	
 	public static String _id_ps, _num_ps, _company_ps, _plant_ps, _shops_ps, _groups_ps, _lines_ps, _oss_ps, _equips_ps, _shop_ps, _line_ps, _linerus_ps,
-	_os_ps, _osrus_ps, _equip_ps, _description_ps, _subnumber_ps, _passport_ps, _manual_ps, _stsupplier_ps, _location_ps, _room_ps,
+	_os_ps, _osrus_ps, _equip_ps, _description_ps, _manual_ps, _stsupplier_ps, _location_ps, 
 	_coord_ps, _alt_ps, _cham_ps, _trcu_ps, _trcul_ps, _hazardous_ps, _keyequip_ps, _type_ps, _sn_ps, _manuf_ps, _mtc_ps, _respons_ps,
-	_melec_ps, _mair_ps, _mwater_ps, _mcwater_ps, _mhwater_ps, _rowater_ps, _mgas_ps;
+	_melec_ps, _mair_ps, _mwater_ps, _mcwater_ps, _mhwater_ps, _rowater_ps, _mgas_ps, _group_ps, _shoprus_ps, _grouprus_ps,
+	_equiprus_ps, _gruopotv_ps, _invnum_ps, _numos_ps, _cost_ps, _startdate_ps;
+		
+	public static String _filter_shop, _filter_group, _filter_line, _filter_os, _filter_equip;
+	
+	public static int flag_ps = 0; // Флаг сортировки таблицы PS
 	
 	@FXML
 	public void initialize()
@@ -77,9 +93,11 @@ public class ps_controller {
 		upd_ps.setLayoutY(screen_hight - 110);
 		del_ps.setLayoutY(screen_hight - 110);
 		upd_table.setLayoutY(screen_hight - 110);
+		btn_duplicate.setLayoutY(screen_hight - 110);
 		
 		upd_ps.setDisable(true);
 		del_ps.setDisable(true);
+		btn_duplicate.setDisable(true);
 		
 		if(conn_connector.USER_ROLE.equals("Technics") || conn_connector.USER_ROLE.equals("Engeneer"))
 			del_ps.setDisable(true);
@@ -97,6 +115,7 @@ public class ps_controller {
 		scl._style(upd_ps);
 		scl._style(del_ps);
 		scl._style(upd_table);
+		scl._style(btn_duplicate);
 		
 		initData();
 		
@@ -109,19 +128,25 @@ public class ps_controller {
 		col_oss_ps.setCellValueFactory(CellData -> CellData.getValue().Operation_Station_sProperty());
 		col_equips_ps.setCellValueFactory(CellData -> CellData.getValue().Equipment_sProperty());
 		col_shop_ps.setCellValueFactory(CellData -> CellData.getValue().ShopProperty());
+		col_group_ps.setCellValueFactory(CellData -> CellData.getValue().FL04_Group_ENGProperty());
 		col_line_ps.setCellValueFactory(CellData -> CellData.getValue().Line_MachineProperty());
-		col_linerus_ps.setCellValueFactory(CellData -> CellData.getValue().Line_Machine_RUSProperty());
 		col_os_ps.setCellValueFactory(CellData -> CellData.getValue().Operation_StationProperty());
-		col_osrus_ps.setCellValueFactory(CellData -> CellData.getValue().Operation_Station_RUSProperty());
 		col_equip_ps.setCellValueFactory(CellData -> CellData.getValue().EquipmentProperty());
+		col_shoprus_ps.setCellValueFactory(CellData -> CellData.getValue().FL03_Shop_RUSProperty());
+		col_grouprus_ps.setCellValueFactory(CellData -> CellData.getValue().FL04_Group_RUSProperty());
+		col_linerus_ps.setCellValueFactory(CellData -> CellData.getValue().Line_Machine_RUSProperty());
+		col_osrus_ps.setCellValueFactory(CellData -> CellData.getValue().Operation_Station_RUSProperty());
+		col_equiprus_ps.setCellValueFactory(CellData -> CellData.getValue().FL07_Equipment_RUSProperty());
 		col_description_ps.setCellValueFactory(CellData -> CellData.getValue().DescriptionProperty());
 		col_equiplabel_ps.setCellValueFactory(CellData -> CellData.getValue().Equip_labelProperty());
 		col_stationlabel_ps.setCellValueFactory(CellData -> CellData.getValue().Station_labelProperty());
-		col_passport_ps.setCellValueFactory(CellData -> CellData.getValue().passportProperty());
 		col_manual_ps.setCellValueFactory(CellData -> CellData.getValue().manualProperty());
-		col_stsupplier_ps.setCellValueFactory(CellData -> CellData.getValue().Station_SupplierProperty());
+		col_groupotv_ps.setCellValueFactory(CellData -> CellData.getValue().RespPlannerGroupProperty());
+		col_invnum_ps.setCellValueFactory(CellData -> CellData.getValue().AssetsInvNumProperty());
+		col_numos_ps.setCellValueFactory(CellData -> CellData.getValue().AssetsOsNumProperty());
+		col_startdate_ps.setCellValueFactory(CellData -> CellData.getValue().AssetsStartDateProperty());
+		col_cost_ps.setCellValueFactory(CellData -> CellData.getValue().CostCenterProperty());
 		col_location_ps.setCellValueFactory(CellData -> CellData.getValue().LocationProperty());
-		col_room_ps.setCellValueFactory(CellData -> CellData.getValue().Room_categoryProperty());
 		col_coord_ps.setCellValueFactory(CellData -> CellData.getValue().CoordinatesProperty());
 		col_alt_ps.setCellValueFactory(CellData -> CellData.getValue().AltitudeProperty());
 		col_cham_ps.setCellValueFactory(CellData -> CellData.getValue().CHAMBERProperty());
@@ -129,6 +154,7 @@ public class ps_controller {
 		col_trcul_ps.setCellValueFactory(CellData -> CellData.getValue().TR_CU_LinkProperty());
 		col_hazardous_ps.setCellValueFactory(CellData -> CellData.getValue().HazardousProperty());
 		col_keyequip_ps.setCellValueFactory(CellData -> CellData.getValue().Key_equipmentProperty());
+		col_stsupplier_ps.setCellValueFactory(CellData -> CellData.getValue().Station_SupplierProperty());
 		col_type_ps.setCellValueFactory(CellData -> CellData.getValue().TypetProperty());
 		col_sn_ps.setCellValueFactory(CellData -> CellData.getValue().S_NProperty());
 		col_manuf_ps.setCellValueFactory(CellData -> CellData.getValue().ManufProperty());
@@ -153,7 +179,7 @@ public class ps_controller {
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				try {
-					addps_start(stage);
+					addps_start();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -173,14 +199,36 @@ public class ps_controller {
 				func_upd(_ccl1.getId());
 			}
 		});
+		
+		btn_duplicate.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				try {
+					ps_dup();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
 		table_ps.setOnMouseClicked(new EventHandler<Event>() {
 
 			@Override
 			public void handle(Event event) {
 				// TODO Auto-generated method stub
 				upd_ps.setDisable(false);
+				btn_duplicate.setDisable(false);
 				if(!conn_connector.USER_ROLE.equals("Technics") || !conn_connector.USER_ROLE.equals("Engeneer"))
 					del_ps.setDisable(false);
+				try {
+					addrec_ps_controller._last_id = Integer.parseInt(table_ps.getSelectionModel().getSelectedItem().getId());
+				}
+				catch (Exception e) {
+					// TODO: handle exception
+				}
 			}
 		});
 		upd_table.setOnAction(new EventHandler<ActionEvent>() {
@@ -188,9 +236,26 @@ public class ps_controller {
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
+				/*if(flag_ps == 0)
+					_table_update_ps.addAll(qr._select_data_ps());
+				if(flag_ps == 1)
+					_table_update_ps.addAll(qr._select_data_filter_ps(_filter_shop));
+				if(flag_ps == 2)
+					_table_update_ps.addAll(qr._select_data_filter_ps(_filter_shop, _filter_group));
+				if(flag_ps == 3)
+					_table_update_ps.addAll(qr._select_data_filter_ps(_filter_shop, _filter_group, _filter_line));
+				if(flag_ps == 4)
+					_table_update_ps.addAll(qr._select_data_filter_ps(_filter_shop, _filter_group, _filter_line, _filter_os));
+				if(flag_ps == 5)
+					_table_update_ps.addAll(qr._select_data_filter_ps(_filter_shop, _filter_group, _filter_line, _filter_os, _filter_equip));*/
 				table_ps.setItems(qr._select_data_ps());
 				columns_ps.get(0).setVisible(false);
 			    columns_ps.get(0).setVisible(true);
+			   
+			    c_group.valueProperty().set(null);
+			    c_line.valueProperty().set(null);
+			    c_os.valueProperty().set(null);
+				c_equip.valueProperty().set(null);
 			}
 		});
 		del_ps.setOnAction(new EventHandler<ActionEvent>() {
@@ -228,11 +293,36 @@ public class ps_controller {
 		_table_update_ps.addListener(new ListChangeListener<hmmr_ps_model>() {
 		    @Override
 			public void onChanged(Change<? extends hmmr_ps_model> c) {
-				// TODO Auto-generated method stub
+				
+			    table_ps.setItems(qr._select_data_ps());
+			    table_ps.getColumns().get(0).setVisible(false);
+			    table_ps.getColumns().get(0).setVisible(true);
 		    	
-		    	table_ps.setItems(qr._select_data_ps());
-		    	table_ps.getColumns().get(0).setVisible(false);
-		        table_ps.getColumns().get(0).setVisible(true);
+		        if(flag_ps == 1) {
+		        	table_ps.setItems(qr._select_data_filter_ps(_filter_shop));
+					table_ps.getColumns().get(0).setVisible(false);
+			        table_ps.getColumns().get(0).setVisible(true);
+		        }
+				if(flag_ps == 2) {
+					table_ps.setItems(qr._select_data_filter_ps(_filter_shop, _filter_group));
+					table_ps.getColumns().get(0).setVisible(false);
+			        table_ps.getColumns().get(0).setVisible(true);
+				}
+				if(flag_ps == 3) {
+					table_ps.setItems(qr._select_data_filter_ps(_filter_shop, _filter_group, _filter_line));
+					table_ps.getColumns().get(0).setVisible(false);
+			        table_ps.getColumns().get(0).setVisible(true);
+				}
+				if(flag_ps == 4) {
+					table_ps.setItems(qr._select_data_filter_ps(_filter_shop, _filter_group, _filter_line, _filter_os));
+					table_ps.getColumns().get(0).setVisible(false);
+			        table_ps.getColumns().get(0).setVisible(true);
+				}
+				if(flag_ps == 5) {
+					table_ps.setItems(qr._select_data_filter_ps(_filter_shop, _filter_group, _filter_line, _filter_os, _filter_equip));
+					table_ps.getColumns().get(0).setVisible(false);
+			        table_ps.getColumns().get(0).setVisible(true);
+				}
 			}
 		});
 		//Вызываем окно обновления по двойному клику на строке
@@ -245,6 +335,184 @@ public class ps_controller {
 	            }
 			}
 		});
+		
+		c_shop.setItems(qr._select_shop_pm());
+		c_shop.setValue(apwr_controller.SHOP_NAME);
+		
+		if(c_shop.getValue().toString().length() != 0)
+			c_group.setItems(qr._select_group_pm(scl.parser_str(c_shop.getValue(), 0)));
+		
+		try {
+			c_shop.getSelectionModel().selectedItemProperty().addListener(new  ChangeListener<String>() {
+	
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if(c_shop.getValue().toString().length() != 0) {
+						c_group.valueProperty().set(null);
+						c_line.valueProperty().set(null);
+						c_os.valueProperty().set(null);
+						c_equip.valueProperty().set(null);
+						
+						c_group.setItems(qr._select_group_pm(scl.parser_str(c_shop.getValue(), 0)));
+						table_ps.setItems(qr._select_data_filter_ps(scl.parser_str(c_shop.getValue(), 0)));
+						_filter_shop = scl.parser_str(c_shop.getValue(), 0);
+						flag_ps = 1;
+					}
+				}
+			});
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		c_group.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				
+				try {
+					if(c_group.getValue().toString().length() != 0) {
+						c_line.valueProperty().set(null);
+						c_os.valueProperty().set(null);
+						c_equip.valueProperty().set(null);
+						
+						c_line.setItems(qr._select_lm_pm(scl.parser_str(c_group.getValue(), 0)));
+						table_ps.setItems(qr._select_data_filter_ps(scl.parser_str(c_shop.getValue(), 0), scl.parser_str(c_group.getValue(), 0)));
+						_filter_group = scl.parser_str(c_group.getValue(), 0);
+						flag_ps = 2;
+					}
+					//if(lm_wr_add.getValue().toString().length() != 0)
+					//	os_wr_add.setItems(qr._select_os_pm(sclass.parser_str(shop_wr_add.getValue(), 0), sclass.parser_str(lm_wr_add.getValue(), 0)));
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+			}
+		});
+		c_group.setOnMouseEntered(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				tip = new Tooltip(c_group.getValue());
+				Point2D p = c_group.localToScreen(c_group.getLayoutBounds().getMaxX(), c_group.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
+		        tip.show(c_group, p.getX(), p.getY());
+			}
+		});
+		c_group.setOnMouseExited(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				tip.hide();
+			}
+		});
+		
+		c_line.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				try {
+					if(c_line.getValue().toString().length() != 0) {
+						c_os.valueProperty().set(null);
+						c_equip.valueProperty().set(null);
+						
+						c_os.setItems(qr._select_os_pm(scl.parser_str(c_group.getValue(), 0), scl.parser_str(c_line.getValue(), 0)));
+						table_ps.setItems(qr._select_data_filter_ps(scl.parser_str(c_shop.getValue(), 0), scl.parser_str(c_group.getValue(), 0), scl.parser_str(c_line.getValue(), 0)));
+						_filter_line = scl.parser_str(c_line.getValue(), 0);
+						flag_ps = 3;
+					}
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+			}
+		});
+		c_line.setOnMouseEntered(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				tip = new Tooltip(c_line.getValue());
+				Point2D p = c_line.localToScreen(c_line.getLayoutBounds().getMaxX(), c_line.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
+		        tip.show(c_line, p.getX(), p.getY());
+			}
+		});
+		c_line.setOnMouseExited(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				tip.hide();
+			}
+		});
+			
+		
+		c_os.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+	
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				try {
+					if(c_os.getValue().toString().length() != 0) {
+						c_equip.valueProperty().set(null);
+						
+						c_equip.setItems(qr._select_equip_pm(scl.parser_str(c_os.getValue(), 0), scl.parser_str(c_group.getValue(), 0), scl.parser_str(c_line.getValue(), 0)));
+						table_ps.setItems(qr._select_data_filter_ps(scl.parser_str(c_shop.getValue(), 0), scl.parser_str(c_group.getValue(), 0), scl.parser_str(c_line.getValue(), 0), scl.parser_str(c_os.getValue(), 0)));
+						_filter_os = scl.parser_str(c_os.getValue(), 0);
+						flag_ps = 4;
+					}
+					} catch (Exception e) {
+					}
+			}
+		});
+		c_os.setOnMouseEntered(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				tip = new Tooltip(c_os.getValue());
+				Point2D p = c_os.localToScreen(c_os.getLayoutBounds().getMaxX(), c_os.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
+		        tip.show(c_os, p.getX(), p.getY());
+			}
+		});
+		c_os.setOnMouseExited(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				tip.hide();
+			}
+		});
+		
+		c_equip.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+				try {
+					if(c_os.getValue().toString().length() != 0) {
+						table_ps.setItems(qr._select_data_filter_ps(scl.parser_str(c_shop.getValue(), 0), scl.parser_str(c_group.getValue(), 0), scl.parser_str(c_line.getValue(), 0), scl.parser_str(c_os.getValue(), 0), scl.parser_str(c_equip.getValue(), 0)));
+						_filter_equip = scl.parser_str(c_equip.getValue(), 0);
+						flag_ps = 5;
+					}
+				}
+				catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		});
+		c_equip.setOnMouseEntered(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				tip = new Tooltip(c_equip.getValue());
+				Point2D p = c_equip.localToScreen(c_equip.getLayoutBounds().getMaxX(), c_equip.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
+		        tip.show(c_equip, p.getX(), p.getY());
+			}
+		});
+		c_equip.setOnMouseExited(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				tip.hide();
+			}
+		});
 	}
 	
 	private void initData()
@@ -252,15 +520,16 @@ public class ps_controller {
 		table_ps.setItems(qr._select_data_ps());
 	}
 	//Вызываем окно записи для PS
-	protected void addps_start(Stage stage) throws IOException {
+	protected void addps_start() throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("add_rec_ps.fxml"));
-		   
-	    Scene scene = new Scene(root);
-	    stage.setTitle("M&U - Add Record Window");
-	    stage.setResizable(true);
-	    //stage.initModality(Modality.APPLICATION_MODAL);
-	    stage.setScene(scene);
-	    stage.show();
+		Scene scene = new Scene(root);
+	    Stage stage_set = new Stage();
+		stage_set.initModality(Modality.WINDOW_MODAL);	
+		stage_set.initOwner(mu_main_controller.getPrimaryStage());
+	    stage_set.setTitle("M&U - Add Record Window");
+	    stage_set.setResizable(true);
+	    stage_set.setScene(scene);
+	    stage_set.show();
 	}
 	
 	public void refreshTable_ps(@SuppressWarnings("rawtypes") ObservableList col) {
@@ -285,39 +554,45 @@ public class ps_controller {
 		_oss_ps = scl.parser_str_str_str(_sql_rez, 6);
 		_equips_ps = scl.parser_str_str_str(_sql_rez, 7);
 		_shop_ps = scl.parser_str_str_str(_sql_rez, 8);
-		_line_ps = scl.parser_str_str_str(_sql_rez, 9);
-		_linerus_ps = scl.parser_str_str_str(_sql_rez, 10);
+		_group_ps = scl.parser_str_str_str(_sql_rez, 9);
+		_line_ps = scl.parser_str_str_str(_sql_rez, 10);
 		_os_ps = scl.parser_str_str_str(_sql_rez, 11);
-		_osrus_ps = scl.parser_str_str_str(_sql_rez, 12);
-		_equip_ps = scl.parser_str_str_str(_sql_rez, 13);
-		_description_ps = scl.parser_str_str_str(_sql_rez, 14);
-		_subnumber_ps = scl.parser_str_str_str(_sql_rez, 15);
-		_passport_ps = scl.parser_str_str_str(_sql_rez, 16);
-		_manual_ps = scl.parser_str_str_str(_sql_rez, 17);
-		_stsupplier_ps = scl.parser_str_str_str(_sql_rez, 18);
-		_location_ps = scl.parser_str_str_str(_sql_rez, 19);
-		_room_ps = scl.parser_str_str_str(_sql_rez, 20);
-		_coord_ps = scl.parser_str_str_str(_sql_rez, 21);
-		_alt_ps = scl.parser_str_str_str(_sql_rez, 22);
-		_cham_ps = scl.parser_str_str_str(_sql_rez, 23);
-		_trcu_ps = scl.parser_str_str_str(_sql_rez, 24);
-		_trcul_ps = scl.parser_str_str_str(_sql_rez, 25);
-		_hazardous_ps = scl.parser_str_str_str(_sql_rez, 26);
-		_keyequip_ps = scl.parser_str_str_str(_sql_rez, 27);
-		_type_ps = scl.parser_str_str_str(_sql_rez, 28);
-		_sn_ps = scl.parser_str_str_str(_sql_rez, 29);
-		_manuf_ps = scl.parser_str_str_str(_sql_rez, 30);
-		_mtc_ps = scl.parser_str_str_str(_sql_rez, 31);
-		_respons_ps = scl.parser_str_str_str(_sql_rez, 32);
-		_melec_ps = scl.parser_str_str_str(_sql_rez, 33);
-		_mair_ps = scl.parser_str_str_str(_sql_rez, 34);
-		_mwater_ps = scl.parser_str_str_str(_sql_rez, 35);
-		_mcwater_ps = scl.parser_str_str_str(_sql_rez, 36);
-		_mhwater_ps = scl.parser_str_str_str(_sql_rez, 37);
-		_rowater_ps = scl.parser_str_str_str(_sql_rez, 38);
-		_mgas_ps = scl.parser_str_str_str(_sql_rez, 39);
+		_equip_ps = scl.parser_str_str_str(_sql_rez, 12);
+		_shoprus_ps = scl.parser_str_str_str(_sql_rez, 13);
+		_grouprus_ps = scl.parser_str_str_str(_sql_rez, 14);
+		_linerus_ps = scl.parser_str_str_str(_sql_rez, 15);
+		_osrus_ps = scl.parser_str_str_str(_sql_rez, 16);
+		_equiprus_ps = scl.parser_str_str_str(_sql_rez, 17);
+		_description_ps = scl.parser_str_str_str(_sql_rez, 18);
+		_manual_ps = scl.parser_str_str_str(_sql_rez, 19);
+		_gruopotv_ps = scl.parser_str_str_str(_sql_rez, 20);
+		_invnum_ps = scl.parser_str_str_str(_sql_rez, 21);
+		_numos_ps = scl.parser_str_str_str(_sql_rez, 22);
+		_startdate_ps = scl.parser_str_str_str(_sql_rez, 23);
+		_cost_ps = scl.parser_str_str_str(_sql_rez, 24);
+		_location_ps = scl.parser_str_str_str(_sql_rez, 25);
+		_cham_ps = scl.parser_str_str_str(_sql_rez, 26);
+		_coord_ps = scl.parser_str_str_str(_sql_rez, 27);
+		_alt_ps = scl.parser_str_str_str(_sql_rez, 28);
+		_trcu_ps = scl.parser_str_str_str(_sql_rez, 29);
+		_trcul_ps = scl.parser_str_str_str(_sql_rez, 30);
+		_hazardous_ps = scl.parser_str_str_str(_sql_rez, 31);
+		_keyequip_ps = scl.parser_str_str_str(_sql_rez, 32);
+		_stsupplier_ps = scl.parser_str_str_str(_sql_rez, 33);
+		_manuf_ps = scl.parser_str_str_str(_sql_rez, 34);
+		_type_ps = scl.parser_str_str_str(_sql_rez, 35);
+		_sn_ps = scl.parser_str_str_str(_sql_rez, 36);
+		_mtc_ps = scl.parser_str_str_str(_sql_rez, 37);
+		_respons_ps = scl.parser_str_str_str(_sql_rez, 38);
+		_melec_ps = scl.parser_str_str_str(_sql_rez, 39);
+		_mair_ps = scl.parser_str_str_str(_sql_rez, 40);
+		_mwater_ps = scl.parser_str_str_str(_sql_rez, 41);
+		_mcwater_ps = scl.parser_str_str_str(_sql_rez, 42);
+		_mhwater_ps = scl.parser_str_str_str(_sql_rez, 43);
+		_rowater_ps = scl.parser_str_str_str(_sql_rez, 44);
+		_mgas_ps = scl.parser_str_str_str(_sql_rez, 45);
 		try {
-			ps_upd(stage);
+			ps_upd();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -325,16 +600,29 @@ public class ps_controller {
 	}
 	
 	//Вызываем окно обновления записи
-	protected void ps_upd(Stage stage) throws IOException {
+	protected void ps_upd() throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("upd_rec_ps.fxml"));
-				   
-	    Scene scene = new Scene(root);
-	    stage.setTitle("M&U - Update Record Window");
-	    stage.setResizable(true);
-	    //stage.initModality(Modality.APPLICATION_MODAL);
-	    stage.setScene(scene);
-	    stage.show();
+		Scene scene = new Scene(root);
+	    Stage stage_set = new Stage();
+		stage_set.initModality(Modality.WINDOW_MODAL);	
+		stage_set.initOwner(mu_main_controller.getPrimaryStage());
+	    stage_set.setTitle("M&U - Update Record Window");
+	    stage_set.setResizable(true);
+	    stage_set.setScene(scene);
+	    stage_set.show();
 		}
+	//Вызываем окно дублирования записи
+	protected void ps_dup() throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("duplicate_rec_ps.fxml"));
+		Scene scene = new Scene(root);
+	    Stage stage_set = new Stage();
+		stage_set.initModality(Modality.WINDOW_MODAL);	
+		stage_set.initOwner(mu_main_controller.getPrimaryStage());
+	    stage_set.setTitle("M&U - Duplicate Record Window");
+	    stage_set.setResizable(false);
+	    stage_set.setScene(scene);
+	    stage_set.show();
+	}
 	
 	private void lang_fun(String loc1, String loc2)
 	{
@@ -354,15 +642,12 @@ public class ps_controller {
 		col_os_ps.setText(lngBndl.getString("col_os_pm"));
 		col_osrus_ps.setText(lngBndl.getString("col_os_pm")+","+lngBndl.getString("lbl_rus"));
 		col_equip_ps.setText(lngBndl.getString("col_equip_pm"));
-		
 		col_description_ps.setText(lngBndl.getString("desc_ap"));
 		col_equiplabel_ps.setText(lngBndl.getString("col_equiplabel_ps"));
 		col_stationlabel_ps.setText(lngBndl.getString("col_stationlabel_ps"));
-		col_passport_ps.setText(lngBndl.getString("col_passport_ps"));
 		col_manual_ps.setText(lngBndl.getString("col_sdoc_inst"));
 		col_stsupplier_ps.setText(lngBndl.getString("col_stsupplier_ps"));
 		col_location_ps.setText(lngBndl.getString("col_location_ps"));
-		col_room_ps.setText(lngBndl.getString("col_room_ps"));
 		col_coord_ps.setText(lngBndl.getString("col_coord_ps"));
 		col_alt_ps.setText(lngBndl.getString("col_alt_ps"));
 		col_cham_ps.setText(lngBndl.getString("col_cham_ps"));
@@ -382,10 +667,18 @@ public class ps_controller {
 		col_mhwater_ps.setText(lngBndl.getString("col_mhwater_ps"));
 		col_rowater_ps.setText(lngBndl.getString("col_rowater_ps"));
 		col_mgas_ps.setText(lngBndl.getString("col_mgas_ps"));
-		
-		add_ps.setText(lngBndl.getString("add_tsk"));
+		col_group_ps.setText(lngBndl.getString("lbl_group"));
+		col_shoprus_ps.setText(lngBndl.getString("col_shop_pm")+","+lngBndl.getString("lbl_rus"));
+		col_grouprus_ps.setText(lngBndl.getString("lbl_group")+","+lngBndl.getString("lbl_rus"));
+		col_equiprus_ps.setText(lngBndl.getString("col_equip_pm")+","+lngBndl.getString("lbl_rus"));
+		col_groupotv_ps.setText(lngBndl.getString("col_groupotv_ps"));
+		col_invnum_ps.setText(lngBndl.getString("col_invnum_ps")+" №");
+		col_numos_ps.setText(lngBndl.getString("col_numos_ps"));
+		col_startdate_ps.setText(lngBndl.getString("col_startdate_ps"));
+		col_cost_ps.setText(lngBndl.getString("col_cost_ps"));
 		upd_ps.setText(lngBndl.getString("upd_wr"));
 		del_ps.setText(lngBndl.getString("del_inst"));
 		upd_table.setText(lngBndl.getString("upd_table_wr"));
+		btn_duplicate.setText(lngBndl.getString("btn_duplicate")+" x");
 	}
 }

@@ -8,14 +8,13 @@ import com.jfoenix.controls.JFXButton;
 
 import application.conn_connector;
 import db._query;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -30,15 +29,16 @@ public class addrec_ps_controller {
 	
 	@FXML
 	private ComboBox<String> company_ps, plant_ps, shops_ps, groups_ps, lines_ps, oss_ps, equips_ps, shop_ps, line_ps, linerus_ps, os_ps, osrus_ps, equip_ps, stsupplier_ps, location_ps, 
-	room_ps, cham_ps, trcu_ps, trcul_ps, hazardous_ps, keyequip_ps, type_ps, mtc_ps, respons_ps;
+	room_ps, cham_ps, trcu_ps, trcul_ps, hazardous_ps, keyequip_ps, type_ps, mtc_ps, respons_ps, group_ps, shoprus_ps, grouprus_ps,
+	equiprus_ps, groupotv_ps, costcenter_ps;
 	
 	@FXML
-	private TextField company_ps_t, plant_ps_t, shops_ps_t, groups_ps_t, lines_ps_t, oss_ps_t, equips_ps_t, shop_ps_t, equip_ps_t, sub_number_t, passport_ps_t, manual_ps_t, stsupplier_ps_t, 
-	location_ps_t, room_ps_t, coord_ps_t, alt_ps_t, cham_ps_t, trcu_ps_t, trcul_ps_t, keyequip_ps_t, type_ps_t, sn_ps_t, manuf_ps_t, mtc_ps_t, respons_ps_t, melec_ps_t, mair_ps_t,
-	mwater_ps_t, mcwater_ps_t, mhwater_ps_t, rowater_ps_t, mgas_ps_t;
+	private TextField company_ps_t, plant_ps_t, shops_ps_t, groups_ps_t, lines_ps_t, oss_ps_t, equips_ps_t, shop_ps_t, equip_ps_t, manual_ps_t, stsupplier_ps_t, 
+	location_ps_t, coord_ps_t, alt_ps_t, cham_ps_t, trcu_ps_t, trcul_ps_t, keyequip_ps_t, type_ps_t, sn_ps_t, manuf_ps_t, mtc_ps_t, respons_ps_t, melec_ps_t, mair_ps_t,
+	mwater_ps_t, mcwater_ps_t, mhwater_ps_t, rowater_ps_t, mgas_ps_t, group_ps_t, invnum_ps_t, osnum_ps_t;
 	
 	@FXML
-	private TextArea line_ps_t, linerus_ps_t, os_ps_t, osrus_ps_t, description_ps_t;
+	private TextArea line_ps_t, linerus_ps_t, os_ps_t, osrus_ps_t, description_ps_t, grouprus_ps_t, equiprus_ps_t, shoprus_ps_t;
 	
 	@FXML
 	private JFXButton exp_ps, add_ps, cancel_ps;
@@ -48,9 +48,14 @@ public class addrec_ps_controller {
 	
 	@FXML
 	Label head_ps, lbl_company_ps, lbl_plant_ps, lbl_shops_ps, lbl_groups_ps, lbl_lines_ps, lbl_oss_ps, lbl_equips_ps, lbl_shop_ps, lbl_line_ps, lbl_linerus_ps,
-	lbl_os_ps, lbl_osrus_ps, lbl_equip_ps, lbl_description_ps, lbl_mark, lbl_passport_ps, lbl_manual_ps, lbl_stsupplier_ps, lbl_location_ps, lbl_room_ps,
+	lbl_os_ps, lbl_osrus_ps, lbl_equip_ps, lbl_description_ps, lbl_manual_ps, lbl_stsupplier_ps, lbl_location_ps,
 	lbl_coord_ps, lbl_alt_ps, lbl_cham_ps, lbl_trcu_ps, lbl_trcul_ps, lbl_hazardous_ps, lbl_keyequip_ps, lbl_type_ps, lbl_sn_ps, lbl_manuf_ps, lbl_mtc_ps, lbl_respons_ps,
-	lbl_melec_ps, lbl_mair_ps, lbl_mwater_ps, lbl_mcwater_ps, lbl_mhwater_ps, lbl_rowater_ps, lbl_mgas_ps;
+	lbl_melec_ps, lbl_mair_ps, lbl_mwater_ps, lbl_mcwater_ps, lbl_mhwater_ps, lbl_rowater_ps, lbl_mgas_ps, lbl_group_ps, 
+	lbl_shoprus_ps, lbl_grouprus_ps, lbl_equiprus_ps, lbl_groupotv_ps, lbl_invnum_ps, lbl_osnum_ps, lbl_startdate_ps,
+	lbl_costcenter_ps;
+	
+	@FXML
+	DatePicker startdate_ps;
 	
 	private String equip_label, _s_name;
 	
@@ -58,6 +63,8 @@ public class addrec_ps_controller {
 	s_class sclass = new s_class();
 	ps_controller ps = new ps_controller();
 	Stage stage;
+	
+	public static int _last_id = 0;
 	
 	@FXML
 	public void initialize()
@@ -84,34 +91,18 @@ public class addrec_ps_controller {
 		sclass._style(exp_ps);
 		
 		add_ps.setDisable(true);
-		sub_number_t.textProperty().addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if(!newValue.isEmpty()) {
-		
-				if (!newValue.matches("\\d*|#|\\*")) {
-					sub_number_t.setText(newValue.replaceAll("[^\\d|#|\\*]", ""));
-		        }
-				if(newValue.length() > 4) {
-					
-					sub_number_t.setText(newValue.replaceAll("[0-9]", ""));
-	            	
-				}
-			}
-			}
-		});
-		
+				
 		company_ps.setValue("HAVAL");
-		company_ps.setItems(qr._select_shop_ps("Company"));
+		company_ps.setItems(qr._select_shop_ps("FL01_Company"));
 		if(company_ps.getValue().length() != 0) {
-			plant_ps.setItems(qr._select_shop_ps("Plant"));
+			plant_ps.setItems(qr._select_shop_ps("FL02_Plant"));
 			company_ps_t.setText(company_ps.getValue());
 		}
 		plant_ps.setValue("HMMR");
 		if(plant_ps.getValue().length() != 0) {
-			shops_ps.setItems(qr._select_shop_ps("Shop_s", "Shop", "Plant", plant_ps.getValue()));
-			shop_ps.setItems(qr._select_shop_ps("Shop_s", "Shop", "Plant", plant_ps.getValue()));
+			shops_ps.setItems(qr._select_shop_ps("FL03_Shop_s", "FL03_Shop_ENG", "FL02_Plant", plant_ps.getValue()));
+			shop_ps.setItems(qr._select_shop_ps("FL03_Shop_s", "FL03_Shop_ENG", "FL02_Plant", plant_ps.getValue()));
+			//shoprus_ps.setItems(qr._select_shop_ps("FL03_Shop_RUS", "FL02_Plant", plant_ps.getValue()));
 			plant_ps_t.setText(plant_ps.getValue());
 		}
 		
@@ -127,14 +118,22 @@ public class addrec_ps_controller {
 			_s_name = apwr_controller.SHOP_NAME + " - Maintenance Shop";
 		if(apwr_controller.SHOP_NAME.equals("L"))
 			_s_name = apwr_controller.SHOP_NAME + " - Logistic Shop";
+		if(apwr_controller.SHOP_NAME.equals("S,W"))
+			_s_name = apwr_controller.SHOP_NAME + " - S,W";
+		if(apwr_controller.SHOP_NAME.equals("MU"))
+			_s_name = apwr_controller.SHOP_NAME + " - MU";
+		if(apwr_controller.SHOP_NAME.equals("UTL"))
+			_s_name = apwr_controller.SHOP_NAME + " - UTL";
 		
 		shops_ps.setValue(_s_name);
+		shoprus_ps.setValue(qr._select_shop_ps_str("FL03_Shop_RUS", "FL03_Shop_s", sclass.parser_str(shops_ps.getValue(), 0)));
 		if(shops_ps.getValue().toString().length() != 0) {
-			groups_ps.setItems(qr._select_shop_ps("Group_PM","Shop_s", sclass.parser_str(shops_ps.getValue(), 0)));
+			groups_ps.setItems(qr._select_shop_ps("FL04_Group_s","FL03_Shop_s", sclass.parser_str(shops_ps.getValue(), 0)));
 			shops_ps_t.setText(sclass.parser_str(shops_ps.getValue(), 0));
 			shop_ps_t.setText(sclass.parser_str(shops_ps.getValue(), 1));
 			shop_ps.setValue(sclass.parser_str(shops_ps.getValue(), 0));
-			
+			shoprus_ps.setValue(shoprus_ps.getValue());
+			shoprus_ps_t.setText(shoprus_ps.getValue());
 		}
 		
 		company_ps.setOnAction(new EventHandler<ActionEvent>() {
@@ -143,7 +142,7 @@ public class addrec_ps_controller {
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				if(company_ps.getValue().length() != 0) {
-					plant_ps.setItems(qr._select_shop_ps("Plant"));
+					plant_ps.setItems(qr._select_shop_ps("FL02_Plant"));
 					company_ps_t.setText(company_ps.getValue());
 					
 				}
@@ -156,8 +155,8 @@ public class addrec_ps_controller {
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				if(plant_ps.getValue().length() != 0) {
-					shops_ps.setItems(qr._select_shop_ps("Shop_s", "Shop", "Plant", plant_ps.getValue()));
-					shop_ps.setItems(qr._select_shop_ps("Shop_s", "Shop", "Plant", plant_ps.getValue()));
+					shops_ps.setItems(qr._select_shop_ps("FL03_Shop_s", "FL03_Shop_ENG", "FL02_Plant", plant_ps.getValue()));
+					shop_ps.setItems(qr._select_shop_ps("FL03_Shop_s", "FL03_Shop_ENG", "FL02_Plant", plant_ps.getValue()));
 					plant_ps_t.setText(plant_ps.getValue());
 					
 				}
@@ -174,14 +173,18 @@ public class addrec_ps_controller {
 					lines_ps.valueProperty().set(null);
 					oss_ps.valueProperty().set(null);
 					equips_ps.valueProperty().set(null);
-					groups_ps.setItems(qr._select_shop_ps("Group_PM","Shop_s", sclass.parser_str(shops_ps.getValue(), 0)));
+					groups_ps.setItems(qr._select_shop_ps("FL04_Group_s","FL03_Shop_s", sclass.parser_str(shops_ps.getValue(), 0)));
+					group_ps.setItems(qr._select_shop_ps("FL04_Group_ENG","FL03_Shop_s", sclass.parser_str(shops_ps.getValue(), 0)));
+					grouprus_ps.setItems(qr._select_shop_ps("FL04_Group_RUS","FL03_Shop_s", sclass.parser_str(shops_ps.getValue(), 0)));
 					shops_ps_t.setText(sclass.parser_str(shops_ps.getValue(), 0));
 					shop_ps_t.setText(sclass.parser_str(shops_ps.getValue(), 1));
 					shop_ps.setValue(sclass.parser_str(shops_ps.getValue(), 0));
-					
+					shoprus_ps.setValue(qr._select_shop_ps_str("FL03_Shop_RUS", "FL03_Shop_s", sclass.parser_str(shops_ps.getValue(), 0)));
+					shoprus_ps_t.setText(shoprus_ps.getValue());
 				}
 			}
 		});
+		
 		groups_ps.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -191,11 +194,14 @@ public class addrec_ps_controller {
 					lines_ps.valueProperty().set(null);
 					oss_ps.valueProperty().set(null);
 					equips_ps.valueProperty().set(null);
-					lines_ps.setItems(qr._select_shop_ps("Line_Machine_s","Line_Machine", "Group_PM", groups_ps.getValue()));
-					line_ps.setItems(qr._select_shop_ps("Line_Machine_s","Line_Machine", "Group_PM", groups_ps.getValue()));
-					linerus_ps.setItems(qr._select_shop_ps("Line_Machine_s","Line_Machine_RUS", "Group_PM", groups_ps.getValue()));
+					lines_ps.setItems(qr._select_shop_ps("FL05_Line_s","FL05_Line_ENG", "FL04_Group_s", groups_ps.getValue()));
+					line_ps.setItems(qr._select_shop_ps("FL05_Line_s","FL05_Line_ENG", "FL04_Group_s", groups_ps.getValue()));
+					linerus_ps.setItems(qr._select_shop_ps("FL05_Line_s","FL05_Line_RUS", "FL04_Group_s", groups_ps.getValue()));
 					groups_ps_t.setText(groups_ps.getValue());
-					
+					group_ps.setValue(sclass.parser_str(groups_ps.getValue(), 0));
+					group_ps_t.setText(group_ps.getValue());
+					grouprus_ps.setValue(qr._select_shop_ps_str("FL04_Group_RUS","FL04_Group_s", sclass.parser_str(groups_ps.getValue(), 0)));
+					grouprus_ps_t.setText(grouprus_ps.getValue());
 				}
 			}
 		});
@@ -207,15 +213,14 @@ public class addrec_ps_controller {
 				if(lines_ps.getValue().toString().length() != 0) {
 					oss_ps.valueProperty().set(null);
 					equips_ps.valueProperty().set(null);
-					oss_ps.setItems(qr._select_shop_ps("Operation_Station_s","Operation_Station", "Line_Machine_s", sclass.parser_str(lines_ps.getValue(), 0)));
-					os_ps.setItems(qr._select_shop_ps("Operation_Station_s","Operation_Station", "Line_Machine_s", sclass.parser_str(lines_ps.getValue(), 0)));
-					osrus_ps.setItems(qr._select_shop_ps("Operation_Station_s","Operation_Station_RUS", "Line_Machine_s", sclass.parser_str(lines_ps.getValue(), 0)));
+					oss_ps.setItems(qr._select_shop_ps("FL06_Station_s","FL06_Station_ENG", "FL05_Line_s", sclass.parser_str(lines_ps.getValue(), 0)));
+					os_ps.setItems(qr._select_shop_ps("FL06_Station_s","FL06_Station_ENG", "FL05_Line_s", sclass.parser_str(lines_ps.getValue(), 0)));
+					osrus_ps.setItems(qr._select_shop_ps("FL06_Station_s","FL05_Line_RUS", "FL05_Line_s", sclass.parser_str(lines_ps.getValue(), 0)));
 					lines_ps_t.setText(sclass.parser_str(lines_ps.getValue(), 0));
 					line_ps_t.setText(sclass.parser_str(lines_ps.getValue(), 1));
 					line_ps.setValue(sclass.parser_str(lines_ps.getValue(), 1));
-					
-					linerus_ps.setValue(qr._select_shop_ps_str("Line_Machine_RUS", "Line_Machine_s", sclass.parser_str(lines_ps.getValue(), 0)));
-					linerus_ps_t.setText(qr._select_shop_ps_str("Line_Machine_RUS", "Line_Machine_s", sclass.parser_str(lines_ps.getValue(), 0)));
+					linerus_ps.setValue(qr._select_shop_ps_str("FL05_Line_RUS", "FL05_Line_s", sclass.parser_str(lines_ps.getValue(), 0)));
+					linerus_ps_t.setText(qr._select_shop_ps_str("FL05_Line_RUS", "FL05_Line_s", sclass.parser_str(lines_ps.getValue(), 0)));
 					
 				}
 			}
@@ -227,13 +232,14 @@ public class addrec_ps_controller {
 				// TODO Auto-generated method stub
 				if(oss_ps.getValue().toString().length() != 0) {
 					equips_ps.valueProperty().set(null);
-					equips_ps.setItems(qr._select_shop_ps("Equipment_s","Equipment", "Operation_Station_s", sclass.parser_str(oss_ps.getValue(), 0)));
-					equip_ps.setItems(qr._select_shop_ps("Equipment_s","Equipment", "Operation_Station_s", sclass.parser_str(oss_ps.getValue(), 0)));
+					equips_ps.setItems(qr._select_shop_ps("FL07_Equipment_s","FL07_Equipment_ENG", "FL06_Station_s", sclass.parser_str(oss_ps.getValue(), 0)));
+					equip_ps.setItems(qr._select_shop_ps("FL07_Equipment_s","FL07_Equipment_ENG", "FL06_Station_s", sclass.parser_str(oss_ps.getValue(), 0)));
+					equiprus_ps.setItems(qr._select_shop_ps("FL07_Equipment_RUS", "FL06_Station_s", sclass.parser_str(oss_ps.getValue(), 0)));
 					oss_ps_t.setText(sclass.parser_str(oss_ps.getValue(), 0));
 					os_ps_t.setText(sclass.parser_str(oss_ps.getValue(), 1));
 					os_ps.setValue(sclass.parser_str(oss_ps.getValue(), 1));
-					osrus_ps.setValue(qr._select_shop_ps_str("Operation_Station_RUS", "Operation_Station_s", sclass.parser_str(oss_ps.getValue(), 0)));
-					osrus_ps_t.setText(qr._select_shop_ps_str("Operation_Station_RUS", "Operation_Station_s", sclass.parser_str(oss_ps.getValue(), 0)));
+					osrus_ps.setValue(qr._select_shop_ps_str("FL06_Station_RUS", "FL06_Station_s", sclass.parser_str(oss_ps.getValue(), 0)));
+					osrus_ps_t.setText(qr._select_shop_ps_str("FL06_Station_RUS", "FL06_Station_s", sclass.parser_str(oss_ps.getValue(), 0)));
 					
 				}
 			}
@@ -246,8 +252,49 @@ public class addrec_ps_controller {
 				equips_ps_t.setText(sclass.parser_str(equips_ps.getValue(), 0));
 				equip_ps_t.setText(sclass.parser_str(equips_ps.getValue(), 1));
 				equip_ps.setValue(sclass.parser_str(equips_ps.getValue(), 1));
-				
+				equiprus_ps.setValue(qr._select_shop_ps_str("FL07_Equipment_RUS", "FL07_Equipment_s", sclass.parser_str(equips_ps.getValue(), 0)));
+				equiprus_ps_t.setText(equiprus_ps.getValue());
 				//stsupplier_ps.setItems(qr._select_shop_ps("Station_Supplier"));
+			}
+		});
+		shoprus_ps.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				shoprus_ps_t.setText(shoprus_ps.getValue());
+			}
+		});
+		grouprus_ps.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				grouprus_ps_t.setText(grouprus_ps.getValue());
+			}
+		});
+		linerus_ps.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				linerus_ps_t.setText(linerus_ps.getValue());
+			}
+		});
+		osrus_ps.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				osrus_ps_t.setText(osrus_ps.getValue());
+			}
+		});
+		equiprus_ps.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				equiprus_ps_t.setText(equiprus_ps.getValue());
 			}
 		});
 		exp_ps.setOnAction(new EventHandler<ActionEvent>() {
@@ -276,7 +323,11 @@ public class addrec_ps_controller {
 			    	 manual_ps_t.setText(phil.getPath());
 			}
 	   });
-		stsupplier_ps.setItems(qr._select_shop_ps("Station_Supplier"));
+		
+		groupotv_ps.setItems(qr._select_shop_ps("Resp_Planner_Group"));
+		costcenter_ps.setItems(qr._select_shop_ps("Cost_Center"));
+		
+		stsupplier_ps.setItems(qr._select_shop_ps("EQ_Integrator"));
 		stsupplier_ps.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -288,7 +339,7 @@ public class addrec_ps_controller {
 				//location_ps.setItems(qr._select_shop_ps("Location"));
 			}
 		});
-		location_ps.setItems(qr._select_shop_ps("Location"));
+		location_ps.setItems(qr._select_shop_ps("Site_Location"));
 		location_ps.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -299,18 +350,7 @@ public class addrec_ps_controller {
 				//room_ps.setItems(qr._select_shop_ps("Room_category"));
 			}
 		});
-		room_ps.setItems(qr._select_shop_ps("Room_category"));
-		room_ps.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				room_ps_t.setText(room_ps.getValue());
-				
-				//cham_ps.setItems(qr._select_shop_ps("CHAMBER"));
-			}
-		});
-		cham_ps.setItems(qr._select_shop_ps("CHAMBER"));
+		cham_ps.setItems(qr._select_shop_ps("Site_CHAMBER"));
 		cham_ps.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -363,7 +403,7 @@ public class addrec_ps_controller {
 				//type_ps.setItems(qr._select_shop_ps("Type"));
 			}
 		});
-		type_ps.setItems(qr._select_shop_ps("Type"));
+		type_ps.setItems(qr._select_shop_ps("EQ_Type"));
 		type_ps.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -374,7 +414,7 @@ public class addrec_ps_controller {
 				//mtc_ps.setItems(qr._select_shop_ps("Main_Technical_Characteristic"));
 			}
 		});
-		mtc_ps.setItems(qr._select_shop_ps("Main_Technical_Characteristic"));
+		mtc_ps.setItems(qr._select_shop_ps("EQ_Technical_Characteristic"));
 		mtc_ps.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -468,22 +508,6 @@ public class addrec_ps_controller {
 				chk_btn();
 			}
 		});
-		sub_number_t.setOnKeyReleased(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				// TODO Auto-generated method stub
-				chk_btn();
-			}
-		});
-		passport_ps_t.setOnKeyReleased(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				// TODO Auto-generated method stub
-				chk_btn();
-			}
-		});
 		manual_ps_t.setOnKeyReleased(new EventHandler<Event>() {
 
 			@Override
@@ -501,14 +525,6 @@ public class addrec_ps_controller {
 			}
 		}); 
 		location_ps_t.setOnKeyReleased(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				// TODO Auto-generated method stub
-				chk_btn();
-			}
-		});
-		room_ps_t.setOnKeyReleased(new EventHandler<Event>() {
 
 			@Override
 			public void handle(Event event) {
@@ -701,7 +717,6 @@ public class addrec_ps_controller {
 			}
 		});
 		
-		sub_number_t.setText("0");
 		melec_ps_t.setText("-");
 		mair_ps_t.setText("-");
 		mwater_ps_t.setText("-");
@@ -716,18 +731,28 @@ public class addrec_ps_controller {
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
-				if(apwr_controller.SHOP_NAME.equals("W"))
-					equip_label = oss_ps_t.getText()+"."+sub_number_t.getText()+"-"+equips_ps_t.getText();
-				else
+				//if(apwr_controller.SHOP_NAME.equals("W"))
+				//	equip_label = oss_ps_t.getText()+"."+sub_number_t.getText()+"-"+equips_ps_t.getText();
+				//else
 					equip_label = oss_ps_t.getText()+"."+equips_ps_t.getText();
 				
 				//INSERT INTO hmmr_plant_structure (user_id,Company,Plant,Shop_s,Group_PM,Line_Machine_s,Operation_Station_s,Equipment_s,Shop,Line_Machine,Line_Machine_RUS,Operation_Station,Operation_Station_RUS,Equipment,Description,Sub_Number,Equip_label,Station_label,passport,manual,Station_Supplier,Location,Room_Category,Coordinates,Altitude,CHAMBER,TR_CU,TR_CU_Link,Hazardous,Key_equipment,Type,S_N,Manuf,Main_Technical_Characteristic,Responsobility,M_Electric,M_Air,M_Water,M_Cold_water,M_Hot_water,RO_Water,M_Gas) VALUES ('1','HAVAL','HMMR','Assembly Shop','CARE','Линия проверки интерьера и экстерьера','ST02','MCP2','Assembly Shop','Care/Check Line','Линия проверки интерьера и экстерьера','Operation Station #02','TextArea[id=osrus_ps_t, styleClass=text-input text-area]','Master Control Panel','dfdfdf','df','ST02.MCP2','Care/Check Line.ST02','dfdf','C:/Work/HMMR_OIL_GREASE_20180712.xlsx''A&G','04-102','В2','dfdf''dfdf','3-102','TR_CU_011','By DURR''RTN','1','160T','dfdf''dfdf','160t','MTC','''','','','''','');
-				qr._insert_ps(company_ps_t.getText(), plant_ps_t.getText(), shops_ps_t.getText(), groups_ps_t.getText(), lines_ps_t.getText(), oss_ps_t.getText(), equips_ps_t.getText(), shop_ps_t.getText(), line_ps_t.getText(), linerus_ps_t.getText().toString(), os_ps_t.getText(), osrus_ps_t.getText().toString(), equip_ps_t.getText(), description_ps_t.getText(), sub_number_t.getText(), equip_label, line_ps_t.getText()+"."+oss_ps_t.getText(), passport_ps_t.getText(), manual_ps_t.getText().replace('\\', '/'), stsupplier_ps_t.getText(), location_ps_t.getText(), room_ps_t.getText(), coord_ps_t.getText(), alt_ps_t.getText(), cham_ps_t.getText(), trcu_ps_t.getText(), trcul_ps_t.getText(), hazardous_ps.getValue(), keyequip_ps_t.getText(), type_ps_t.getText(), sn_ps_t.getText(), manuf_ps_t.getText(), mtc_ps_t.getText(), respons_ps_t.getText(), melec_ps_t.getText(), mair_ps_t.getText(), mwater_ps_t.getText(), mcwater_ps_t.getText(), mhwater_ps_t.getText(), rowater_ps_t.getText(), mgas_ps_t.getText());
+				qr._insert_ps(conn_connector.USER_ID, company_ps_t.getText(), plant_ps_t.getText(), shops_ps_t.getText(), groups_ps_t.getText(), lines_ps_t.getText(), oss_ps_t.getText(), equips_ps_t.getText(), shop_ps_t.getText(), group_ps_t.getText(), line_ps_t.getText(), os_ps_t.getText(), equip_ps_t.getText(), shoprus_ps_t.getText(), grouprus_ps_t.getText(), linerus_ps_t.getText().toString(), osrus_ps_t.getText().toString(), equiprus_ps_t.getText(), description_ps_t.getText(), equip_label, line_ps_t.getText()+"."+oss_ps_t.getText(), manual_ps_t.getText().replace('\\', '/'), groupotv_ps.getValue(), invnum_ps_t.getText(), osnum_ps_t.getText(), startdate_ps.getValue(), costcenter_ps.getValue(), location_ps_t.getText(), cham_ps_t.getText(), coord_ps_t.getText(), alt_ps_t.getText(), trcu_ps_t.getText(), trcul_ps_t.getText(), hazardous_ps.getValue(), keyequip_ps_t.getText(), stsupplier_ps_t.getText(), manuf_ps_t.getText(), type_ps_t.getText(), sn_ps_t.getText(), mtc_ps_t.getText(), respons_ps_t.getText(), melec_ps_t.getText(), mair_ps_t.getText(), mwater_ps_t.getText(), mcwater_ps_t.getText(), mhwater_ps_t.getText(), rowater_ps_t.getText(), mgas_ps_t.getText());
 				
 				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_plant_structure") + " в таблице Plant Structure");
-				
-				ps._table_update_ps.addAll(qr._select_data_ps());
-				
+				_last_id = Integer.parseInt(qr._select_last_id("hmmr_plant_structure"));
+				if(ps.flag_ps == 0)
+					ps._table_update_ps.addAll(qr._select_data_ps());
+				if(ps.flag_ps == 1)
+					ps._table_update_ps.addAll(qr._select_data_filter_ps(ps._filter_shop));
+				if(ps.flag_ps == 2)
+					ps._table_update_ps.addAll(qr._select_data_filter_ps(ps._filter_shop, ps._filter_group));
+				if(ps.flag_ps == 3)
+					ps._table_update_ps.addAll(qr._select_data_filter_ps(ps._filter_shop, ps._filter_group, ps._filter_line));
+				if(ps.flag_ps == 4)
+					ps._table_update_ps.addAll(qr._select_data_filter_ps(ps._filter_shop, ps._filter_group, ps._filter_line, ps._filter_os));
+				if(ps.flag_ps == 5)
+					ps._table_update_ps.addAll(qr._select_data_filter_ps(ps._filter_shop, ps._filter_group, ps._filter_line, ps._filter_os, ps._filter_equip));
 				ps.refreshTable_ps(ps_controller.columns_ps);
 				stage = (Stage) add_ps.getScene().getWindow();
 				stage.close();
@@ -765,13 +790,10 @@ public class addrec_ps_controller {
 		lbl_equip_ps.setText(lngBndl.getString("col_equip_pm")+":");
 		
 		lbl_description_ps.setText(lngBndl.getString("desc_ap")+":");
-		lbl_mark.setText(lngBndl.getString("lbl_mark")+":");
-		
-		lbl_passport_ps.setText(lngBndl.getString("col_passport_ps")+":");
+				
 		lbl_manual_ps.setText(lngBndl.getString("col_sdoc_inst")+":");
 		lbl_stsupplier_ps.setText(lngBndl.getString("col_stsupplier_ps")+":");
 		lbl_location_ps.setText(lngBndl.getString("col_location_ps")+":");
-		lbl_room_ps.setText(lngBndl.getString("col_room_ps")+":");
 		lbl_coord_ps.setText(lngBndl.getString("col_coord_ps")+":");
 		lbl_alt_ps.setText(lngBndl.getString("col_alt_ps")+":");
 		lbl_cham_ps.setText(lngBndl.getString("col_cham_ps")+":");
@@ -792,6 +814,16 @@ public class addrec_ps_controller {
 		lbl_rowater_ps.setText(lngBndl.getString("col_rowater_ps")+":");
 		lbl_mgas_ps.setText(lngBndl.getString("col_mgas_ps")+":");
 		
+		lbl_group_ps.setText(lngBndl.getString("lbl_group")+":");
+		lbl_shoprus_ps.setText(lngBndl.getString("col_shop_pm")+","+lngBndl.getString("lbl_rus")+":");
+		lbl_grouprus_ps.setText(lngBndl.getString("lbl_group")+","+lngBndl.getString("lbl_rus")+":");
+		lbl_equiprus_ps.setText(lngBndl.getString("col_equip_pm")+","+lngBndl.getString("lbl_rus")+":");
+		lbl_groupotv_ps.setText(lngBndl.getString("col_groupotv_ps")+":");
+		lbl_invnum_ps.setText(lngBndl.getString("col_invnum_ps")+" №"+":");
+		lbl_osnum_ps.setText(lngBndl.getString("col_numos_ps")+":");
+		lbl_startdate_ps.setText(lngBndl.getString("col_startdate_ps")+":");
+		lbl_costcenter_ps.setText(lngBndl.getString("col_cost_ps")+":");
+		
 		add_ps.setText(lngBndl.getString("lbl_apply"));
 		cancel_ps.setText(lngBndl.getString("cancel_tsk"));
 		exp_ps.setText(lngBndl.getString("sdoc_inst"));
@@ -803,8 +835,8 @@ public class addrec_ps_controller {
 			if(hazardous_ps.getValue().length() != 0 && company_ps_t.getText().length() != 0 &&
 					plant_ps_t.getText().length() != 0 && shops_ps_t.getText().length() != 0 && groups_ps_t.getText().length() != 0 && lines_ps_t.getText().length() != 0 &&
 					oss_ps_t.getText().length() != 0 && equips_ps_t.getText().length() != 0 && shop_ps_t.getText().length() != 0 && equip_ps_t.getText().length() != 0 &&
-					sub_number_t.getText().length() != 0 && passport_ps_t.getText().length() != 0 && manual_ps_t.getText().length() != 0 && stsupplier_ps_t.getText().length() != 0 &&
-					location_ps_t.getText().length() != 0 && room_ps_t.getText().length() != 0 && coord_ps_t.getText().length() != 0 && alt_ps_t.getText().length() != 0 &&
+					manual_ps_t.getText().length() != 0 && stsupplier_ps_t.getText().length() != 0 &&
+					location_ps_t.getText().length() != 0 && coord_ps_t.getText().length() != 0 && alt_ps_t.getText().length() != 0 &&
 					cham_ps_t.getText().length() != 0 && trcu_ps_t.getText().length() != 0 && trcul_ps_t.getText().length() != 0 && keyequip_ps_t.getText().length() != 0 &&
 					type_ps_t.getText().length() != 0 && sn_ps_t.getText().length() != 0 && manuf_ps_t.getText().length() != 0 && mtc_ps_t.getText().length() != 0 &&
 					respons_ps_t.getText().length() != 0 && melec_ps_t.getText().length() != 0 && mair_ps_t.getText().length() != 0 && mwater_ps_t.getText().length() != 0 &&

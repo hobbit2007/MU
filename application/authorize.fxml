@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="216.0" prefWidth="289.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.conn_connector">
+<AnchorPane prefHeight="243.0" prefWidth="296.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.conn_connector">
    <children>
-      <Pane prefHeight="243.0" prefWidth="325.0" stylesheets="@application.css">
+      <Pane prefHeight="243.0" prefWidth="296.0" stylesheets="@application.css">
          <children>
             <Label id="l_info" fx:id="l_info" alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="7.0" prefHeight="31.0" prefWidth="309.0" text="Вход в систему" textAlignment="CENTER" textFill="#099717">
                <font>
@@ -25,8 +25,8 @@
             </Label>
             <TextField fx:id="login_id" layoutX="23.0" layoutY="56.0" promptText="Введите логин:" stylesheets="@application.css" />
             <PasswordField fx:id="passwd_id" layoutX="23.0" layoutY="104.0" onAction="#_click_on_passwd" promptText="Введите пароль:" />
-            <JFXComboBox fx:id="s_lan" layoutX="24.0" layoutY="152.0" prefHeight="25.0" prefWidth="208.0" promptText="Select language" viewOrder="1.0" />
-            <JFXButton fx:id="btn_conn" layoutX="249.0" layoutY="104.0" onAction="#_click_btn_conn" text="Войти">
+            <JFXComboBox fx:id="s_lan" layoutX="24.0" layoutY="152.0" prefHeight="25.0" prefWidth="173.0" promptText="Select language" viewOrder="1.0" />
+            <JFXButton fx:id="btn_conn" layoutX="219.0" layoutY="104.0" onAction="#_click_btn_conn" text="Войти">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

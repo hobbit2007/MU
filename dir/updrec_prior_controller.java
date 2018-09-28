@@ -1,6 +1,8 @@
 package dir;
 
 import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -25,7 +27,7 @@ public class updrec_prior_controller {
 	JFXTextField t_id_prior, t_name_prior, t_icon_prior;
 	
 	@FXML
-	Label lbl_title_prior, lbl_id_prior, lbl_name_prior, lbl_desc_prior, lbl_icon_prior;
+	Label lbl_title_prior_upd, lbl_id_prior, lbl_name_prior, lbl_desc_prior, lbl_icon_prior;
 	
 	@FXML
 	JFXButton b_add_prior, b_cancel_prior, b_exp_prior;
@@ -45,6 +47,15 @@ public class updrec_prior_controller {
 		scl._style(b_add_prior);
 		scl._style(b_cancel_prior);
 		scl._style(b_exp_prior);
+		
+		if(conn_connector.LANG_ID == 1)
+			lang_fun("en", "EN");
+		if(conn_connector.LANG_ID == 0)
+			lang_fun("ru", "RU");
+		if(conn_connector.LANG_ID == 2)
+			lang_fun("zh", "CN");
+		if(conn_connector.LANG_ID == -1)
+			lang_fun("ru", "RU");
 		
 		b_add_prior.setDisable(true);
 		//Проверяем заполненность полей
@@ -169,6 +180,23 @@ public class updrec_prior_controller {
 				stage.close();
 			}
 		});
+	}
+	
+	private void lang_fun(String loc1, String loc2)
+	{
+		ResourceBundle lngBndl = ResourceBundle
+	            .getBundle("bundles.LangBundle", new Locale(loc1, loc2));
+		
+		lbl_title_prior_upd.setText(lngBndl.getString("lbl_title_prior_upd"));
+		lbl_id_prior.setText(lngBndl.getString("lbl_id_prior"));
+		lbl_name_prior.setText(lngBndl.getString("lbl_name_prior"));
+		lbl_desc_prior.setText(lngBndl.getString("lbl_desc_prior"));
+		lbl_icon_prior.setText(lngBndl.getString("translate_icon"));
+				
+		b_add_prior.setText(lngBndl.getString("add_tsk"));
+		b_exp_prior.setText(lngBndl.getString("sdoc_inst"));
+		b_cancel_prior.setText(lngBndl.getString("cancel_tsk"));
+		
 	}
 
 	private void chk_btn()

@@ -1,7 +1,5 @@
 package report;
 
-
-import java.io.File;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,8 +13,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.export.JRXlsExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
 import share_class.s_class;
 
 
@@ -66,11 +62,11 @@ public class PrintReport extends JFrame {
 			}
 	        // Make sure the output directory exists.
 //	        File outDir = new File("m:/08.USER/U.14.RG/jasperoutput");
-	        File outDir = new File("C:\\Report\\jasperoutput");
-	        outDir.mkdirs();
+//	        File outDir = new File("C:\\Report\\jasperoutput");
+//	        outDir.mkdirs();
 	  
-	        JRXlsExporter exporter = new JRXlsExporter();
-	        exporter.setExporterInput(new SimpleExporterInput(print));
+//	        JRXlsExporter exporter = new JRXlsExporter();
+//	        exporter.setExporterInput(new SimpleExporterInput(print));
 //	        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("m:/08.USER/U.14.RG/jasperoutput/Task_Report"+conn_connector.USER_ID+".xls"));
 //export excel	        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("C:\\Report\\jasperoutput\\Task_Report"+conn_connector.USER_ID+".xls"));
             

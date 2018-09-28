@@ -65,145 +65,145 @@ where (Type = 'TSK' OR Type = 'CM' OR Type = 'PM') AND id = $P{Id}]]>
 	<pageHeader>
 		<band height="289" splitType="Stretch">
 			<textField>
-				<reportElement x="330" y="76" width="240" height="92" uuid="d63cad98-60de-4896-8909-2ed24e97e1c8"/>
+				<reportElement x="333" y="76" width="240" height="92" uuid="d63cad98-60de-4896-8909-2ed24e97e1c8"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Description}]]></textFieldExpression>
 			</textField>
 			<textField pattern=" yyyy/MM/dd">
-				<reportElement x="130" y="41" width="151" height="20" uuid="038bc7f1-e085-4239-9277-cb1190e1ce59"/>
+				<reportElement x="133" y="41" width="151" height="20" uuid="038bc7f1-e085-4239-9277-cb1190e1ce59"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="16" y="41" width="101" height="20" uuid="635a0249-8897-49fe-a876-7a6b11a5a298"/>
+				<reportElement x="19" y="41" width="101" height="20" uuid="635a0249-8897-49fe-a876-7a6b11a5a298"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{Tsk}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement positionType="Float" x="11" y="18" width="569" height="1" uuid="56fd9066-8f8d-48fe-aef7-0fc70e027d5e"/>
+				<reportElement positionType="Float" x="14" y="18" width="569" height="1" uuid="56fd9066-8f8d-48fe-aef7-0fc70e027d5e"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement positionType="Float" x="11" y="19" width="1" height="153" uuid="d1aba2b3-2f50-42b7-8c37-60b21ce6305d"/>
+				<reportElement positionType="Float" x="14" y="19" width="1" height="153" uuid="d1aba2b3-2f50-42b7-8c37-60b21ce6305d"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="580" y="19" width="1" height="153" uuid="ca20f30f-dae6-4203-9640-838901c94d16"/>
+				<reportElement x="583" y="19" width="1" height="153" uuid="ca20f30f-dae6-4203-9640-838901c94d16"/>
 			</line>
 			<line>
-				<reportElement positionType="Float" x="12" y="68" width="289" height="1" uuid="f05152f8-0638-40ef-aa28-4cc89de22050"/>
+				<reportElement positionType="Float" x="15" y="68" width="289" height="1" uuid="f05152f8-0638-40ef-aa28-4cc89de22050"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement positionType="Float" x="124" y="19" width="1" height="49" uuid="aa653758-c4ca-43fd-b382-fea3523336a1"/>
+				<reportElement positionType="Float" x="127" y="19" width="1" height="49" uuid="aa653758-c4ca-43fd-b382-fea3523336a1"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<image>
-				<reportElement positionType="FixRelativeToBottom" x="505" y="22" width="73" height="34" uuid="a6946e3b-8061-42ce-a223-14df1df0eba5"/>
+				<reportElement positionType="FixRelativeToBottom" x="508" y="22" width="73" height="34" uuid="a6946e3b-8061-42ce-a223-14df1df0eba5"/>
 				<imageExpression><![CDATA["application/haval1.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="130" y="21" width="151" height="20" uuid="8992c0e6-9d59-4d5f-aa4a-d8c93994c1af"/>
+				<reportElement x="133" y="21" width="151" height="20" uuid="8992c0e6-9d59-4d5f-aa4a-d8c93994c1af"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Дата получения задачи:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="16" y="21" width="101" height="20" uuid="b9b029fd-52b0-436d-bbf1-1e033d37c870"/>
+				<reportElement x="19" y="21" width="101" height="20" uuid="b9b029fd-52b0-436d-bbf1-1e033d37c870"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Задача:]]></text>
 			</staticText>
 			<line>
-				<reportElement x="12" y="172" width="569" height="1" uuid="fbd187cf-e4a4-43e9-866e-1a1be6143902"/>
+				<reportElement x="15" y="172" width="569" height="1" uuid="fbd187cf-e4a4-43e9-866e-1a1be6143902"/>
 			</line>
 			<staticText>
-				<reportElement x="322" y="41" width="183" height="20" uuid="c0459c5c-f958-4313-acee-a9ab9af770c8"/>
+				<reportElement x="325" y="41" width="183" height="20" uuid="c0459c5c-f958-4313-acee-a9ab9af770c8"/>
 				<textElement textAlignment="Left">
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Что необходимо выполнить:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="16" y="120" width="171" height="17" uuid="60e50df8-b311-4165-9555-7c8cb4e244b9"/>
+				<reportElement x="19" y="120" width="171" height="17" uuid="60e50df8-b311-4165-9555-7c8cb4e244b9"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ID и подпись исполнителя:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="192" y="120" width="60" height="17" uuid="379c2cf1-c3db-410f-b404-4d73a84254e9"/>
+				<reportElement x="195" y="120" width="60" height="17" uuid="379c2cf1-c3db-410f-b404-4d73a84254e9"/>
 				<textElement textAlignment="Left">
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Otv}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="16" y="142" width="171" height="17" uuid="f234a25b-ad7f-41c4-a033-998e2e537b11"/>
+				<reportElement x="19" y="142" width="171" height="17" uuid="f234a25b-ad7f-41c4-a033-998e2e537b11"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Крайний срок выполнения:]]></text>
 			</staticText>
 			<textField pattern=" yyyy/MM/dd">
-				<reportElement x="192" y="142" width="73" height="15" uuid="1c191c40-2e3a-4e60-af04-c7a9a9351ff6"/>
+				<reportElement x="195" y="142" width="73" height="15" uuid="1c191c40-2e3a-4e60-af04-c7a9a9351ff6"/>
 				<textElement textAlignment="Left">
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Due_Date}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="16" y="78" width="100" height="17" uuid="3aa181b7-251d-4339-bdb1-cde74cdd8201"/>
+				<reportElement x="19" y="78" width="100" height="17" uuid="3aa181b7-251d-4339-bdb1-cde74cdd8201"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Оборудование:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="123" y="80" width="175" height="15" uuid="31a7d885-8190-4de7-a048-452c6f1c4334"/>
+				<reportElement x="126" y="80" width="175" height="15" uuid="31a7d885-8190-4de7-a048-452c6f1c4334"/>
 				<textElement textAlignment="Left">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Equipment}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="16" y="99" width="151" height="16" uuid="648d3058-d626-4a3a-90a9-6e552a0041c2"/>
+				<reportElement x="19" y="99" width="151" height="16" uuid="648d3058-d626-4a3a-90a9-6e552a0041c2"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ID ответственного:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="172" y="100" width="104" height="15" uuid="1818ec19-f2af-44b0-adb5-fb3e590c9165"/>
+				<reportElement x="175" y="100" width="104" height="15" uuid="1818ec19-f2af-44b0-adb5-fb3e590c9165"/>
 				<textElement textAlignment="Left">
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Otv_For_Task}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="301" y="19" width="1" height="153" uuid="0069f2cf-ff65-4141-9c53-a585f7d198cf"/>
+				<reportElement x="304" y="19" width="1" height="153" uuid="0069f2cf-ff65-4141-9c53-a585f7d198cf"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="546" y="60" width="30" height="15" uuid="a9cba772-6adb-4005-b7e2-8ea8c3d7fc64"/>
+				<reportElement x="549" y="60" width="30" height="15" uuid="a9cba772-6adb-4005-b7e2-8ea8c3d7fc64"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

@@ -51,6 +51,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -338,16 +339,18 @@ public class apwr_controller {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				//stage.initModality(Modality.APPLICATION_MODAL);			    
+				Stage stage_set = new Stage();
+				stage_set.initModality(Modality.WINDOW_MODAL);	
+				stage_set.initOwner(conn_connector.getPrimaryStage());
 		        Scene scene = new Scene(root);
-		        stage.setTitle("M&U - Main Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
-		        stage.setResizable(false);
+		        stage_set.setTitle("M&U - Main Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
+		        stage_set.setResizable(false);
 		        
 		        //stage.setWidth(primaryScreenBounds.getWidth() - 315);// - 77
 		        //stage.setHeight(primaryScreenBounds.getHeight() - 15);// - 77
-		        stage.setScene(scene);
+		        stage_set.setScene(scene);
 		        
-		        stage.show();
+		        stage_set.show();
 			}
 		});
 		
@@ -1033,14 +1036,7 @@ public class apwr_controller {
 				// TODO Auto-generated method stub
 				try {
 					upd_ap.setDisable(true);
-					
-					//mu_main_controller.getPrimaryStage().setAlwaysOnTop(false);
-					//_flag = false;
-					pminst_add(stage);
-					//_flag = true;
-					//t = new Thread(update_table());
-	        		//t.setDaemon(true);
-	        		//t.start();
+					pminst_add();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1098,7 +1094,7 @@ public class apwr_controller {
 					before_date = fx_dp.toString(begin_data.getValue());
 					after_date = fx_dp.toString(last_data.getValue().plusDays(1));
 					
-					addwr_start(stage);
+					addwr_start();
 					
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -1410,19 +1406,23 @@ public class apwr_controller {
 			@Override
 			public void handle(Event event) {
 				// TODO Auto-generated method stub
-				tip = new Tooltip(str_set_btn);
-				Point2D p = set_btn.localToScreen(set_btn.getLayoutBounds().getMaxX(), set_btn.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
-		        tip.show(set_btn, p.getX(), p.getY());
-			}
+				//tip = new Tooltip(str_set_btn);
+				//Point2D p = set_btn.localToScreen(set_btn.getLayoutBounds().getMaxX(), set_btn.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
+		        //tip.show(set_btn, p.getX(), p.getY());
+				Platform.runLater(() -> {
+					Tooltip tip = new Tooltip(str_set_btn);
+					set_btn.setTooltip(tip);
+				});
+		    }
 		});
-		set_btn.setOnMouseExited(new EventHandler<Event>() {
+		//set_btn.setOnMouseExited(new EventHandler<Event>() {
 
-			@Override
-			public void handle(Event event) {
+		//	@Override
+		//	public void handle(Event event) {
 				// TODO Auto-generated method stub
-				tip.hide();
-			}
-		});
+		//		tip.hide();
+		//	}
+		//});
 		rus_btn.setOnMouseEntered(new EventHandler<Event>() {
 
 			@Override
@@ -1736,49 +1736,53 @@ public class apwr_controller {
 		//}
 	}
 	
-	protected void pminst_add(Stage stage) throws IOException {
+	protected void pminst_add() throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("add_rec_ap.fxml"));
-		   
-	    Scene scene = new Scene(root);
-	    stage.setTitle("M&U - Add Record Window");
-	    stage.setResizable(false);
-	    //stage.initModality(Modality.APPLICATION_MODAL);
-	    stage.setScene(scene);
-	    stage.show();
+		Scene scene = new Scene(root);
+		Stage stage_set = new Stage();
+		stage_set.initModality(Modality.WINDOW_MODAL);	
+		stage_set.initOwner(conn_connector.getPrimaryStage());
+	    stage_set.setTitle("M&U - Add Record Window");
+	    stage_set.setResizable(false);
+	    stage_set.setScene(scene);
+	    stage_set.show();
 	}
 	//Вызываем окно обновления записи
-		protected void ap_upd(Stage stage) throws IOException {
-			Parent root = FXMLLoader.load(getClass().getResource("upd_rec_ap.fxml"));
-					   
-		    Scene scene = new Scene(root);
-		    stage.setTitle("M&U - Update Record Window");
-		    stage.setResizable(false);
-		    //stage.initModality(Modality.APPLICATION_MODAL);
-		    stage.setScene(scene);
-		    stage.show();
-		}
-		//Вызываем окно обновления записи WR
-		protected void wr_upd(Stage stage) throws IOException {
-			Parent root = FXMLLoader.load(getClass().getResource("upd_rec_wr.fxml"));
-							   
-		    Scene scene = new Scene(root);
-		    stage.setTitle("M&U - Update Record Window");
-		    stage.setResizable(false);
-		    //stage.initModality(Modality.APPLICATION_MODAL);
-		    stage.setScene(scene);
-		    stage.show();
-		}
-		//Вызываем окно записи для WR
-		protected void addwr_start(Stage stage) throws IOException {
-			Parent root = FXMLLoader.load(getClass().getResource("add_rec_wr.fxml"));
-			   
-		    Scene scene = new Scene(root);
-		    stage.setTitle("M&U - Add Record Window");
-		    stage.setResizable(false);
-		    //stage.initModality(Modality.APPLICATION_MODAL);
-		    stage.setScene(scene);
-		    stage.show();
-		}	
+	protected void ap_upd() throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("upd_rec_ap.fxml"));
+		Scene scene = new Scene(root);
+		Stage stage_set = new Stage();
+		stage_set.initModality(Modality.WINDOW_MODAL);	
+		stage_set.initOwner(conn_connector.getPrimaryStage());
+	    stage_set.setTitle("M&U - Update Record Window");
+	    stage_set.setResizable(false);
+	    stage_set.setScene(scene);
+	    stage_set.show();
+	}
+	//Вызываем окно обновления записи WR
+	protected void wr_upd() throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("upd_rec_wr.fxml"));
+		Scene scene = new Scene(root);
+		Stage stage_set = new Stage();
+		stage_set.initModality(Modality.WINDOW_MODAL);	
+		stage_set.initOwner(conn_connector.getPrimaryStage());
+	    stage_set.setTitle("M&U - Update Record Window");
+	    stage_set.setResizable(false);
+	    stage_set.setScene(scene);
+		stage_set.show();
+	}
+	//Вызываем окно записи для WR
+	protected void addwr_start() throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("add_rec_wr.fxml"));
+		Scene scene = new Scene(root);
+		Stage stage_set = new Stage();
+		stage_set.initModality(Modality.WINDOW_MODAL);	
+		stage_set.initOwner(conn_connector.getPrimaryStage());
+	    stage_set.setTitle("M&U - Add Record Window");
+	    stage_set.setResizable(false);
+	    stage_set.setScene(scene);
+	    stage_set.show();
+	}	
 	
 	
 	private void addButtonToTable() {
@@ -2079,7 +2083,7 @@ public class apwr_controller {
 		
 		try {
 			//_flag = false;
-			ap_upd(stage);
+			ap_upd();
 			//_flag = true;
 			//t = new Thread(update_table());
     		//t.setDaemon(true);
@@ -2137,7 +2141,7 @@ public class apwr_controller {
 		after_date = fx_dp.toString(last_data.getValue());		
 		try {
 			//_flag = false;
-			wr_upd(stage);
+			wr_upd();
 			_flag = true;
 			
 			//System.out.println("COLUMNS NAME1: = " + columns_test);

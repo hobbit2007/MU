@@ -32,29 +32,36 @@
                         <TableColumn fx:id="col_oss_ps" prefWidth="104.0" text="Станция, сокр" />
                         <TableColumn fx:id="col_equips_ps" prefWidth="96.0" text="Оборуд., сокр" />
                         <TableColumn fx:id="col_shop_ps" prefWidth="55.0" text="Цех" />
-                        <TableColumn fx:id="col_line_ps" prefWidth="74.0" text="Линия" />
-                        <TableColumn fx:id="col_linerus_ps" prefWidth="87.0" text="Линия, рус." />
-                        <TableColumn fx:id="col_os_ps" prefWidth="73.0" text="Станция" />
-                        <TableColumn fx:id="col_osrus_ps" prefWidth="120.0" text="Станция, рус" />
-                        <TableColumn fx:id="col_equip_ps" prefWidth="99.0" text="Оборудование" />
-                        <TableColumn fx:id="col_description_ps" prefWidth="75.0" text="Описание" />
+                  <TableColumn fx:id="col_group_ps" prefWidth="48.0" text="Группа" />
+                        <TableColumn fx:id="col_line_ps" prefWidth="57.0" text="Линия" />
+                        <TableColumn fx:id="col_os_ps" prefWidth="63.0" text="Станция" />
+                        <TableColumn fx:id="col_equip_ps" prefWidth="98.0" text="Оборудование" />
+                  <TableColumn fx:id="col_shoprus_ps" prefWidth="59.0" text="Цех,рус." />
+                  <TableColumn fx:id="col_grouprus_ps" prefWidth="74.0" text="Группа,рус." />
+                        <TableColumn fx:id="col_linerus_ps" prefWidth="75.0" text="Линия, рус." />
+                        <TableColumn fx:id="col_osrus_ps" prefWidth="83.0" text="Станция, рус." />
+                  <TableColumn fx:id="col_equiprus_ps" prefWidth="79.0" text="Оборуд.,рус." />
+                        <TableColumn fx:id="col_description_ps" prefWidth="192.0" text="Описание" />
                         <TableColumn fx:id="col_equiplabel_ps" prefWidth="97.0" text="Equip Label" />
                         <TableColumn fx:id="col_stationlabel_ps" prefWidth="108.0" text="Station Label" />
-                        <TableColumn fx:id="col_passport_ps" prefWidth="96.0" text="Passpoprt" />
                         <TableColumn fx:id="col_manual_ps" prefWidth="106.0" sortable="false" text="Manual" />
-                        <TableColumn fx:id="col_stsupplier_ps" prefWidth="111.0" sortable="false" text="St. Supplier" />
+                  <TableColumn fx:id="col_groupotv_ps" prefWidth="75.0" text="Группа ответственных" />
+                  <TableColumn fx:id="col_invnum_ps" prefWidth="75.0" text="Инв. №" />
+                  <TableColumn fx:id="col_numos_ps" prefWidth="75.0" text="№ Осн. Средства" />
+                  <TableColumn fx:id="col_startdate_ps" prefWidth="75.0" text="Дата запуска" />
+                  <TableColumn fx:id="col_cost_ps" prefWidth="75.0" text="Cost Center" />
                         <TableColumn fx:id="col_location_ps" prefWidth="76.0" sortable="false" text="Location" />
-                        <TableColumn fx:id="col_room_ps" prefWidth="54.0" sortable="false" text="Room" />
+                        <TableColumn fx:id="col_cham_ps" prefWidth="69.0" sortable="false" text="CHAMBER" />
                         <TableColumn fx:id="col_coord_ps" prefWidth="93.0" sortable="false" text="Координаты" />
                         <TableColumn fx:id="col_alt_ps" prefWidth="68.0" sortable="false" text="Высота" />
-                        <TableColumn fx:id="col_cham_ps" prefWidth="69.0" sortable="false" text="CHAMBER" />
                         <TableColumn fx:id="col_trcu_ps" prefWidth="48.0" sortable="false" text="TR_CU" />
                         <TableColumn fx:id="col_trcul_ps" prefWidth="83.0" sortable="false" text="TR_CU_Link" />
                         <TableColumn fx:id="col_hazardous_ps" prefWidth="68.0" sortable="false" text="Hazardous" />
                         <TableColumn fx:id="col_keyequip_ps" prefWidth="71.0" sortable="false" text="Key equip." />
+                        <TableColumn fx:id="col_stsupplier_ps" prefWidth="111.0" sortable="false" text="St. Supplier" />
+                        <TableColumn fx:id="col_manuf_ps" prefWidth="54.0" sortable="false" text="Manuf." />
                         <TableColumn fx:id="col_type_ps" prefWidth="46.0" sortable="false" text="Type" />
                         <TableColumn fx:id="col_sn_ps" prefWidth="54.0" sortable="false" text="S/N" />
-                        <TableColumn fx:id="col_manuf_ps" prefWidth="54.0" sortable="false" text="Manuf." />
                         <TableColumn fx:id="col_mtc_ps" prefWidth="58.0" sortable="false" text="Main TC" />
                         <TableColumn fx:id="col_respons_ps" prefWidth="70.0" sortable="false" text="Respons" />
                         <TableColumn fx:id="col_melec_ps" prefWidth="62.0" sortable="false" text="M Electric" />
@@ -62,7 +69,7 @@
                         <TableColumn fx:id="col_mwater_ps" prefWidth="58.0" sortable="false" text="M Water" />
                         <TableColumn fx:id="col_mcwater_ps" prefWidth="86.0" sortable="false" text="M Cold Water" />
                         <TableColumn fx:id="col_mhwater_ps" prefWidth="84.0" sortable="false" text="M Hot Water" />
-                        <TableColumn fx:id="col_rowater_ps" prefWidth="60.0" sortable="false" text="RO Water" />
+                        <TableColumn fx:id="col_rowater_ps" prefWidth="60.0" sortable="false" text="M RO Water" />
                         <TableColumn fx:id="col_mgas_ps" prefWidth="41.0" sortable="false" text="M Gas" />
                     </columns>
                   </TableView>
@@ -92,11 +99,16 @@
                </font>
             </JFXButton>
             <Label layoutX="240.0" layoutY="42.0" text="Фильтры:" />
-            <ComboBox layoutX="309.0" layoutY="39.0" prefHeight="25.0" prefWidth="90.0" promptText="Цех" />
-            <ComboBox layoutX="405.0" layoutY="39.0" prefHeight="25.0" prefWidth="117.0" promptText="Группа" />
-            <ComboBox layoutX="528.0" layoutY="39.0" prefHeight="25.0" prefWidth="112.0" promptText="Линия" />
-            <ComboBox layoutX="646.0" layoutY="39.0" prefHeight="25.0" prefWidth="114.0" promptText="Станция" />
-            <ComboBox layoutX="766.0" layoutY="39.0" prefHeight="25.0" prefWidth="125.0" promptText="Оборудование" />
+            <ComboBox fx:id="c_shop" layoutX="309.0" layoutY="39.0" prefHeight="25.0" prefWidth="90.0" promptText="Цех" />
+            <ComboBox fx:id="c_group" layoutX="405.0" layoutY="39.0" prefHeight="25.0" prefWidth="117.0" promptText="Группа" />
+            <ComboBox fx:id="c_line" layoutX="528.0" layoutY="39.0" prefHeight="25.0" prefWidth="112.0" promptText="Линия" />
+            <ComboBox fx:id="c_os" layoutX="646.0" layoutY="39.0" prefHeight="25.0" prefWidth="114.0" promptText="Станция" />
+            <ComboBox fx:id="c_equip" layoutX="766.0" layoutY="39.0" prefHeight="25.0" prefWidth="125.0" promptText="Оборудование" />
+            <JFXButton fx:id="btn_duplicate" layoutX="502.0" layoutY="733.0" text="Дублировать запись х">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
                </children>
             </AnchorPane>
         </content>

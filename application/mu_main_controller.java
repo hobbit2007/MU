@@ -276,7 +276,7 @@ public class mu_main_controller
 	}
 	
 	protected void pmcycle_start(Stage stage) throws IOException {
-		
+		setPrimaryStage(stage);
 	    Parent root = FXMLLoader.load(getClass().getResource("pm_cycle.fxml"));
 	    
         Scene scene = new Scene(root);
@@ -372,7 +372,7 @@ public class mu_main_controller
 			}
 		}
 		protected void pmtype_start(Stage stage) throws IOException {
-			
+			setPrimaryStage(stage);
 		    Parent root = FXMLLoader.load(getClass().getResource("type_pm.fxml"));
 		    
 	        Scene scene = new Scene(root);
@@ -385,6 +385,7 @@ public class mu_main_controller
 	    }
 		
 		protected void pminst_start(Stage stage) throws IOException {
+			setPrimaryStage(stage);
 			Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 			
 			Parent root = FXMLLoader.load(getClass().getResource("pm_inst.fxml"));
@@ -400,6 +401,7 @@ public class mu_main_controller
 		}
 		
 		protected void pm_start(Stage stage) throws IOException {
+			setPrimaryStage(stage);
 			Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 			
 			Parent root = FXMLLoader.load(getClass().getResource("pmdb.fxml"));

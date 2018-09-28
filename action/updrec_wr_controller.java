@@ -69,6 +69,7 @@ public class updrec_wr_controller {
 	private Stage stage;
 	Tooltip tip;
 	double wt_rezult = 0;
+	private String b_gdw, e_gdw, b_gtw, e_gtw;
 	
 	@SuppressWarnings("static-access")
 	@FXML
@@ -616,16 +617,95 @@ public class updrec_wr_controller {
 					@Override
 					public void handle(ActionEvent event) {
 						// TODO Auto-generated method stub 
-						/*if(shift_report_wr_upd.getText().length() != 0 && req_action_wr_upd.getText().length() != 0 && actual_time_wr_upd.getText().length() != 0 &&
-								actual_time1_wr_upd.getText().length() != 0 && numap_wr_upd.getText().length() != 0 && data_wr_upd.getValue().toString().length() != 0 &&
-								shop_wr_upd.getValue().length() != 0 && group_wr_upd.getValue().length() != 0 && lm_wr_upd.getValue().length() != 0 && os_wr_upd.getValue().length() != 0 &&
-								equip_wr_upd.getValue().length() != 0 && record_type_wr_upd.getValue().length() != 0 && resp_wr_upd.getValue().length() != 0 &&
-								status_wr_upd.getValue().length() != 0)
-						{*/
+						if(record_type_wr_upd.getValue().equals("CM")) {
+							if(!qr._select_confirm_wt(pic._idap_for_wr.substring(2)).equals("YES")) {
+								
+								b_gdw = fx_dp.toString(w_data_b_upd.getValue());
+								e_gdw = fx_dp.toString(w_data_e_upd.getValue());
+								b_gtw = fx_time.toStringt(b_picker_upd15.getValue());
+								e_gtw = fx_time.toStringt(e_picker_upd15.getValue());
+								
+								//Ввычисляем время сколько занял ремонт
+								int d_b = w_data_b_upd.getValue().getDayOfYear();
+								int d_e = w_data_e_upd.getValue().getDayOfYear();
+								
+								int data_rezult = d_e - d_b;
+								//Обрезаем секунды
+								//int hours_b = Integer.parseInt(sclass.parser_double_dot(b_picker.getValue().toString(), 0));
+								//int min_b = Integer.parseInt(sclass.parser_double_dot(b_picker.getValue().toString(), 1));
+								//int hours_e = Integer.parseInt(sclass.parser_double_dot(e_picker.getValue().toString(), 0));
+								//int min_e = Integer.parseInt(sclass.parser_double_dot(e_picker.getValue().toString(), 1));
+								
+								//int time_rezult = Math.abs(hours_e - hours_b)*60 + Math.abs(min_e - min_b);
+								LocalTime test = b_picker_upd15.getValue();
+								LocalTime test2 = e_picker_upd15.getValue();
+								
+								//long h_between = ChronoUnit.HOURS.between(test, test2);
+								long m_between = ChronoUnit.MINUTES.between(test, test2);
+								
+								int time_rezult = Math.abs((int) m_between);
+														
+								//wt_rezult = data_rezult*24 + time_rezult/60.d;
+								wt_rezult = data_rezult*24 + time_rezult/60.d;
+							}
+							else 
+								wt_rezult = 0;
+						}
+						else
+						{
+							b_gdw = "0000-00-00";
+							e_gdw = "0000-00-00";
+							b_gtw = "00:00";
+							e_gtw = "00:00";
+						}
 								qr._update_rec_wr(id_wr.substring(2), numap_wr_upd.getText(), sclass.parser_str(shop_wr_upd.getValue(), 0), sclass.parser_str(group_wr_upd.getValue(), 0), sclass.parser_str(lm_wr_upd.getValue(), 0), sclass.parser_str(os_wr_upd.getValue(), 0), sclass.parser_str(equip_wr_upd.getValue(), 0), sclass.parser_str(shop_wr_upd.getValue(), 0)+"."+sclass.parser_str(group_wr_upd.getValue(), 0)+"."+sclass.parser_str(lm_wr_upd.getValue(), 0)+"."+sclass.parser_str(os_wr_upd.getValue(), 0)+"."+sclass.parser_str(equip_wr_upd.getValue(), 0), record_type_wr_upd.getValue(), sclass.parser_str(resp_wr_upd.getValue(), 0),sclass.parser_str(resp_wr_upd2.getValue(), 0),sclass.parser_str(resp_wr_upd3.getValue(), 0),sclass.parser_str(resp_wr_upd4.getValue(), 0), status_wr_upd.getValue(), shift_report_wr_upd.getText(), req_action_wr_upd.getText(), w_data_b_upd.getValue(),w_data_b1_upd.getValue(),w_data_b2_upd.getValue(),w_data_b3_upd.getValue(), actual_time_wr_upd.getText(), w_data_e_upd.getValue(),w_data_e1_upd.getValue(),w_data_e2_upd.getValue(),w_data_e3_upd.getValue(), actual_time1_wr_upd.getText(),actual_time1_wr_upd2.getText(),actual_time1_wr_upd3.getText(),actual_time1_wr_upd4.getText(), b_picker_upd.getValue(),b_picker1_upd.getValue(),b_picker2_upd.getValue(),b_picker3_upd.getValue(), e_picker_upd.getValue(),e_picker1_upd.getValue(),e_picker2_upd.getValue(),e_picker3_upd.getValue());
 								err_msg.setVisible(false);
 								
 								qr._insert_history(conn_connector.USER_ID, pic.USER_S + " - Обновил запись № = " + id_wr.substring(2) + " в таблице Work Recording");
+								
+								
+								String id_wr = qr._select_last_id("hmmr_work_recording");
+								//В зависимости от количества исполнителей указанных в записи WR создаем такое же количество записей в WR
+									if(!qr._select_resp(id_wr, "_Resp2").equals("0"))
+									{
+										LocalDate b_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date_2"));
+										LocalDate e_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date2"));
+										LocalTime b_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours1_2"));
+										LocalTime e_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours2_2"));
+										String at = qr._select_b_hours(id_wr, "_Actual_Time2");
+										//Если СМ то для всех остальных кроме первого техника время общего ремонта = 0
+										wt_rezult = 0;
+										
+										qr._insert_wr(numap_wr_upd.getText(), conn_connector.USER_ID, sclass.parser_str(shop_wr_upd.getValue(), 0), group_wr_upd.getValue(), sclass.parser_str(lm_wr_upd.getValue(), 0), sclass.parser_str(os_wr_upd.getValue(), 0), sclass.parser_str(equip_wr_upd.getValue(), 0), sclass.parser_str(shop_wr_upd.getValue(), 0)+"."+group_wr_upd.getValue()+"."+sclass.parser_str(lm_wr_upd.getValue(), 0)+"."+sclass.parser_str(os_wr_upd.getValue(), 0)+"."+sclass.parser_str(equip_wr_upd.getValue(), 0), record_type_wr_upd.getValue(), wt_rezult, sclass.parser_str(qr._select_resp(id_wr, "_Resp2"), 0), "0", "0", "0", status_wr_upd.getValue(), shift_report_wr_upd.getText(), req_action_wr_upd.getText(), b_data, w_data_b_upd.getValue(), w_data_b2_upd.getValue(), w_data_b3_upd.getValue(), actual_time_wr_upd.getText(), e_data, w_data_e_upd.getValue(), w_data_e2_upd.getValue(), w_data_e3_upd.getValue(), at, "0", "0", "0", b_time, b_picker_upd.getValue(), b_picker2_upd.getValue(), b_picker3_upd.getValue(), e_time, e_picker_upd.getValue(), e_picker2_upd.getValue(), e_picker3_upd.getValue(), b_gdw, e_gdw, b_gtw, e_gtw);
+										qr._update_r_wr(id_wr, "_Resp2", "0");
+										qr._update_r_wr(id_wr, "_Actual_Time2", "0");
+									}
+									if(!qr._select_resp(id_wr, "_Resp3").equals("0"))
+									{
+										LocalDate b_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date_3"));
+										LocalDate e_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date3"));
+										LocalTime b_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours1_3"));
+										LocalTime e_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours2_3"));
+										String at = qr._select_b_hours(id_wr, "_Actual_Time3");
+										wt_rezult = 0;
+										
+										qr._insert_wr(numap_wr_upd.getText(), conn_connector.USER_ID, sclass.parser_str(shop_wr_upd.getValue(), 0), group_wr_upd.getValue(), sclass.parser_str(lm_wr_upd.getValue(), 0), sclass.parser_str(os_wr_upd.getValue(), 0), sclass.parser_str(equip_wr_upd.getValue(), 0), sclass.parser_str(shop_wr_upd.getValue(), 0)+"."+group_wr_upd.getValue()+"."+sclass.parser_str(lm_wr_upd.getValue(), 0)+"."+sclass.parser_str(os_wr_upd.getValue(), 0)+"."+sclass.parser_str(equip_wr_upd.getValue(), 0), record_type_wr_upd.getValue(), wt_rezult, sclass.parser_str(qr._select_resp(id_wr, "_Resp3"), 0), "0", "0", "0", status_wr_upd.getValue(), shift_report_wr_upd.getText(), req_action_wr_upd.getText(), b_data, w_data_b_upd.getValue(), w_data_b2_upd.getValue(), w_data_b3_upd.getValue(), actual_time_wr_upd.getText(), e_data, w_data_e_upd.getValue(), w_data_e2_upd.getValue(), w_data_e3_upd.getValue(), at, "0", "0", "0", b_time, b_picker_upd.getValue(), b_picker2_upd.getValue(), b_picker3_upd.getValue(), e_time, e_picker_upd.getValue(), e_picker2_upd.getValue(), e_picker3_upd.getValue(), b_gdw, e_gdw, b_gtw, e_gtw);
+										qr._update_r_wr(id_wr, "_Resp3", "0");
+										qr._update_r_wr(id_wr, "_Actual_Time3", "0");
+									}
+									if(!qr._select_resp(id_wr, "_Resp4").equals("0"))
+									{
+										LocalDate b_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date_4"));
+										LocalDate e_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date4"));
+										LocalTime b_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours1_4"));
+										LocalTime e_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours2_4"));
+										String at = qr._select_b_hours(id_wr, "_Actual_Time4");
+										wt_rezult = 0;
+										
+										qr._insert_wr(numap_wr_upd.getText(), conn_connector.USER_ID, sclass.parser_str(shop_wr_upd.getValue(), 0), group_wr_upd.getValue(), sclass.parser_str(lm_wr_upd.getValue(), 0), sclass.parser_str(os_wr_upd.getValue(), 0), sclass.parser_str(equip_wr_upd.getValue(), 0), sclass.parser_str(shop_wr_upd.getValue(), 0)+"."+group_wr_upd.getValue()+"."+sclass.parser_str(lm_wr_upd.getValue(), 0)+"."+sclass.parser_str(os_wr_upd.getValue(), 0)+"."+sclass.parser_str(equip_wr_upd.getValue(), 0), record_type_wr_upd.getValue(), wt_rezult, sclass.parser_str(qr._select_resp(id_wr, "_Resp4"), 0), "0", "0", "0", status_wr_upd.getValue(), shift_report_wr_upd.getText(), req_action_wr_upd.getText(), b_data, w_data_b_upd.getValue(), w_data_b2_upd.getValue(), w_data_b3_upd.getValue(), actual_time_wr_upd.getText(), e_data, w_data_e_upd.getValue(), w_data_e2_upd.getValue(), w_data_e3_upd.getValue(), at, "0", "0", "0", b_time, b_picker_upd.getValue(), b_picker2_upd.getValue(), b_picker3_upd.getValue(), e_time, e_picker_upd.getValue(), e_picker2_upd.getValue(), e_picker3_upd.getValue(), b_gdw, e_gdw, b_gtw, e_gtw);
+										qr._update_r_wr(id_wr, "_Resp4", "0");
+										qr._update_r_wr(id_wr, "_Actual_Time4", "0");
+									}
 								
 								//Если мы апдейтим запись в WR по задаче из AP то меняем цвет для поля исполнитель на желтый, т.к. эта новая запись еще не проверенна
 								//qr._update_otv_ap(numap_wr_upd.getText(), "flag_otv", "1");
@@ -981,6 +1061,7 @@ public class updrec_wr_controller {
 					status_wr_upd.getValue().length() != 0 && w_data_b_upd.getValue().toString().length() != 0 && b_picker_upd.getValue().toString().length() != 0 &&
 					w_data_e_upd.getValue().toString().length() != 0 && e_picker_upd.getValue().toString().length() != 0)
 			{
+				//разрешаем редактировать запись только тому кто ее создал
 				if(conn_connector.USER_ID.equals(user_number))
 					add_wr_upd.setDisable(false);
 			}
