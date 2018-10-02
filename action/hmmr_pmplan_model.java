@@ -8,18 +8,20 @@ public class hmmr_pmplan_model {
 	public SimpleStringProperty num_pm = new SimpleStringProperty();
 	public SimpleStringProperty dd = new SimpleStringProperty();
 	public SimpleStringProperty resp = new SimpleStringProperty();
+	public SimpleStringProperty pm_group = new SimpleStringProperty();
 	
 	public hmmr_pmplan_model()
 	{
 		
 	}
 	
-	public hmmr_pmplan_model (String Id, String num_pm, String dd, String resp)
+	public hmmr_pmplan_model (String Id, String num_pm, String dd, String resp, String pm_group)
 	{
 		this.Id.set(Id);
 		this.num_pm.set(num_pm);
 		this.dd.set(dd);
 		this.resp.set(resp);
+		this.pm_group.set(pm_group);
 	}
 
 	public String getId() {
@@ -74,6 +76,19 @@ public class hmmr_pmplan_model {
         this.resp.set(resp);
     }
     
+    public String getpm_group() {
+        return pm_group.get();
+    }
+
+    public SimpleStringProperty pm_groupProperty()
+    {
+    	return pm_group;
+    }
+    
+    public void setpm_group(String pm_group) {
+        this.pm_group.set(pm_group);
+    }
+    
     @Override
     public String toString() {
         return "hmmr_pmplan_model{" +
@@ -81,6 +96,7 @@ public class hmmr_pmplan_model {
                ", num_pm='" + num_pm.get() + '\'' +
                ", dd='" + dd.get() + '\'' +
                ", resp='" + resp.get() + '\'' +
+               ", pm_group='" + pm_group.get() + '\'' +
                '}';
     }
 }

@@ -1,11 +1,10 @@
 package action;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 import com.jfoenix.controls.JFXButton;
-
 import application.conn_connector;
 import db._query;
 import javafx.beans.value.ChangeListener;
@@ -16,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -30,15 +30,18 @@ public class addrec_inst_controller
 	ComboBox<String> typepm_inst, cyclepm1_inst, cyclepm2_inst, pos_inst, line_inst, power_inst, sinfo_inst;
 	
 	@FXML
-	TextField ninst_inst, ver_inst, mt_inst, pmname_inst, sdoc_txt_inst, qtyspec_inst, ptw_inst, wt_inst, adm2_inst, adm3_inst, of1_inst, of2_inst;
+	TextField ninst_inst, ver_inst, mt_inst, pmname_inst, sdoc_txt_inst, qtyspec_inst, ptw_inst, wt_inst, adm2_inst, adm3_inst, of1_inst, of2_inst,inst_pdf_pi;
 	
 	@FXML
-	JFXButton sdoc_inst, add_confirm_inst, add_cancel_inst;
+	JFXButton sdoc_inst, add_confirm_inst, add_cancel_inst, exp_inst_pdf;
 	
 	@FXML
 	Label error_msg, head_add_inst, col_ninst_inst, col_ver_inst, col_mt_inst, col_pmn_inst, col_pmt_inst, col_pmc1_inst, col_pmc2_inst, col_ool_inst,
 	 col_oop_inst, col_pos_inst, col_sinfo_inst, col_sdoc_inst, col_qspec_inst, col_pty_inst, col_wt_inst, col_adm2_inst,
 	 col_adm3_inst, col_of1_inst, col_of2_inst;
+	
+	@FXML
+	DatePicker date_create_pi, date_change_pi;
 	
 	public static int ind1, ind2, ind3, ind4, ind5, ind6;
 	
@@ -137,6 +140,10 @@ public class addrec_inst_controller
 		sclass._style(add_confirm_inst);
 		sclass._style(add_cancel_inst);
 		sclass._style(sdoc_inst);
+		sclass._style(exp_inst_pdf);
+		
+		date_create_pi.setValue(LocalDate.now());
+		date_change_pi.setValue(LocalDate.now());
 		
 		//инициализируем данными combobox
 		typepm_inst.setItems(qr._select_typepm_inst());
@@ -218,7 +225,7 @@ public class addrec_inst_controller
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				FileChooser fc = new FileChooser();
-			    fc.setTitle("Get Text");
+			    fc.setTitle("Choose a path to file:");
 			    fc.getExtensionFilters().addAll(
 			        new ExtensionFilter(
 			            "Excel Files", 
@@ -239,6 +246,35 @@ public class addrec_inst_controller
 			    chk_btn();
 			}
 	   });
+		
+		exp_inst_pdf.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				FileChooser fc = new FileChooser();
+			    fc.setTitle("Choose a path to file:");
+			    fc.getExtensionFilters().addAll(
+			        new ExtensionFilter(
+			            "PDF Files", 
+			            "*.pdf"),
+			        new ExtensionFilter(
+			            "All Files", 
+			            "*.*"));
+			    
+			    //showing the file chooser
+			    File phil = 
+			        fc.showOpenDialog(
+			            pic.stage);
+			    
+			    // checking that a file was
+			    // chosen by the user
+			    if (phil != null) 
+			    	 inst_pdf_pi.setText(phil.getPath());
+			    chk_btn();
+			}
+	   });
+		
 		
 	//Проверяем заполнение полей	
 		ninst_inst.setOnKeyReleased(new EventHandler<Event>() {
@@ -408,7 +444,7 @@ public class addrec_inst_controller
 				{
 					error_msg.setVisible(false);*/
 					
-					qr._insert_pm_inst(ninst_inst.getText(), ver_inst.getText(), mt_inst.getText(), pmname_inst.getText(), sdoc_txt_inst.getText().replace('\\', '/'), 
+					qr._insert_pm_inst(ninst_inst.getText(), date_create_pi.getValue(),date_change_pi.getValue(),inst_pdf_pi.getText().replace('\\', '/'),ver_inst.getText(), mt_inst.getText(), pmname_inst.getText(), sdoc_txt_inst.getText().replace('\\', '/'), 
 							           qtyspec_inst.getText(), ptw_inst.getText(), wt_inst.getText(), adm2_inst.getText(), adm3_inst.getText(), of1_inst.getText(),
 							           of2_inst.getText(), typepm_inst.getValue().toString(), cyclepm1_inst.getValue().toString(), cyclepm2_inst.getValue().toString(), 
 							           pos_inst.getValue().toString(), line_inst.getValue().toString(), power_inst.getValue().toString(), sinfo_inst.getValue().toString());
@@ -475,7 +511,7 @@ public class addrec_inst_controller
 					   sdoc_txt_inst.getText().length() != 0 && qtyspec_inst.getText().length() != 0 && ptw_inst.getText().length() != 0 && wt_inst.getText().length() != 0 &&
 					   adm2_inst.getText().length() != 0 && adm3_inst.getText().length() != 0 && of1_inst.getText().length() != 0 && of2_inst.getText().length() != 0 &&
 					   typepm_inst.getValue().toString().length() != 0 && cyclepm1_inst.getValue().toString().length() != 0 && cyclepm2_inst.getValue().toString().length() != 0 && pos_inst.getValue().toString().length() != 0 && 
-					   line_inst.getValue().toString().length() != 0 && power_inst.getValue().toString().length() != 0 && sinfo_inst.getValue().toString().length() != 0)
+					   line_inst.getValue().toString().length() != 0 && power_inst.getValue().toString().length() != 0 && sinfo_inst.getValue().toString().length() != 0 && inst_pdf_pi.getText().length() != 0)
 				add_confirm_inst.setDisable(false);
 			else
 				add_confirm_inst.setDisable(true);

@@ -34,7 +34,7 @@ public class pmplan_controller {
 	TableView<hmmr_pmplan_model> table_pmplan = new TableView<>();
 	
 	@FXML
-	TableColumn<hmmr_pmplan_model, String> col_num_pmplan, col_numpm_pmplan, col_dd_pmplan, col_resp_pmplan;
+	TableColumn<hmmr_pmplan_model, String> col_num_pmplan, col_numpm_pmplan, col_dd_pmplan, col_resp_pmplan, col_group_pm_pmplan;
 	
 	@FXML
 	JFXDatePicker b_data_pmplan, e_data_pmplan;
@@ -46,7 +46,7 @@ public class pmplan_controller {
 	Label lbl_upd_pmplan, lbl_search_pmplan, lbl_with_pmplan, lbl_to_pmplan;
 	
 	private String _sql_rez;
-	public static String _id_pmplan, _numpm_pmplan, _date_pmplan, _oft_pmplan;
+	public static String _id_pmplan, _numpm_pmplan, _date_pmplan, _oft_pmplan, _pm_group;
 	
 	public static ObservableList<hmmr_pmplan_model> _table_update_pmplan = FXCollections.observableArrayList();
 	
@@ -84,6 +84,7 @@ public class pmplan_controller {
 		col_numpm_pmplan.setCellValueFactory(CellData -> CellData.getValue().num_pmProperty());
 		col_dd_pmplan.setCellValueFactory(CellData -> CellData.getValue().ddProperty());
 		col_resp_pmplan.setCellValueFactory(CellData -> CellData.getValue().respProperty());
+		col_group_pm_pmplan.setCellValueFactory(CellData -> CellData.getValue().pm_groupProperty());
 		
 		table_pmplan.setEditable(true);
 		upd_pmplan.setDisable(true);
@@ -209,6 +210,7 @@ public class pmplan_controller {
 		_numpm_pmplan = scl.parser_str_str_str(_sql_rez, 0);
 		_date_pmplan = scl.parser_str_str_str(_sql_rez, 1);
 		_oft_pmplan = scl.parser_str_str_str(_sql_rez, 2);
+		_pm_group = scl.parser_str_str_str(_sql_rez, 3);
 				
 		try {
 			//_flag = false;
@@ -246,6 +248,7 @@ public class pmplan_controller {
 		lbl_to_pmplan.setText(lngBndl.getString("to_wr"));
 		col_dd_pmplan.setText(lngBndl.getString("dd_ap"));
 		col_resp_pmplan.setText(lngBndl.getString("lbl_oft_ap"));
+		col_group_pm_pmplan.setText(lngBndl.getString("lbl_group"));
 		upd_pmplan.setText(lngBndl.getString("upd_ap"));
 		cancel_pmplan.setText(lngBndl.getString("cancel_tsk"));
 		upd_table_pmplan.setText(lngBndl.getString("upd_table_ap"));

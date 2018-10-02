@@ -402,13 +402,13 @@ public class mu_main_controller
 		
 		protected void pm_start(Stage stage) throws IOException {
 			setPrimaryStage(stage);
-			Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+			//Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 			
 			Parent root = FXMLLoader.load(getClass().getResource("pmdb.fxml"));
 		    
 	        Scene scene = new Scene(root);
 	        stage.setTitle("M&U - PM Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
-	        stage.setWidth(primaryScreenBounds.getWidth() - 230);
+	       // stage.setWidth(primaryScreenBounds.getWidth() - 230);
 	       // stage.setHeight(primaryScreenBounds.getHeight() - 15);
 	        //stage.setResizable(false);
 	        //stage.initModality(Modality.APPLICATION_MODAL);

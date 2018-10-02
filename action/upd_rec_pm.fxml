@@ -7,53 +7,36 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="485.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="action.updrec_pm_controller">
+<AnchorPane prefHeight="465.0" prefWidth="424.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="action.updrec_pm_controller">
    <children>
-      <Label fx:id="lbl_head_pm" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="23.0" prefHeight="17.0" prefWidth="650.0" text="Обновление записи в таблицу PM">
+      <Label fx:id="lbl_head_pm" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="23.0" prefHeight="20.0" prefWidth="410.0" text="Обновление записи в таблицу PM">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </Label>
       <Label fx:id="lbl_ninst_pm" layoutX="14.0" layoutY="65.0" text="№ инструкции:" />
-      <Label fx:id="lbl_shop_pm" layoutX="14.0" layoutY="115.0" text="Цех:" />
-      <ComboBox fx:id="shop_pm_upd" layoutX="130.0" layoutY="115.0" prefWidth="150.0" />
-      <Label fx:id="lbl_lm_pm" layoutX="14.0" layoutY="215.0" text="Линия:" />
-      <ComboBox fx:id="lm_pm_upd" layoutX="130.0" layoutY="215.0" prefWidth="150.0" />
-      <Label fx:id="lbl_os_pm" layoutX="14.0" layoutY="265.0" text="Станция:" />
-      <ComboBox fx:id="os_pm_upd" layoutX="130.0" layoutY="265.0" prefWidth="150.0" />
-      <Label fx:id="lbl_equip_pm" layoutX="14.0" layoutY="315.0" text="Оборудование:" />
-      <ComboBox fx:id="equip_pm_upd" layoutX="130.0" layoutY="315.0" prefWidth="150.0" />
-      <Label fx:id="lbl_group_pm" layoutX="14.0" layoutY="165.0" text="Группа:" />
-      <ComboBox fx:id="group_pm_upd" layoutX="130.0" layoutY="165.0" prefWidth="150.0" />
-      <Label fx:id="lbl_pmname_pm" layoutX="371.0" layoutY="115.0" text="Имя PM:" />
-      <ComboBox fx:id="pmname_pm_upd" layoutX="492.0" layoutY="115.0" prefWidth="150.0" />
-      <Label fx:id="lbl_pmcycle_pm" layoutX="371.0" layoutY="165.0" text="Цикл PM:" />
-      <ComboBox fx:id="pmcycle_pm_upd" layoutX="492.0" layoutY="165.0" prefWidth="150.0" />
-      <Label fx:id="lbl_pmtype_pm" layoutX="371.0" layoutY="215.0" text="Тип PM:" />
-      <ComboBox fx:id="pmtype_pm_upd" layoutX="492.0" layoutY="215.0" prefWidth="150.0" />
-      <Label fx:id="lbl_ool_pm" layoutX="371.0" layoutY="265.0" text="Линия Вкл/Выкл:" />
-      <ComboBox fx:id="ool_pm_upd" layoutX="492.0" layoutY="265.0" prefWidth="150.0" />
-      <Label fx:id="lbl_dexp_pm" layoutX="371.0" layoutY="365.0" text="Исткает через, дней:" />
-      <TextField fx:id="dexp_pm_upd" layoutX="492.0" layoutY="365.0" />
-      <Label fx:id="err_msg_upd" layoutX="371.0" layoutY="340.0" prefHeight="17.0" prefWidth="273.0" text="Внимание! Не все поля заполнены!" textFill="#b90909" visible="false">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
+      <Label fx:id="lbl_ool_pm" layoutX="14.0" layoutY="215.0" text="Линия Вкл/Выкл:" />
+      <ComboBox fx:id="ool_pm_upd" layoutX="130.0" layoutY="212.0" prefWidth="150.0" />
+      <Label fx:id="lbl_dexp_pm" layoutX="14.0" layoutY="315.0" text="Исткает через, дней:" />
+      <TextField fx:id="dexp_pm_upd" layoutX="130.0" layoutY="312.0" />
       <ComboBox fx:id="ninst_pm_upd" layoutX="130.0" layoutY="65.0" prefWidth="150.0" />
-      <Label fx:id="lbl_group_eq" layoutX="371.0" layoutY="65.0" text="Группа:" />
-      <TextField fx:id="group_eq_upd" layoutX="492.0" layoutY="65.0" />
-      <Label fx:id="lbl_otv_pm" layoutX="371.0" layoutY="315.0" text="Ответственный:" />
-      <ComboBox fx:id="otv_pm_upd" layoutX="492.0" layoutY="315.0" prefWidth="150.0" />
-      <JFXButton fx:id="confirm_pm_upd" layoutX="476.0" layoutY="435.0" text="Применить">
+      <Label fx:id="lbl_group_eq" layoutX="14.0" layoutY="165.0" text="Группа:" />
+      <TextField fx:id="group_eq_upd" layoutX="130.0" layoutY="161.0" />
+      <Label fx:id="lbl_otv_pm" layoutX="14.0" layoutY="265.0" text="Ответственный:" />
+      <ComboBox fx:id="otv_pm_upd" layoutX="130.0" layoutY="262.0" prefWidth="150.0" />
+      <JFXButton fx:id="confirm_pm_upd" layoutX="236.0" layoutY="410.0" text="Применить">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="cancel_pm_upd" layoutX="578.0" layoutY="435.0" text="Отмена">
+      <JFXButton fx:id="cancel_pm_upd" layoutX="338.0" layoutY="410.0" text="Отмена">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </JFXButton>
+      <Label fx:id="eqip_id_upd" layoutX="14.0" layoutY="115.0" text="Оборудование:" />
+      <TextField fx:id="equip_pm_upd" disable="true" layoutX="130.0" layoutY="110.0" prefHeight="25.0" prefWidth="273.0" />
+      <Label layoutX="14.0" layoutY="365.0" text="№ PM:" />
+      <TextField fx:id="num_pm_upd" disable="true" layoutX="130.0" layoutY="361.0" />
    </children>
 </AnchorPane>

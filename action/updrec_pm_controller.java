@@ -23,16 +23,16 @@ import share_class.s_class;
 
 public class updrec_pm_controller {
 	@FXML
-	ComboBox<String> ninst_pm_upd, shop_pm_upd, group_pm_upd, lm_pm_upd, os_pm_upd, equip_pm_upd, pmname_pm_upd, pmcycle_pm_upd, pmtype_pm_upd, ool_pm_upd, otv_pm_upd;
+	ComboBox<String> ninst_pm_upd, ool_pm_upd, otv_pm_upd; //shop_pm_upd, group_pm_upd, lm_pm_upd, os_pm_upd, equip_pm_upd, pmname_pm_upd, pmcycle_pm_upd, pmtype_pm_upd, 
 	
 	@FXML
-	TextField dexp_pm_upd, group_eq_upd;
+	TextField dexp_pm_upd, group_eq_upd, equip_pm_upd, num_pm_upd;
 	
 	@FXML
 	JFXButton confirm_pm_upd, cancel_pm_upd;
 	
 	@FXML
-	Label err_msg_upd, lbl_head_pm, lbl_ninst_pm, lbl_shop_pm, lbl_lm_pm, lbl_os_pm, lbl_equip_pm, lbl_group_pm, lbl_pmname_pm, lbl_pmcycle_pm, lbl_pmtype_pm, lbl_ool_pm, lbl_otv_pm, lbl_dexp_pm, lbl_group_eq;
+	Label lbl_head_pm, lbl_ninst_pm, lbl_ool_pm, lbl_otv_pm, lbl_dexp_pm, lbl_group_eq;//lbl_shop_pm, lbl_lm_pm, lbl_os_pm, lbl_equip_pm, lbl_group_pm, lbl_pmname_pm, lbl_pmcycle_pm, lbl_pmtype_pm, 
 	
 	private Stage stage;	
 	_query qr = new _query();
@@ -56,10 +56,28 @@ public class updrec_pm_controller {
 		sclass._style(confirm_pm_upd);
 		sclass._style(cancel_pm_upd);
 		
+		group_eq_upd.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if(!newValue.isEmpty()) {
+		
+				if (!newValue.matches("\\d*|#|\\*")) {
+					group_eq_upd.setText(newValue.replaceAll("[^\\d|#|\\*]", ""));
+		        }
+				if(newValue.length() > 5) {
+					
+					group_eq_upd.setText(newValue.replaceAll("[0-9]", ""));
+	            	
+				}
+			}
+			}
+		});
+		
 		confirm_pm_upd.setDisable(true);
 		//инициализируем данные комбобоксов
 				ninst_pm_upd.setItems(qr._select_instr_pm());
-				confirm_pm_upd.setDisable(false);
+				
 				ninst_pm_upd.setOnMouseEntered(new EventHandler<Event>() {
 
 					@Override
@@ -79,7 +97,7 @@ public class updrec_pm_controller {
 					}
 				});
 				
-				shop_pm_upd.setItems(qr._select_shop_pm());
+				/*shop_pm_upd.setItems(qr._select_shop_pm());
 				try {
 					shop_pm_upd.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			
@@ -223,7 +241,7 @@ public class updrec_pm_controller {
 						// TODO Auto-generated method stub
 						tip.hide();
 					}
-				});
+				});*/
 				/*ninst_pm_upd.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 
 					@Override
@@ -255,60 +273,22 @@ public class updrec_pm_controller {
 						tip.hide();
 					}
 				});*/
-				ninst_pm_upd.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-
-					@Override
-					public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-						// TODO Auto-generated method stub
-						try {
-						if(ninst_pm_upd.getValue().toString().length() != 0)
-							pmname_pm_upd.setItems(qr._select_pmn_pm(ninst_pm_upd.getValue()));
-						} catch (Exception e) {
-							// TODO: handle exception
-						}
-					}
-				});
-				pmname_pm_upd.setOnMouseEntered(new EventHandler<Event>() {
-
-					@Override
-					public void handle(Event event) {
-						// TODO Auto-generated method stub
-						tip = new Tooltip(pmname_pm_upd.getValue());
-						Point2D p = pmname_pm_upd.localToScreen(pmname_pm_upd.getLayoutBounds().getMaxX(), pmname_pm_upd.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
-				        tip.show(pmname_pm_upd, p.getX(), p.getY());
-					}
-				});
-				pmname_pm_upd.setOnMouseExited(new EventHandler<Event>() {
-
-					@Override
-					public void handle(Event event) {
-						// TODO Auto-generated method stub
-						tip.hide();
-					}
-				});
-				pmtype_pm_upd.setItems(qr._select_typepm_inst());
-				pmcycle_pm_upd.setItems(qr._select_cycle_inst());
+				
 				String line1 = new String("ON");
 				String line2 = new String("OFF");
+				otv_pm_upd.setItems(qr._select_fio_for_ap(1, apwr_controller.SHOP_NAME));
 				ool_pm_upd.getItems().addAll(line1, line2);
-				
 				ninst_pm_upd.getSelectionModel().select(pc._ninst_pm_upd);
-				shop_pm_upd.getSelectionModel().select(pc._shop_pm_upd);
-				group_pm_upd.getSelectionModel().select(pc._group_pm_upd);
-				lm_pm_upd.getSelectionModel().select(pc._lm_pm_upd);
-				os_pm_upd.getSelectionModel().select(pc._os_pm_upd);
-				equip_pm_upd.getSelectionModel().select(pc._equip_pm_upd);
-				group_eq_upd.setText(pc._group_eq_upd); //pc._group_eq_upd
-				//supplier_pm_upd.setText(pc._supplier_pm_upd);
-				//mtt_pm_upd.getSelectionModel().select(pc._mtt_pm_upd);
-				pmname_pm_upd.getSelectionModel().select(pc._pmn_pm_upd);
-				pmcycle_pm_upd.getSelectionModel().select(pc._pmc_pm_upd);
-				pmtype_pm_upd.getSelectionModel().select(pc._pmtype_pm_upd);
+				//shop_pm_upd.getSelectionModel().select(pc._eq_id_upd);
+				//group_pm_upd.getSelectionModel().select(pc._group_pm_upd);
 				ool_pm_upd.getSelectionModel().select(pc._ool_pm_upd);
 				otv_pm_upd.getSelectionModel().select(pc._otv);
 				dexp_pm_upd.setText(pc._days_exp_upd);
+				num_pm_upd.setText(pc._id_pm);
+				equip_pm_upd.setText(qr._select_fillpm_equip(pc._eq_id_upd));
+				group_eq_upd.setText(pc._group_pm_upd);
 				
-				pmname_pm_upd.setOnAction(new EventHandler<ActionEvent>() {
+				/*pmname_pm_upd.setOnAction(new EventHandler<ActionEvent>() {
 					
 					@Override
 					public void handle(ActionEvent event) {
@@ -331,11 +311,35 @@ public class updrec_pm_controller {
 						// TODO Auto-generated method stub
 						chk_btn();
 					}
-				});
-				ool_pm_upd.setOnAction(new EventHandler<ActionEvent>() {
-					
+				});*/
+				ool_pm_upd.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
 					@Override
-					public void handle(ActionEvent event) {
+					public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+						// TODO Auto-generated method stub
+						chk_btn();
+					}
+				});
+				otv_pm_upd.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+					@Override
+					public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+						// TODO Auto-generated method stub
+						chk_btn();
+					}
+				});
+				group_eq_upd.setOnKeyReleased(new EventHandler<Event>() {
+
+					@Override
+					public void handle(Event arg0) {
+						// TODO Auto-generated method stub
+						chk_btn();
+					}
+				});
+				dexp_pm_upd.setOnKeyReleased(new EventHandler<Event>() {
+
+					@Override
+					public void handle(Event arg0) {
 						// TODO Auto-generated method stub
 						chk_btn();
 					}
@@ -354,25 +358,14 @@ public class updrec_pm_controller {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						// TODO Auto-generated method stub
-						if(ninst_pm_upd.getValue().length() != 0 && shop_pm_upd.getValue().length() != 0 && group_pm_upd.getValue().length() != 0 && lm_pm_upd.getValue().length() != 0 &&
-								os_pm_upd.getValue().length() != 0 && equip_pm_upd.getValue().length() != 0 && group_eq_upd.getText().length() != 0 && 
-								pmname_pm_upd.getValue().length() != 0 && pmcycle_pm_upd.getValue().length() != 0 &&
-								pmtype_pm_upd.getValue().length() != 0 && ool_pm_upd.getValue().length() != 0 && otv_pm_upd.getValue().length() != 0 && dexp_pm_upd.getText().length() != 0)
-						{
-							err_msg_upd.setVisible(false);
+						qr._update_rec_pm(pc._id_pm, sclass.parser_str(ninst_pm_upd.getValue(), 0), sclass.parser_str(group_eq_upd.getText(), 0), sclass.parser_str(otv_pm_upd.getValue(), 0), dexp_pm_upd.getText(), sclass.parser_str(ool_pm_upd.getValue(), 0));
 							
-							qr._update_rec_pm(pc._id_pm, sclass.parser_str(ninst_pm_upd.getValue(), 0), sclass.parser_str(shop_pm_upd.getValue(), 0), sclass.parser_str(group_pm_upd.getValue(), 0), sclass.parser_str(lm_pm_upd.getValue(), 0), sclass.parser_str(os_pm_upd.getValue(), 0), sclass.parser_str(equip_pm_upd.getValue(), 0), sclass.parser_str(group_eq_upd.getText(), 0), sclass.parser_str(pmname_pm_upd.getValue(), 0), sclass.parser_str(pmcycle_pm_upd.getValue(), 0), sclass.parser_str(pmtype_pm_upd.getValue(), 0), sclass.parser_str(ool_pm_upd.getValue(), 0), sclass.parser_str(otv_pm_upd.getValue(), 0), dexp_pm_upd.getText());
+						qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновиле запись № = " + pc._id_pm + " в таблице PM");
 							
-							qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновиле запись № = " + pc._id_pm + " в таблице PM");
+						pc._table_update_pm.addAll(qr._select_data_pm());
 							
-							pc._table_update_pm.addAll(qr._select_data_pm());
-							
-							stage = (Stage) confirm_pm_upd.getScene().getWindow();
-							stage.close();
-						}
-						else
-							err_msg_upd.setVisible(true);
+						stage = (Stage) confirm_pm_upd.getScene().getWindow();
+						stage.close();
 					}
 				});
 				group_eq_upd.setOnKeyReleased(new EventHandler<Event>() {
@@ -398,14 +391,14 @@ public class updrec_pm_controller {
 	            .getBundle("bundles.LangBundle", new Locale(loc1, loc2));
 		
 		lbl_ninst_pm.setText(lngBndl.getString("col_ninst_inst")+":");
-		lbl_shop_pm.setText(lngBndl.getString("lbl_shop_ap"));
-		lbl_group_pm.setText(lngBndl.getString("lbl_group_ap"));
-		lbl_lm_pm.setText(lngBndl.getString("lbl_lm_ap"));
-		lbl_os_pm.setText(lngBndl.getString("lbl_os_ap"));
-		lbl_equip_pm.setText(lngBndl.getString("lbl_equip_ap"));
-		lbl_pmname_pm.setText(lngBndl.getString("col_group_eq")+":");
-		lbl_pmcycle_pm.setText(lngBndl.getString("col_pmc_pm")+":");
-		lbl_pmtype_pm.setText(lngBndl.getString("col_pmtype_pm")+":");
+		//lbl_shop_pm.setText(lngBndl.getString("lbl_shop_ap"));
+		//lbl_group_pm.setText(lngBndl.getString("lbl_group_ap"));
+		//lbl_lm_pm.setText(lngBndl.getString("lbl_lm_ap"));
+		//lbl_os_pm.setText(lngBndl.getString("lbl_os_ap"));
+		//lbl_equip_pm.setText(lngBndl.getString("lbl_equip_ap"));
+		//lbl_pmname_pm.setText(lngBndl.getString("col_group_eq")+":");
+		//lbl_pmcycle_pm.setText(lngBndl.getString("col_pmc_pm")+":");
+		//lbl_pmtype_pm.setText(lngBndl.getString("col_pmtype_pm")+":");
 		lbl_ool_pm.setText(lngBndl.getString("col_ool_pm")+":");
 		lbl_otv_pm.setText(lngBndl.getString("lbl_otv_ap")+":");
 		lbl_dexp_pm.setText(lngBndl.getString("lbl_dexp_pm")+":");
@@ -417,10 +410,8 @@ public class updrec_pm_controller {
 	private void chk_btn()
 	{
 		try {
-			if(ninst_pm_upd.getValue().length() != 0 && shop_pm_upd.getValue().length() != 0 && group_pm_upd.getValue().length() != 0 && lm_pm_upd.getValue().length() != 0 &&
-					os_pm_upd.getValue().length() != 0 && equip_pm_upd.getValue().length() != 0 && group_eq_upd.getText().length() != 0 &&  
-					pmname_pm_upd.getValue().length() != 0 && pmcycle_pm_upd.getValue().length() != 0 &&
-					pmtype_pm_upd.getValue().length() != 0 && ool_pm_upd.getValue().length() != 0 && otv_pm_upd.getValue().length() != 0 && dexp_pm_upd.getText().length() != 0)
+			if(ninst_pm_upd.getValue().length() != 0 && group_eq_upd.getText().length() != 0 &&  
+					ool_pm_upd.getValue().length() != 0 && otv_pm_upd.getValue().length() != 0 && dexp_pm_upd.getText().length() != 0)
 				confirm_pm_upd.setDisable(false);
 			else
 				confirm_pm_upd.setDisable(true);

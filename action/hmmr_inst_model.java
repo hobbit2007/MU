@@ -6,6 +6,9 @@ public class hmmr_inst_model {
 	
 	public SimpleStringProperty Id = new SimpleStringProperty();
     public SimpleStringProperty num_instruction = new SimpleStringProperty();
+    public SimpleStringProperty date_create = new SimpleStringProperty();
+    public SimpleStringProperty date_change = new SimpleStringProperty();
+    public SimpleStringProperty inst_pdf = new SimpleStringProperty();
     public SimpleStringProperty Version = new SimpleStringProperty();
     public SimpleStringProperty Model_Type_task = new SimpleStringProperty();
     public SimpleStringProperty PM_name = new SimpleStringProperty();
@@ -30,12 +33,15 @@ public class hmmr_inst_model {
     	
     }
     
-    public hmmr_inst_model(String Id, String num_instruction, String Version, String Model_Type_Task, String PM_name, String Type_PM, String PM_Cycle1, String PM_Cycle2,
+    public hmmr_inst_model(String Id, String num_instruction, String date_create, String date_change, String inst_pdf, String Version, String Model_Type_Task, String PM_name, String Type_PM, String PM_Cycle1, String PM_Cycle2,
     					   String ON_Line_OFF_Line, String Power_ON_Power_OFF, String Position, String Src_info, String Src_Doc, String Qty_Specialist,
     					   String Prep_Work_Time, String Work_Time, String Admission_2, String Admission_3, String Outfit_1, String Outfit_2)
     {
     	this.Id.set(Id);
     	this.num_instruction.set(num_instruction);
+    	this.date_create.set(date_create);
+    	this.date_change.set(date_change);
+    	this.inst_pdf.set(inst_pdf);
     	this.Version.set(Version);
     	this.Model_Type_task.set(Model_Type_Task);
     	this.PM_name.set(PM_name);
@@ -80,6 +86,45 @@ public class hmmr_inst_model {
     
     public void setnum_inst(String num_instruction) {
         this.num_instruction.set(num_instruction);
+    }
+    
+    public String getdate_create() {
+        return date_create.get();
+    }
+
+    public SimpleStringProperty date_createProperty()
+    {
+    	return date_create;
+    }
+    
+    public void sedate_create(String date_create) {
+        this.date_create.set(date_create);
+    }
+    
+    public String getdate_change() {
+        return date_change.get();
+    }
+
+    public SimpleStringProperty date_changeProperty()
+    {
+    	return date_change;
+    }
+    
+    public void setdate_change(String date_change) {
+        this.date_change.set(date_change);
+    }
+    
+    public String getinst_pdf() {
+        return inst_pdf.get();
+    }
+
+    public SimpleStringProperty inst_pdfProperty()
+    {
+    	return inst_pdf;
+    }
+    
+    public void setinst_pdf(String inst_pdf) {
+        this.inst_pdf.set(inst_pdf);
     }
     
     public String getVer() {
@@ -321,6 +366,9 @@ public class hmmr_inst_model {
         return "hmmr_inst_model{" +
                "Id=" + Id.get() +
                 ", num_instruction='" + num_instruction.get() + '\'' +
+                ", date_create='" + date_create.get() + '\'' +
+                ", date_change='" + date_change.get() + '\'' +
+                ", inst_pdf='" + inst_pdf.get() + '\'' +
                 ", Version='" + Version.get() + '\'' +
                 ", Model_Type_task='" + Model_Type_task.get() + '\'' +
                 ", PM_name='" + PM_name.get() + '\'' +

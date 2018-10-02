@@ -23,7 +23,7 @@ import share_class.s_class;
 
 public class addrec_pm_controller {
 	@FXML
-	ComboBox<String> ninst_pm, shop_pm, lm_pm, os_pm, equip_pm, group_pm, pmname_pm, pmcycle_pm, pmtype_pm, ool_pm, otv_pm;
+	ComboBox<String> ninst_pm, shop_pm, lm_pm, os_pm, equip_pm, group_pm, ool_pm, otv_pm;
 	
 	@FXML
 	TextField dexp_pm, group_eq;
@@ -32,7 +32,7 @@ public class addrec_pm_controller {
 	JFXButton confirm_pm, cancel_pm;
 	
 	@FXML
-	Label err_msg, lbl_head_pm, lbl_ninst_pm, lbl_shop_pm, lbl_lm_pm, lbl_os_pm, lbl_equip_pm, lbl_group_pm, lbl_pmname_pm, lbl_pmcycle_pm, lbl_pmtype_pm, lbl_ool_pm, lbl_otv_pm, lbl_dexp_pm, lbl_group_eq;
+	Label err_msg, lbl_head_pm, lbl_ninst_pm, lbl_shop_pm, lbl_lm_pm, lbl_os_pm, lbl_equip_pm, lbl_group_pm, lbl_ool_pm, lbl_otv_pm, lbl_dexp_pm, lbl_group_eq;
 	
 	private Stage stage;	
 	_query qr = new _query();
@@ -58,6 +58,24 @@ public class addrec_pm_controller {
 		
 		sclass._style(confirm_pm);
 		sclass._style(cancel_pm);
+		
+		group_eq.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if(!newValue.isEmpty()) {
+		
+				if (!newValue.matches("\\d*|#|\\*")) {
+					group_eq.setText(newValue.replaceAll("[^\\d|#|\\*]", ""));
+		        }
+				if(newValue.length() > 5) {
+					
+					group_eq.setText(newValue.replaceAll("[0-9]", ""));
+	            	
+				}
+			}
+			}
+		});
 		
 		ninst_pm.setOnMouseEntered(new EventHandler<Event>() {
 		
@@ -237,99 +255,23 @@ public class addrec_pm_controller {
 				tip.hide();
 			}
 		});
-		/*ninst_pm.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				// TODO Auto-generated method stub
-				try {
-				if(ninst_pm.getValue().toString().length() != 0)
-					mtt_pm.setItems(qr._select_mtt_pm(ninst_pm.getValue()));
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			}
-		});
-		mtt_pm.setOnMouseEntered(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				// TODO Auto-generated method stub
-				tip = new Tooltip(mtt_pm.getValue());
-				Point2D p = mtt_pm.localToScreen(mtt_pm.getLayoutBounds().getMaxX(), mtt_pm.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
-		        tip.show(mtt_pm, p.getX(), p.getY());
-			}
-		});
-		mtt_pm.setOnMouseExited(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				// TODO Auto-generated method stub
-				tip.hide();
-			}
-		});*/
+		
 		ninst_pm.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				// TODO Auto-generated method stub
 				try {
-				if(ninst_pm.getValue().toString().length() != 0)
-					pmname_pm.setItems(qr._select_pmn_pm(ninst_pm.getValue()));
-				chk_btn();
+					chk_btn();
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
 			}
 		});
-		pmname_pm.setOnMouseEntered(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				// TODO Auto-generated method stub
-				tip = new Tooltip(pmname_pm.getValue());
-				Point2D p = pmname_pm.localToScreen(pmname_pm.getLayoutBounds().getMaxX(), pmname_pm.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
-		        tip.show(pmname_pm, p.getX(), p.getY());
-			}
-		});
-		pmname_pm.setOnMouseExited(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				// TODO Auto-generated method stub
-				tip.hide();
-			}
-		});
-		pmtype_pm.setItems(qr._select_typepm_inst());
-		pmcycle_pm.setItems(qr._select_cycle_inst());
 		String line1 = new String("ON");
 		String line2 = new String("OFF");
 		ool_pm.getItems().addAll(line1, line2);
 		
-		pmname_pm.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				chk_btn();
-			}
-		});
-		pmcycle_pm.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				chk_btn();
-			}
-		});
-		pmtype_pm.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				chk_btn();
-			}
-		});
 		ool_pm.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -344,26 +286,16 @@ public class addrec_pm_controller {
 			@SuppressWarnings("static-access")
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				/*if(ninst_pm.getValue().length() != 0 && shop_pm.getValue().length() != 0 && group_pm.getValue().length() != 0 && lm_pm.getValue().length() != 0 &&
-						os_pm.getValue().length() != 0 && equip_pm.getValue().length() != 0 && group_eq.getText().length() != 0 &&  
-						pmname_pm.getValue().length() != 0 && pmcycle_pm.getValue().length() != 0 &&
-						pmtype_pm.getValue().length() != 0 && ool_pm.getValue().length() != 0 && otv_pm.getValue().length() != 0 && dexp_pm.getText().length() != 0)
-				{*/
-				//	err_msg.setVisible(false);
-					qr._insert_pm(sclass.parser_str(ninst_pm.getValue(), 0), sclass.parser_str(shop_pm.getValue(), 0), sclass.parser_str(group_pm.getValue(), 0), sclass.parser_str(lm_pm.getValue(), 0), sclass.parser_str(os_pm.getValue(), 0), sclass.parser_str(equip_pm.getValue(), 0), 
-					           sclass.parser_str(group_eq.getText(), 0), sclass.parser_str(pmname_pm.getValue(), 0), sclass.parser_str(pmcycle_pm.getValue(), 0), sclass.parser_str(pmtype_pm.getValue(), 0),
-					           sclass.parser_str(ool_pm.getValue(), 0), sclass.parser_str(otv_pm.getValue(), 0), dexp_pm.getText());
+				
+				String eq_id_total = qr._select_data_filter_ps_id(sclass.parser_str(shop_pm.getValue(), 0), sclass.parser_str(group_pm.getValue(), 0), sclass.parser_str(lm_pm.getValue(), 0), sclass.parser_str(os_pm.getValue(), 0), sclass.parser_str(equip_pm.getValue(), 0));
+				qr._insert_pm(sclass.parser_str(ninst_pm.getValue(), 0), eq_id_total, sclass.parser_str(group_eq.getText(), 0), sclass.parser_str(otv_pm.getValue(), 0), dexp_pm.getText(), sclass.parser_str(ool_pm.getValue(), 0));
 			
-					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_pm") + " в таблице PM");
+				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_pm") + " в таблице PM");
 					
-					pc._table_update_pm.addAll(qr._select_data_pm());
+				pc._table_update_pm.addAll(qr._select_data_pm());
 					
-					stage = (Stage) confirm_pm.getScene().getWindow();
-					stage.close();
-					//}
-					///else
-					//	err_msg.setVisible(true);
+				stage = (Stage) confirm_pm.getScene().getWindow();
+				stage.close();
 				}
 			});
 		cancel_pm.setOnAction(new EventHandler<ActionEvent>() {
@@ -404,9 +336,6 @@ public class addrec_pm_controller {
 		lbl_lm_pm.setText(lngBndl.getString("lbl_lm_ap"));
 		lbl_os_pm.setText(lngBndl.getString("lbl_os_ap"));
 		lbl_equip_pm.setText(lngBndl.getString("lbl_equip_ap"));
-		lbl_pmname_pm.setText(lngBndl.getString("col_group_eq")+":");
-		lbl_pmcycle_pm.setText(lngBndl.getString("col_pmc_pm")+":");
-		lbl_pmtype_pm.setText(lngBndl.getString("col_pmtype_pm")+":");
 		lbl_ool_pm.setText(lngBndl.getString("col_ool_pm")+":");
 		lbl_otv_pm.setText(lngBndl.getString("lbl_otv_ap")+":");
 		lbl_dexp_pm.setText(lngBndl.getString("lbl_dexp_pm")+":");
@@ -421,8 +350,7 @@ public class addrec_pm_controller {
 			try {
 			if(ninst_pm.getValue().length() != 0 && shop_pm.getValue().length() != 0 && group_pm.getValue().length() != 0 && lm_pm.getValue().length() != 0 &&
 					os_pm.getValue().length() != 0 && equip_pm.getValue().length() != 0 && group_eq.getText().length() != 0 &&  
-					pmname_pm.getValue().length() != 0 && pmcycle_pm.getValue().length() != 0 &&
-					pmtype_pm.getValue().length() != 0 && ool_pm.getValue().length() != 0 && otv_pm.getValue().length() != 0 && dexp_pm.getText().length() != 0)
+					ool_pm.getValue().length() != 0 && dexp_pm.getText().length() != 0 && otv_pm.getValue().length() != 0)// && dexp_pm.getText().length() != 0
 				confirm_pm.setDisable(false);
 			else
 				confirm_pm.setDisable(true);

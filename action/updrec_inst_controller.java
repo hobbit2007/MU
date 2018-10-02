@@ -1,12 +1,14 @@
 package action;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
 import application.conn_connector;
+import data.FxDatePickerConverter;
 import db._query;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,6 +18,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -30,21 +33,25 @@ public class updrec_inst_controller
 	ComboBox<String> typepm_inst_upd, cyclepm1_inst_upd, cyclepm2_inst_upd, pos_inst_upd, line_inst_upd, power_inst_upd, sinfo_inst_upd;
 	
 	@FXML
-	TextField ninst_inst_upd, ver_inst_upd, mt_inst_upd, pmname_inst_upd, sdoc_txt_inst_upd, qtyspec_inst_upd, ptw_inst_upd, wt_inst_upd, adm2_inst_upd, adm3_inst_upd, of1_inst_upd, of2_inst_upd;
+	TextField ninst_inst_upd, ver_inst_upd, mt_inst_upd, pmname_inst_upd, sdoc_txt_inst_upd, qtyspec_inst_upd, ptw_inst_upd, wt_inst_upd, adm2_inst_upd, adm3_inst_upd, of1_inst_upd, of2_inst_upd, inst_pdf_pi;
 	
 	@FXML
-	JFXButton sdoc_inst_upd, add_confirm_inst_upd, add_cancel_inst_upd;
+	JFXButton sdoc_inst_upd, add_confirm_inst_upd, add_cancel_inst_upd, exp_inst_pdf;
 	
 	@FXML
 	Label error_msg_upd, head_upd_inst, col_ninst_inst, col_ver_inst, col_mt_inst, col_pmn_inst, col_pmt_inst, col_pmc1_inst, col_pmc2_inst, col_ool_inst,
 	 col_oop_inst, col_pos_inst, col_sinfo_inst, col_sdoc_inst, col_qspec_inst, col_pty_inst, col_wt_inst, col_adm2_inst,
 	 col_adm3_inst, col_of1_inst, col_of2_inst;
 	
+	@FXML
+	DatePicker date_create_pi, date_change_pi;
+	
 	private Stage stage;	
 	_query qr = new _query();
 	pm_inst_controller pic = new pm_inst_controller();
 	typepm_model_inst tmi = new typepm_model_inst();
 	s_class sclass = new s_class();
+	FxDatePickerConverter fx_dp = new FxDatePickerConverter();
 	Tooltip tip;	
 	
 	@SuppressWarnings("static-access")
@@ -140,6 +147,10 @@ public class updrec_inst_controller
 				sclass._style(add_confirm_inst_upd);
 				sclass._style(add_cancel_inst_upd);
 				sclass._style(sdoc_inst_upd);
+				sclass._style(exp_inst_pdf);
+				
+				date_create_pi.setValue(LocalDate.now());
+				date_change_pi.setValue(LocalDate.now());
 				
 		//инициализируем данными combobox
 				typepm_inst_upd.setItems(qr._select_typepm_inst());
@@ -206,7 +217,7 @@ public class updrec_inst_controller
 					public void handle(ActionEvent event) {
 						// TODO Auto-generated method stub
 						FileChooser fc = new FileChooser();
-					    fc.setTitle("Get Text");
+					    fc.setTitle("Choose a path to file:");
 					    fc.getExtensionFilters().addAll(
 					        new ExtensionFilter(
 					            "Excel Files", 
@@ -224,6 +235,33 @@ public class updrec_inst_controller
 					    // chosen by the user
 					    if (phil != null) 
 					    	 sdoc_txt_inst_upd.setText(phil.getPath());
+					}
+			   });
+				
+				exp_inst_pdf.setOnAction(new EventHandler<ActionEvent>() {
+					
+					@Override
+					public void handle(ActionEvent event) {
+						// TODO Auto-generated method stub
+						FileChooser fc = new FileChooser();
+					    fc.setTitle("Choose a path to file:");
+					    fc.getExtensionFilters().addAll(
+					        new ExtensionFilter(
+					            "PDF Files", 
+					            "*.pdf"),
+					        new ExtensionFilter(
+					            "All Files", 
+					            "*.*"));
+					    
+					    //showing the file chooser
+					    File phil = 
+					        fc.showOpenDialog(
+					            pic.stage);
+					    
+					    // checking that a file was
+					    // chosen by the user
+					    if (phil != null) 
+					    	 inst_pdf_pi.setText(phil.getPath());
 					}
 			   });
 				//инициализируем данными три TextField
@@ -244,6 +282,9 @@ public class updrec_inst_controller
 				});*/
 		
 		ninst_inst_upd.setText(pic._ninst_inst);
+		date_create_pi.setValue(fx_dp.fromString(pic._date_create));
+		date_change_pi.setValue(fx_dp.fromString(pic._date_change));
+		inst_pdf_pi.setText(pic._inst_pdf);
 		ver_inst_upd.setText(pic._ver_inst); 
 		mt_inst_upd.setText(pic._mt_inst); 
 		pmname_inst_upd.setText(pic._pmname_inst); 
@@ -431,24 +472,24 @@ public class updrec_inst_controller
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
-				if(ninst_inst_upd.getText().length() != 0 && ver_inst_upd.getText().length() != 0 && mt_inst_upd.getText().length() != 0 && pmname_inst_upd.getText().length() != 0 &&
-						   sdoc_txt_inst_upd.getText().length() != 0 && qtyspec_inst_upd.getText().length() != 0 && ptw_inst_upd.getText().length() != 0 && wt_inst_upd.getText().length() != 0 &&
-						   adm2_inst_upd.getText().length() != 0 && adm3_inst_upd.getText().length() != 0 && of1_inst_upd.getText().length() != 0 && of2_inst_upd.getText().length() != 0 &&
-						   typepm_inst_upd.getValue().toString().length() != 0 && cyclepm1_inst_upd.getValue().toString().length() != 0 && cyclepm2_inst_upd.getValue().toString().length() != 0 && pos_inst_upd.getValue().toString().length() != 0 && 
-						   line_inst_upd.getValue().toString().length() != 0 && power_inst_upd.getValue().toString().length() != 0 && sinfo_inst_upd.getValue().toString().length() != 0)
-				{
-					error_msg_upd.setVisible(false);
+				//if(ninst_inst_upd.getText().length() != 0 && ver_inst_upd.getText().length() != 0 && mt_inst_upd.getText().length() != 0 && pmname_inst_upd.getText().length() != 0 &&
+				//		   sdoc_txt_inst_upd.getText().length() != 0 && qtyspec_inst_upd.getText().length() != 0 && ptw_inst_upd.getText().length() != 0 && wt_inst_upd.getText().length() != 0 &&
+				//		   adm2_inst_upd.getText().length() != 0 && adm3_inst_upd.getText().length() != 0 && of1_inst_upd.getText().length() != 0 && of2_inst_upd.getText().length() != 0 &&
+				//		   typepm_inst_upd.getValue().toString().length() != 0 && cyclepm1_inst_upd.getValue().toString().length() != 0 && cyclepm2_inst_upd.getValue().toString().length() != 0 && pos_inst_upd.getValue().toString().length() != 0 && 
+				//		   line_inst_upd.getValue().toString().length() != 0 && power_inst_upd.getValue().toString().length() != 0 && sinfo_inst_upd.getValue().toString().length() != 0)
+				//{
+				//	error_msg_upd.setVisible(false);
 					
-					qr._update_rec_inst(pic._id_inst, ninst_inst_upd.getText(), ver_inst_upd.getText(), mt_inst_upd.getText(), pmname_inst_upd.getText(), sdoc_txt_inst_upd.getText().replace('\\', '/'), qtyspec_inst_upd.getText(), ptw_inst_upd.getText(), wt_inst_upd.getText(), adm2_inst_upd.getText(), adm3_inst_upd.getText(), of1_inst_upd.getText(), of2_inst_upd.getText(), typepm_inst_upd.getValue(), cyclepm1_inst_upd.getValue(), cyclepm2_inst_upd.getValue(), pos_inst_upd.getValue(), line_inst_upd.getValue(), power_inst_upd.getValue(), sinfo_inst_upd.getValue());
+					qr._update_rec_inst(pic._id_inst, ninst_inst_upd.getText(), date_create_pi.getValue(), date_change_pi.getValue(), inst_pdf_pi.getText().replace('\\', '/'), ver_inst_upd.getText(), mt_inst_upd.getText(), pmname_inst_upd.getText(), sdoc_txt_inst_upd.getText().replace('\\', '/'), qtyspec_inst_upd.getText(), ptw_inst_upd.getText(), wt_inst_upd.getText(), adm2_inst_upd.getText(), adm3_inst_upd.getText(), of1_inst_upd.getText(), of2_inst_upd.getText(), typepm_inst_upd.getValue(), cyclepm1_inst_upd.getValue(), cyclepm2_inst_upd.getValue(), pos_inst_upd.getValue(), line_inst_upd.getValue(), power_inst_upd.getValue(), sinfo_inst_upd.getValue());
 					
 					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + pic._id_inst + " в таблице PM Instruction");
 					
 					pic._table_update_inst.addAll(qr._select_data_pminst());
 					stage = (Stage) add_confirm_inst_upd.getScene().getWindow();
 					stage.close();
-				}
-				else
-					error_msg_upd.setVisible(true);
+				//}
+				//else
+				//	error_msg_upd.setVisible(true);
 			}
 		});
 	}

@@ -26,7 +26,7 @@ public class updrec_pmplan_controller {
 	JFXButton upd_pmplan, cancel_pmplan;
 	
 	@FXML
-	JFXTextField id_pmplan, num_pm_pmplan;
+	JFXTextField id_pmplan, num_pm_pmplan, group_pm_pmplan;
 	
 	@FXML
 	JFXDatePicker data_pmplan;
@@ -35,7 +35,7 @@ public class updrec_pmplan_controller {
 	ComboBox<String> oft_pmplan;
 	
 	@FXML
-	Label lbl_upd_record_pmplan, lbl_de_pmplan, lbl_resp_pmplan;
+	Label lbl_upd_record_pmplan, lbl_de_pmplan, lbl_resp_pmplan, lbl_group_pm;
 	
 	_query qr = new _query();
 	s_class scl = new s_class();
@@ -67,6 +67,7 @@ public class updrec_pmplan_controller {
 		num_pm_pmplan.setText(ppc._numpm_pmplan);
 		oft_pmplan.getSelectionModel().select(ppc._oft_pmplan.toString());
 		data_pmplan.setValue(fx_dp.fromString(ppc._date_pmplan));
+		group_pm_pmplan.setText(ppc._pm_group);
 		
 		upd_pmplan.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -130,6 +131,7 @@ public class updrec_pmplan_controller {
 		lbl_upd_record_pmplan.setText(lngBndl.getString("lbl_upd_record_pmplan"));
 		lbl_de_pmplan.setText(lngBndl.getString("lbl_de_pmplan")+":");
 		lbl_resp_pmplan.setText(lngBndl.getString("lbl_otv_ap")+":");
+		lbl_group_pm.setText(lngBndl.getString("lbl_group_ap"));
 		upd_pmplan.setText(lngBndl.getString("lbl_apply"));
 		cancel_pmplan.setText(lngBndl.getString("cancel_tsk"));
 	}

@@ -7,7 +7,7 @@ public class hmmr_pm_model
 	public SimpleStringProperty Id = new SimpleStringProperty();
 	public SimpleStringProperty user_id = new SimpleStringProperty();
 	public SimpleStringProperty num_instruction = new SimpleStringProperty();
-	public SimpleStringProperty Shop = new SimpleStringProperty();
+	public SimpleStringProperty eq_id = new SimpleStringProperty();
 	public SimpleStringProperty Group_PM = new SimpleStringProperty();
 	public SimpleStringProperty Line_Machine = new SimpleStringProperty();
 	public SimpleStringProperty Operation_Station = new SimpleStringProperty();
@@ -27,14 +27,14 @@ public class hmmr_pm_model
 		
 	}
 	
-	public hmmr_pm_model(String Id, String user_id, String num_instruction, String Shop, String Group_PM, String Line_Machine, String Operation_Station, String Equipment,
+	public hmmr_pm_model(String Id, String user_id, String num_instruction, String eq_id, String Group_PM, String Line_Machine, String Operation_Station, String Equipment,
 			             String Group_EQ, String Station_Supplier, String Model_Type_Task, String PM_Name, String PM_Cycle,
 			             String Type_of_PM_Org_Tech, String OnOff_Line, String Otv, String Days_Exp)
 	{
 		this.Id.set(Id);
 		this.user_id.set(user_id);
 		this.num_instruction.set(num_instruction);
-		this.Shop.set(Shop);
+		this.eq_id.set(eq_id);
 		this.Group_PM.set(Group_PM);
 		this.Line_Machine.set(Line_Machine);
 		this.Operation_Station.set(Operation_Station);
@@ -90,17 +90,17 @@ public class hmmr_pm_model
         this.num_instruction.set(num_instruction);
     }
     
-    public String getShop() {
-        return Shop.get();
+    public String geteq_id() {
+        return eq_id.get();
     }
 
-    public SimpleStringProperty ShopProperty()
+    public SimpleStringProperty eq_idProperty()
     {
-    	return Shop;
+    	return eq_id;
     }
     
-    public void setShop(String Shop) {
-        this.Shop.set(Shop);
+    public void seteq_id(String eq_id) {
+        this.eq_id.set(eq_id);
     }
     
     public String getGroup_PM() {
@@ -278,7 +278,7 @@ public class hmmr_pm_model
                "Id=" + Id.get() +
                ", user_id='" + user_id.get() + '\'' +
                 ", num_instruction='" + num_instruction.get() + '\'' +
-                ", Shop='" + Shop.get() + '\'' +
+                ", eq_id='" + eq_id.get() + '\'' +
                 ", Group_PM='" + Group_PM.get() + '\'' +
                 ", Line_Machine='" + Line_Machine.get() + '\'' +
                 ", operation_Station='" + Operation_Station.get() + '\'' +

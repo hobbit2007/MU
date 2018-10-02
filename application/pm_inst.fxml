@@ -13,11 +13,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="sp_inst" prefHeight="828.0" prefWidth="1644.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="action.pm_inst_controller">
+<ScrollPane fx:id="sp_inst" prefHeight="828.0" prefWidth="1851.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="action.pm_inst_controller">
    <content>
-      <Pane fx:id="pane_inst" prefHeight="828.0" prefWidth="1644.0">
+      <Pane fx:id="pane_inst" prefHeight="828.0" prefWidth="1841.0">
          <children>
-            <VBox fx:id="vbox_inst" alignment="TOP_CENTER" prefHeight="828.0" prefWidth="1644.0">
+            <VBox fx:id="vbox_inst" alignment="TOP_CENTER" prefHeight="828.0" prefWidth="1837.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="1644.0">
                      <children>
@@ -33,12 +33,15 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox fx:id="hbox_inst" alignment="CENTER" prefHeight="681.0" prefWidth="1613.0">
+                  <HBox fx:id="hbox_inst" alignment="CENTER_LEFT" prefHeight="681.0" prefWidth="1613.0">
                      <children>
-                        <TableView fx:id="table_inst" prefHeight="385.0" prefWidth="1563.0">
+                        <TableView fx:id="table_inst" prefHeight="673.0" prefWidth="1805.0">
                           <columns>
                             <TableColumn fx:id="col_id_inst" prefWidth="40.0" text="№" />
                             <TableColumn fx:id="col_ninst_inst" prefWidth="134.0" text="№ инструкции" />
+                              <TableColumn fx:id="col_date_create_pi" prefWidth="75.0" sortable="false" text="Дата созд." />
+                              <TableColumn fx:id="col_date_change_pi" prefWidth="75.0" sortable="false" text="Дата изм." />
+                              <TableColumn fx:id="col_inst_pi" prefWidth="75.0" sortable="false" text="Инс-я PDF" />
                               <TableColumn fx:id="col_ver_inst" prefWidth="51.0" text="Версия" />
                               <TableColumn fx:id="col_mt_inst" prefWidth="84.0" text="Модель/Тип" />
                               <TableColumn fx:id="col_pmn_inst" prefWidth="66.0" text="PM name" />

@@ -13,11 +13,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="sp_pm" prefHeight="828.0" prefWidth="1657.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="action.pm_controller">
+<ScrollPane fx:id="sp_pm" hbarPolicy="NEVER" prefHeight="828.0" prefWidth="855.0" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="action.pm_controller">
    <content>
-      <Pane fx:id="pane_pm" layoutX="-41.0" prefHeight="828.0" prefWidth="1633.0">
+      <Pane fx:id="pane_pm" layoutX="-41.0" prefHeight="828.0" prefWidth="855.0">
          <children>
-            <VBox fx:id="vbox_pm" prefHeight="828.0" prefWidth="1657.0">
+            <VBox fx:id="vbox_pm" prefHeight="828.0" prefWidth="836.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
@@ -26,31 +26,23 @@
                               <Image url="@haval.jpg" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="1277.0" text="Редактирование таблицы PM">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="565.0" text="Редактирование таблицы PM">
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
                         </Label>
                      </children>
                   </HBox>
-                  <HBox fx:id="hbox_pm" alignment="CENTER" prefHeight="670.0" prefWidth="1631.0">
+                  <HBox fx:id="hbox_pm" prefHeight="670.0" prefWidth="772.0">
                      <children>
-                        <TableView fx:id="table_pm" prefHeight="670.0" prefWidth="1520.0">
+                        <TableView fx:id="table_pm" prefHeight="664.0" prefWidth="789.0">
                           <columns>
                             <TableColumn fx:id="col_id_pm" prefWidth="49.0" text="№ PM" />
-                            <TableColumn fx:id="col_ninst_pm" prefWidth="139.0" text="№ инструкции" />
-                              <TableColumn fx:id="col_shop_pm" prefWidth="65.0" text="Цех" />
-                              <TableColumn fx:id="col_group_pm" prefWidth="86.0" text="Группа" />
-                              <TableColumn fx:id="col_lm_pm" prefWidth="75.0" text="Линия" />
-                              <TableColumn fx:id="col_os_pm" prefWidth="99.0" text="Станция" />
-                              <TableColumn fx:id="col_equip_pm" prefWidth="100.0" text="Оборудование" />
-                              <TableColumn fx:id="col_group_eq" prefWidth="64.0" text="Группа" />
-                              <TableColumn fx:id="col_pmn_pm" prefWidth="395.0" text="PM Name" />
-                              <TableColumn fx:id="col_pmc_pm" prefWidth="57.0" text="PM Cycle" />
-                              <TableColumn fx:id="col_pmtype_pm" prefWidth="55.0" text="Type PM" />
-                              <TableColumn fx:id="col_ool_pm" prefWidth="85.0" text="On/Off Line" />
-                              <TableColumn fx:id="col_otv_pm" minWidth="0.0" prefWidth="142.0" text="Ответственный" />
-                              <TableColumn fx:id="col_days_exp" prefWidth="111.0" text="Предупредить за" />
+                            <TableColumn fx:id="col_ninst_pm" prefWidth="163.0" text="№ инструкции" />
+                              <TableColumn fx:id="col_group_pm" prefWidth="91.0" text="Группа" />
+                              <TableColumn fx:id="col_otv_pm" minWidth="0.0" prefWidth="99.0" text="Ответственный" />
+                              <TableColumn fx:id="col_days_exp" prefWidth="110.0" text="Предупредить за" />
+                              <TableColumn fx:id="col_ool_pm" prefWidth="75.0" text="On/Off Line" />
                           </columns>
                            <HBox.margin>
                               <Insets left="25.0" />

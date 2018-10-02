@@ -40,7 +40,7 @@ public class pm_inst_controller
 	TableView<hmmr_inst_model> table_inst;
 	
 	@FXML
-	TableColumn<hmmr_inst_model, String> col_id_inst, col_ninst_inst, col_ver_inst, col_mt_inst, col_pmn_inst, col_pmt_inst, col_pmc1_inst, col_pmc2_inst, col_ool_inst,
+	TableColumn<hmmr_inst_model, String> col_id_inst, col_ninst_inst, col_date_create_pi, col_date_change_pi, col_inst_pi, col_ver_inst, col_mt_inst, col_pmn_inst, col_pmt_inst, col_pmc1_inst, col_pmc2_inst, col_ool_inst,
 										 col_oop_inst, col_pos_inst, col_sinfo_inst, col_sdoc_inst, col_qspec_inst, col_pty_inst, col_wt_inst, col_adm2_inst,
 										 col_adm3_inst, col_of1_inst, col_of2_inst;
 	
@@ -63,7 +63,7 @@ public class pm_inst_controller
 	Label head_pm;
 	
 	public static String _id_inst, _ninst_inst, _ver_inst, _mt_inst, _pmname_inst, _sdoc_txt_inst, _qtyspec_inst, _ptw_inst, _wt_inst, _adm2_inst, _adm3_inst, _of1_inst, _of2_inst, 
-	_typepm_inst, _cyclepm1_inst, _cyclepm2_inst, _pos_inst, _line_inst, _power_inst, _sinfo_inst;
+	_typepm_inst, _cyclepm1_inst, _cyclepm2_inst, _pos_inst, _line_inst, _power_inst, _sinfo_inst, _date_create, _date_change, _inst_pdf;
 	
 	_query qr = new _query();
 	s_class scl = new s_class();
@@ -119,6 +119,9 @@ public class pm_inst_controller
 				
 		col_id_inst.setCellValueFactory(CellData -> CellData.getValue().IdProperty());
 		col_ninst_inst.setCellValueFactory(CellData -> CellData.getValue().num_instProperty());
+		col_date_create_pi.setCellValueFactory(CellData -> CellData.getValue().date_createProperty());
+		col_date_change_pi.setCellValueFactory(CellData -> CellData.getValue().date_changeProperty());
+		col_inst_pi.setCellValueFactory(CellData -> CellData.getValue().inst_pdfProperty());
 		col_ver_inst.setCellValueFactory(CellData -> CellData.getValue().VerProperty());
 		col_mt_inst.setCellValueFactory(CellData -> CellData.getValue().MTTProperty());
 		col_pmn_inst.setCellValueFactory(CellData -> CellData.getValue().PM_nameProperty());
@@ -324,24 +327,27 @@ public class pm_inst_controller
 			String _sql_rez = qr._select_for_update_pminst(str);
 			_id_inst = str;
 			_ninst_inst = scl.parser_sql_str(_sql_rez, 0);
-			_ver_inst = scl.parser_sql_str(_sql_rez, 1);
-			_mt_inst = scl.parser_sql_str(_sql_rez, 2);
-			_pmname_inst = scl.parser_sql_str(_sql_rez, 3); 
-			_typepm_inst = scl.parser_sql_str(_sql_rez, 4);
-			_cyclepm1_inst = scl.parser_sql_str(_sql_rez, 5);
-			_cyclepm2_inst = scl.parser_sql_str(_sql_rez, 6);
-			_line_inst = scl.parser_sql_str(_sql_rez, 7);
-			_power_inst = scl.parser_sql_str(_sql_rez, 8);
-			_pos_inst = scl.parser_sql_str(_sql_rez, 9);
-			_sinfo_inst = scl.parser_sql_str(_sql_rez, 10);
-			_sdoc_txt_inst = scl.parser_sql_str(_sql_rez, 11);
-			_qtyspec_inst = scl.parser_sql_str(_sql_rez, 12);
-			_ptw_inst = scl.parser_sql_str(_sql_rez, 13);
-			_wt_inst = scl.parser_sql_str(_sql_rez, 14);
-			_adm2_inst = scl.parser_sql_str(_sql_rez, 15);
-			_adm3_inst = scl.parser_sql_str(_sql_rez, 16);
-			_of1_inst = scl.parser_sql_str(_sql_rez, 17);
-			_of2_inst = scl.parser_sql_str(_sql_rez, 18);
+			_date_create = scl.parser_sql_str(_sql_rez, 1);
+			_date_change = scl.parser_sql_str(_sql_rez, 2);
+			_inst_pdf = scl.parser_sql_str(_sql_rez, 3);
+			_ver_inst = scl.parser_sql_str(_sql_rez, 4);
+			_mt_inst = scl.parser_sql_str(_sql_rez, 5);
+			_pmname_inst = scl.parser_sql_str(_sql_rez, 6); 
+			_typepm_inst = scl.parser_sql_str(_sql_rez, 7);
+			_cyclepm1_inst = scl.parser_sql_str(_sql_rez, 8);
+			_cyclepm2_inst = scl.parser_sql_str(_sql_rez, 9);
+			_line_inst = scl.parser_sql_str(_sql_rez, 10);
+			_power_inst = scl.parser_sql_str(_sql_rez, 11);
+			_pos_inst = scl.parser_sql_str(_sql_rez, 12);
+			_sinfo_inst = scl.parser_sql_str(_sql_rez, 13);
+			_sdoc_txt_inst = scl.parser_sql_str(_sql_rez, 14);
+			_qtyspec_inst = scl.parser_sql_str(_sql_rez, 15);
+			_ptw_inst = scl.parser_sql_str(_sql_rez, 16);
+			_wt_inst = scl.parser_sql_str(_sql_rez, 17);
+			_adm2_inst = scl.parser_sql_str(_sql_rez, 18);
+			_adm3_inst = scl.parser_sql_str(_sql_rez, 19);
+			_of1_inst = scl.parser_sql_str(_sql_rez, 20);
+			_of2_inst = scl.parser_sql_str(_sql_rez, 21);
 			
 			try {
 				typepm_upd(stage);
@@ -383,6 +389,9 @@ public class pm_inst_controller
 			col_adm3_inst.setText(lngBndl.getString("col_adm3_inst"));
 			col_of1_inst.setText(lngBndl.getString("col_of1_inst"));
 			col_of2_inst.setText(lngBndl.getString("col_of2_inst"));
+			col_date_create_pi.setText(lngBndl.getString("col_date_create_pi"));
+			col_date_change_pi.setText(lngBndl.getString("col_date_change_pi"));
+			col_inst_pi.setText(lngBndl.getString("inst_l")+ " PDF");
 			add_inst.setText(lngBndl.getString("add_tsk"));
 			upd_inst.setText(lngBndl.getString("upd_wr"));
 			del_inst.setText(lngBndl.getString("del_inst"));
