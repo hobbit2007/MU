@@ -249,11 +249,13 @@ public class addrec_inst_controller
 		
 		exp_inst_pdf.setOnAction(new EventHandler<ActionEvent>() {
 			
+			@SuppressWarnings("static-access")
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				FileChooser fc = new FileChooser();
 			    fc.setTitle("Choose a path to file:");
+			    //fc.setInitialDirectory(new File(System.getProperty("user.home")));
 			    fc.getExtensionFilters().addAll(
 			        new ExtensionFilter(
 			            "PDF Files", 
@@ -265,12 +267,14 @@ public class addrec_inst_controller
 			    //showing the file chooser
 			    File phil = 
 			        fc.showOpenDialog(
-			            pic.stage);
+			            pic.getPrimaryStage());
 			    
 			    // checking that a file was
 			    // chosen by the user
-			    if (phil != null) 
+			    if (phil != null) { 
+			    	fc.setInitialDirectory(new File(phil.getParent()));
 			    	 inst_pdf_pi.setText(phil.getPath());
+			    }
 			    chk_btn();
 			}
 	   });

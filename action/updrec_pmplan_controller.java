@@ -26,7 +26,7 @@ public class updrec_pmplan_controller {
 	JFXButton upd_pmplan, cancel_pmplan;
 	
 	@FXML
-	JFXTextField id_pmplan, num_pm_pmplan, group_pm_pmplan;
+	JFXTextField id_pmplan, group_pm_pmplan;
 	
 	@FXML
 	JFXDatePicker data_pmplan;
@@ -64,10 +64,10 @@ public class updrec_pmplan_controller {
 		oft_pmplan.setItems(qr._select_fio_for_ap(1, apwr_controller.SHOP_NAME));
 				
 		id_pmplan.setText(ppc._id_pmplan);
-		num_pm_pmplan.setText(ppc._numpm_pmplan);
+		group_pm_pmplan.setText(ppc._pm_group);
 		oft_pmplan.getSelectionModel().select(ppc._oft_pmplan.toString());
 		data_pmplan.setValue(fx_dp.fromString(ppc._date_pmplan));
-		group_pm_pmplan.setText(ppc._pm_group);
+		
 		
 		upd_pmplan.setOnAction(new EventHandler<ActionEvent>() {
 			

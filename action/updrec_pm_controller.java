@@ -23,10 +23,10 @@ import share_class.s_class;
 
 public class updrec_pm_controller {
 	@FXML
-	ComboBox<String> ninst_pm_upd, ool_pm_upd, otv_pm_upd; //shop_pm_upd, group_pm_upd, lm_pm_upd, os_pm_upd, equip_pm_upd, pmname_pm_upd, pmcycle_pm_upd, pmtype_pm_upd, 
+	ComboBox<String> ninst_pm_upd, ool_pm_upd, otv_pm_upd, group_eq_upd; //shop_pm_upd, group_pm_upd, lm_pm_upd, os_pm_upd, equip_pm_upd, pmname_pm_upd, pmcycle_pm_upd, pmtype_pm_upd, 
 	
 	@FXML
-	TextField dexp_pm_upd, group_eq_upd, equip_pm_upd, num_pm_upd;
+	TextField dexp_pm_upd, equip_pm_upd, num_pm_upd;
 	
 	@FXML
 	JFXButton confirm_pm_upd, cancel_pm_upd;
@@ -56,24 +56,6 @@ public class updrec_pm_controller {
 		sclass._style(confirm_pm_upd);
 		sclass._style(cancel_pm_upd);
 		
-		group_eq_upd.textProperty().addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if(!newValue.isEmpty()) {
-		
-				if (!newValue.matches("\\d*|#|\\*")) {
-					group_eq_upd.setText(newValue.replaceAll("[^\\d|#|\\*]", ""));
-		        }
-				if(newValue.length() > 5) {
-					
-					group_eq_upd.setText(newValue.replaceAll("[0-9]", ""));
-	            	
-				}
-			}
-			}
-		});
-		
 		confirm_pm_upd.setDisable(true);
 		//инициализируем данные комбобоксов
 				ninst_pm_upd.setItems(qr._select_instr_pm());
@@ -94,6 +76,16 @@ public class updrec_pm_controller {
 					public void handle(Event event) {
 						// TODO Auto-generated method stub
 						tip.hide();
+					}
+				});
+				
+				//Заполняем ComboBox Группа в зависимотси от переодичности, т.е в этот ComboBox попадут только те группы которые соответствуют выбранному периоду ППР, а период
+				//мы узнаем по номеру инструкции из таблицы pm_inst
+				ninst_pm_upd.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+					@Override
+					public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+						group_eq_upd.setItems(qr._select_pm_group(ninst_pm_upd.getValue()));				
 					}
 				});
 				
@@ -286,7 +278,7 @@ public class updrec_pm_controller {
 				dexp_pm_upd.setText(pc._days_exp_upd);
 				num_pm_upd.setText(pc._id_pm);
 				equip_pm_upd.setText(qr._select_fillpm_equip(pc._eq_id_upd));
-				group_eq_upd.setText(pc._group_pm_upd);
+				group_eq_upd.getSelectionModel().select(pc._group_pm_upd);
 				
 				/*pmname_pm_upd.setOnAction(new EventHandler<ActionEvent>() {
 					
@@ -358,7 +350,7 @@ public class updrec_pm_controller {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						qr._update_rec_pm(pc._id_pm, sclass.parser_str(ninst_pm_upd.getValue(), 0), sclass.parser_str(group_eq_upd.getText(), 0), sclass.parser_str(otv_pm_upd.getValue(), 0), dexp_pm_upd.getText(), sclass.parser_str(ool_pm_upd.getValue(), 0));
+						qr._update_rec_pm(pc._id_pm, sclass.parser_str(ninst_pm_upd.getValue(), 0), group_eq_upd.getValue(), sclass.parser_str(otv_pm_upd.getValue(), 0), dexp_pm_upd.getText(), sclass.parser_str(ool_pm_upd.getValue(), 0));
 							
 						qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновиле запись № = " + pc._id_pm + " в таблице PM");
 							
@@ -402,7 +394,7 @@ public class updrec_pm_controller {
 		lbl_ool_pm.setText(lngBndl.getString("col_ool_pm")+":");
 		lbl_otv_pm.setText(lngBndl.getString("lbl_otv_ap")+":");
 		lbl_dexp_pm.setText(lngBndl.getString("lbl_dexp_pm")+":");
-		lbl_group_eq.setText(lngBndl.getString("col_group_pm")+":");
+		lbl_group_eq.setText(lngBndl.getString("col_group_eq")+":");
 		lbl_head_pm.setText(lngBndl.getString("lbl_head_pm_upd"));
 		confirm_pm_upd.setText(lngBndl.getString("lbl_apply"));
 		cancel_pm_upd.setText(lngBndl.getString("cancel_tsk"));
@@ -410,7 +402,7 @@ public class updrec_pm_controller {
 	private void chk_btn()
 	{
 		try {
-			if(ninst_pm_upd.getValue().length() != 0 && group_eq_upd.getText().length() != 0 &&  
+			if(ninst_pm_upd.getValue().length() != 0 && group_eq_upd.getValue().length() != 0 &&  
 					ool_pm_upd.getValue().length() != 0 && otv_pm_upd.getValue().length() != 0 && dexp_pm_upd.getText().length() != 0)
 				confirm_pm_upd.setDisable(false);
 			else

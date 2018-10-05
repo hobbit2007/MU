@@ -23,10 +23,10 @@ import share_class.s_class;
 
 public class addrec_pm_controller {
 	@FXML
-	ComboBox<String> ninst_pm, shop_pm, lm_pm, os_pm, equip_pm, group_pm, ool_pm, otv_pm;
+	ComboBox<String> ninst_pm, shop_pm, lm_pm, os_pm, equip_pm, group_pm, ool_pm, otv_pm, group_eq;
 	
 	@FXML
-	TextField dexp_pm, group_eq;
+	TextField dexp_pm;
 	
 	@FXML
 	JFXButton confirm_pm, cancel_pm;
@@ -59,24 +59,6 @@ public class addrec_pm_controller {
 		sclass._style(confirm_pm);
 		sclass._style(cancel_pm);
 		
-		group_eq.textProperty().addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if(!newValue.isEmpty()) {
-		
-				if (!newValue.matches("\\d*|#|\\*")) {
-					group_eq.setText(newValue.replaceAll("[^\\d|#|\\*]", ""));
-		        }
-				if(newValue.length() > 5) {
-					
-					group_eq.setText(newValue.replaceAll("[0-9]", ""));
-	            	
-				}
-			}
-			}
-		});
-		
 		ninst_pm.setOnMouseEntered(new EventHandler<Event>() {
 		
 			@Override
@@ -96,6 +78,16 @@ public class addrec_pm_controller {
 			}
 		});
 		
+		//Заполняем ComboBox Группа в зависимотси от переодичности, т.е в этот ComboBox попадут только те группы которые соответствуют выбранному периоду ППР, а период
+		//мы узнаем по номеру инструкции из таблицы pm_inst
+		ninst_pm.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+				group_eq.setItems(qr._select_pm_group(ninst_pm.getValue()));				
+			}
+		});
+				
 		shop_pm.setItems(qr._select_shop_pm());
 		shop_pm.setValue(apwr_controller.SHOP_NAME);
 				
@@ -288,7 +280,7 @@ public class addrec_pm_controller {
 			public void handle(ActionEvent event) {
 				
 				String eq_id_total = qr._select_data_filter_ps_id(sclass.parser_str(shop_pm.getValue(), 0), sclass.parser_str(group_pm.getValue(), 0), sclass.parser_str(lm_pm.getValue(), 0), sclass.parser_str(os_pm.getValue(), 0), sclass.parser_str(equip_pm.getValue(), 0));
-				qr._insert_pm(sclass.parser_str(ninst_pm.getValue(), 0), eq_id_total, sclass.parser_str(group_eq.getText(), 0), sclass.parser_str(otv_pm.getValue(), 0), dexp_pm.getText(), sclass.parser_str(ool_pm.getValue(), 0));
+				qr._insert_pm(sclass.parser_str(ninst_pm.getValue(), 0), eq_id_total, group_eq.getValue(), sclass.parser_str(otv_pm.getValue(), 0), dexp_pm.getText(), sclass.parser_str(ool_pm.getValue(), 0));
 			
 				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_pm") + " в таблице PM");
 					
@@ -339,7 +331,7 @@ public class addrec_pm_controller {
 		lbl_ool_pm.setText(lngBndl.getString("col_ool_pm")+":");
 		lbl_otv_pm.setText(lngBndl.getString("lbl_otv_ap")+":");
 		lbl_dexp_pm.setText(lngBndl.getString("lbl_dexp_pm")+":");
-		lbl_group_eq.setText(lngBndl.getString("col_group_pm")+":");
+		lbl_group_eq.setText(lngBndl.getString("col_group_eq")+":");
 		lbl_head_pm.setText(lngBndl.getString("lbl_head_pm"));
 		confirm_pm.setText(lngBndl.getString("lbl_apply"));
 		cancel_pm.setText(lngBndl.getString("cancel_tsk"));
@@ -349,7 +341,7 @@ public class addrec_pm_controller {
 		{
 			try {
 			if(ninst_pm.getValue().length() != 0 && shop_pm.getValue().length() != 0 && group_pm.getValue().length() != 0 && lm_pm.getValue().length() != 0 &&
-					os_pm.getValue().length() != 0 && equip_pm.getValue().length() != 0 && group_eq.getText().length() != 0 &&  
+					os_pm.getValue().length() != 0 && equip_pm.getValue().length() != 0 && group_eq.getValue().length() != 0 &&  
 					ool_pm.getValue().length() != 0 && dexp_pm.getText().length() != 0 && otv_pm.getValue().length() != 0)// && dexp_pm.getText().length() != 0
 				confirm_pm.setDisable(false);
 			else

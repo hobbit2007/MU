@@ -55,6 +55,7 @@ public class Main extends Application {
 	public static Stage getPrimaryStage() {
         return pStage;
     }
+	//Запускаем на выполнение любой файл, не только Excel!!!!!
 	public void _run_excel(File path) throws IOException
 	{
 		getHostServices().showDocument(path.toURI().toURL().toExternalForm());

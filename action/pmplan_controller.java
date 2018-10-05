@@ -46,7 +46,7 @@ public class pmplan_controller {
 	Label lbl_upd_pmplan, lbl_search_pmplan, lbl_with_pmplan, lbl_to_pmplan;
 	
 	private String _sql_rez;
-	public static String _id_pmplan, _numpm_pmplan, _date_pmplan, _oft_pmplan, _pm_group;
+	public static String _id_pmplan, _numpm_pmplan, _date_pmplan, _oft_pmplan, _pm_group, _pm_id;
 	
 	public static ObservableList<hmmr_pmplan_model> _table_update_pmplan = FXCollections.observableArrayList();
 	
@@ -81,10 +81,11 @@ public class pmplan_controller {
 		filter_clear.setDisable(true);
 		
 		col_num_pmplan.setCellValueFactory(CellData -> CellData.getValue().IdProperty());
-		col_numpm_pmplan.setCellValueFactory(CellData -> CellData.getValue().num_pmProperty());
+		//col_numpm_pmplan.setCellValueFactory(CellData -> CellData.getValue().num_pmProperty());
+		col_group_pm_pmplan.setCellValueFactory(CellData -> CellData.getValue().pm_groupProperty());
 		col_dd_pmplan.setCellValueFactory(CellData -> CellData.getValue().ddProperty());
 		col_resp_pmplan.setCellValueFactory(CellData -> CellData.getValue().respProperty());
-		col_group_pm_pmplan.setCellValueFactory(CellData -> CellData.getValue().pm_groupProperty());
+		
 		
 		table_pmplan.setEditable(true);
 		upd_pmplan.setDisable(true);
@@ -207,10 +208,11 @@ public class pmplan_controller {
 	{
 		_sql_rez = qr._select_for_update_pmplan(str);
 		_id_pmplan = str; 
-		_numpm_pmplan = scl.parser_str_str_str(_sql_rez, 0);
-		_date_pmplan = scl.parser_str_str_str(_sql_rez, 1);
-		_oft_pmplan = scl.parser_str_str_str(_sql_rez, 2);
-		_pm_group = scl.parser_str_str_str(_sql_rez, 3);
+		_pm_id = scl.parser_str_str_str(_sql_rez, 0);
+		_pm_group = scl.parser_str_str_str(_sql_rez, 1);
+		_date_pmplan = scl.parser_str_str_str(_sql_rez, 2);
+		_oft_pmplan = scl.parser_str_str_str(_sql_rez, 3);
+		
 				
 		try {
 			//_flag = false;

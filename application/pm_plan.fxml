@@ -11,22 +11,21 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="569.0" prefWidth="567.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="action.pmplan_controller">
+<AnchorPane prefHeight="569.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="action.pmplan_controller">
    <children>
-      <Pane prefHeight="569.0" prefWidth="567.0">
+      <Pane prefHeight="569.0" prefWidth="485.0">
          <children>
-            <Label fx:id="lbl_upd_pmplan" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="20.0" prefWidth="535.0" text="PM Plan - Редактор">
+            <Label fx:id="lbl_upd_pmplan" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="20.0" prefWidth="429.0" text="PM Plan - Редактор">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>
             </Label>
-            <TableView fx:id="table_pmplan" layoutX="14.0" layoutY="85.0" prefHeight="411.0" prefWidth="535.0">
+            <TableView fx:id="table_pmplan" layoutX="25.0" layoutY="85.0" prefHeight="411.0" prefWidth="429.0">
               <columns>
                 <TableColumn fx:id="col_num_pmplan" prefWidth="97.0" sortable="false" text="№" />
-                <TableColumn fx:id="col_numpm_pmplan" prefWidth="105.0" sortable="false" text="№ PM" />
+                  <TableColumn fx:id="col_group_pm_pmplan" prefWidth="75.0" sortable="false" text="Группа" />
                 <TableColumn fx:id="col_dd_pmplan" prefWidth="104.0" sortable="false" text="Due Date" />
                 <TableColumn fx:id="col_resp_pmplan" prefWidth="142.0" sortable="false" text="Ответственный" />
-                  <TableColumn fx:id="col_group_pm_pmplan" prefWidth="75.0" sortable="false" text="Группа" />
               </columns>
             </TableView>
             <JFXButton fx:id="cancel_pmplan" layoutX="404.0" layoutY="518.0" text="Отмена">

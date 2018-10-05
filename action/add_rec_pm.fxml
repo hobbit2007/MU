@@ -36,7 +36,6 @@
       </Label>
       <ComboBox fx:id="ninst_pm" layoutX="130.0" layoutY="65.0" prefWidth="150.0" />
       <Label fx:id="lbl_group_eq" layoutX="371.0" layoutY="65.0" text="Группа:" />
-      <TextField fx:id="group_eq" layoutX="492.0" layoutY="65.0" />
       <Label fx:id="lbl_otv_pm" layoutX="371.0" layoutY="165.0" text="Ответственный:" />
       <ComboBox fx:id="otv_pm" layoutX="492.0" layoutY="165.0" prefWidth="150.0" />
       <JFXButton fx:id="confirm_pm" layoutX="466.0" layoutY="317.0" text="Применить">
@@ -49,5 +48,6 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </JFXButton>
+      <ComboBox fx:id="group_eq" layoutX="492.0" layoutY="61.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

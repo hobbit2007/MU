@@ -261,46 +261,62 @@ public class pm_controller {
 			});
 	        add_ap_pm.setOnAction(new EventHandler<ActionEvent>() {
 				
+				@SuppressWarnings("static-access")
 				@Override
 				public void handle(ActionEvent event) {
 					// TODO Auto-generated method stub
 					String Otv_for_task = null;
+					
 					hmmr_pm_model _ccl = table_pm.getSelectionModel().getSelectedItem();
 					//String sql_rez = qr._select_for_pmplan(_ccl.getGroup_PM());
-					for(int j = 0; j < qr._select_for_pmplan(_ccl.getGroup_PM()).size(); j++) {
-						String before_pars = qr._select_for_pmplan(_ccl.getGroup_PM()).get(j);
-						String pereodic = scl.parser_sql_str(before_pars, 0);
-						String b_date = scl.parser_sql_str(before_pars, 1);
-						String e_date = scl.parser_sql_str(before_pars, 2);
-						@SuppressWarnings("unused")
-						String shop = scl.parser_sql_str(before_pars, 3);
-						Otv_for_task = scl.parser_sql_str(before_pars, 4);
-						int pm_group = Integer.parseInt(_ccl.getGroup_PM());
-						
-						int _count = Integer.parseInt(pereodic);
-						int _cnt = _count;
-						
-						int day_bdate = fx_dp.fromString(b_date).getDayOfMonth();
-						int month_bdate = fx_dp.fromString(b_date).getMonthValue();
-						int year_bdate = fx_dp.fromString(b_date).getYear();
-						
-						int day_edate = fx_dp.fromString(e_date).getDayOfMonth();
-						int month_edate = fx_dp.fromString(e_date).getMonthValue();
-						int year_edate = fx_dp.fromString(e_date).getYear();
-						
-						//Находим количество дней в течении которых должно выполняться ППР, а затем находим сколько надо создать записей в таблице hmmr_pm_year
-						int gen_day = Math.abs(day_edate - day_bdate);
-						int gen_month = Math.abs(month_edate - month_bdate)*30;
-						int gen_year = Math.abs(year_edate - year_bdate)*365;
-						
-						int _general = Math.round((gen_day + gen_month + gen_year)/_count);
-						
-						for (int i = 0; i < _general; i++) {
-							LocalDate days = LocalDate.of(year_bdate, month_bdate, day_bdate).plusDays(_count);//Расчитываем даты когда заявка должна быть выполнена
-							qr._insert_pm_year(_ccl.getId(), days, Otv_for_task, pm_group);
-							_count = _cnt + _count;
+					//for(int j = 0; j < qr._select_data_pmplan().size(); j++) {
+					if(!_ccl.getGroup_PM().equals("0")) {
+						if(!scl.parser_sql_str(qr._select_for_pmgroup(_ccl.getGroup_PM()), 0).equals(_ccl.getGroup_PM())) {
+							try {
+								String before_pars = qr._select_for_pmplan(_ccl.getGroup_PM()).get(0);
+								String pereodic = scl.parser_sql_str(before_pars, 0);
+								String b_date = scl.parser_sql_str(before_pars, 1);
+								String e_date = scl.parser_sql_str(before_pars, 2);
+								@SuppressWarnings("unused")
+								String shop = scl.parser_sql_str(before_pars, 3);
+								Otv_for_task = scl.parser_sql_str(before_pars, 4);
+								int pm_group = Integer.parseInt(_ccl.getGroup_PM());
+								
+								int _count = Integer.parseInt(pereodic);
+								int _cnt = _count;
+								
+								int day_bdate = fx_dp.fromString(b_date).getDayOfMonth();
+								int month_bdate = fx_dp.fromString(b_date).getMonthValue();
+								int year_bdate = fx_dp.fromString(b_date).getYear();
+								
+								int day_edate = fx_dp.fromString(e_date).getDayOfMonth();
+								int month_edate = fx_dp.fromString(e_date).getMonthValue();
+								int year_edate = fx_dp.fromString(e_date).getYear();
+								
+								//Находим количество дней в течении которых должно выполняться ППР, а затем находим сколько надо создать записей в таблице hmmr_pm_year
+								int gen_day = Math.abs(day_edate - day_bdate);
+								int gen_month = Math.abs(month_edate - month_bdate)*30;
+								int gen_year = Math.abs(year_edate - year_bdate)*365;
+								
+								int _general = Math.round((gen_day + gen_month + gen_year)/_count);
+								
+								for (int i = 0; i < _general; i++) {
+									LocalDate days = LocalDate.of(year_bdate, month_bdate, day_bdate).plusDays(_count);//Расчитываем даты когда заявка должна быть выполнена
+									qr._insert_pm_year(_ccl.getId(), pm_group, days, Otv_for_task);
+									_count = _cnt + _count;
+								}
+							}
+							catch (Exception e) {
+								scl._AlertDialog("Не найден номер инструкции или имя цикла переодичности задано некорректно!", "Ошибка!");
+							}
+						}
+						else
+						{
+							scl._AlertDialog("Группа "+ _ccl.getGroup_PM() +" уже добавлена в PM PLAN!", "Группа уже существует");
 						}
 					}
+					else
+						scl._AlertDialog("Группа 0 не может быть добавлена в PM PLAN! Введите корректный номер группы!", "Ошибка!");
 					//LocalDate day256_2017 = LocalDate.ofYearDay(2018, 256);
 					//System.out.println("DAY = "+ day_bdate + " MONTH = " + month_bdate + " YEAR = " + year_bdate);
 					add_ap_pm.setDisable(true);

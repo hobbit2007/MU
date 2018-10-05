@@ -5,6 +5,8 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
+
+import application.Main;
 import application.conn_connector;
 import db._query;
 import javafx.collections.FXCollections;
@@ -71,6 +73,7 @@ public class pm_inst_controller
 	public Stage stage = new Stage();
 	public static ObservableList<TableColumn<hmmr_inst_model, ?>> columns_inst;
 	public static ObservableList<hmmr_inst_model> _table_update_inst = FXCollections.observableArrayList();
+	public static Stage pStage;
 	
 	public pm_inst_controller()
 	{
@@ -296,6 +299,7 @@ public class pm_inst_controller
 	
 	//Вызываем окно добавления записи к PM_Instruction
 		protected void pminst_add(Stage stage) throws IOException {
+			setPrimaryStage(stage);
 			Parent root = FXMLLoader.load(getClass().getResource("add_rec_inst.fxml"));
 			   
 		    Scene scene = new Scene(root);
@@ -399,6 +403,14 @@ public class pm_inst_controller
 			head_pm.setText(lngBndl.getString("head_pm"));
 			upd_table_inst.setText(lngBndl.getString("upd_table_wr"));
 		}
+		
+		@SuppressWarnings("unused")
+		private void setPrimaryStage(Stage pStage) {
+	        Main.pStage = pStage;
+	    }
+		public static Stage getPrimaryStage() {
+	        return pStage;
+	    }
 		
 		//Запускаем поток для реального обновления данных в таблице
 		/*		@SuppressWarnings("rawtypes")

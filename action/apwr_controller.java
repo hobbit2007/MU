@@ -15,6 +15,8 @@ import javax.imageio.ImageIO;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
+
+import application.Main;
 import application.conn_connector;
 import data.FxDatePickerConverter;
 import db._query;
@@ -102,10 +104,12 @@ public class apwr_controller {
 	_query qr = new _query();
 	s_class scl = new s_class();
 	FxDatePickerConverter fx_dp = new FxDatePickerConverter();
+	Main mn = new Main();
 	
 	private String _date, _count;
 	
-	private String _due_date, _instruct, _shop, _lm, _os, _equip, _id_pm, _pmname,_type, _otf, _id, _record, _sql_rez, _group_pm; 
+	@SuppressWarnings("unused")
+	private String _due_date, _instruct, _shop, _lm, _os, _equip, _id_pm, _pmname,_type, _otf, _id, _group_pm, _sql_rez, _group_eq; 
 	public Stage stage = new Stage();
 	//Thread t, b;
 	private boolean _flag = true;
@@ -1001,30 +1005,33 @@ public class apwr_controller {
 			if(_chk_cur_date.equals(_chk_new_date))
 			{
 				//Получаем поля необходимые для инсерта в Action Plan
-				_get_field.addAll(qr._select_getfield_for_ap());
-				_due_date = scl.parser_str(_get_field.get(i), 0);
-				_otf = scl.parser_str(_get_field.get(i), 1);
-				_instruct = scl.parser_str(_get_field.get(i), 2);
-				_shop = scl.parser_str(_get_field.get(i), 3);
-				_lm = scl.parser_str(_get_field.get(i), 4);
-				_os = scl.parser_str(_get_field.get(i), 5);
-				_equip = scl.parser_str(_get_field.get(i), 6);
-				_id_pm = scl.parser_str(_get_field.get(i), 7);
-				_pmname = scl.parser_str(_get_field.get(i), 8);
-				_record = scl.parser_str(_get_field.get(i), 9);
-				_id = scl.parser_str(_get_field.get(i), 10);
-				_group_pm = scl.parser_str(_get_field.get(i), 11);
-				_type = "PM";
-				if(_record.equals("0"))
-					qr._insert_ap(_id_pm, _type, _pmname, _due_date, _shop+"."+_group_pm+"."+_lm+"."+_os+"."+_equip, _instruct, _otf, qr._select_userid_(_otf), _shop);
-				//Чтобы задача не добавлясь в AP каждый раз с запуском приложения, поэтому ставим признак - 1, после первого заполнения
-				qr._update_hpy_record(_id, "1");
-		
+				_get_field.addAll(qr._select_getfield_for_ap(_date));
+				for(int j = 0; j < _get_field.size(); j++) {  //new
+					_due_date = scl.parser_str(_get_field.get(j), 0);
+					_otf = scl.parser_str(_get_field.get(j), 1);
+					_instruct = scl.parser_str(_get_field.get(j), 2);
+					_id_pm = scl.parser_str(_get_field.get(j), 3);
+					_group_pm = scl.parser_str(_get_field.get(j), 4);
+					_pmname = scl.parser_str(_get_field.get(j), 5);
+					_shop = scl.parser_str(_get_field.get(j), 6);
+					_group_eq = scl.parser_str(_get_field.get(j), 7);
+					_lm = scl.parser_str(_get_field.get(j), 8);
+					_os = scl.parser_str(_get_field.get(j), 9);
+					_equip = scl.parser_str(_get_field.get(j), 10);
+					_id = scl.parser_str(_get_field.get(j), 11);
+					_type = "PM";
+					//if(_record.equals("0"))
+						qr._insert_ap(_id_pm, _type, _pmname, _due_date, _shop+"."+_group_eq+"."+_lm+"."+_os+"."+_equip, _instruct, _otf, qr._select_userid_(_otf), _shop, "4M");
+					//Чтобы задача не добавлясь в AP каждый раз с запуском приложения, поэтому ставим признак - 1, после первого заполнения
+					qr._update_hpy_record(_id, "1");
+				}
+				_chk.removeAll(_chk);
+				_chk.addAll(qr._select_pmplan());
 				table_ap.setItems(qr._select_data_ap(USER_S));
 				table_ap.getColumns().get(0).setVisible(false);
 		        table_ap.getColumns().get(0).setVisible(true);
 			}
-			//_get_field.removeAll();
+			
 		}
 		
 		scl._style(create_ap);
@@ -1857,23 +1864,23 @@ public class apwr_controller {
                         //btn.setFocusTraversable(false);
                         btn.setOnAction(new EventHandler<ActionEvent>() {
 							
+							@SuppressWarnings("static-access")
 							@Override
 							public void handle(ActionEvent event) {
 								// TODO Auto-generated method stub
+								
+								//System.out.println("RECORD ID = " + table_ap.getSelectionModel().getSelectedItem().getId());
 								try {
-			                    	//System.out.println("RECORD ID = " + table_ap.getSelectionModel().getSelectedItem().getId());
-			                    	String inst_path = qr._select_inst_for_ap(table_ap.getSelectionModel().getSelectedItem().getId());
-			                    	
-			                    	Runtime runtime = Runtime.getRuntime();
-			                    	if(inst_path.length() != 0)
-										runtime.exec("excel " + inst_path);
-			                    	//btn.setDisable(true);
-									} catch (IOException e) {
-										// TODO Auto-generated catch block
-										//e.printStackTrace();
-										System.out.println("ERROR!!!");
-									}
-						        _flag = false;
+									File inst_path = new File(qr._select_inst_for_ap(table_ap.getSelectionModel().getSelectedItem().getId()));
+									mn._run_excel(inst_path);
+								}
+								catch (Exception e) {
+									scl._AlertDialog("Сначала выделите строку!", "Ошибка!");
+								}
+//			                    	Runtime runtime = Runtime.getRuntime();
+//			                    	if(inst_path.length() != 0)
+//										runtime.exec("excel " + inst_path);
+								//btn.setDisable(true);
 							}
 						});
 
