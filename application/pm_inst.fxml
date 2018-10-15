@@ -13,13 +13,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="sp_inst" prefHeight="828.0" prefWidth="1851.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="action.pm_inst_controller">
+<ScrollPane fx:id="sp_inst" hbarPolicy="NEVER" prefHeight="828.0" prefWidth="1851.0" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="action.pm_inst_controller">
    <content>
       <Pane fx:id="pane_inst" prefHeight="828.0" prefWidth="1841.0">
          <children>
             <VBox fx:id="vbox_inst" alignment="TOP_CENTER" prefHeight="828.0" prefWidth="1837.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="1644.0">
+                  <HBox fx:id="hb1" alignment="CENTER" prefHeight="100.0" prefWidth="1644.0">
                      <children>
                         <ImageView fitHeight="70.0" fitWidth="219.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -33,7 +33,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox fx:id="hbox_inst" alignment="CENTER_LEFT" prefHeight="681.0" prefWidth="1613.0">
+                  <HBox fx:id="hb2" alignment="CENTER_LEFT" prefHeight="681.0" prefWidth="1613.0">
                      <children>
                         <TableView fx:id="table_inst" prefHeight="673.0" prefWidth="1805.0">
                           <columns>
@@ -67,7 +67,7 @@
                         </TableView>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="71.0" prefWidth="1602.0">
+                  <HBox fx:id="hb3" alignment="CENTER_LEFT" prefHeight="71.0" prefWidth="1602.0">
                      <children>
                         <HBox prefHeight="63.0" prefWidth="53.0" />
                         <JFXButton fx:id="add_inst" text="Создать">

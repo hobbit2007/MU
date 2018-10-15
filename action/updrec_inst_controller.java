@@ -53,6 +53,7 @@ public class updrec_inst_controller
 	s_class sclass = new s_class();
 	FxDatePickerConverter fx_dp = new FxDatePickerConverter();
 	Tooltip tip;	
+	private static String pathToPdf = "\\\\10.168.170.49\\MU\\Instruction_PDF", pathToPdf1 = "C://";//user.home
 	
 	@SuppressWarnings("static-access")
 	@FXML
@@ -211,40 +212,50 @@ public class updrec_inst_controller
 						tip.hide();
 					}
 				});
+				FileChooser fc1 = new FileChooser();
+			    fc1.setTitle("Choose a path to file:");
 				sdoc_inst_upd.setOnAction(new EventHandler<ActionEvent>() {
 					
 					@Override
 					public void handle(ActionEvent event) {
 						// TODO Auto-generated method stub
-						FileChooser fc = new FileChooser();
-					    fc.setTitle("Choose a path to file:");
-					    fc.getExtensionFilters().addAll(
+						fc1.setInitialDirectory(new File(pathToPdf1));
+					    fc1.getExtensionFilters().addAll(
 					        new ExtensionFilter(
 					            "Excel Files", 
-					            "*.xlsx"),
+					            "*.xlsx", "*.xls"),
 					        new ExtensionFilter(
 					            "All Files", 
 					            "*.*"));
 					    
 					    //showing the file chooser
 					    File phil = 
-					        fc.showOpenDialog(
+					        fc1.showOpenDialog(
 					            pic.stage);
 					    
 					    // checking that a file was
 					    // chosen by the user
 					    if (phil != null) 
-					    	 sdoc_txt_inst_upd.setText(phil.getPath());
+					    	try {
+						    	 pathToPdf1 =  phil.getParent();
+						    	 sdoc_txt_inst_upd.setText(phil.getPath());
+					    	}
+					    catch (Exception e) {
+							// TODO: handle exception
+						}
+					    chk_btn();
 					}
 			   });
 				
+				 
+				FileChooser fc = new FileChooser();
+			    fc.setTitle("Choose a path to file:");
 				exp_inst_pdf.setOnAction(new EventHandler<ActionEvent>() {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						// TODO Auto-generated method stub
-						FileChooser fc = new FileChooser();
-					    fc.setTitle("Choose a path to file:");
+					
+					    fc.setInitialDirectory(new File(pathToPdf)); //System.getProperty(pathToPdf)
 					    fc.getExtensionFilters().addAll(
 					        new ExtensionFilter(
 					            "PDF Files", 
@@ -256,12 +267,20 @@ public class updrec_inst_controller
 					    //showing the file chooser
 					    File phil = 
 					        fc.showOpenDialog(
-					            pic.stage);
+					            pic.getPrimaryStage());
 					    
 					    // checking that a file was
 					    // chosen by the user
-					    if (phil != null) 
-					    	 inst_pdf_pi.setText(phil.getPath());
+					    if (phil != null) { 
+					    	try {
+								pathToPdf =  phil.getParent();//.replace("\\", "//")
+								inst_pdf_pi.setText(phil.getPath());
+					    	}
+					    	catch (Exception e) {
+								// TODO: handle exception
+							}
+					    }
+					    chk_btn();
 					}
 			   });
 				//инициализируем данными три TextField

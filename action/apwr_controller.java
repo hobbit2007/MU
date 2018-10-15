@@ -43,6 +43,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -52,7 +53,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -89,10 +92,19 @@ public class apwr_controller {
 	JFXButton print_tsk, add_wr, create_ap, upd_ap, private_ap, showall_ap, upd_table_ap, upd_wr, clear_filter, upd_table_wr, set_btn, rus_btn, chn_btn, usa_btn, assembly, paint, stamp, welding, export_excel;
 	
 	@FXML
-	Label from_wr, to_wr;
+	Label from_wr, to_wr, title_wo, title_wr;
 	
 	@FXML
-	HBox hb_btn_ap, hb_btn_wr;
+	HBox hb1, hb2, hb3, hb_wr1, hb_wr2, hb_wr3;
+	
+	@FXML
+	VBox vb, vb_wr;
+	
+	@FXML
+	AnchorPane an_pn1, an_pn2, an_pn_wr;
+	
+	@FXML
+	TabPane tb_pn;
 	
 	@FXML
 	ComboBox<String> filtre_apwr, shop_resp_wr;
@@ -109,7 +121,7 @@ public class apwr_controller {
 	private String _date, _count;
 	
 	@SuppressWarnings("unused")
-	private String _due_date, _instruct, _shop, _lm, _os, _equip, _id_pm, _pmname,_type, _otf, _id, _group_pm, _sql_rez, _group_eq; 
+	private String _due_date, _instruct, _shop, _lm, _os, _equip, _id_pm, _pmname,_type, _otf, _id, _group_pm, _sql_rez, _group_eq, _pm_exec; 
 	public Stage stage = new Stage();
 	//Thread t, b;
 	private boolean _flag = true;
@@ -160,9 +172,66 @@ public class apwr_controller {
 		Double screen_width = primaryScreenBounds.getWidth();
 		Double screen_hight = primaryScreenBounds.getHeight(); 
 		
-		sp_wr.setPrefWidth(screen_width - 575);
-		sp_wr.setPrefHeight(screen_hight - 30);
-		
+			sp_wr.setPrefWidth(screen_width);
+			sp_wr.setPrefHeight(screen_hight);
+			an_pn1.setPrefWidth(screen_width - 19);
+			an_pn1.setPrefHeight(screen_hight - 50);
+			tb_pn.setPrefWidth(screen_width - 19);
+			tb_pn.setPrefHeight(screen_hight - 50);
+			an_pn2.setPrefWidth(screen_width - 50);
+			an_pn2.setPrefHeight(screen_hight - 50);
+			vb.setPrefWidth(screen_width - 50);
+			vb.setPrefHeight(screen_hight - 50);
+			hb1.setPrefWidth(screen_width - 50);
+			hb1.setPrefHeight(70.0);
+			hb2.setPrefWidth(screen_width - 50);
+			hb2.setPrefHeight(screen_hight - 220);
+			hb3.setPrefWidth(screen_width - 50);
+			hb3.setPrefHeight(70.0);
+			table_ap.setPrefWidth(screen_width-100);
+			table_ap.setPrefHeight(screen_hight-200);
+			title_wo.setPrefWidth(900.0);
+			if(screen_width == 1920.0)
+				desc_ap.setPrefWidth(900.0);
+			if(screen_width == 1768.0)
+				desc_ap.setPrefWidth(750.0);
+			if(screen_width == 1600.0)
+				desc_ap.setPrefWidth(610.0);
+			if(screen_width == 1440.0)
+				desc_ap.setPrefWidth(430.0);
+			
+			an_pn_wr.setPrefWidth(screen_width - 20);
+			an_pn_wr.setPrefHeight(screen_hight - 20);
+			vb_wr.setPrefWidth(screen_width - 20);
+			vb_wr.setPrefHeight(screen_hight - 20);
+			hb_wr1.setPrefWidth(screen_width - 20);
+			hb_wr1.setPrefHeight(70.0);
+			hb_wr2.setPrefWidth(screen_width - 20);
+			hb_wr2.setPrefHeight(screen_hight - 220);
+			hb_wr3.setPrefWidth(screen_width - 20);
+			hb_wr3.setPrefHeight(70.0);
+			table_wr.setPrefWidth(screen_width-70);
+			table_wr.setPrefHeight(screen_hight-200);
+			
+			if(screen_width == 1920.0) {
+				shift_report_wr.setPrefWidth(520.0);
+				req_action_wr.setPrefWidth(520.0);
+				title_wr.setPrefWidth(850.0);
+			}
+			if(screen_width == 1768.0) {
+				shift_report_wr.setPrefWidth(450.0);
+				req_action_wr.setPrefWidth(450.0);
+				title_wr.setPrefWidth(750.0);
+			}
+			if(screen_width == 1600.0) {
+				shift_report_wr.setPrefWidth(360.0);
+				req_action_wr.setPrefWidth(360.0);
+				title_wr.setPrefWidth(580.0);
+			}
+			if(screen_width == 1440.0) {
+				shift_report_wr.setPrefWidth(290.0);
+				req_action_wr.setPrefWidth(290.0);
+			}
 		begin_data.setValue(LocalDate.now().minusDays(7));
 		last_data.setValue(LocalDate.now());
 		
@@ -1019,9 +1088,10 @@ public class apwr_controller {
 					_os = scl.parser_str(_get_field.get(j), 9);
 					_equip = scl.parser_str(_get_field.get(j), 10);
 					_id = scl.parser_str(_get_field.get(j), 11);
+					_pm_exec = scl.parser_str(_get_field.get(j), 12);
 					_type = "PM";
 					//if(_record.equals("0"))
-						qr._insert_ap(_id_pm, _type, _pmname, _due_date, _shop+"."+_group_eq+"."+_lm+"."+_os+"."+_equip, _instruct, _otf, qr._select_userid_(_otf), _shop, "4M");
+						qr._insert_ap(_id_pm, _type, _pmname, _due_date, _shop+"."+_group_eq+"."+_lm+"."+_os+"."+_equip, _instruct, _otf, qr._select_userid_(_otf), _shop, "4M",_pm_exec);
 					//Чтобы задача не добавлясь в AP каждый раз с запуском приложения, поэтому ставим признак - 1, после первого заполнения
 					qr._update_hpy_record(_id, "1");
 				}

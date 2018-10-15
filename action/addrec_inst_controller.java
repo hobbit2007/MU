@@ -51,7 +51,9 @@ public class addrec_inst_controller
 	pm_inst_controller pic = new pm_inst_controller();
 	File dataFile = null;
 	Tooltip tip;
-		
+	
+	private static String pathToPdf = "\\\\10.168.170.49\\MU\\Instruction_PDF", pathToPdf1 = "C://";//user.home
+			
 	@FXML
 	public void initialize()
 	{
@@ -219,43 +221,51 @@ public class addrec_inst_controller
 				tip.hide();
 			}
 		});
+		FileChooser fc1 = new FileChooser();
+	    fc1.setTitle("Choose a path to file:");
 		sdoc_inst.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
-				FileChooser fc = new FileChooser();
-			    fc.setTitle("Choose a path to file:");
-			    fc.getExtensionFilters().addAll(
+				fc1.setInitialDirectory(new File(pathToPdf1));
+			    fc1.getExtensionFilters().addAll(
 			        new ExtensionFilter(
 			            "Excel Files", 
-			            "*.xlsx"),
+			            "*.xlsx", "*.xls"),
 			        new ExtensionFilter(
 			            "All Files", 
 			            "*.*"));
 			    
 			    //showing the file chooser
 			    File phil = 
-			        fc.showOpenDialog(
+			        fc1.showOpenDialog(
 			            pic.stage);
 			    
 			    // checking that a file was
 			    // chosen by the user
 			    if (phil != null) 
-			    	 sdoc_txt_inst.setText(phil.getPath());
+			    	try {
+				    	 pathToPdf1 =  phil.getParent();
+				    	 sdoc_txt_inst.setText(phil.getPath());
+			    	}
+			    catch (Exception e) {
+					// TODO: handle exception
+				}
 			    chk_btn();
 			}
 	   });
 		
+		 
+		FileChooser fc = new FileChooser();
+	    fc.setTitle("Choose a path to file:");
 		exp_inst_pdf.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@SuppressWarnings("static-access")
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				FileChooser fc = new FileChooser();
-			    fc.setTitle("Choose a path to file:");
-			    //fc.setInitialDirectory(new File(System.getProperty("user.home")));
+			
+			    fc.setInitialDirectory(new File(pathToPdf)); //System.getProperty(pathToPdf)
 			    fc.getExtensionFilters().addAll(
 			        new ExtensionFilter(
 			            "PDF Files", 
@@ -272,8 +282,13 @@ public class addrec_inst_controller
 			    // checking that a file was
 			    // chosen by the user
 			    if (phil != null) { 
-			    	fc.setInitialDirectory(new File(phil.getParent()));
-			    	 inst_pdf_pi.setText(phil.getPath());
+			    	try {
+						pathToPdf =  phil.getParent();//.replace("\\", "//")
+						inst_pdf_pi.setText(phil.getPath());
+			    	}
+			    	catch (Exception e) {
+						// TODO: handle exception
+					}
 			    }
 			    chk_btn();
 			}

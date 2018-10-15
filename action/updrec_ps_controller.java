@@ -59,6 +59,7 @@ public class updrec_ps_controller {
 	DatePicker startdate_ps;
 	
 	private String equip_label, _s_name, prev_id, next_id;
+	private static String pathToPs_Upd="C://";
 
 	_query qr = new _query();
 	s_class sclass = new s_class();
@@ -321,18 +322,16 @@ public class updrec_ps_controller {
 			}
 		});
 		FileChooser fc = new FileChooser();
-		fc.setInitialDirectory(new File(System.getProperty("user.dir")));
+		fc.setTitle("Âûבונטעו פאיכ:");
 		exp_ps.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				
-				
-			   fc.setTitle("Âûבונטעו פאיכ:");
+			   fc.setInitialDirectory(new File(pathToPs_Upd));			   
 			   fc.getExtensionFilters().addAll(
 			        new ExtensionFilter(
 			            "Excel Files",
-			            "*.xlsx"),
+			            "*.xlsx","*.xls"),
 			        new ExtensionFilter(
 			            "All Files", 
 			            "*.*"));
@@ -344,8 +343,13 @@ public class updrec_ps_controller {
 			    // checking that a file was
 			    // chosen by the user
 			    if (phil != null) {
-			    	 manual_ps_t.setText(phil.getPath());
-			    	fc.setInitialDirectory(new File(phil.getParent()));
+			    	try {
+				    	pathToPs_Upd =  phil.getParent();
+				        manual_ps_t.setText(phil.getPath());
+			    	}
+			    	catch (Exception e) {
+						// TODO: handle exception
+					}
 			    }
 			}
 	   });

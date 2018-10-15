@@ -19,6 +19,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -31,6 +32,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import share_class.s_class;
@@ -41,12 +43,12 @@ public class pm_controller {
 	TableView<hmmr_pm_model> table_pm;
 	
 	@FXML
-	TableColumn<hmmr_pm_model, String> col_id_pm, col_ninst_pm, col_group_pm, col_ool_pm, col_otv_pm, col_days_exp; //col_group_eq, col_lm_pm, col_os_pm, col_equip_pm, col_pmn_pm, col_pmc_pm, col_pmtype_pm, 
+	TableColumn<hmmr_pm_model, String> col_id_pm, col_ninst_pm, col_group_pm, col_ool_pm, col_otv_pm, col_isp_pm; //col_group_eq, col_lm_pm, col_os_pm, col_equip_pm, col_pmn_pm, col_pmc_pm, col_pmtype_pm, 
 	
 	@FXML
 	JFXButton add_ap_pm, add_pm, upd_pm, del_pm, close_pm, upd_table_pm;
 	
-	public static String _id_pm, _ninst_pm_upd, _eq_id_upd,_group_pm_upd, _ool_pm_upd, _otv, _days_exp_upd;// _group_eq_upd, _lm_pm_upd, _os_pm_upd, _equip_pm_upd, _pmn_pm_upd, _pmc_pm_upd, _pmtype_pm_upd, 
+	public static String _id_pm, _ninst_pm_upd, _eq_id_upd,_group_pm_upd, _ool_pm_upd, _otv, _pm_exec;// _group_eq_upd, _lm_pm_upd, _os_pm_upd, _equip_pm_upd, _pmn_pm_upd, _pmc_pm_upd, _pmtype_pm_upd, 
 	
 	@FXML
 	ScrollPane sp_pm;
@@ -58,7 +60,7 @@ public class pm_controller {
 	VBox vbox_pm;
 	
 	@FXML
-	HBox hbox_pm;
+	HBox hb1, hb2, hb3;
 	
 	_query qr = new _query();
 	private Stage stage = new Stage();
@@ -72,9 +74,9 @@ public class pm_controller {
 	@FXML
 	public void initialize()
 	{
-	//	Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-	//	Double screen_width = primaryScreenBounds.getWidth();
-	//	Double screen_hight = primaryScreenBounds.getHeight(); 
+		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+		Double screen_width = primaryScreenBounds.getWidth();
+		Double screen_hight = primaryScreenBounds.getHeight(); 
 		
 		//sp_pm.setPrefWidth(screen_width - 230);
 		//sp_pm.setPrefHeight(screen_hight - 50);
@@ -83,7 +85,85 @@ public class pm_controller {
 		//vbox_pm.setPrefHeight(screen_hight - 50);
 		
 	//	hbox_pm.setPrefHeight(screen_hight - 199);
+		sp_pm.setPrefWidth(screen_width - 900);
+		sp_pm.setPrefHeight(screen_hight - 50);
+		pane_pm.setPrefWidth(screen_width - 900);
+		pane_pm.setPrefHeight(screen_hight - 50);
 		
+		vbox_pm.setPrefWidth(screen_width - 900);
+		vbox_pm.setPrefHeight(screen_hight - 50);
+		hb1.setPrefWidth(screen_width - 900);
+		hb1.setPrefHeight(70.0);
+		hb2.setPrefWidth(screen_width - 900);
+		hb2.setPrefHeight(screen_hight - 220);
+		hb3.setPrefWidth(screen_width - 900);
+		hb3.setPrefHeight(70.0);
+		table_pm.setPrefWidth(screen_width - 1000);
+		table_pm.setPrefHeight(screen_hight - 200);
+		
+		if(screen_width == 1920.0) {
+			sp_pm.setPrefWidth(screen_width - 900);
+			pane_pm.setPrefWidth(screen_width - 900);
+			vbox_pm.setPrefWidth(screen_width - 900);
+			hb1.setPrefWidth(screen_width - 900);
+			hb2.setPrefWidth(screen_width - 900);
+			hb3.setPrefWidth(screen_width - 900);
+			table_pm.setPrefWidth(screen_width-1000);
+		}
+		if(screen_width == 1768.0) {
+			sp_pm.setPrefWidth(screen_width - 800);
+			pane_pm.setPrefWidth(screen_width - 800);
+			vbox_pm.setPrefWidth(screen_width - 800);
+			hb1.setPrefWidth(screen_width - 800);
+			hb2.setPrefWidth(screen_width - 800);
+			hb3.setPrefWidth(screen_width - 800);
+			table_pm.setPrefWidth(screen_width - 900);
+		}
+		if(screen_width == 1600.0) {
+			sp_pm.setPrefWidth(screen_width - 600);
+			pane_pm.setPrefWidth(screen_width - 600);
+			vbox_pm.setPrefWidth(screen_width - 600);
+			hb1.setPrefWidth(screen_width - 600);
+			hb2.setPrefWidth(screen_width - 600);
+			hb3.setPrefWidth(screen_width - 600);
+			table_pm.setPrefWidth(screen_width - 500);
+		}
+		if(screen_width == 1440.0) {
+			sp_pm.setPrefWidth(screen_width - 600);
+			pane_pm.setPrefWidth(screen_width - 600);
+			vbox_pm.setPrefWidth(screen_width - 600);
+			hb1.setPrefWidth(screen_width - 600);
+			hb2.setPrefWidth(screen_width - 600);
+			hb3.setPrefWidth(screen_width - 600);
+			table_pm.setPrefWidth(screen_width - 500);
+		}
+		if(screen_width == 1366.0) {
+			sp_pm.setPrefWidth(screen_width - 500);
+			pane_pm.setPrefWidth(screen_width - 500);
+			vbox_pm.setPrefWidth(screen_width - 500);
+			hb1.setPrefWidth(screen_width - 600);
+			hb2.setPrefWidth(screen_width - 600);
+			hb3.setPrefWidth(screen_width - 600);
+			table_pm.setPrefWidth(screen_width - 600);
+		}
+		if(screen_width == 1360.0) {
+			sp_pm.setPrefWidth(screen_width - 500);
+			pane_pm.setPrefWidth(screen_width - 500);
+			vbox_pm.setPrefWidth(screen_width - 500);
+			hb1.setPrefWidth(screen_width - 600);
+			hb2.setPrefWidth(screen_width - 600);
+			hb3.setPrefWidth(screen_width - 600);
+			table_pm.setPrefWidth(screen_width - 600);
+		}
+		if(screen_width == 1280.0) {
+			sp_pm.setPrefWidth(screen_width - 500);
+			pane_pm.setPrefWidth(screen_width - 500);
+			vbox_pm.setPrefWidth(screen_width - 500);
+			hb1.setPrefWidth(screen_width - 550);
+			hb2.setPrefWidth(screen_width - 550);
+			hb3.setPrefWidth(screen_width - 550);
+			table_pm.setPrefWidth(screen_width - 550);
+		}
 		upd_pm.setDisable(true);
 		del_pm.setDisable(true);
 		add_ap_pm.setDisable(true);
@@ -115,7 +195,7 @@ public class pm_controller {
 		columns_pm = table_pm.getColumns();	
 		
 		//устанавливаем права для кнопки удалить
-		if(conn_connector.USER_ROLE.equals("Technics") || conn_connector.USER_ROLE.equals("Engeneer"))
+		if(conn_connector.USER_ROLE.equals("Technics")) // || conn_connector.USER_ROLE.equals("Engeneer")
 			del_pm.setDisable(true);
 			
 		col_id_pm.setCellValueFactory(CellData -> CellData.getValue().IdProperty());
@@ -133,7 +213,7 @@ public class pm_controller {
 //		col_pmtype_pm.setCellValueFactory(CellData -> CellData.getValue().TPOTProperty());
 		col_ool_pm.setCellValueFactory(CellData -> CellData.getValue().OOLProperty());
 		col_otv_pm.setCellValueFactory(CellData -> CellData.getValue().OtvProperty());
-		col_days_exp.setCellValueFactory(CellData -> CellData.getValue().Days_ExpProperty());
+		col_isp_pm.setCellValueFactory(CellData -> CellData.getValue().Otv_IspProperty());
 		
 		col_id_pm.setSortable(false);
 		col_ninst_pm.setSortable(false);
@@ -148,7 +228,7 @@ public class pm_controller {
 //		col_pmtype_pm.setSortable(false);
 		col_ool_pm.setSortable(false);
 		col_otv_pm.setSortable(false);
-		col_days_exp.setSortable(false);
+//		col_days_exp.setSortable(false);
 		
 		table_pm.setEditable(true);
 		final ObservableList<TableColumn<hmmr_pm_model, ?>> columns = table_pm.getColumns();
@@ -183,8 +263,8 @@ public class pm_controller {
 				public void handle(Event event) {
 					// TODO Auto-generated method stub
 					upd_pm.setDisable(false);
-					if(!conn_connector.USER_ROLE.equals("Engeneer"))
-						del_pm.setDisable(false);
+				//	if(!conn_connector.USER_ROLE.equals("Engeneer"))
+					del_pm.setDisable(false);
 					add_ap_pm.setDisable(false);
 				}
 			});
@@ -276,34 +356,37 @@ public class pm_controller {
 								String before_pars = qr._select_for_pmplan(_ccl.getGroup_PM()).get(0);
 								String pereodic = scl.parser_sql_str(before_pars, 0);
 								String b_date = scl.parser_sql_str(before_pars, 1);
-								String e_date = scl.parser_sql_str(before_pars, 2);
-								@SuppressWarnings("unused")
-								String shop = scl.parser_sql_str(before_pars, 3);
-								Otv_for_task = scl.parser_sql_str(before_pars, 4);
-								int pm_group = Integer.parseInt(_ccl.getGroup_PM());
-								
-								int _count = Integer.parseInt(pereodic);
-								int _cnt = _count;
-								
-								int day_bdate = fx_dp.fromString(b_date).getDayOfMonth();
-								int month_bdate = fx_dp.fromString(b_date).getMonthValue();
-								int year_bdate = fx_dp.fromString(b_date).getYear();
-								
-								int day_edate = fx_dp.fromString(e_date).getDayOfMonth();
-								int month_edate = fx_dp.fromString(e_date).getMonthValue();
-								int year_edate = fx_dp.fromString(e_date).getYear();
-								
-								//Находим количество дней в течении которых должно выполняться ППР, а затем находим сколько надо создать записей в таблице hmmr_pm_year
-								int gen_day = Math.abs(day_edate - day_bdate);
-								int gen_month = Math.abs(month_edate - month_bdate)*30;
-								int gen_year = Math.abs(year_edate - year_bdate)*365;
-								
-								int _general = Math.round((gen_day + gen_month + gen_year)/_count);
-								
-								for (int i = 0; i < _general; i++) {
-									LocalDate days = LocalDate.of(year_bdate, month_bdate, day_bdate).plusDays(_count);//Расчитываем даты когда заявка должна быть выполнена
-									qr._insert_pm_year(_ccl.getId(), pm_group, days, Otv_for_task);
-									_count = _cnt + _count;
+								if(!b_date.equals("2018-10-10")) {
+									String e_date = scl.parser_sql_str(before_pars, 2);
+									@SuppressWarnings("unused")
+									String shop = scl.parser_sql_str(before_pars, 3);
+									Otv_for_task = scl.parser_sql_str(before_pars, 4);
+									
+									int pm_group = Integer.parseInt(_ccl.getGroup_PM());
+									
+									int _count = Integer.parseInt(pereodic);
+									int _cnt = _count;
+									
+									int day_bdate = fx_dp.fromString(b_date).getDayOfMonth();
+									int month_bdate = fx_dp.fromString(b_date).getMonthValue();
+									int year_bdate = fx_dp.fromString(b_date).getYear();
+									
+									int day_edate = fx_dp.fromString(e_date).getDayOfMonth();
+									int month_edate = fx_dp.fromString(e_date).getMonthValue();
+									int year_edate = fx_dp.fromString(e_date).getYear();
+									
+									//Находим количество дней в течении которых должно выполняться ППР, а затем находим сколько надо создать записей в таблице hmmr_pm_year
+									int gen_day = Math.abs(day_edate - day_bdate);
+									int gen_month = Math.abs(month_edate - month_bdate)*30;
+									int gen_year = Math.abs(year_edate - year_bdate)*365;
+									
+									int _general = Math.round((gen_day + gen_month + gen_year)/_count);
+									
+									for (int i = 0; i < _general; i++) {
+										LocalDate days = LocalDate.of(year_bdate, month_bdate, day_bdate).plusDays(_count);//Расчитываем даты когда заявка должна быть выполнена
+										qr._insert_pm_year(_ccl.getId(), pm_group, days, Otv_for_task);
+										_count = _cnt + _count;
+									}
 								}
 							}
 							catch (Exception e) {
@@ -356,8 +439,8 @@ public class pm_controller {
 		_eq_id_upd = scl.parser_sql_str(_sql_rez, 1);
 		_group_pm_upd = scl.parser_sql_str(_sql_rez, 2);
 		_otv = scl.parser_sql_str(_sql_rez, 3);
-		_days_exp_upd = scl.parser_sql_str(_sql_rez, 4);
-		_ool_pm_upd = scl.parser_sql_str(_sql_rez, 5);
+		_ool_pm_upd = scl.parser_sql_str(_sql_rez, 4);
+		_pm_exec = scl.parser_sql_str(_sql_rez, 5);
 				
 		try {
 			pm_upd(stage);
@@ -412,7 +495,7 @@ public class pm_controller {
 		col_group_pm.setText(lngBndl.getString("col_group_pm"));
 		col_ool_pm.setText(lngBndl.getString("col_ool_pm"));
 		col_otv_pm.setText(lngBndl.getString("lbl_otv_ap"));
-		col_days_exp.setText(lngBndl.getString("col_days_exp"));
+//		col_days_exp.setText(lngBndl.getString("col_days_exp"));
 		add_ap_pm.setText(lngBndl.getString("add_ap_pm"));
 		add_pm.setText(lngBndl.getString("add_tsk"));
 		upd_pm.setText(lngBndl.getString("upd_wr"));

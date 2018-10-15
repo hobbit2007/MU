@@ -53,7 +53,7 @@ public class pm_inst_controller
 	JFXButton add_inst, upd_inst, del_inst, close_inst, upd_table_inst;
 	
 	@FXML
-	HBox hbox_inst;
+	HBox hb1, hb2, hb3;
 	
 	@FXML
 	Pane pane_inst;
@@ -87,15 +87,31 @@ public class pm_inst_controller
 		Double screen_width = primaryScreenBounds.getWidth();
 		Double screen_hight = primaryScreenBounds.getHeight(); 
 		
-		sp_inst.setPrefWidth(screen_width - 230);
+		sp_inst.setPrefWidth(screen_width);
 		sp_inst.setPrefHeight(screen_hight - 50);
-		
+		pane_inst.setPrefWidth(screen_width - 19);
 		pane_inst.setPrefHeight(screen_hight - 50);
-		vbox_inst.setPrefHeight(screen_hight - 50);
 		
-		hbox_inst.setPrefHeight(screen_hight - 199);
+		vbox_inst.setPrefWidth(screen_width - 50);
+		vbox_inst.setPrefHeight(screen_hight - 50);
+		hb1.setPrefWidth(screen_width - 50);
+		hb1.setPrefHeight(70.0);
+		hb2.setPrefWidth(screen_width - 50);
+		hb2.setPrefHeight(screen_hight - 220);
+		hb3.setPrefWidth(screen_width - 50);
+		hb3.setPrefHeight(70.0);
+		table_inst.setPrefWidth(screen_width-100);
+		table_inst.setPrefHeight(screen_hight-200);
+		
+		//sp_inst.setPrefWidth(screen_width - 230);
+		//sp_inst.setPrefHeight(screen_hight - 50);
+		
+		//pane_inst.setPrefHeight(screen_hight - 50);
+		//vbox_inst.setPrefHeight(screen_hight - 50);
+		
+		//hb2.setPrefHeight(screen_hight - 199);
 		//устанавливаем права для кнопки удалить
-		if(conn_connector.USER_ROLE.equals("Technics") || conn_connector.USER_ROLE.equals("Engeneer"))
+		if(conn_connector.USER_ROLE.equals("Technics")) // || conn_connector.USER_ROLE.equals("Engeneer")
 			del_inst.setDisable(true);
 		
 		if(conn_connector.LANG_ID == 1)
@@ -196,8 +212,8 @@ public class pm_inst_controller
 			// TODO Auto-generated method stub
 				upd_inst.setDisable(false);
 				//устанавливаем права для кнопки удалить
-				if(!conn_connector.USER_ROLE.equals("Engeneer"))
-					del_inst.setDisable(false);
+				//if(!conn_connector.USER_ROLE.equals("Engeneer"))
+				del_inst.setDisable(false);
 			}
 		});
 		
@@ -330,28 +346,28 @@ public class pm_inst_controller
 		{
 			String _sql_rez = qr._select_for_update_pminst(str);
 			_id_inst = str;
-			_ninst_inst = scl.parser_sql_str(_sql_rez, 0);
-			_date_create = scl.parser_sql_str(_sql_rez, 1);
-			_date_change = scl.parser_sql_str(_sql_rez, 2);
-			_inst_pdf = scl.parser_sql_str(_sql_rez, 3);
-			_ver_inst = scl.parser_sql_str(_sql_rez, 4);
-			_mt_inst = scl.parser_sql_str(_sql_rez, 5);
-			_pmname_inst = scl.parser_sql_str(_sql_rez, 6); 
-			_typepm_inst = scl.parser_sql_str(_sql_rez, 7);
-			_cyclepm1_inst = scl.parser_sql_str(_sql_rez, 8);
-			_cyclepm2_inst = scl.parser_sql_str(_sql_rez, 9);
-			_line_inst = scl.parser_sql_str(_sql_rez, 10);
-			_power_inst = scl.parser_sql_str(_sql_rez, 11);
-			_pos_inst = scl.parser_sql_str(_sql_rez, 12);
-			_sinfo_inst = scl.parser_sql_str(_sql_rez, 13);
-			_sdoc_txt_inst = scl.parser_sql_str(_sql_rez, 14);
-			_qtyspec_inst = scl.parser_sql_str(_sql_rez, 15);
-			_ptw_inst = scl.parser_sql_str(_sql_rez, 16);
-			_wt_inst = scl.parser_sql_str(_sql_rez, 17);
-			_adm2_inst = scl.parser_sql_str(_sql_rez, 18);
-			_adm3_inst = scl.parser_sql_str(_sql_rez, 19);
-			_of1_inst = scl.parser_sql_str(_sql_rez, 20);
-			_of2_inst = scl.parser_sql_str(_sql_rez, 21);
+			_ninst_inst = scl.parser_str_str_str(_sql_rez, 0);
+			_date_create = scl.parser_str_str_str(_sql_rez, 1);
+			_date_change = scl.parser_str_str_str(_sql_rez, 2);
+			_inst_pdf = scl.parser_str_str_str(_sql_rez, 3);
+			_ver_inst = scl.parser_str_str_str(_sql_rez, 4);
+			_mt_inst = scl.parser_str_str_str(_sql_rez, 5);
+			_pmname_inst = scl.parser_str_str_str(_sql_rez, 6); 
+			_typepm_inst = scl.parser_str_str_str(_sql_rez, 7);
+			_cyclepm1_inst = scl.parser_str_str_str(_sql_rez, 8);
+			_cyclepm2_inst = scl.parser_str_str_str(_sql_rez, 9);
+			_line_inst = scl.parser_str_str_str(_sql_rez, 10);
+			_power_inst = scl.parser_str_str_str(_sql_rez, 11);
+			_pos_inst = scl.parser_str_str_str(_sql_rez, 12);
+			_sinfo_inst = scl.parser_str_str_str(_sql_rez, 13);
+			_sdoc_txt_inst = scl.parser_str_str_str(_sql_rez, 14);
+			_qtyspec_inst = scl.parser_str_str_str(_sql_rez, 15);
+			_ptw_inst = scl.parser_str_str_str(_sql_rez, 16);
+			_wt_inst = scl.parser_str_str_str(_sql_rez, 17);
+			_adm2_inst = scl.parser_str_str_str(_sql_rez, 18);
+			_adm3_inst = scl.parser_str_str_str(_sql_rez, 19);
+			_of1_inst = scl.parser_str_str_str(_sql_rez, 20);
+			_of2_inst = scl.parser_str_str_str(_sql_rez, 21);
 			
 			try {
 				typepm_upd(stage);
@@ -404,7 +420,6 @@ public class pm_inst_controller
 			upd_table_inst.setText(lngBndl.getString("upd_table_wr"));
 		}
 		
-		@SuppressWarnings("unused")
 		private void setPrimaryStage(Stage pStage) {
 	        Main.pStage = pStage;
 	    }

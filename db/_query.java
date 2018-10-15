@@ -14,6 +14,7 @@ import action.hmmr_ps_model;
 import action.hmmr_wr_model;
 import application.conn_connector;
 import dir.Cycle;
+import dir.Hmmr_OrderType_Model;
 import dir.hmmr_groupcycle_model;
 import dir.hmmr_prior_model;
 import dir.type_pm;
@@ -31,7 +32,7 @@ public class _query
     			  weeks_inst, hours_inst, pereodic_inst, total_rez_upd_inst;
     private String ninst_inst, ver_inst, mtt_inst, pmn_inst, tpm_inst, pmc1_inst, pmc2_inst, ool_inst, oop_inst, pos_inst, sinfo_inst, s_doc_inst, qspec_inst,
     			   pwt_inst, wt_inst, adm2_inst, adm3_inst, ofit1_inst, ofit2_inst, date_create, date_change, inst_pdf;
-    private String total_rez_upd_pm, ninst_pm, eq_id, ool_pm, pm_resp, dexp_pm, group_pm;
+    private String total_rez_upd_pm, ninst_pm, eq_id, ool_pm, pm_resp, group_pm, pm_exec;
     private String total_rez_data, pereodic_pmplan, dbegin, dend, shop_pmplan, otv_plan;
     private String pmnum_ap, type_ap, description_ap, due_date_ap, equip_ap, oft_ap, otv_ap, total_rez_upd_ap, icon;
 	private String shift_report, req_action, actual_time, actual_time1,actual_time2,actual_time3,actual_time4, data, equip, record_type, work_time, resp,resp2,resp3,resp4, status_wr, qty, ap_num, total_rez_upd_wr, actual_date,actual_date_2,actual_date_3,actual_date_4, actual_date1,actual_date2,actual_date3,actual_date4, user, hours1,hours1_2,hours1_3,hours1_4, min1, hours2,hours2_2,hours2_3,hours2_4, min2, user_number; 
@@ -44,8 +45,9 @@ public class _query
 					_melec_ps, _mair_ps, _mwater_ps, _mcwater_ps, _mhwater_ps, _rowater_ps, _mgas_ps, total_rez_ps, _group_eng, _shop_rus,
 					_group_rus, _equip_rus, _group_otv, _inv_num, _os_num, _start_date, _cost_centre;
 	private String lst_id;
-	private String data_pmplan, oft_pmplan, total_rez_pmplan,pm_group, total_rez_group;
+	private String data_pmplan, oft_pmplan, pm_startdate, pm_duration, total_rez_pmplan,pm_group, total_rez_group;
 	private String id_prior, name_prior, desc_prior, icon_prior, total_rez_prior;
+	private String name_ot, desc_ot, total_rez_ot;
 	private String del_rec = "0";
 
             
@@ -286,7 +288,7 @@ public class _query
 		ObservableList<hmmr_pm_model> list = FXCollections.observableArrayList();
 		
 		try {
-			String query = "select id,Instruction_num,Eq_ID,PM_Group,PM_Resp,Date_Beforehand,OnOff_Line from hmmr_pm where del_rec = 0;";
+			String query = "select id,Instruction_num,Eq_ID,PM_Group,PM_Resp,OnOff_Line,PM_Executor from hmmr_pm where del_rec = 0;";
 			
 			cn.ConToDb();
 			stmt11 = cn.con.createStatement();
@@ -300,8 +302,8 @@ public class _query
 	        		hpm.eq_id.set(rs11.getString(3));
 	        		hpm.Group_PM.set(rs11.getString(4));
 	        		hpm.Otv.set(rs11.getString(5));
-	        		hpm.Days_Exp.set(rs11.getString(6));
-	        		hpm.OnOff_Line.set(rs11.getString(7));
+	        		hpm.OnOff_Line.set(rs11.getString(6));
+	        		hpm.Otv_Isp.set(rs11.getString(7));
 	        		
 	        				            
 		            list.add(hpm);
@@ -309,7 +311,7 @@ public class _query
 	        }
 		}
 		catch (SQLException e) {
-			s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 280!");
+			s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 291!");
 	       } finally {
 	           //close connection ,stmt and resultset here
 	       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -585,7 +587,7 @@ public class _query
 		ObservableList<hmmr_pmplan_model> list = FXCollections.observableArrayList();
 	
 		try {
-			String query = "select id,PM_ID,PM_Group,data,OFT from hmmr_pm_year where data BETWEEN "+"'"+begin_data+"'"+" AND "+"'"+last_data+"'"+" AND record_del = 0;";
+			String query = "select id,PM_ID,PM_Group,data,OFT,PM_StartDate,PM_Duration from hmmr_pm_year where data BETWEEN "+"'"+begin_data+"'"+" AND "+"'"+last_data+"'"+" AND record_del = 0;";
 			
 			cn.ConToDb();
 			stmt16 = cn.con.createStatement();
@@ -599,13 +601,15 @@ public class _query
 	        		hpm.pm_group.set(rs16.getString(3));
 	        		hpm.dd.set(rs16.getString(4));
 	        		hpm.resp.set(rs16.getString(5));
-	        			        						        				            
+	        		hpm.pm_startdate.set(rs16.getString(6));
+	        		hpm.pm_duration.set(rs16.getString(7));
+	        		       						        				            
 		            list.add(hpm);
 	        	}    
 	        }
 		}
 		catch (SQLException e) {
-			s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 586!");
+			s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 590!");
 	       } finally {
 	           //close connection ,stmt and resultset here
 	       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -797,7 +801,7 @@ public class _query
 		ObservableList<hmmr_pmplan_model> list = FXCollections.observableArrayList();
 		
 		try {
-			String query = "select id,PM_ID,PM_Group,data,OFT from hmmr_pm_year where record_del = 0;";
+			String query = "select id,PM_ID,PM_Group,data,OFT,PM_StartDate,PM_Duration from hmmr_pm_year where record_del = 0;";
 			
 			cn.ConToDb();
 			stmt18 = cn.con.createStatement();
@@ -811,7 +815,9 @@ public class _query
 	        		hpm.pm_group.set(rs18.getString(3));
 	        		hpm.dd.set(rs18.getString(4));
 	        		hpm.resp.set(rs18.getString(5));
-	        			        						        						        				            
+	        		hpm.pm_startdate.set(rs18.getString(6));
+	        		hpm.pm_duration.set(rs18.getString(7));
+	        			        			        						        						        				            
 		            list.add(hpm);
 	        	}    
 	        }
@@ -1570,8 +1576,8 @@ public class _query
 				{
 					ObservableList<String> list = FXCollections.observableArrayList();
 					try {
-						String query = "select hpy.data, hp.Date_Beforehand from hmmr_pm_year hpy INNER JOIN hmmr_pm hp ON hpy.PM_ID = hp.id where hpy.record_del = 0;";// GROUP BY hpy.data
-						
+						//String query = "select hpy.data, hp.Date_Beforehand from hmmr_pm_year hpy INNER JOIN hmmr_pm hp ON hpy.PM_ID = hp.id where hpy.record_del = 0;";// GROUP BY hpy.data
+						String query = "select hpy.data, hgc.Date_Beforehand from hmmr_pm_year hpy INNER JOIN hmmr_group_cycle hgc ON hpy.PM_Group = hgc.PM_Group where hpy.record_del = 0;";
 						cn.ConToDb();
 						stmt6 = cn.con.createStatement();
 						rs6 = stmt6.executeQuery(query);
@@ -1587,7 +1593,7 @@ public class _query
 //				        System.out.println("SELECT WORKED DATA: "+list);
 					}
 					catch (SQLException e) {
-						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 1571!");
+						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 1574!");
 			        } finally {
 			            //close connection ,stmt and resultset here
 			        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -1605,7 +1611,7 @@ public class _query
 					ObservableList<String> list = FXCollections.observableArrayList();
 					try {
 						//String query = "select hpy.data, hpy.OFT, pi.Src_Doc, hp.Shop, hp.Line_Machine, hp.Operation_Station, hp.Equipment, hp.id, hp.PM_Name, hpy.record_del, hpy.id, hp.Group_PM from hmmr_pm_year hpy INNER JOIN hmmr_pm hp ON hpy.PM = hp.id INNER JOIN pm_inst pi ON hp.num_instruction = pi.num_instruction;";
-						String query = "select hpy.data, hpy.OFT, pi.Link_instruction_PDF, hp.id, hp.PM_Group, pi.PM_name, hps.FL03_Shop_s, hps.FL04_Group_s, hps.FL05_Line_s, hps.FL06_Station_s, hps.FL07_Equipment_s, hpy.id from hmmr_pm_year hpy INNER JOIN hmmr_pm hp ON hp.PM_Group = hpy.PM_Group INNER JOIN hmmr_plant_structure hps ON hps.id = hp.Eq_ID INNER JOIN pm_inst pi ON hp.Instruction_num = pi.num_instruction where hpy.record_del = 0 AND hpy.data = "+"'"+data+"'"+" GROUP BY hp.id;";
+						String query = "select hpy.data, hpy.OFT, pi.Link_instruction_PDF, hp.id, hp.PM_Group, pi.PM_name, hps.FL03_Shop_s, hps.FL04_Group_s, hps.FL05_Line_s, hps.FL06_Station_s, hps.FL07_Equipment_s, hpy.id, hp.PM_Executor from hmmr_pm_year hpy INNER JOIN hmmr_pm hp ON hp.PM_Group = hpy.PM_Group INNER JOIN hmmr_plant_structure hps ON hps.id = hp.Eq_ID INNER JOIN pm_inst pi ON hp.Instruction_num = pi.num_instruction where hpy.record_del = 0 AND hpy.data = "+"'"+data+"'"+" GROUP BY hp.id;";
 						
 						cn.ConToDb();
 						stmt6 = cn.con.createStatement();
@@ -1615,7 +1621,7 @@ public class _query
 				        	//typepm_model_inst tpm = new typepm_model_inst();
 				        	if(rs6.getString(1) != null) {
 				        		//tpm.settypepm(rs6.getString(1));
-				        		String pmn = rs6.getString(1)+" - "+ rs6.getString(2)+" - "+ rs6.getString(3)+" - "+ rs6.getString(4)+" - "+ rs6.getString(5)+" - "+ rs6.getString(6)+" - "+ rs6.getString(7)+" - "+ rs6.getString(8)+" - "+ rs6.getString(9)+" - "+ rs6.getString(10)+" - "+ rs6.getString(11)+" - "+ rs6.getString(12);			        					            
+				        		String pmn = rs6.getString(1)+" - "+ rs6.getString(2)+" - "+ rs6.getString(3)+" - "+ rs6.getString(4)+" - "+ rs6.getString(5)+" - "+ rs6.getString(6)+" - "+ rs6.getString(7)+" - "+ rs6.getString(8)+" - "+ rs6.getString(9)+" - "+ rs6.getString(10)+" - "+ rs6.getString(11)+" - "+ rs6.getString(12)+" - "+ rs6.getString(13);			        					            
 					            list.add(pmn);
 				        	}    
 				        }
@@ -2032,9 +2038,9 @@ public class _query
 //////////////////////////////////////////////////////////////ACTION PLAN////////////////////////////////////////////////////////////////////////////////	
 	//Вставляем запись в Action Plan
 	@SuppressWarnings("static-access")
-	public void _insert_ap(String id_pm, String type, String pmname, String due_date, String equip, String instruct, String otf, String userid, String shop, String icon)
+	public void _insert_ap(String id_pm, String type, String pmname, String due_date, String equip, String instruct, String otf, String userid, String shop, String icon, String otv)
 	{
-		String query = "INSERT INTO hmmr_action_plan (PM_Num, Type, Description, Due_Date, Equipment, Instruction, Tsk_maker, Otv_For_Task, user_id, shop, Icon) VALUES ("+"'"+id_pm+"'"+","+ "'"+type+"'"+","+"'"+pmname+"'"+","+"'"+due_date+"'"+","+"'"+equip+"'"+","+"'"+instruct+"'"+","+"'"+otf+"'"+","+"'"+otf+"'"+","+"'"+userid+"'"+","+"'"+shop+"'"+","+"'"+icon+"'"+");";
+		String query = "INSERT INTO hmmr_action_plan (PM_Num, Type, Description, Due_Date, Equipment, Instruction, Tsk_maker, Otv_For_Task, user_id, shop, Icon, Otv) VALUES ("+"'"+id_pm+"'"+","+ "'"+type+"'"+","+"'"+pmname+"'"+","+"'"+due_date+"'"+","+"'"+equip+"'"+","+"'"+instruct+"'"+","+"'"+otf+"'"+","+"'"+otf+"'"+","+"'"+userid+"'"+","+"'"+shop+"'"+","+"'"+icon+"'"+","+"'"+otv+"'"+");";
 		
 		try {
 			cn.ConToDb();
@@ -2129,9 +2135,9 @@ public class _query
 	
 	//Вставляем строку в таблицу hmmr_pm_year 
 		@SuppressWarnings("static-access")
-		public void _insert_pm_year(String pm_id, int pm_group, LocalDate data, String OFT)
+		public void _insert_pm_year(String pm_id, int pm_group, LocalDate data, String OFT) //, String pm_startdate, String pm_duration
 		{
-			String query = "INSERT INTO hmmr_pm_year (PM_ID,PM_Group, data, OFT) VALUES ("+"'"+pm_id+"'"+","+"'"+pm_group+"'"+","+ "'"+data+"'"+","+"'"+OFT+"'"+");";
+			String query = "INSERT INTO hmmr_pm_year (PM_ID,PM_Group, data, OFT, PM_StartDate, PM_Duration) VALUES ("+"'"+pm_id+"'"+","+"'"+pm_group+"'"+","+ "'"+data+"'"+","+"'"+OFT+"'"+","+"'"+pm_startdate+"'"+","+"'"+pm_duration+"'"+");";
 			
 			try {
 				cn.ConToDb();
@@ -2140,7 +2146,7 @@ public class _query
 				//log.log(Level.INFO, "ADD STRING TO DB");
 				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 2130!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 2140!");
 			}
 	    	finally {
 	            //close connection ,stmt and resultset here
@@ -2308,10 +2314,10 @@ public class _query
 //*****************************************************************************************************************************		
 		//Вставляем строку в таблицу PM 
 				@SuppressWarnings("static-access")
-				public void _insert_pm(String ninst_pm, String eq_id, String group_pm, String otv_pm, String dexp_pm, String ool_pm)
+				public void _insert_pm(String ninst_pm, String eq_id, String group_pm, String otv_pm, String ool_pm, String pm_exec)
 				{
-					String query = "INSERT INTO hmmr_pm (user_id, Instruction_num, Eq_ID, PM_Group, PM_Resp, Date_Beforehand, OnOff_Line) "
-							+ "VALUES ("+"'"+conn_connector.USER_ID+"'"+","+"'"+ninst_pm+"'"+","+"'"+eq_id+"'"+","+"'"+group_pm+"'"+","+"'"+otv_pm+"'"+","+"'"+dexp_pm+"'"+","+"'"+ool_pm+"'"+");";
+					String query = "INSERT INTO hmmr_pm (user_id, Instruction_num, Eq_ID, PM_Group, PM_Resp, OnOff_Line, PM_Executor) "
+							+ "VALUES ("+"'"+conn_connector.USER_ID+"'"+","+"'"+ninst_pm+"'"+","+"'"+eq_id+"'"+","+"'"+group_pm+"'"+","+"'"+otv_pm+"'"+","+"'"+ool_pm+"'"+","+"'"+pm_exec+"'"+");";
 					
 					try {
 						cn.ConToDb();
@@ -2320,7 +2326,7 @@ public class _query
 						//log.log(Level.INFO, "ADD STRING TO DB");
 						//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
 					} catch (SQLException e) {
-						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 2305!");
+						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 2315!");
 					}
 			    	finally {
 			            //close connection ,stmt and resultset here
@@ -2458,8 +2464,8 @@ public class _query
 			    			ofit1_inst = rs10.getString(21); 
 			    			ofit2_inst = rs10.getString(22); 
 			    		}
-				        total_rez_upd_inst = ninst_inst+","+date_create+","+date_change+","+inst_pdf+","+ver_inst+","+mtt_inst+","+pmn_inst+","+tpm_inst+","+pmc1_inst+","+pmc2_inst+","+ool_inst+","+oop_inst+","+pos_inst+","+
-				                             sinfo_inst+","+s_doc_inst+","+qspec_inst+","+pwt_inst+","+wt_inst+","+adm2_inst+","+adm3_inst+","+ofit1_inst+","+
+				        total_rez_upd_inst = ninst_inst+";"+date_create+";"+date_change+";"+inst_pdf+";"+ver_inst+";"+mtt_inst+";"+pmn_inst+";"+tpm_inst+";"+pmc1_inst+";"+pmc2_inst+";"+ool_inst+";"+oop_inst+";"+pos_inst+";"+
+				                             sinfo_inst+";"+s_doc_inst+";"+qspec_inst+";"+pwt_inst+";"+wt_inst+";"+adm2_inst+";"+adm3_inst+";"+ofit1_inst+";"+
 				        		             ofit2_inst;
 //				        System.out.println("SELECT WORKED: "+total_rez);
 					}
@@ -2479,7 +2485,7 @@ public class _query
 				public String _select_for_update_pm(String id)
 				{
 					try {
-						String query = "select Instruction_num,Eq_ID,PM_Group,PM_Resp,Date_Beforehand,OnOff_Line from hmmr_pm where id = "+"'"+id+"'"+";";
+						String query = "select Instruction_num,Eq_ID,PM_Group,PM_Resp,OnOff_Line,PM_Executor from hmmr_pm where id = "+"'"+id+"'"+";";
 						
 						cn.ConToDb();
 						stmt9 = cn.con.createStatement();
@@ -2490,14 +2496,14 @@ public class _query
 				        	eq_id = rs9.getString(2);
 				        	group_pm = rs9.getString(3);
 				        	pm_resp = rs9.getString(4);
-				        	dexp_pm = rs9.getString(5);
-				        	ool_pm = rs9.getString(6); 
+				        	ool_pm = rs9.getString(5); 
+				        	pm_exec = rs9.getString(6);
 				        }
-				        total_rez_upd_pm = ninst_pm+","+eq_id+","+group_pm+","+pm_resp+","+dexp_pm+","+ool_pm;
+				        total_rez_upd_pm = ninst_pm+","+eq_id+","+group_pm+","+pm_resp+","+ool_pm+","+pm_exec;
 //				        System.out.println("SELECT WORKED: "+total_rez);
 					}
 					catch (SQLException e) {
-						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 2322!");
+						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 2484!");
 			        } finally {
 			            //close connection ,stmt and resultset here
 			        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -2547,7 +2553,7 @@ public class _query
 				public String _select_for_update_pmplan(String id)
 				{
 					try {
-						String query = "select PM_Group, data, OFT from hmmr_pm_year where id = "+"'"+id+"'"+" AND record_del = 0;";
+						String query = "select PM_Group, data, OFT, PM_StartDate, PM_Duration from hmmr_pm_year where id = "+"'"+id+"'"+" AND record_del = 0;";
 						
 						cn.ConToDb();
 						stmt15 = cn.con.createStatement();
@@ -2557,8 +2563,10 @@ public class _query
 				        	pm_group = rs15.getString(1);
 				        	data_pmplan = rs15.getString(2);
 				        	oft_pmplan = rs15.getString(3);
+				        	pm_startdate = rs15.getString(4);
+				        	pm_duration = rs15.getString(5);
 				        }
-				        total_rez_pmplan = pm_group+";"+data_pmplan+";"+oft_pmplan;
+				        total_rez_pmplan = pm_group+";"+data_pmplan+";"+oft_pmplan+";"+pm_startdate+";"+pm_duration;
 //				        System.out.println("SELECT WORKED: "+total_rez);
 					}
 					catch (SQLException e) {
@@ -2720,7 +2728,7 @@ public class _query
 				{
 					ObservableList<String> list = FXCollections.observableArrayList();
 					try {
-						String query = "select ps.Pereodic, ps.begin_date, ps.end_date, hps.FL03_Shop_s, p.PM_Resp from hmmr_pm p INNER JOIN hmmr_group_cycle hgc ON hgc.PM_Group = p.PM_Group INNER JOIN hmmr_pm_cycle ps ON ps.Type = hgc.PM_Cycle INNER JOIN hmmr_plant_structure hps ON hps.id = p.Eq_ID where p.PM_Group = "+"'"+group+"'"+";";
+						String query = "select ps.Pereodic, hgc.PM_StartDate, ps.end_date, hps.FL03_Shop_s, p.PM_Resp from hmmr_pm p INNER JOIN hmmr_group_cycle hgc ON hgc.PM_Group = p.PM_Group INNER JOIN hmmr_pm_cycle ps ON ps.Type = hgc.PM_Cycle INNER JOIN hmmr_plant_structure hps ON hps.id = p.Eq_ID where p.PM_Group = "+"'"+group+"'"+";";
 						
 						cn.ConToDb();
 						stmt9 = cn.con.createStatement();
@@ -2732,7 +2740,7 @@ public class _query
 				            dend = rs9.getString(3);
 				            shop_pmplan = rs9.getString(4);
 				            otv_plan = rs9.getString(5);
-				            
+				            				            
 				            total_rez_data = pereodic_pmplan+","+dbegin+","+dend+","+shop_pmplan+","+otv_plan;
 				            list.add(total_rez_data);
 				            
@@ -2741,7 +2749,7 @@ public class _query
 
 					}
 					catch (SQLException e) {
-						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 2562!");
+						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 2725!");
 			        } finally {
 
 			        	try { cn.con.close(); } catch(SQLException se) { }
@@ -3427,9 +3435,9 @@ public class _query
 		
 		//апдейтим запись в таблице PM
 				@SuppressWarnings("static-access")
-				public void _update_rec_pm(String id, String num_instruction, String Group_EQ, String Otv, String Date_Expire, String OnOff_Line)
+				public void _update_rec_pm(String id, String num_instruction, String Group_EQ, String Otv, String OnOff_Line, String pm_exec)
 				{
-					String query = "UPDATE hmmr_pm SET Instruction_num = "+"'"+num_instruction+"'"+",PM_Group = "+"'"+Group_EQ+"'"+",PM_Resp = "+"'"+Otv+"'"+",Date_Beforehand = "+"'"+Date_Expire+"'"+",OnOff_Line = "+"'"+OnOff_Line+"'"+" where id = "+"'"+id+"'"+";"; //"UPDATE pm_inst SET Type_PM = "+"'"+type+"'"+", Description = "+"'"+desc+"'"+" WHERE id = "+"'"+id+"'"+";";
+					String query = "UPDATE hmmr_pm SET Instruction_num = "+"'"+num_instruction+"'"+",PM_Group = "+"'"+Group_EQ+"'"+",PM_Resp = "+"'"+Otv+"'"+",OnOff_Line = "+"'"+OnOff_Line+"'"+" ,PM_Executor = "+"'"+pm_exec+"'"+" where id = "+"'"+id+"'"+";"; //"UPDATE pm_inst SET Type_PM = "+"'"+type+"'"+", Description = "+"'"+desc+"'"+" WHERE id = "+"'"+id+"'"+";";
 					
 					try {
 						cn.ConToDb();
@@ -3495,9 +3503,9 @@ public class _query
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!				
 				//апдейтим запись в таблице PM Plan
 				@SuppressWarnings("static-access")
-				public void _update_rec_pmplan(String id, LocalDate Date, String oft)
+				public void _update_rec_pmplan(String id, LocalDate Date, String oft) //, String pm_startdate, String pm_duration
 				{
-					String query = "UPDATE hmmr_pm_year SET data = "+"'"+Date+"'"+",OFT = "+"'"+oft+"'"+" where id = "+"'"+id+"'"+";"; //"UPDATE pm_inst SET Type_PM = "+"'"+type+"'"+", Description = "+"'"+desc+"'"+" WHERE id = "+"'"+id+"'"+";";
+					String query = "UPDATE hmmr_pm_year SET data = "+"'"+Date+"'"+",OFT = "+"'"+oft+"'"+" where id = "+"'"+id+"'"+";"; //,PM_StartDate = "+"'"+pm_startdate+"'"+",PM_Duration = "+"'"+pm_duration+"'"+"
 					
 					try {
 						cn.ConToDb();
@@ -4683,7 +4691,7 @@ public class _query
 //		        System.out.println("SELECT WORKED: "+total_rez);
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4664!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4679!");
 	        } finally {
 	            //close connection ,stmt and resultset here
 	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -4701,7 +4709,7 @@ public class _query
 		{
 			ObservableList<hmmr_groupcycle_model> list = FXCollections.observableArrayList();
 			try {
-				String query = "select id, PM_Group, PM_Cycle from hmmr_group_cycle where del_rec = 0;";
+				String query = "select id, PM_Group, PM_Cycle, PM_StartDate, PM_Duration, Date_Beforehand from hmmr_group_cycle where del_rec = 0;";
 				
 				cn.ConToDb();
 				stmt15 = cn.con.createStatement();
@@ -4712,7 +4720,9 @@ public class _query
 		        	hgm.Id.set(rs15.getString(1));
 		        	hgm.group_pm.set(rs15.getString(2));
 		        	hgm.cycle_pm.set(rs15.getString(3));
-		        	
+		        	hgm.pm_startdate.set(rs15.getString(4));
+		        	hgm.pm_duration.set(rs15.getString(5));
+		        	hgm.days.set(rs15.getString(6));
 		        	list.add(hgm);
 		        }
 		    }
@@ -4730,12 +4740,14 @@ public class _query
 		 * Вставляем значения в БД в таблицу hmmr_group_cycle
 		 * @param pm_group - Группа ППР
 		 * @param pm_cycle - Переодичность выполнения ППР
+		 * @param date_start - Дата старта ППР
+		 * @param duration - Продолжительность ППР
 		 */
 		@SuppressWarnings("static-access")
-		public void _insert_gc(String pm_group, String pm_cycle)
+		public void _insert_gc(String pm_group, String pm_cycle, LocalDate date_start, String duration, String days_gc)
 		{
-			String query = "INSERT INTO hmmr_group_cycle (PM_Group, PM_Cycle) "
-					+ "VALUES ("+"'"+pm_group+"'"+","+"'"+pm_cycle+"'"+");";
+			String query = "INSERT INTO hmmr_group_cycle (PM_Group, PM_Cycle, PM_StartDate, PM_Duration, Date_Beforehand) "
+					+ "VALUES ("+"'"+pm_group+"'"+","+"'"+pm_cycle+"'"+","+"'"+date_start+"'"+","+"'"+duration+"'"+","+"'"+days_gc+"'"+");";
 			
 			try {
 				cn.ConToDb();
@@ -4744,7 +4756,7 @@ public class _query
 				//log.log(Level.INFO, "ADD STRING TO DB");
 				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
 			} catch (SQLException e) {
-				s_class._AlertDialog("Группа с номером "+pm_group+" уже существует в справочнике!", "ошибка в строке № 4737!");
+				s_class._AlertDialog("Группа с номером "+pm_group+" уже существует в справочнике!", "ошибка в строке № 4749!");
 			}
 	    	finally {
 	            //close connection ,stmt and resultset here
@@ -4762,14 +4774,14 @@ public class _query
 		{
 			String list = "null";
 			try {
-				String query = "select PM_Group, PM_Cycle from hmmr_group_cycle where del_rec = 0 and id = "+id+";";
+				String query = "select PM_Group, PM_Cycle, Date_Beforehand, PM_StartDate, PM_Duration from hmmr_group_cycle where del_rec = 0 and id = "+id+";";
 				
 				cn.ConToDb();
 				stmt15 = cn.con.createStatement();
 				rs15 = stmt15.executeQuery(query);
 				//log.log(Level.INFO, "CHANNEL WAS FOUND");
 		        while (rs15.next()) {
-		        	list = rs15.getString(1) + " - " + rs15.getString(2);
+		        	list = rs15.getString(1) + " - " + rs15.getString(2) + " - " + rs15.getString(3) + " - " + rs15.getString(4) + " - " + rs15.getString(5);
 		        }
 		    }
 			catch (SQLException e) {
@@ -4789,17 +4801,17 @@ public class _query
 		 * @param pm_cycle - период выполнения ППР 
 		 */
 		@SuppressWarnings("static-access")
-		public void _update_for_gc(int id, String pm_group, String pm_cycle)
+		public void _update_for_gc(int id, String pm_group, String pm_cycle, String days_gc, LocalDate start_date, String duration)
 		{
 			try {
-				String query = "update hmmr_group_cycle set PM_Group = "+"'"+pm_group+"'"+", PM_Cycle = "+"'"+pm_cycle+"'"+" where id = "+id+";";
+				String query = "update hmmr_group_cycle set PM_Group = "+"'"+pm_group+"'"+", PM_Cycle = "+"'"+pm_cycle+"'"+", Date_Beforehand = "+"'"+days_gc+"'"+", PM_StartDate = "+"'"+start_date+"'"+", PM_Duration = "+"'"+duration+"'"+" where id = "+id+";";
 				
 				cn.ConToDb();
 				stmt = cn.con.createStatement();
 				stmt.executeUpdate(query);
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4795!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4807!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -4860,5 +4872,151 @@ public class _query
 		       }
 
 			return list;
+		}
+		
+		/**
+		 *Заполняем данными таблицу БД, для справочника order type 
+		 * @return - возвращаем набор необходимых данных
+		 */
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<Hmmr_OrderType_Model> _select_data_ot()
+		{
+			ObservableList<Hmmr_OrderType_Model> list = FXCollections.observableArrayList();
+			
+			try {
+				String query = "select id, Name, Description from hmmr_order_type where del_rec = 0;";
+				
+				cn.ConToDb();
+				stmt19 = cn.con.createStatement();
+				rs19 = stmt19.executeQuery(query);
+							
+		        while (rs19.next()) {
+		        	Hmmr_OrderType_Model hot = new Hmmr_OrderType_Model();
+		        	if(rs19.getString(1) != null && rs19.getString(2) != null && rs19.getString(3) != null) {
+		        		hot.Id.set(rs19.getString(1));
+		        		hot.Name.set(rs19.getString(2));
+		        		hot.Desc.set(rs19.getString(3));
+		        				        				            
+			            list.add(hot);
+		        	}    
+		        }
+
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4874!");
+	        } finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt19.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs19.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+
+			return list;
+		}
+		/**
+		 * Запрос необходим при вызове окна обновления справочника order type,
+		 * чтобы были заполнены все поля в окне обновления
+		 * @param id - id записи для которой вызывается окно обновления
+		 * @return - возвращаем набор данных
+		 */
+		@SuppressWarnings("static-access")
+		public String _select_for_update_ot(String id)
+		{
+			try {
+				String query = "select Name, Description from hmmr_order_type where id = "+"'"+id+"'"+";";
+				
+				cn.ConToDb();
+				stmt10 = cn.con.createStatement();
+				rs10 = stmt10.executeQuery(query);
+				
+		        while (rs10.next()) {
+		            name_ot = rs10.getString(1);
+		            desc_ot = rs10.getString(2);
+		        }
+		        total_rez_ot = name_ot+","+desc_ot;
+
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4914!");
+	        } finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt10.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs10.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+			return total_rez_ot;
+		}
+		/**
+		 * Удаляем запись из таблицы hmmr_order_type, путем апдейта значения поля del_rec
+		 * с 0 на 1
+		 * @param id - id записи, которую удаляем
+		 */
+		@SuppressWarnings("static-access")
+		public void _delete_rec_ot(String id)
+		{
+			try {
+				String query = "update hmmr_order_type set del_rec = 1 where id = "+"'"+id+"'"+";";
+				
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4946!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+		}
+		/**
+		 * Вставляем запись в БД для таблицы справочника Order Type
+		 */
+		@SuppressWarnings("static-access")
+		public void _insert_ot(String name, String desc)
+		{
+			String query = "INSERT INTO hmmr_order_type (Name, Description) VALUES ("+ "'"+name+"'"+","+ "'"+desc+"'"+");";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "ADD STRING TO DB");
+				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4969!");
+			}
+		   	finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+		}
+		/**
+		 * Апдейтим запись в БД в таблице hmmr_order_type
+		 * @param id - id записи для апдейта
+		 * @param name - имя записи
+		 * @param desc - описание
+		 */
+		@SuppressWarnings("static-access")
+		public void _update_rec_ot(String id, String name, String desc)
+		{
+			try {
+				String query = "update hmmr_order_type set Name = "+"'"+name+"'"+",Description = "+"'"+desc+"'"+" where id = "+"'"+id+"'"+";";
+				
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5003!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
 		}
 }

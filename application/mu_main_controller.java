@@ -37,7 +37,7 @@ public class mu_main_controller
 	VBox root1;
 	
 	@FXML
-	MenuItem pm_cyc, typepm, pm_inst, pm, psdb, about_program, apwr, pmplan, prior, gc;
+	MenuItem pm_cyc, typepm, pm_inst, pm, psdb, about_program, apwr, pmplan, prior, gc, ot;
 	
 	@FXML
 	MenuBar menubar_id;
@@ -99,12 +99,13 @@ public class mu_main_controller
 			pmplan.setDisable(true);
 			prior.setDisable(true);
 			gc.setDisable(true);
+			ot.setDisable(true);
 		}
 		
 		if(conn_connector.USER_ROLE.equals("Engeneer"))
 		{
 			pm_cyc.setDisable(true);
-			typepm.setDisable(true);
+			//typepm.setDisable(true);
 		}
 		
 		if(conn_connector.LANG_ID == 1)
@@ -127,6 +128,7 @@ public class mu_main_controller
 			apwr.setText(lngBndl.getString("apwr_key"));
 			prior.setText(lngBndl.getString("prior"));
 			gc.setText(lngBndl.getString("lbl_gc"));
+			ot.setText(lngBndl.getString("lbl_ot"));
 		}
 		
 		if(conn_connector.LANG_ID == 0)
@@ -149,6 +151,7 @@ public class mu_main_controller
 			apwr.setText(lngBndl.getString("apwr_key"));
 			prior.setText(lngBndl.getString("prior"));
 			gc.setText(lngBndl.getString("lbl_gc"));
+			ot.setText(lngBndl.getString("lbl_ot"));
 		}
 		if(conn_connector.LANG_ID == 2)
 		{
@@ -170,6 +173,7 @@ public class mu_main_controller
 			apwr.setText(lngBndl.getString("apwr_key"));
 			prior.setText(lngBndl.getString("prior"));
 			gc.setText(lngBndl.getString("lbl_gc"));
+			ot.setText(lngBndl.getString("lbl_ot"));
 		}
 		if(conn_connector.LANG_ID == -1)
 		{
@@ -191,6 +195,7 @@ public class mu_main_controller
 			apwr.setText(lngBndl.getString("apwr_key"));
 			prior.setText(lngBndl.getString("prior"));
 			gc.setText(lngBndl.getString("lbl_gc"));
+			ot.setText(lngBndl.getString("lbl_ot"));
 		}
 		
 		//Автоматически вызываем окно Action Plan & Work Recording
@@ -389,6 +394,18 @@ public class mu_main_controller
 			}
 		}
 		
+		//Вызываем из меню справочник Order Type
+		@FXML
+		public void getOT() {
+			Stage stage = new Stage();
+		       try {
+				ot_start(stage);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		protected void pmtype_start(Stage stage) throws IOException {
 			setPrimaryStage(stage);
 		    Parent root = FXMLLoader.load(getClass().getResource("type_pm.fxml"));
@@ -410,7 +427,7 @@ public class mu_main_controller
 		    
 	        Scene scene = new Scene(root);
 	        stage.setTitle("M&U - PM Instruction Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
-	        stage.setWidth(primaryScreenBounds.getWidth() - 230);
+	        stage.setWidth(primaryScreenBounds.getWidth());
 	        //stage.setResizable(false);
 	        //stage.initModality(Modality.APPLICATION_MODAL);
 	        stage.setScene(scene);
@@ -512,6 +529,19 @@ public class mu_main_controller
 		    
 	        Scene scene = new Scene(root);
 	        stage.setTitle("M&U - Group-Cycle Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
+	        stage.setResizable(false);
+	        stage.setScene(scene);
+	        	        
+	        stage.show();
+	        
+		}
+		
+		protected void ot_start(Stage stage) throws IOException {
+			setPrimaryStage(stage);
+			Parent root = FXMLLoader.load(getClass().getResource("ordertype.fxml"));
+		    
+	        Scene scene = new Scene(root);
+	        stage.setTitle("M&U - Order Type Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
 	        stage.setResizable(false);
 	        stage.setScene(scene);
 	        	        

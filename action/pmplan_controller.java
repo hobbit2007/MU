@@ -208,10 +208,10 @@ public class pmplan_controller {
 	{
 		_sql_rez = qr._select_for_update_pmplan(str);
 		_id_pmplan = str; 
-		_pm_id = scl.parser_str_str_str(_sql_rez, 0);
-		_pm_group = scl.parser_str_str_str(_sql_rez, 1);
-		_date_pmplan = scl.parser_str_str_str(_sql_rez, 2);
-		_oft_pmplan = scl.parser_str_str_str(_sql_rez, 3);
+		//_pm_id = scl.parser_str_str_str(_sql_rez, 0);
+		_pm_group = scl.parser_str_str_str(_sql_rez, 0);
+		_date_pmplan = scl.parser_str_str_str(_sql_rez, 1);
+		_oft_pmplan = scl.parser_str_str_str(_sql_rez, 2);
 		
 				
 		try {

@@ -20,7 +20,7 @@ public class hmmr_pm_model
 	public SimpleStringProperty Type_of_PM_Org_Tech = new SimpleStringProperty();
 	public SimpleStringProperty Otv = new SimpleStringProperty();
 	public SimpleStringProperty OnOff_Line = new SimpleStringProperty();
-	public SimpleStringProperty Days_Exp = new SimpleStringProperty();
+	public SimpleStringProperty Otv_Isp = new SimpleStringProperty();
 	
 	public hmmr_pm_model()
 	{
@@ -29,7 +29,7 @@ public class hmmr_pm_model
 	
 	public hmmr_pm_model(String Id, String user_id, String num_instruction, String eq_id, String Group_PM, String Line_Machine, String Operation_Station, String Equipment,
 			             String Group_EQ, String Station_Supplier, String Model_Type_Task, String PM_Name, String PM_Cycle,
-			             String Type_of_PM_Org_Tech, String OnOff_Line, String Otv, String Days_Exp)
+			             String Type_of_PM_Org_Tech, String OnOff_Line, String Otv, String Otv_Isp)
 	{
 		this.Id.set(Id);
 		this.user_id.set(user_id);
@@ -47,7 +47,7 @@ public class hmmr_pm_model
 		this.Type_of_PM_Org_Tech.set(Type_of_PM_Org_Tech);
 		this.OnOff_Line.set(OnOff_Line);
 		this.Otv.set(Otv);
-		this.Days_Exp.set(Days_Exp);
+		this.Otv_Isp.set(Otv_Isp);
 	}
 	
 	public String getId() {
@@ -259,17 +259,17 @@ public class hmmr_pm_model
         this.Otv.set(Otv);
     }
     
-    public String getDays_Exp() {
-        return Days_Exp.get();
+    public String getOtv_Isp() {
+        return Otv_Isp.get();
     }
 
-    public SimpleStringProperty Days_ExpProperty()
+    public SimpleStringProperty Otv_IspProperty()
     {
-    	return Days_Exp;
+    	return Otv_Isp;
     }
     
-    public void setDays_Exp(String Days_Exp) {
-        this.Days_Exp.set(Days_Exp);
+    public void setOtv_Isp(String Otv_Isp) {
+        this.Otv_Isp.set(Otv_Isp);
     }
 
     @Override
@@ -291,7 +291,7 @@ public class hmmr_pm_model
                 ", Type_of_PM_Org_Tech='" + Type_of_PM_Org_Tech.get() + '\'' +
                 ", OnOff_Line='" + OnOff_Line.get() + '\'' +
                 ", Otv='" + Otv.get() + '\'' +
-                ", Days_Exp='" + Days_Exp.get() + '\'' +
+                ", Otv_Isp='" + Otv_Isp.get() + '\'' +
                 '}';
     }
 }

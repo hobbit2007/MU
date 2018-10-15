@@ -58,6 +58,7 @@ public class addrec_ps_controller {
 	DatePicker startdate_ps;
 	
 	private String equip_label, _s_name;
+	private static String pathToPs="C://";
 	
 	_query qr = new _query();
 	s_class sclass = new s_class();
@@ -297,17 +298,18 @@ public class addrec_ps_controller {
 				equiprus_ps_t.setText(equiprus_ps.getValue());
 			}
 		});
+		FileChooser fc = new FileChooser();
+	    fc.setTitle("Get Text");
 		exp_ps.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
-				FileChooser fc = new FileChooser();
-			    fc.setTitle("Get Text");
+				fc.setInitialDirectory(new File(pathToPs));
 			    fc.getExtensionFilters().addAll(
 			        new ExtensionFilter(
 			            "Excel Files", 
-			            "*.xlsx"),
+			            "*.xlsx","*.xls"),
 			        new ExtensionFilter(
 			            "All Files", 
 			            "*.*"));
@@ -319,8 +321,14 @@ public class addrec_ps_controller {
 			    
 			    // checking that a file was
 			    // chosen by the user
-			    if (phil != null) 
-			    	 manual_ps_t.setText(phil.getPath());
+			    if (phil != null)
+			    try {
+			    	pathToPs =  phil.getParent();
+			    	manual_ps_t.setText(phil.getPath());
+			    }
+			    catch (Exception e) {
+					// TODO: handle exception
+				}
 			}
 	   });
 		

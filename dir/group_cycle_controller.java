@@ -34,7 +34,7 @@ public class group_cycle_controller {
 	TableView<hmmr_groupcycle_model> table_gc;
 	
 	@FXML
-	TableColumn<hmmr_groupcycle_model, String> col_id_gc, col_group_pm, col_cycle_pm;
+	TableColumn<hmmr_groupcycle_model, String> col_id_gc, col_group_pm, col_cycle_pm, col_days_gc, col_start_date, col_duration;
 	
 	@FXML
 	JFXButton add_rec, upd_rec, del_rec, cancel_form;
@@ -74,6 +74,9 @@ public class group_cycle_controller {
 		col_id_gc.setCellValueFactory(CellData -> CellData.getValue().getId_());
 		col_group_pm.setCellValueFactory(CellData -> CellData.getValue().getGroup_pm());
 		col_cycle_pm.setCellValueFactory(CellData -> CellData.getValue().getCycle_pm());
+		col_days_gc.setCellValueFactory(CellData -> CellData.getValue().getdays());
+		col_start_date.setCellValueFactory(CellData -> CellData.getValue().getpm_startdate());
+		col_duration.setCellValueFactory(CellData -> CellData.getValue().getpm_duration());
 		
 		add_rec.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -220,6 +223,9 @@ public class group_cycle_controller {
 		title_label.setText(lngBndl.getString("lbl_title"));
 		col_group_pm.setText(lngBndl.getString("lbl_group"));
 		col_cycle_pm.setText(lngBndl.getString("lbl_pm_cycle"));
+		col_days_gc.setText(lngBndl.getString("col_days_exp"));
+		col_start_date.setText(lngBndl.getString("col_startdate_ps"));
+		col_duration.setText(lngBndl.getString("lbl_duration"));
 		
 		add_rec.setText(lngBndl.getString("add_tsk"));
 		upd_rec.setText(lngBndl.getString("upd_ap"));

@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import com.jfoenix.controls.JFXButton;
 
 import action.apwr_controller;
+import application.Main;
 import application.conn_connector;
 import db._query;
 import javafx.beans.property.SimpleObjectProperty;
@@ -68,6 +69,7 @@ public class prior_controller {
 	public static String _id_prior, _name_prior, _desc_prior, _icon_prior, _id_pr;
 	@SuppressWarnings("unused")
 	private String translate_icon;
+	public static Stage pStage;
 	
 	@FXML
 	public void initialize()
@@ -271,6 +273,7 @@ public class prior_controller {
 	
 	//Вызываем окно добавления записи к Спраавочнику приоритетов
 	protected void prior_add(Stage stage) throws IOException {
+		setPrimaryStage(stage);
 		Parent root = FXMLLoader.load(getClass().getResource("add_rec_prior.fxml"));
 		   
 	    Scene scene = new Scene(root);
@@ -282,6 +285,7 @@ public class prior_controller {
 	}
 	//Вызываем окно обновления записи
 	protected void prior_upd(Stage stage) throws IOException {
+		setPrimaryStage(stage);
 		Parent root = FXMLLoader.load(getClass().getResource("upd_rec_prior.fxml"));
 		   
 	    Scene scene = new Scene(root);
@@ -311,4 +315,11 @@ public class prior_controller {
 		cancel_prior.setText(lngBndl.getString("cancel_tsk"));
 		
 	}
+	
+	private void setPrimaryStage(Stage pStage) {
+        Main.pStage = pStage;
+    }
+	public static Stage getPrimaryStage() {
+        return pStage;
+    }
 }

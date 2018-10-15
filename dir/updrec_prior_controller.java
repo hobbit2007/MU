@@ -40,6 +40,8 @@ public class updrec_prior_controller {
 	prior_controller pic = new prior_controller();
 	private Stage stage;
 	
+	private static String pathToPdf = "\\\\10.168.170.49\\MU\\Img";
+	
 	@SuppressWarnings("static-access")
 	@FXML
 	public void initialize()
@@ -91,13 +93,13 @@ public class updrec_prior_controller {
 				chk_btn();
 			}
 		});
-		
+		FileChooser fc = new FileChooser();
+	    fc.setTitle("Укажите путь к файлу:");
 		b_exp_prior.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				FileChooser fc = new FileChooser();
-			    fc.setTitle("Укажите путь к файлу:");
+				fc.setInitialDirectory(new File(pathToPdf));
 			    fc.getExtensionFilters().addAll(
 			        new ExtensionFilter(
 			            "JPG Files", 
@@ -109,13 +111,14 @@ public class updrec_prior_controller {
 			    //showing the file chooser
 			    File phil = 
 			        fc.showOpenDialog(
-			            pic.stage);
+			            pic.getPrimaryStage());
 			    
 			    // checking that a file was
 			    // chosen by the user
 			    if (phil != null) {
-			    	 t_icon_prior.setText(phil.getPath());
-			    	 chk_btn();
+			    	pathToPdf =  phil.getParent();
+			    	t_icon_prior.setText(phil.getPath());
+			    	chk_btn();
 			    }
 			}
 		});
@@ -124,7 +127,7 @@ public class updrec_prior_controller {
 			@Override
 			public void handle(Event event) {
 				// TODO Auto-generated method stub
-				scl._ToolTip("Внимание! Размеры изображения не должны превышать 30х30 px!", b_exp_prior);
+				scl._ToolTip("Внимание! Размеры изображения не должны превышать 32х32 px!", b_exp_prior);
 			}
 		});
 		b_exp_prior.setOnMouseExited(new EventHandler<Event>() {
@@ -140,7 +143,7 @@ public class updrec_prior_controller {
 			@Override
 			public void handle(Event event) {
 				// TODO Auto-generated method stub
-				scl._ToolTip("Внимание! Размеры изображения не должны превышать 30х30 px!", t_icon_prior);
+				scl._ToolTip("Внимание! Размеры изображения не должны превышать 32х32 px!", t_icon_prior);
 			}
 		});
 		t_icon_prior.setOnMouseExited(new EventHandler<Event>() {

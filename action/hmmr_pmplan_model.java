@@ -9,19 +9,22 @@ public class hmmr_pmplan_model {
 	public SimpleStringProperty dd = new SimpleStringProperty();
 	public SimpleStringProperty resp = new SimpleStringProperty();
 	public SimpleStringProperty pm_group = new SimpleStringProperty();
+	public SimpleStringProperty pm_startdate = new SimpleStringProperty();
+	public SimpleStringProperty pm_duration = new SimpleStringProperty();
 	
 	public hmmr_pmplan_model()
 	{
 		
 	}
 	
-	public hmmr_pmplan_model (String Id, String num_pm, String dd, String resp, String pm_group)
+	public hmmr_pmplan_model (String Id, String num_pm, String dd, String resp, String pm_group, String pm_startdate, String pm_duration)
 	{
 		this.Id.set(Id);
 		this.num_pm.set(num_pm);
 		this.dd.set(dd);
 		this.resp.set(resp);
 		this.pm_group.set(pm_group);
+		this.pm_startdate.set(pm_startdate);
 	}
 
 	public String getId() {
@@ -87,6 +90,32 @@ public class hmmr_pmplan_model {
     
     public void setpm_group(String pm_group) {
         this.pm_group.set(pm_group);
+    }
+    
+    public String getpm_startdate() {
+        return pm_startdate.get();
+    }
+
+    public SimpleStringProperty pm_startdateProperty()
+    {
+    	return pm_startdate;
+    }
+    
+    public void setpm_startdate(String pm_startdate) {
+        this.pm_startdate.set(pm_startdate);
+    }
+    
+    public String getpm_duration() {
+        return pm_duration.get();
+    }
+
+    public SimpleStringProperty pm_durationProperty()
+    {
+    	return pm_duration;
+    }
+    
+    public void setpm_duration(String pm_duration) {
+        this.pm_duration.set(pm_duration);
     }
     
     @Override

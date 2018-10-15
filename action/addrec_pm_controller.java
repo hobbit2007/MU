@@ -16,23 +16,19 @@ import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 import share_class.s_class;
 
 public class addrec_pm_controller {
 	@FXML
-	ComboBox<String> ninst_pm, shop_pm, lm_pm, os_pm, equip_pm, group_pm, ool_pm, otv_pm, group_eq;
-	
-	@FXML
-	TextField dexp_pm;
+	ComboBox<String> ninst_pm, shop_pm, lm_pm, os_pm, equip_pm, group_pm, ool_pm, otv_pm, group_eq, list_otv_isp_pm;
 	
 	@FXML
 	JFXButton confirm_pm, cancel_pm;
 	
 	@FXML
-	Label err_msg, lbl_head_pm, lbl_ninst_pm, lbl_shop_pm, lbl_lm_pm, lbl_os_pm, lbl_equip_pm, lbl_group_pm, lbl_ool_pm, lbl_otv_pm, lbl_dexp_pm, lbl_group_eq;
+	Label err_msg, lbl_head_pm, lbl_ninst_pm, lbl_shop_pm, lbl_lm_pm, lbl_os_pm, lbl_equip_pm, lbl_group_pm, lbl_ool_pm, lbl_otv_pm, lbl_group_eq, lbl_otv_isp, lbl_otv_isp1;
 	
 	private Stage stage;	
 	_query qr = new _query();
@@ -272,6 +268,7 @@ public class addrec_pm_controller {
 				chk_btn();
 			}
 		});
+		list_otv_isp_pm.setItems(qr._select_fio_for_ap(2, sclass.parser_str(shop_pm.getValue(), 0)));
 		
 		confirm_pm.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -279,8 +276,11 @@ public class addrec_pm_controller {
 			@Override
 			public void handle(ActionEvent event) {
 				
+				if(list_otv_isp_pm.getValue() == null)
+					list_otv_isp_pm.setValue("need select");
+				
 				String eq_id_total = qr._select_data_filter_ps_id(sclass.parser_str(shop_pm.getValue(), 0), sclass.parser_str(group_pm.getValue(), 0), sclass.parser_str(lm_pm.getValue(), 0), sclass.parser_str(os_pm.getValue(), 0), sclass.parser_str(equip_pm.getValue(), 0));
-				qr._insert_pm(sclass.parser_str(ninst_pm.getValue(), 0), eq_id_total, group_eq.getValue(), sclass.parser_str(otv_pm.getValue(), 0), dexp_pm.getText(), sclass.parser_str(ool_pm.getValue(), 0));
+				qr._insert_pm(sclass.parser_str(ninst_pm.getValue(), 0), eq_id_total, group_eq.getValue(), sclass.parser_str(otv_pm.getValue(), 0), sclass.parser_str(ool_pm.getValue(), 0), sclass.parser_str(list_otv_isp_pm.getValue(), 0));
 			
 				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_pm") + " в таблице PM");
 					
@@ -295,27 +295,27 @@ public class addrec_pm_controller {
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
-				stage = (Stage) confirm_pm.getScene().getWindow();
+				stage = (Stage) cancel_pm.getScene().getWindow();
 				stage.close();
 			}
 		});
-		group_eq.setOnKeyReleased(new EventHandler<Event>() {
+		group_eq.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 
 			@Override
-			public void handle(Event event) {
+			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
 				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
-		dexp_pm.setOnKeyReleased(new EventHandler<Event>() {
+		otv_pm.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 
 			@Override
-			public void handle(Event event) {
+			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
 				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
-		}
+	}
 	
 	private void lang_fun(String loc1, String loc2)
 	{
@@ -330,7 +330,8 @@ public class addrec_pm_controller {
 		lbl_equip_pm.setText(lngBndl.getString("lbl_equip_ap"));
 		lbl_ool_pm.setText(lngBndl.getString("col_ool_pm")+":");
 		lbl_otv_pm.setText(lngBndl.getString("lbl_otv_ap")+":");
-		lbl_dexp_pm.setText(lngBndl.getString("lbl_dexp_pm")+":");
+		lbl_otv_isp.setText(lngBndl.getString("lbl_otv_ap"));
+		lbl_otv_isp1.setText(lngBndl.getString("lbl_otv_ap1"));
 		lbl_group_eq.setText(lngBndl.getString("col_group_eq")+":");
 		lbl_head_pm.setText(lngBndl.getString("lbl_head_pm"));
 		confirm_pm.setText(lngBndl.getString("lbl_apply"));
@@ -340,9 +341,7 @@ public class addrec_pm_controller {
 		private void chk_btn()
 		{
 			try {
-			if(ninst_pm.getValue().length() != 0 && shop_pm.getValue().length() != 0 && group_pm.getValue().length() != 0 && lm_pm.getValue().length() != 0 &&
-					os_pm.getValue().length() != 0 && equip_pm.getValue().length() != 0 && group_eq.getValue().length() != 0 &&  
-					ool_pm.getValue().length() != 0 && dexp_pm.getText().length() != 0 && otv_pm.getValue().length() != 0)// && dexp_pm.getText().length() != 0
+			if(ninst_pm.getValue().length() != 0 && shop_pm.getValue().length() != 0 && group_pm.getValue().length() != 0 && lm_pm.getValue().length() != 0 && os_pm.getValue().length() != 0 && equip_pm.getValue().length() != 0 && group_eq.getValue().length() != 0 && ool_pm.getValue().length() != 0 && otv_pm.getValue().length() != 0)
 				confirm_pm.setDisable(false);
 			else
 				confirm_pm.setDisable(true);

@@ -35,6 +35,7 @@
                               <MenuItem fx:id="typepm" mnemonicParsing="false" onAction="#getType_pm" text="Type_PM - Редактор" />
                               <MenuItem fx:id="prior" mnemonicParsing="false" onAction="#getPrior" text="Приоритеты" />
                               <MenuItem fx:id="gc" mnemonicParsing="false" onAction="#getGC" text="Группа - Период - Редактор" />
+                              <MenuItem fx:id="ot" mnemonicParsing="false" onAction="#getOT" text="Order Type - Редактор" />
                            </items>
                         </Menu>
                       <Menu fx:id="_rep" mnemonicParsing="false" text="Отчеты">
