@@ -306,6 +306,12 @@ public class pm_inst_controller
 			        table_inst.getColumns().get(0).setVisible(true);
 				}
 			});
+		 
+		//Ставим фокус и опускаемся на последнюю строку таблицы     
+	        table_inst.requestFocus();
+	        table_inst.getFocusModel().focus(0);
+	        table_inst.getSelectionModel().selectLast();
+	        table_inst.scrollTo(table_inst.getItems().size());
 	}
 	
 	private void initData()

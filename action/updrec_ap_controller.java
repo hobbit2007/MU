@@ -395,6 +395,16 @@ public class updrec_ap_controller {
 		
 		sclass._style(add_tsk_upd);
 		
+		//!!!!!!!!!!!Отслеживаем изменение даты!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
+		    public void handle(ActionEvent e) 
+		    { 
+		       	chk_btn();
+			} 
+		}; 
+		edate_tsk.setOnAction(event);
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		
 		add_tsk_upd.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override

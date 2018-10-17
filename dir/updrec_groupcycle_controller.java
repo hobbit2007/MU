@@ -1,6 +1,8 @@
 package dir;
 
+import java.time.LocalDate;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -15,10 +17,13 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import share_class.s_class;
 
@@ -42,6 +47,8 @@ public class updrec_groupcycle_controller {
 	s_class scl = new s_class();
 	group_cycle_controller gcc = new group_cycle_controller();
 	FxDatePickerConverter fx_dp = new FxDatePickerConverter();
+	
+	LocalDate new_date;
 	
 	private Stage stage;
 	
@@ -89,7 +96,7 @@ public class updrec_groupcycle_controller {
 				if (!newValue.matches("\\d*|#|\\*")) {
 					txt_duration.setText(newValue.replaceAll("[^\\d|#|\\*]", ""));
 		        }
-				if(newValue.length() > 2) {
+				if(newValue.length() > 3) {
 					
 					txt_duration.setText(newValue.replaceAll("[0-9]", ""));
 	            	
@@ -138,7 +145,35 @@ public class updrec_groupcycle_controller {
 		txt_days_gc.setText(scl.parser_str(qr._select_for_gc_str(gcc._id_gc), 2));
 		d_start_date.setValue(fx_dp.fromString(scl.parser_str(qr._select_for_gc_str(gcc._id_gc), 3)));
 		txt_duration.setText(scl.parser_str(qr._select_for_gc_str(gcc._id_gc), 4));
-		
+		//!!!!!!!!!!!Отслеживаем изменение даты!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
+            public void handle(ActionEvent e) 
+            { 
+            	Alert alert = new Alert(AlertType.CONFIRMATION);
+			    alert.setTitle("M&U - Внимание!");
+			    			    
+			    alert.setHeaderText("Вы изменили дату! Вы уверены что хотите пересчитать в PM Plan группу: "+txt_pm_group.getText()+" на новую дату?");
+			    
+			    Optional<ButtonType> option = alert.showAndWait();
+			    if (option.get() == null) {
+			      
+			    } else if (option.get() == ButtonType.OK) {
+			  	   try {
+			  		   new_date = d_start_date.getValue();
+			  		   new_pm_date(gcc._id_gc);
+			  		   chk_btn();
+			  	   } catch (Exception e1) {
+					// TODO: handle exception
+				}
+			    } else if (option.get() == ButtonType.CANCEL) {
+			       //label.setText("Cancelled!");
+			    } else {
+			       //label.setText("-");
+			    }
+            } 
+        }; 
+        d_start_date.setOnAction(event);
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		add_rec.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -175,6 +210,69 @@ public class updrec_groupcycle_controller {
 		
 		add_rec.setText(lngBndl.getString("upd_ap"));
 		cancel_form.setText(lngBndl.getString("cancel_tsk"));
+	}
+	
+	@SuppressWarnings("static-access")
+	private void new_pm_date(int _id_gc)
+	{
+		String Otv_for_task = null;
+		
+		//находим Pm_id для группы для которой поменяли дату
+		String pm_id = qr._select_pmid(txt_pm_group.getText());
+		//удаляем все записи из PM Plan группы для которой поменяли дату
+		qr._update_new_date(txt_pm_group.getText());
+		
+		if(!txt_pm_group.getText().equals("0")) {
+			if(!scl.parser_sql_str(qr._select_for_pmgroup(txt_pm_group.getText()), 0).equals(txt_pm_group.getText())) {
+				try {
+					String before_pars = qr._select_for_pmplan(txt_pm_group.getText()).get(0);
+					String pereodic = scl.parser_sql_str(before_pars, 0);
+					String b_date = fx_dp.toString(new_date);
+					
+						String e_date = scl.parser_sql_str(before_pars, 2);
+						@SuppressWarnings("unused")
+						String shop = scl.parser_sql_str(before_pars, 3);
+						Otv_for_task = scl.parser_sql_str(before_pars, 4);
+						
+						int pm_group = Integer.parseInt(txt_pm_group.getText());
+						
+						int _count = Integer.parseInt(pereodic);
+						int _cnt = _count;
+						
+						int day_bdate = fx_dp.fromString(b_date).getDayOfMonth();
+						int month_bdate = fx_dp.fromString(b_date).getMonthValue();
+						int year_bdate = fx_dp.fromString(b_date).getYear();
+						
+						int day_edate = fx_dp.fromString(e_date).getDayOfMonth();
+						int month_edate = fx_dp.fromString(e_date).getMonthValue();
+						int year_edate = fx_dp.fromString(e_date).getYear();
+						
+						//Находим количество дней в течении которых должно выполняться ППР, а затем находим сколько надо создать записей в таблице hmmr_pm_year
+						int gen_day = Math.abs(day_edate - day_bdate);
+						int gen_month = Math.abs(month_edate - month_bdate)*30;
+						int gen_year = Math.abs(year_edate - year_bdate)*365;
+						
+						int _general = Math.round((gen_day + gen_month + gen_year)/_count);
+						
+						for (int i = 0; i < _general; i++) {
+							LocalDate days = LocalDate.of(year_bdate, month_bdate, day_bdate).plusDays(_count);//Расчитываем даты когда заявка должна быть выполнена
+							qr._insert_pm_year(pm_id, pm_group, days, Otv_for_task);
+							_count = _cnt + _count;
+						}
+					
+					
+				}
+				catch (Exception e) {
+					scl._AlertDialog("Не найден номер инструкции или имя цикла переодичности задано некорректно!", "Ошибка!");
+				}
+			}
+			else
+			{
+				scl._AlertDialog("Группа "+ txt_pm_group.getText() +" уже добавлена в PM PLAN!", "Группа уже существует");
+			}
+		}
+		else
+			scl._AlertDialog("Группа 0 не может быть добавлена в PM PLAN! Введите корректный номер группы!", "Ошибка!");
 	}
 	
 	private void chk_btn()

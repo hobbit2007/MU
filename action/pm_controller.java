@@ -388,6 +388,8 @@ public class pm_controller {
 										_count = _cnt + _count;
 									}
 								}
+								else
+									scl._AlertDialog("Пожалуйста, измените дату старта ППР в справочнике Группа-Период!", "Внимание!");
 							}
 							catch (Exception e) {
 								scl._AlertDialog("Не найден номер инструкции или имя цикла переодичности задано некорректно!", "Ошибка!");
@@ -423,6 +425,11 @@ public class pm_controller {
 			        table_pm.getColumns().get(0).setVisible(true);
 				}
 			});
+	   //Ставим фокус и опускаемся на последнюю строку таблицы     
+	        table_pm.requestFocus();
+	        table_pm.getFocusModel().focus(0);
+	        table_pm.getSelectionModel().selectLast();
+	        table_pm.scrollTo(table_pm.getItems().size());
 	}
 	
 	private void initData()

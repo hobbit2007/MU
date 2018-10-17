@@ -2,10 +2,12 @@ package action;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+
 import com.jfoenix.controls.JFXButton;
+
 import application.conn_connector;
+import data.FxDatePickerConverter;
 import db._query;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -23,10 +25,13 @@ import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 import share_class.s_class;
 
-public class addrec_ap_controller {
+public class UpdRec_WP_Controller {
 	
 	@FXML
-	private ComboBox<String> shop_tsk, lm_tsk, os_tsk, equip_tsk, oft_tsk, otv_tsk,group_tsk, prior_ap;
+	private ComboBox<String> shop_tsk, lm_tsk, os_tsk, equip_tsk, oft_tsk, otv_tsk, group_tsk;
+	
+	@FXML
+	TextField numpm_tsk;
 	
 	@FXML
 	TextArea description_tsk;
@@ -35,14 +40,14 @@ public class addrec_ap_controller {
 	DatePicker edate_tsk;
 	
 	@FXML
-	Button tsk_ap, cm_ap;
+	Button explorer, pm_ap;
 	
 	@FXML
-	Label err_msg, lbl_create_tsk_ap, lbl_type_ap, lbl_desc_ap, lbl_dd_ap, lbl_shop_ap, lbl_group_ap, lbl_lm_ap, lbl_os_ap, lbl_equip_ap, lbl_oft_ap, lbl_oft_ap1, 
-		lbl_otv_ap, lbl_otv_ap1, lbl_tsk_maker_ap, lbl_prior;
+	Label err_msg, lbl_create_tsk_ap_upd, lbl_num_pm, lbl_type_ap, lbl_desc_ap, lbl_dd_ap, lbl_shop_ap, lbl_group_ap, lbl_lm_ap, lbl_os_ap, lbl_equip_ap, 
+			lbl_oft_ap, lbl_oft_ap1, lbl_otv_ap, lbl_otv_ap1, lbl_tsk_maker_ap;
 	
 	@FXML
-	JFXButton add_tsk, cancel_tsk; 
+	JFXButton add_tsk_upd, cancel_tsk;
 	
 	@FXML
 	TextField tsk_maker_ap;
@@ -50,12 +55,13 @@ public class addrec_ap_controller {
 	_query qr = new _query();
 	s_class sclass = new s_class();
 	apwr_controller pic = new apwr_controller();
+	FxDatePickerConverter fx_dp = new FxDatePickerConverter();
+	
 	private Stage stage;
 	Tooltip tip;
 	String type_tsk;
-	boolean _flag_bt = false; //проверяем нажата ли одна из кнопок - TSK или CN
 	
-	@FXML
+	@SuppressWarnings("static-access")
 	public void initialize()
 	{
 		if(conn_connector.LANG_ID == 1)
@@ -66,20 +72,14 @@ public class addrec_ap_controller {
 			lang_fun("zh", "CN");
 		if(conn_connector.LANG_ID == -1)
 			lang_fun("ru", "RU");
-				
-		add_tsk.setDisable(true);
 		
-		tsk_maker_ap.setText(sclass.parser_str(qr._select_user(conn_connector.USER_ID), 1));
-		
-		prior_ap.setItems(qr._select_prior());
+		add_tsk_upd.setDisable(true);
+		if(conn_connector.USER_ROLE.equals("Technics"))
+			add_tsk_upd.setDisable(true);
 		
 		shop_tsk.setItems(qr._select_shop_pm());
-		shop_tsk.setValue(apwr_controller.SHOP_NAME);//mu_main_controller.SHOP_NAME
-		if(shop_tsk.getValue().toString().length() != 0)
-			group_tsk.setItems(qr._select_group_pm(sclass.parser_str(shop_tsk.getValue(), 0)));
-		
 		try {
-			shop_tsk.getSelectionModel().selectedItemProperty().addListener(new  ChangeListener<String>() {
+			shop_tsk.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 	
 				@Override
 				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -88,10 +88,10 @@ public class addrec_ap_controller {
 						lm_tsk.valueProperty().set(null);
 						os_tsk.valueProperty().set(null);
 						equip_tsk.valueProperty().set(null);
-						add_tsk.setDisable(true);
 						group_tsk.setItems(qr._select_group_pm(sclass.parser_str(shop_tsk.getValue(), 0)));
+						add_tsk_upd.setDisable(true);
 					}
-					chk_btn();
+						chk_btn();
 				}
 			});
 		} catch (Exception e) {
@@ -107,7 +107,7 @@ public class addrec_ap_controller {
 						lm_tsk.valueProperty().set(null);
 						os_tsk.valueProperty().set(null);
 						equip_tsk.valueProperty().set(null);
-						add_tsk.setDisable(true);
+						add_tsk_upd.setDisable(true);
 						lm_tsk.setItems(qr._select_lm_pm(sclass.parser_str(group_tsk.getValue(), 0)));
 					}
 					//if(lm_wr_add.getValue().toString().length() != 0)
@@ -116,7 +116,7 @@ public class addrec_ap_controller {
 						// TODO: handle exception
 					}
 				chk_btn();
-			}
+				}
 		});
 		group_tsk.setOnMouseEntered(new EventHandler<Event>() {
 
@@ -136,6 +136,7 @@ public class addrec_ap_controller {
 				tip.hide();
 			}
 		});
+
 		
 		lm_tsk.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -144,14 +145,14 @@ public class addrec_ap_controller {
 					if(lm_tsk.getValue().toString().length() != 0) {
 						os_tsk.valueProperty().set(null);
 						equip_tsk.valueProperty().set(null);
-						add_tsk.setDisable(true);
+						add_tsk_upd.setDisable(true);
 						os_tsk.setItems(qr._select_os_pm(sclass.parser_str(group_tsk.getValue(), 0), sclass.parser_str(lm_tsk.getValue(), 0)));
 					}
 					} catch (Exception e) {
 						// TODO: handle exception
 					}
 				chk_btn();
-			}
+				}
 		});
 		lm_tsk.setOnMouseEntered(new EventHandler<Event>() {
 
@@ -180,13 +181,13 @@ public class addrec_ap_controller {
 				try {
 					if(os_tsk.getValue().toString().length() != 0) {
 						equip_tsk.valueProperty().set(null);
-						add_tsk.setDisable(true);
+						add_tsk_upd.setDisable(true);
 						equip_tsk.setItems(qr._select_equip_pm(sclass.parser_str(os_tsk.getValue(), 0), sclass.parser_str(group_tsk.getValue(), 0), sclass.parser_str(lm_tsk.getValue(), 0)));
 					}
 					} catch (Exception e) {
 					}
 				chk_btn();
-			}
+				}
 		});
 		os_tsk.setOnMouseEntered(new EventHandler<Event>() {
 
@@ -234,10 +235,10 @@ public class addrec_ap_controller {
 				try {
 					//if(oft_tsk.getValue().toString().length() != 0)
 						oft_tsk.setItems(qr._select_fio_for_ap(1, sclass.parser_str(shop_tsk.getValue(), 0)));
-						chk_btn();
 					} catch (Exception e) {
 					}
-			}
+				chk_btn();
+				}
 		});
 		oft_tsk.setOnMouseEntered(new EventHandler<Event>() {
 
@@ -257,28 +258,20 @@ public class addrec_ap_controller {
 				tip.hide();
 			}
 		});
-		oft_tsk.setValue(sclass.parser_str(qr._select_user(conn_connector.USER_ID), 1));
-		otv_tsk.setItems(qr._select_fio_for_ap(2, sclass.parser_str(shop_tsk.getValue(), 0)));
+		
 		oft_tsk.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				try {
 					//if(oft_tsk.getValue().toString().length() != 0)
-						//otv_tsk.setItems(qr._select_fio_for_ap());
-						chk_btn();
+						otv_tsk.setItems(qr._select_fio_for_ap(2, sclass.parser_str(shop_tsk.getValue(), 0)));
 					} catch (Exception e) {
 					}
-			}
-		});
-		otv_tsk.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
+		
 		otv_tsk.setOnMouseEntered(new EventHandler<Event>() {
 
 			@Override
@@ -297,90 +290,7 @@ public class addrec_ap_controller {
 				tip.hide();
 			}
 		});
-		prior_ap.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				// TODO Auto-generated method stub
-				chk_btn();
-			}
-		});
-		tsk_ap.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				type_tsk = "TSK";
-				tsk_ap.setDisable(true);
-				cm_ap.setDisable(false);
-				_flag_bt = true;
-				
-				Platform.runLater(new Runnable() {
-				    @Override
-				    public void run() {
-				        description_tsk.requestFocus();
-				    }
-				});
-				
-				chk_btn();
-			}
-		});
-		tsk_ap.setOnMouseEntered(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				// TODO Auto-generated method stub
-				tip = new Tooltip(tsk_ap.getText());
-				Point2D p = tsk_ap.localToScreen(tsk_ap.getLayoutBounds().getMaxX(), tsk_ap.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
-		        tip.show(tsk_ap, p.getX(), p.getY());
-			}
-		});
-		tsk_ap.setOnMouseExited(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				// TODO Auto-generated method stub
-				tip.hide();
-			}
-		});
-		cm_ap.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				type_tsk = "CM";
-				tsk_ap.setDisable(false);
-				cm_ap.setDisable(true);
-				_flag_bt = true;
-				
-				Platform.runLater(new Runnable() {
-				    @Override
-				    public void run() {
-				        description_tsk.requestFocus();
-				    }
-				});
-				
-				chk_btn();
-			}
-		});
-		cm_ap.setOnMouseEntered(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				// TODO Auto-generated method stub
-				tip = new Tooltip(cm_ap.getText());
-				Point2D p = cm_ap.localToScreen(cm_ap.getLayoutBounds().getMaxX(), cm_ap.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
-		        tip.show(cm_ap, p.getX(), p.getY());
-			}
-		});
-		cm_ap.setOnMouseExited(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				// TODO Auto-generated method stub
-				tip.hide();
-			}
-		});
+		
 		description_tsk.setOnKeyReleased(new EventHandler<Event>() {
 
 			@Override
@@ -389,27 +299,69 @@ public class addrec_ap_controller {
 				chk_btn();
 			}
 		});
-				
-		sclass._style(add_tsk);
 		
-		add_tsk.setOnAction(new EventHandler<ActionEvent>() {
+		pm_ap.setOnMouseEntered(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				tip = new Tooltip(pm_ap.getText());
+				Point2D p = pm_ap.localToScreen(pm_ap.getLayoutBounds().getMaxX(), pm_ap.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
+		        tip.show(pm_ap, p.getX(), p.getY());
+			}
+		});
+		pm_ap.setOnMouseExited(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				tip.hide();
+			}
+		});
+		numpm_tsk.setText(pic._pmnum_wp);
+		description_tsk.setText(pic._description_wp);
+		type_tsk = pic._type_wp;
+		shop_tsk.getSelectionModel().select(sclass.parser_str_str(pic._equip_wp, 0));
+		group_tsk.getSelectionModel().select(sclass.parser_str_str(pic._equip_wp, 1));
+		lm_tsk.getSelectionModel().select(sclass.parser_str_str(pic._equip_wp, 2));
+		os_tsk.getSelectionModel().select(sclass.parser_str_str(pic._equip_wp, 3));
+		equip_tsk.getSelectionModel().select(sclass.parser_str_str(pic._equip_wp, 4));
+		tsk_maker_ap.setText(qr._select_tm_wp(pic._id_wp));
+		oft_tsk.getSelectionModel().select(pic._oft_wp);
+		otv_tsk.getSelectionModel().select(pic._otv_wp);
+		edate_tsk.setValue(fx_dp.fromString(pic._due_date_wp));
+				
+		sclass._style(add_tsk_upd);
+		
+		//!!!!!!!!!!!Отслеживаем изменение даты!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
+		    public void handle(ActionEvent e) 
+		    { 
+		       	chk_btn();
+			} 
+		}; 
+		edate_tsk.setOnAction(event);
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		
+		add_tsk_upd.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@SuppressWarnings("static-access")
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
-				//if(type_tsk.length() != 0 && shop_tsk.getValue().length() != 0 && group_tsk.getValue().length() != 0 && lm_tsk.getValue().length() != 0 && os_tsk.getValue().length() != 0 &&
-				//		equip_tsk.getValue().length() != 0 && oft_tsk.getValue().length() != 0 && otv_tsk.getValue().length() != 0 && 
-				//		description_tsk.getText().length() != 0 && edate_tsk.getValue().toString().length() != 0 )
-				//{
+			//	if(type_tsk.length() != 0 && shop_tsk.getValue().length() != 0 && lm_tsk.getValue().length() != 0 && os_tsk.getValue().length() != 0 &&
+			//			equip_tsk.getValue().length() != 0 && oft_tsk.getValue().length() != 0 && otv_tsk.getValue().length() != 0 && numpm_tsk.getText().length() != 0 &&
+			//			description_tsk.getText().length() != 0 && edate_tsk.getValue().toString().length() != 0)
+			//	{
 				//	err_msg.setVisible(false);
-					qr._insert_ap1(type_tsk, description_tsk.getText(), edate_tsk.getValue(), sclass.parser_str(shop_tsk.getValue(), 0)+"."+group_tsk.getValue()+"."+sclass.parser_str(lm_tsk.getValue(), 0)+"."+sclass.parser_str(os_tsk.getValue(), 0)+"."+sclass.parser_str(equip_tsk.getValue(), 0), tsk_maker_ap.getText(), sclass.parser_str(oft_tsk.getValue(), 0), sclass.parser_str(otv_tsk.getValue(), 0), conn_connector.USER_ID, sclass.parser_str(shop_tsk.getValue(), 0), sclass.parser_str(prior_ap.getValue(), 0));
+					qr._update_rec_ap(pic._id_ap, numpm_tsk.getText(), type_tsk, description_tsk.getText(), edate_tsk.getValue(), sclass.parser_str(shop_tsk.getValue(), 0)+"."+group_tsk.getValue()+"."+sclass.parser_str(lm_tsk.getValue(), 0)+"."+sclass.parser_str(os_tsk.getValue(), 0)+"."+sclass.parser_str(equip_tsk.getValue(), 0), sclass.parser_str(oft_tsk.getValue(), 0), sclass.parser_str(otv_tsk.getValue(), 0), sclass.parser_str(shop_tsk.getValue(), 0));
 					//pic.refreshTable_ap(apwr_controller.columns_ap);
-					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_action_plan") + " в Action Plan");
+					 
+					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + pic._id_ap + " в таблице Work Plan");
+					//pic.refreshTable(pic.table_ap, pic.columns_ap, pic.row);
 					pic._table_update.addAll(qr._select_data_ap(pic.USER_S));
-					stage = (Stage) add_tsk.getScene().getWindow();
+					stage = (Stage) add_tsk_upd.getScene().getWindow();
 					stage.close();
-				//}
+			//	}
 				//else
 				//	err_msg.setVisible(true);
 			}
@@ -434,7 +386,8 @@ public class addrec_ap_controller {
 		ResourceBundle lngBndl = ResourceBundle
 	            .getBundle("bundles.LangBundle", new Locale(loc1, loc2));
 		
-		lbl_create_tsk_ap.setText(lngBndl.getString("lbl_create_tsk_ap"));
+		lbl_create_tsk_ap_upd.setText(lngBndl.getString("lbl_create_tsk_ap_upd"));
+		lbl_num_pm.setText(lngBndl.getString("lbl_num_pm"));
 		lbl_type_ap.setText(lngBndl.getString("lbl_type_ap")+":");
 		lbl_desc_ap.setText(lngBndl.getString("lbl_desc_ap"));
 		lbl_dd_ap.setText(lngBndl.getString("lbl_dd_ap"));
@@ -447,9 +400,8 @@ public class addrec_ap_controller {
 		lbl_oft_ap1.setText(lngBndl.getString("lbl_oft_ap1"));
 		lbl_otv_ap.setText(lngBndl.getString("lbl_otv_ap"));
 		lbl_otv_ap1.setText(lngBndl.getString("lbl_otv_ap1"));
-		lbl_tsk_maker_ap.setText(lngBndl.getString("lbl_tsk_maker_ap")+":");
-		lbl_prior.setText(lngBndl.getString("lbl_prior")+":");
-		add_tsk.setText(lngBndl.getString("lbl_apply"));
+		lbl_tsk_maker_ap.setText(lngBndl.getString("lbl_tsk_maker_ap"));
+		add_tsk_upd.setText(lngBndl.getString("lbl_apply"));
 		cancel_tsk.setText(lngBndl.getString("cancel_tsk"));
 	}
 	
@@ -461,14 +413,15 @@ public class addrec_ap_controller {
 					os_tsk.getValue().length() != 0 && 
 					equip_tsk.getValue().length() != 0 &&
 					oft_tsk.getValue().length() != 0 &&
-					otv_tsk.getValue().length() != 0 &&
 					group_tsk.getValue().length() != 0 && 
-					prior_ap.getValue().length() != 0 &&
 					description_tsk.getText().length() != 0 &&
-					edate_tsk.getValue().toString().length() != 0 && _flag_bt) //otv_tsk.getValue().length() != 0 &&
-				add_tsk.setDisable(false);
+					edate_tsk.getValue().toString().length() != 0) //otv_tsk.getValue().length() != 0 && 
+			{
+				if(!conn_connector.USER_ROLE.equals("Technics"))
+					add_tsk_upd.setDisable(false);
+			}
 			else
-				add_tsk.setDisable(true);
+				add_tsk_upd.setDisable(true);
 			}
 		catch (Exception e) {
 			// TODO: handle exception

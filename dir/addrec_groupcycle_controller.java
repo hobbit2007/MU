@@ -92,7 +92,7 @@ public class addrec_groupcycle_controller {
 				if (!newValue.matches("\\d*|#|\\*")) {
 					txt_duration.setText(newValue.replaceAll("[^\\d|#|\\*]", ""));
 		        }
-				if(newValue.length() > 2) {
+				if(newValue.length() > 3) {
 					
 					txt_duration.setText(newValue.replaceAll("[0-9]", ""));
 	            	

@@ -43,6 +43,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -76,11 +78,17 @@ public class apwr_controller {
 	TableView<hmmr_wr_model> table_wr = new TableView<hmmr_wr_model>();
 	
 	@FXML
+	public TableView<hmmr_wp_model> table_wp = new TableView<>();
+	
+	@FXML
 	TableColumn<hmmr_ap_model, String> n_ap, n_pm_ap, type_ap, desc_ap, dd_ap, equip_ap, otv_task_ap, otv_ap;
 	
 	@FXML
 	TableColumn<hmmr_wr_model, String> num_wr, shift_report_wr, req_action_wr, actual_time_wr, actual_time1_wr, data_wr, equip_wr, record_type_wr, resp_wr, 
 									   status_wr, qty_wr, ap_num_wr; 
+	
+	@FXML
+	TableColumn<hmmr_wp_model, String> n_wp, n_pm_wp, type_wp, desc_wp, dd_wp, equip_wp, otv_task_wp, otv_wp;
 	
 	@FXML
 	DatePicker begin_data, last_data;
@@ -89,19 +97,19 @@ public class apwr_controller {
 	ScrollPane sp_wr;
 	
 	@FXML
-	JFXButton print_tsk, add_wr, create_ap, upd_ap, private_ap, showall_ap, upd_table_ap, upd_wr, clear_filter, upd_table_wr, set_btn, rus_btn, chn_btn, usa_btn, assembly, paint, stamp, welding, export_excel;
+	JFXButton print_tsk, add_wr, create_ap, upd_ap, private_ap, showall_ap, upd_table_ap, upd_wr, clear_filter, upd_table_wr, set_btn, rus_btn, chn_btn, usa_btn, assembly, paint, stamp, welding, export_excel, upd_tbl_wp, upd_rec_wp;
 	
 	@FXML
-	Label from_wr, to_wr, title_wo, title_wr;
+	Label from_wr, to_wr, title_wo, title_wr, title_wp;
 	
 	@FXML
-	HBox hb1, hb2, hb3, hb_wr1, hb_wr2, hb_wr3;
+	HBox hb1, hb2, hb3, hb_wr1, hb_wr2, hb_wr3, hb1_wp, hb2_wp, hb3_wp;
 	
 	@FXML
-	VBox vb, vb_wr;
+	VBox vb, vb_wr, vb_wp;
 	
 	@FXML
-	AnchorPane an_pn1, an_pn2, an_pn_wr;
+	AnchorPane an_pn1, an_pn2, an_pn_wr, an_pn_wp;
 	
 	@FXML
 	TabPane tb_pn;
@@ -112,16 +120,21 @@ public class apwr_controller {
 	@FXML
 	JFXRadioButton r_shop_wr, r_resp_wr;
 	
-		 
+	@FXML
+	Tab tab_wp, tab_wo, tab_wr;
+	
 	_query qr = new _query();
 	s_class scl = new s_class();
 	FxDatePickerConverter fx_dp = new FxDatePickerConverter();
 	Main mn = new Main();
 	
 	private String _date, _count;
+	int _duration;
 	
 	@SuppressWarnings("unused")
 	private String _due_date, _instruct, _shop, _lm, _os, _equip, _id_pm, _pmname,_type, _otf, _id, _group_pm, _sql_rez, _group_eq, _pm_exec; 
+	@SuppressWarnings("unused")
+	private String _due_date_wo, _instruct_wo, _shop_wo, _lm_wo, _os_wo, _equip_wo, _id_pm_wo, _pmname_wo,_type_wo, _otf_wo, _id_wo, _group_pm_wo, _sql_rez_wo, _group_eq_wo, _pm_exec_wo; 
 	public Stage stage = new Stage();
 	//Thread t, b;
 	private boolean _flag = true;
@@ -131,11 +144,14 @@ public class apwr_controller {
 	ObservableList<String> _chk = FXCollections.observableArrayList();
 	ObservableList<String> _chk_color = FXCollections.observableArrayList();
 	ObservableList<String> _get_field = FXCollections.observableArrayList();
+	ObservableList<String> _get_data_from_wp = FXCollections.observableArrayList();
+	ObservableList<String> _get_data_dly = FXCollections.observableArrayList();
 	public static ObservableList<hmmr_ap_model> _table_update = FXCollections.observableArrayList();
 	public static ObservableList<hmmr_wr_model> _table_update_wr = FXCollections.observableArrayList();
 	
 	public static List<hmmr_ap_model> row;
 	public static String _pmnum_ap, _type_ap, _description_ap, _due_date_ap, _equip_ap, _inst_ap, _oft_ap, _otv_ap, _id_ap, _idap_for_wr = "null", _icon;
+	public static String _pmnum_wp, _type_wp, _description_wp, _due_date_wp, _equip_wp, _inst_wp, _oft_wp, _otv_wp, _id_wp;
 	
 	public static String _id_wr, _qty_wr, _user_wr, _ap_num_wr, _data_wr, _equip_wr, _record_type_wr, _work_time,  _resp_wr,_resp2_wr,_resp3_wr,_resp4_wr, _status_wr, _shift_report_wr, 
 	_req_action_wr, _actual_time_wr, _actual_time1_wr,_actual_time2_wr,_actual_time3_wr,_actual_time4_wr, _actual_date,_actual_date_2,_actual_date_3,_actual_date_4, 
@@ -150,6 +166,7 @@ public class apwr_controller {
 	TableColumn<hmmr_ap_model, Button> oft = new TableColumn<hmmr_ap_model, Button>(c_oft);
 	TableColumn<hmmr_ap_model, Button> tm = new TableColumn<hmmr_ap_model, Button>(c_own);
 	TableColumn<hmmr_ap_model, JFXButton> prior = new TableColumn<hmmr_ap_model, JFXButton>(prior_img);
+	TableColumn<hmmr_wp_model, Button> wp_inst = new TableColumn<hmmr_wp_model, Button>(inst_l);
 	Tooltip tip;
 	String str_set_btn = "Вызов окна редактирования таблиц БД", sort_filter = "Фильтр", sort_tsk = "Выполненные задачи", sort_clear_filter = "Сбросить фильтр";
 	boolean chk_btn = true; //Проверяем какая из кнопок нажата: Личные - true; Показать все - false
@@ -232,6 +249,35 @@ public class apwr_controller {
 				shift_report_wr.setPrefWidth(290.0);
 				req_action_wr.setPrefWidth(290.0);
 			}
+			
+			sp_wr.setPrefWidth(screen_width);
+			sp_wr.setPrefHeight(screen_hight);
+			an_pn1.setPrefWidth(screen_width - 19);
+			an_pn1.setPrefHeight(screen_hight - 50);
+			tb_pn.setPrefWidth(screen_width - 19);
+			tb_pn.setPrefHeight(screen_hight - 50);
+			an_pn_wp.setPrefWidth(screen_width - 50);
+			an_pn_wp.setPrefHeight(screen_hight - 50);
+			vb_wp.setPrefWidth(screen_width - 50);
+			vb_wp.setPrefHeight(screen_hight - 50);
+			hb1_wp.setPrefWidth(screen_width - 50);
+			hb1_wp.setPrefHeight(70.0);
+			hb2_wp.setPrefWidth(screen_width - 50);
+			hb2_wp.setPrefHeight(screen_hight - 220);
+			hb3_wp.setPrefWidth(screen_width - 50);
+			hb3_wp.setPrefHeight(70.0);
+			table_wp.setPrefWidth(screen_width-100);
+			table_wp.setPrefHeight(screen_hight-200);
+			title_wp.setPrefWidth(900.0);
+			if(screen_width == 1920.0)
+				desc_wp.setPrefWidth(900.0);
+			if(screen_width == 1768.0)
+				desc_wp.setPrefWidth(750.0);
+			if(screen_width == 1600.0)
+				desc_wp.setPrefWidth(610.0);
+			if(screen_width == 1440.0)
+				desc_wp.setPrefWidth(430.0);
+			
 		begin_data.setValue(LocalDate.now().minusDays(7));
 		last_data.setValue(LocalDate.now());
 		
@@ -297,6 +343,7 @@ public class apwr_controller {
 			usa_btn.setDisable(false);
 			favoriteColumn.setText(conf_l);
 			favoriteColumn2.setText(inst_l);
+			wp_inst.setText(inst_l);
 			otv.setText(c_resp);
 			oft.setText(c_oft);
 			tm.setText(c_own);
@@ -309,6 +356,7 @@ public class apwr_controller {
 			usa_btn.setDisable(true);
 			favoriteColumn.setText(conf_l);
 			favoriteColumn2.setText(inst_l);
+			wp_inst.setText(inst_l);
 			otv.setText(c_resp);
 			oft.setText(c_oft);
 			tm.setText(c_own);
@@ -321,11 +369,16 @@ public class apwr_controller {
 			usa_btn.setDisable(false);
 			favoriteColumn.setText(conf_l);
 			favoriteColumn2.setText(inst_l);
+			wp_inst.setText(inst_l);
 			otv.setText(c_resp);
 			oft.setText(c_oft);
 			tm.setText(c_own);
 			prior.setText(prior_img);
 		}
+		
+		scl._style(upd_tbl_wp);
+		scl._style(upd_rec_wp);
+		
 		rus_btn.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -335,6 +388,7 @@ public class apwr_controller {
 				lang_fun("ru", "RU");
 				favoriteColumn.setText(conf_l);
 				favoriteColumn2.setText(inst_l);
+				wp_inst.setText(inst_l);
 				otv.setText(c_resp);
 				oft.setText(c_oft);
 				tm.setText(c_own);
@@ -359,6 +413,7 @@ public class apwr_controller {
 				lang_fun("en", "EN");
 				favoriteColumn.setText(conf_l);
 				favoriteColumn2.setText(inst_l);
+				wp_inst.setText(inst_l);
 				otv.setText(c_resp);
 				oft.setText(c_oft);
 				tm.setText(c_own);
@@ -383,6 +438,7 @@ public class apwr_controller {
 				lang_fun("zh", "CN");
 				favoriteColumn.setText(conf_l);
 				favoriteColumn2.setText(inst_l);
+				wp_inst.setText(inst_l);
 				otv.setText(c_resp);
 				oft.setText(c_oft);
 				tm.setText(c_own);
@@ -517,6 +573,7 @@ public class apwr_controller {
 		col_action.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
 			
 		upd_ap.setDisable(true);
+		upd_rec_wp.setDisable(true);
 		table_ap.setEditable(true);
 				
 		num_wr.setCellValueFactory(CellData -> CellData.getValue().IdProperty());
@@ -530,6 +587,14 @@ public class apwr_controller {
 		resp_wr.setCellValueFactory(CellData -> CellData.getValue().respProperty());
 		status_wr.setCellValueFactory(CellData -> CellData.getValue().statusProperty());
 		table_wr.setEditable(true);
+		
+		n_wp.setCellValueFactory(CellData -> CellData.getValue().IdProperty());
+		n_pm_wp.setCellValueFactory(CellData -> CellData.getValue().PM_NumProperty());
+		type_wp.setCellValueFactory(CellData -> CellData.getValue().TypeProperty());
+		desc_wp.setCellValueFactory(CellData -> CellData.getValue().DescProperty());
+		dd_wp.setCellValueFactory(CellData -> CellData.getValue().D_DProperty());
+		equip_wp.setCellValueFactory(CellData -> CellData.getValue().EquipProperty());
+		col_action.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
 		
 		//agree_wr.setDisable(true);
 		upd_wr.setDisable(true);
@@ -716,14 +781,19 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(CellEditEvent<hmmr_ap_model, String> event) {
-				String tst = event.getTableView().getItems().get(event.getTablePosition().getRow()).getId().substring(2);
-				ID_WR = tst;
-				table_wr.setItems(qr._select_sort_apnum_wr(tst));
-				
-				table_wr.getColumns().get(0).setVisible(false);
-		        table_wr.getColumns().get(0).setVisible(true);
-		        clear_filter.setDisable(false);
-		        flag = 1;
+				try {
+					String tst = event.getTableView().getItems().get(event.getTablePosition().getRow()).getId().substring(2);
+					ID_WR = tst;
+					table_wr.setItems(qr._select_sort_apnum_wr(tst));
+					
+					table_wr.getColumns().get(0).setVisible(false);
+			        table_wr.getColumns().get(0).setVisible(true);
+			        clear_filter.setDisable(false);
+			        flag = 1;
+				}
+				catch (Exception e) {
+					// TODO: handle exception
+				}
 			}
 		});
 		//Вызываем окно обновления по двойному клику на строке table AP
@@ -1049,61 +1119,128 @@ public class apwr_controller {
         req_action_wr.setCellFactory(TooltippedTableCell.forTableColumn());
         shift_report_wr.setCellFactory(TooltippedTableCell.forTableColumn());            		
 		addButtonToTable();
+		addButtonToTable_wp();
 		
 		//Получаем текущую дату
 		LocalDate date_cur = LocalDate.now();
-		//Проверяем есть ли что-то, что можно добавить в hmmr_action_plan
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Проверяем есть ли что-то, что можно добавить в hmmr_work_plan!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		_chk.addAll(qr._select_pmplan());
 		for(int i = 0; i < _chk.size(); i++)
 		{
 			_date = scl.parser_str(_chk.get(i), 0); //Дата окончания
 			_count = scl.parser_str(_chk.get(i), 1);//За сколько дней предупреждать техника до даты окончания
-			
-			int day_edate = fx_dp.fromString(_date).getDayOfMonth();
-			int month_edate = fx_dp.fromString(_date).getMonthValue();
-			int year_edate = fx_dp.fromString(_date).getYear();
-			
-			int _count1 = Integer.parseInt(_count);
-			LocalDate days = LocalDate.of(year_edate, month_edate, day_edate).plusDays(_count1);//Расчитываем дату начиная с которой помещаем заявку в Action Plan
-			
-			//Переводим даты в Стринг
-			String _chk_cur_date = fx_dp.toString(date_cur);
-			String _chk_new_date = fx_dp.toString(days);
-			
-			//Проверяем на совпадение расчетной даты с текущей и если совпадает создаем запись в Action Plan
-			if(_chk_cur_date.equals(_chk_new_date))
-			{
-				//Получаем поля необходимые для инсерта в Action Plan
-				_get_field.addAll(qr._select_getfield_for_ap(_date));
-				for(int j = 0; j < _get_field.size(); j++) {  //new
-					_due_date = scl.parser_str(_get_field.get(j), 0);
-					_otf = scl.parser_str(_get_field.get(j), 1);
-					_instruct = scl.parser_str(_get_field.get(j), 2);
-					_id_pm = scl.parser_str(_get_field.get(j), 3);
-					_group_pm = scl.parser_str(_get_field.get(j), 4);
-					_pmname = scl.parser_str(_get_field.get(j), 5);
-					_shop = scl.parser_str(_get_field.get(j), 6);
-					_group_eq = scl.parser_str(_get_field.get(j), 7);
-					_lm = scl.parser_str(_get_field.get(j), 8);
-					_os = scl.parser_str(_get_field.get(j), 9);
-					_equip = scl.parser_str(_get_field.get(j), 10);
-					_id = scl.parser_str(_get_field.get(j), 11);
-					_pm_exec = scl.parser_str(_get_field.get(j), 12);
-					_type = "PM";
-					//if(_record.equals("0"))
-						qr._insert_ap(_id_pm, _type, _pmname, _due_date, _shop+"."+_group_eq+"."+_lm+"."+_os+"."+_equip, _instruct, _otf, qr._select_userid_(_otf), _shop, "4M",_pm_exec);
-					//Чтобы задача не добавлясь в AP каждый раз с запуском приложения, поэтому ставим признак - 1, после первого заполнения
-					qr._update_hpy_record(_id, "1");
+			_duration = Integer.parseInt(scl.parser_str(_chk.get(i), 2));//сколько надо прибавить к дате из PM Plana чтобы получить дату окончания(due date)
+			if(!_count.equals("0") && _duration != 0) {
+				int day_edate = fx_dp.fromString(_date).getDayOfMonth();
+				int month_edate = fx_dp.fromString(_date).getMonthValue();
+				int year_edate = fx_dp.fromString(_date).getYear();
+				
+				int _count1 = Integer.parseInt(_count);
+				for(int k = -1 ; k >= _count1 ; k--) {
+					LocalDate days = LocalDate.of(year_edate, month_edate, day_edate).plusDays(k);//Расчитываем дату начиная с которой помещаем заявку в Action Plan
+					
+					//Переводим даты в Стринг
+					String _chk_cur_date = fx_dp.toString(date_cur);
+					String _chk_new_date = fx_dp.toString(days);
+					
+					//Проверяем на совпадение расчетной даты с текущей и если совпадает создаем запись в Action Plan
+					if(_chk_cur_date.equals(_chk_new_date))
+					{
+						//Получаем поля необходимые для инсерта в Action Plan
+						_get_field.addAll(qr._select_getfield_for_ap(_date));
+						for(int j = 0; j < _get_field.size(); j++) {  //new
+							_due_date = scl.parser_str(_get_field.get(j), 0);
+							_otf = scl.parser_str(_get_field.get(j), 1);
+							_instruct = scl.parser_str(_get_field.get(j), 2);
+							_id_pm = scl.parser_str(_get_field.get(j), 3);
+							_group_pm = scl.parser_str(_get_field.get(j), 4);
+							_pmname = scl.parser_str(_get_field.get(j), 5);
+							_shop = scl.parser_str(_get_field.get(j), 6);
+							_group_eq = scl.parser_str(_get_field.get(j), 7);
+							_lm = scl.parser_str(_get_field.get(j), 8);
+							_os = scl.parser_str(_get_field.get(j), 9);
+							_equip = scl.parser_str(_get_field.get(j), 10);
+							_id = scl.parser_str(_get_field.get(j), 11);
+							_pm_exec = scl.parser_str(_get_field.get(j), 12);
+							_type = "PM";
+							//if(_record.equals("0")) _insert_ap
+								qr._insert_wp(_id_pm, _type, _pmname, _due_date, _shop+"."+_group_eq+"."+_lm+"."+_os+"."+_equip, _instruct, _otf, qr._select_userid_(_otf), _shop, "4M",_pm_exec);
+							//Чтобы задача не добавлясь в WP каждый раз с запуском приложения, поэтому ставим признак - 1, после первого заполнения
+							qr._update_hpy_record(_id, "1");
+						}
+						_chk.removeAll(_chk);
+						_get_field.removeAll(_get_field);
+						_chk.addAll(qr._select_pmplan());
+						//table_ap.setItems(qr._select_data_ap(USER_S));
+						//table_ap.getColumns().get(0).setVisible(false);
+				        //table_ap.getColumns().get(0).setVisible(true);
+						table_wp.setItems(qr._select_data_wp(USER_S));
+						table_wp.getColumns().get(0).setVisible(false);
+				        table_wp.getColumns().get(0).setVisible(true);
+					}
 				}
-				_chk.removeAll(_chk);
-				_chk.addAll(qr._select_pmplan());
-				table_ap.setItems(qr._select_data_ap(USER_S));
-				table_ap.getColumns().get(0).setVisible(false);
-		        table_ap.getColumns().get(0).setVisible(true);
 			}
-			
 		}
-		
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//!!!!!!!!!Теперь проверяем все даты в Work Plane на совпадение с текущей и если совпадает эту запись из Work Plana удаляем и добавляем ее в Work Order!!!!!!!!!!!!!!!!!!!!!!!
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		_get_data_from_wp.addAll(qr._select_date_wp(fx_dp.toString(date_cur)));
+		for(int l = 0; l < _get_data_from_wp.size(); l++) {  
+			
+			String _id = scl.parser_str(_get_data_from_wp.get(l), 0);
+			String _pm_num = scl.parser_str(_get_data_from_wp.get(l), 1);
+			String _type = scl.parser_str(_get_data_from_wp.get(l), 2);
+			String _desc = scl.parser_str(_get_data_from_wp.get(l), 3);
+			String _dd = scl.parser_str(_get_data_from_wp.get(l), 4);
+		//	LocalDate test_dd = fx_dp.fromString(_dd).plusDays(_duration);
+			String _equip = scl.parser_str(_get_data_from_wp.get(l), 5);
+			String _inst = scl.parser_str(_get_data_from_wp.get(l), 6);
+			String _oft = scl.parser_str(_get_data_from_wp.get(l), 7);
+			String _otv = scl.parser_str(_get_data_from_wp.get(l), 8);
+			//String _tm = scl.parser_str(_get_data_from_wp.get(l), 9);
+			String _icon = scl.parser_str(_get_data_from_wp.get(l), 13);
+			String _shop = scl.parser_str(_get_data_from_wp.get(l), 14);
+			
+			qr._insert_ap(_pm_num, _type, _desc, fx_dp.fromString(_dd).plusDays(_duration), _equip, _inst, _oft, qr._select_userid_(_oft), _shop, _icon, _otv);
+			//Удаляем PM из WP
+			qr._update_wp_record(_id);
+			
+			table_ap.setItems(qr._select_data_ap(USER_S));
+			table_ap.getColumns().get(0).setVisible(false);
+	        table_ap.getColumns().get(0).setVisible(true);
+	        table_wp.setItems(qr._select_data_wp(USER_S));
+			table_wp.getColumns().get(0).setVisible(false);
+	        table_wp.getColumns().get(0).setVisible(true);
+		}
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Ежедневный ППР добавляем напрямую в WO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		_get_data_dly.addAll(qr._select_dly_wo(fx_dp.toString(date_cur)));
+		for(int j = 0; j < _get_data_dly.size(); j++) {  //new
+			_due_date_wo = scl.parser_str(_get_data_dly.get(j), 0);
+			_otf_wo = scl.parser_str(_get_data_dly.get(j), 1);
+			_instruct_wo = scl.parser_str(_get_data_dly.get(j), 2);
+			_id_pm_wo = scl.parser_str(_get_data_dly.get(j), 3);
+			_group_pm_wo = scl.parser_str(_get_data_dly.get(j), 4);
+			_pmname_wo = scl.parser_str(_get_data_dly.get(j), 5);
+			_shop_wo = scl.parser_str(_get_data_dly.get(j), 6);
+			_group_eq_wo = scl.parser_str(_get_data_dly.get(j), 7);
+			_lm_wo = scl.parser_str(_get_data_dly.get(j), 8);
+			_os_wo = scl.parser_str(_get_data_dly.get(j), 9);
+			_equip_wo = scl.parser_str(_get_data_dly.get(j), 10);
+			_id_wo = scl.parser_str(_get_data_dly.get(j), 11);
+			_pm_exec_wo = scl.parser_str(_get_data_dly.get(j), 12);
+			_type_wo = "PM";
+			//if(_record.equals("0")) _insert_ap
+				qr._insert_ap(_id_pm_wo, _type_wo, _pmname_wo, fx_dp.fromString(_due_date_wo), _shop_wo+"."+_group_eq_wo+"."+_lm_wo+"."+_os_wo+"."+_equip_wo, _instruct_wo, _otf_wo, qr._select_userid_(_otf_wo), _shop_wo, "4M",_pm_exec_wo);
+			//Чтобы задача не добавлясь в WP каждый раз с запуском приложения, поэтому ставим признак - 1, после первого заполнения
+			qr._update_hpy_record(_id_wo, "1");
+		}
+		_get_data_dly.removeAll(_get_data_dly);
+		table_ap.setItems(qr._select_data_ap(USER_S));
+		table_ap.getColumns().get(0).setVisible(false);
+        table_ap.getColumns().get(0).setVisible(true);
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!	
 		scl._style(create_ap);
 		
 		create_ap.setOnAction(new EventHandler<ActionEvent>() {
@@ -1133,6 +1270,22 @@ public class apwr_controller {
 					//mu_main_controller.getPrimaryStage().setAlwaysOnTop(false);
 					upd_ap.setDisable(true);
 					func_upd(_ccl1.getId());
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		});
+		
+		upd_rec_wp.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				hmmr_wp_model _ccl1 = table_wp.getSelectionModel().getSelectedItem();
+				try {
+					//mu_main_controller.getPrimaryStage().setAlwaysOnTop(false);
+					upd_rec_wp.setDisable(true);
+					_fill_rec_wp(_ccl1.getId());
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -1401,6 +1554,17 @@ public class apwr_controller {
 			    upd_ap.setDisable(true);
 			    print_tsk.setDisable(true);
 			    export_excel.setDisable(true);
+			}
+		});
+		
+		upd_tbl_wp.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				table_wp.setItems(qr._select_data_wp(USER_S));
+				table_wp.getColumns().get(0).setVisible(false);
+			    table_wp.getColumns().get(0).setVisible(true);
 			}
 		});
 		
@@ -1743,12 +1907,18 @@ public class apwr_controller {
 		        table_ap.getColumns().get(0).setVisible(true);
 			}
 		});*/
+		
+		//Ставим фокус и опускаемся на последнюю строку таблицы     
+        table_wr.requestFocus();
+        table_wr.getFocusModel().focus(0);
+        table_wr.getSelectionModel().selectLast();
+        table_wr.scrollTo(table_wr.getItems().size());
 	}
 	
 	private void initData()
 	{
 		table_ap.setItems(qr._select_data_ap(USER_S));
-		//table_wr.setItems(qr._select_data_wr());
+		table_wp.setItems(qr._select_data_wp(USER_S));
 		
 		table_wr.setItems(qr._select_data_wr(fx_dp.toString(begin_data.getValue()), fx_dp.toString(last_data.getValue())));
 	}
@@ -1795,6 +1965,11 @@ public class apwr_controller {
 		prior_img = lngBndl.getString("prior");
 		str_set_btn = lngBndl.getString("str_set_btn");
 		
+		type_wp.setText(lngBndl.getString("type_ap"));
+		desc_wp.setText(lngBndl.getString("desc_ap"));
+		dd_wp.setText(lngBndl.getString("dd_wp"));
+		equip_wp.setText(lngBndl.getString("equip_ap"));
+		
 		lbl_assembly = lngBndl.getString("lbl_assembly");
 		lbl_paint = lngBndl.getString("lbl_paint");
 		lbl_stamp = lngBndl.getString("lbl_stamp");
@@ -1836,6 +2011,18 @@ public class apwr_controller {
 	    stage_set.setScene(scene);
 	    stage_set.show();
 	}
+	//Вызываем окно обновления записи WP
+	protected void wp_upd() throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("Upd_Rec_WP.fxml"));
+		Scene scene = new Scene(root);
+		Stage stage_set = new Stage();
+		stage_set.initModality(Modality.WINDOW_MODAL);	
+		stage_set.initOwner(conn_connector.getPrimaryStage());
+		stage_set.setTitle("M&U - Update Record Window");
+		stage_set.setResizable(false);
+		stage_set.setScene(scene);
+		stage_set.show();
+		}
 	//Вызываем окно обновления записи WR
 	protected void wr_upd() throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("upd_rec_wr.fxml"));
@@ -1927,7 +2114,15 @@ public class apwr_controller {
                     			}
                     		});
             			 }
-                        
+                        table_wp.setOnMouseClicked(new EventHandler<Event>() {
+
+							@Override
+							public void handle(Event arg0) {
+								// TODO Auto-generated method stub
+								if(!conn_connector.USER_ROLE.equals("Technics"))
+                					upd_rec_wp.setDisable(false);
+							}
+						});
                         //устанавливаем checkbox если в базе в этом поле стоит 1
                    //     btn.setText(data.getap_num());
                         //запрещаем бегунку прокрутки возвращаться назад после нажатия кнопки
@@ -1959,98 +2154,113 @@ public class apwr_controller {
 
                 });
         columns2.add(favoriteColumn2);
-		
-		
-		
-		
-		
-/*		Callback<TableColumn<hmmr_ap_model, String>, TableCell<hmmr_ap_model, String>> cellFactory
-        = //
-        new Callback<TableColumn<hmmr_ap_model, String>, TableCell<hmmr_ap_model, String>>() {
-    @SuppressWarnings("rawtypes")
-	@Override
-    public TableCell call(final TableColumn<hmmr_ap_model, String> param) {
-        final TableCell<hmmr_ap_model, String> cell = new TableCell<hmmr_ap_model, String>() {
-        	public Button btn = new Button();
-             {
-            	Platform.runLater(() -> {
-					Image imageOk = new Image(getClass().getResourceAsStream("document.png"));
-					btn.setGraphic(new ImageView(imageOk)); });
-            	
-            	
-            	table_ap.setOnMouseClicked(new EventHandler<Event>() {
-
-        			@SuppressWarnings("static-access")
-					@Override
-        			public void handle(Event event) {
-        				// TODO Auto-generated method stub
-        				upd_ap.setDisable(false);
-        				upd_wr.setDisable(true);
-        				add_wr.setDisable(false);
-        				//Получаем № ap для использования его в таблице wr
-        				_idap_for_wr = table_ap.getSelectionModel().getSelectedItem().getId();
-        				_fill_rec(_idap_for_wr);
-        				mu_main_controller.getPrimaryStage().setAlwaysOnTop(false);
-        				        				        				
-        				table_wr.setOnMouseClicked(new EventHandler<Event>() {
-
-							@Override
-							public void handle(Event event) {
-								// TODO Auto-generated method stub
-								
-								upd_wr.setDisable(false);
-								upd_ap.setDisable(true);
-								_flag = false;
-							}
-						});
-						
-        				//col_action.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
-        				upd_ap.setDisable(false);
-        				table_ap.setEditable(true);
-        				_flag = false;
-        			}
-        		});
-              }
-
-            @Override
-            public void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                    setText(null);
-                } else {
-                	//btn.setDisable(false);
-                    btn.setOnAction(event -> {
-                        //Person person = getTableView().getItems().get(getIndex());
-                    	try {
-                    	//System.out.println("RECORD ID = " + table_ap.getSelectionModel().getSelectedItem().getId());
-                    	String inst_path = qr._select_inst_for_ap(table_ap.getSelectionModel().getSelectedItem().getId());
-                    	
-                    	Runtime runtime = Runtime.getRuntime();
-                    	if(inst_path.length() != 0)
-							runtime.exec("excel " + inst_path);
-                    	//btn.setDisable(true);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							//e.printStackTrace();
-							System.out.println("ERROR!!!");
-						}
-                    });
-                    setGraphic(btn);
-                    setText(null);
-                }
-            }
-        };
-        return cell;
-    }
-};
-
-        col_action.setCellFactory(cellFactory);
-
-        table_ap.getColumns().add(col_action);*/
-
     }
 	
+	private void addButtonToTable_wp() {
+        // TableColumn<Data, Void> colBtn = new TableColumn("Button Column");
+
+ 		//Добавляем кнопку в table_wr
+         final ObservableList<TableColumn<hmmr_wp_model, ?>> columns_wp = table_wp.getColumns();
+ 		//final TableColumn<hmmr_ap_model, Button> favoriteColumn2 = new TableColumn<hmmr_ap_model, Button>(inst_l);
+         wp_inst.setCellValueFactory(
+                 new Callback<TableColumn.CellDataFeatures<hmmr_wp_model, Button>, ObservableValue<Button>>() {
+
+                     @Override
+                     public ObservableValue<Button> call(TableColumn.CellDataFeatures<hmmr_wp_model, Button> arg0) {
+                         hmmr_wp_model data = arg0.getValue();
+                         Button btn1 = new Button();
+                         wp_inst.setStyle( "-fx-alignment: CENTER;");
+                         if(data.getinst_btn().equals("-") || data.getinst_btn().equals("null"))
+                         	btn1.setDisable(true);
+                         else
+                         	btn1.setDisable(false);
+                         
+                         {
+                         	Platform.runLater(() -> {
+             					Image imageOk = new Image(getClass().getResourceAsStream("document.png"));
+             					btn1.setGraphic(new ImageView(imageOk)); });
+                         	
+             				table_wp.setOnMouseClicked(new EventHandler<Event>() {
+
+                     			@Override
+                     			public void handle(Event event) {
+                     				// TODO Auto-generated method stub
+                     				
+                     				//upd_wr.setDisable(true);
+                     				
+                     				//mu_main_controller.getPrimaryStage().setAlwaysOnTop(false);
+                     				//try {
+ 	                    				                  				
+ 	                    				//Получаем № ap для использования его в таблице wr
+ 	                    				//if(!table_wp.getSelectionModel().getSelectedItem().getId().equals("null") || table_wp.getSelectionModel().getSelectedItem().getId() != null) {
+ 	                    				//	_idwp_for_wr = table_ap.getSelectionModel().getSelectedItem().getId();
+ 	                    				//	add_wr.setDisable(false);
+ 	                    				//	if(!conn_connector.USER_ROLE.equals("Technics"))
+ 	                        			//		upd_ap.setDisable(false);
+ 	                    				//}
+                     				
+ 	                    				//_fill_rec(_idap_for_wr.substring(2));
+ 	                    				//mu_main_controller.getPrimaryStage().setAlwaysOnTop(false);
+ 	                    				//table_wr.setItems(qr._select_data_wr(fx_dp.toString(begin_data.getValue()), fx_dp.toString(last_data.getValue())));       				        				
+ 	                    				           						
+ 	                    				//col_action.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
+ 	                    				//if(!conn_connector.USER_ROLE.equals("Technics")) {
+ 	                    				//	upd_ap.setDisable(false);
+ 	                    				//	print_tsk.setDisable(false);
+ 	                    				//	export_excel.setDisable(false);
+ 	                    				//}
+ 	                    				table_wp.setEditable(true);
+ 	                    				
+                     				//}
+                     				//catch (Exception e) {
+                     				//	print_tsk.setDisable(true);
+                     				//	export_excel.setDisable(true);
+                     				//	upd_ap.setDisable(true);
+                     				//	add_wr.setDisable(true);
+ 									//}
+                     			}
+                     		});
+             			 }
+                         
+                         //устанавливаем checkbox если в базе в этом поле стоит 1
+                    //     btn.setText(data.getap_num());
+                         //запрещаем бегунку прокрутки возвращаться назад после нажатия кнопки
+                         //btn.setFocusTraversable(false);
+                         btn1.setOnAction(new EventHandler<ActionEvent>() {
+ 							
+ 							@SuppressWarnings("static-access")
+ 							@Override
+ 							public void handle(ActionEvent event) {
+ 								// TODO Auto-generated method stub
+ 								
+ 								//System.out.println("RECORD ID = " + table_ap.getSelectionModel().getSelectedItem().getId());
+ 								try {
+ 									File inst_path = new File(qr._select_inst_for_wp(table_wp.getSelectionModel().getSelectedItem().getId()));
+ 									mn._run_excel(inst_path);
+ 								}
+ 								catch (Exception e) {
+ 									scl._AlertDialog("Сначала выделите строку!", "Ошибка!");
+ 								}
+// 			                    	Runtime runtime = Runtime.getRuntime();
+// 			                    	if(inst_path.length() != 0)
+// 										runtime.exec("excel " + inst_path);
+ 								//btn.setDisable(true);
+ 							}
+ 						});
+
+                         return new SimpleObjectProperty<Button>(btn1);
+                     }
+
+                 });
+         columns_wp.add(wp_inst);
+	}
+	
+	public void TabSelect(Tab tab)
+	{
+		//переключаемся сразу на вкладку WR
+        SingleSelectionModel<Tab> selectionModel = tb_pn.getSelectionModel();
+        selectionModel.select(tab);
+	}
 /*	@SuppressWarnings({ "unchecked", "unused" })
 	private void addButtonToTable_WR() {
        // TableColumn<Data, Void> colBtn = new TableColumn("Button Column");
@@ -2268,7 +2478,7 @@ public class apwr_controller {
 	    tableView.setItems(list);
 	 }
 	
-	//Заполняем переменные для использования добавления строки в WR
+	//Заполняем переменные для использования в обновлении строки в WO
 	private void _fill_rec(String str)
 	{
 		_sql_rez = qr._select_for_update_ap(str);
@@ -2281,6 +2491,27 @@ public class apwr_controller {
 		_oft_ap = scl.parser_str_str_str(_sql_rez, 5);
 		_otv_ap = scl.parser_str_str_str(_sql_rez, 6);
 	}
+	
+	//Заполняем переменные для использования в обновлении строки в WP
+		private void _fill_rec_wp(String str)
+		{
+			String _sql_rez_wp = qr._select_for_update_wp(str);
+			_id_wp = str; 
+			_pmnum_wp = scl.parser_str_str_str(_sql_rez_wp, 0);
+			_type_wp = scl.parser_str_str_str(_sql_rez_wp, 1);
+			_description_wp = scl.parser_str_str_str(_sql_rez_wp, 2);
+			_due_date_wp = scl.parser_str_str_str(_sql_rez_wp, 3); 
+			_equip_wp = scl.parser_str_str_str(_sql_rez_wp, 4);
+			_oft_wp = scl.parser_str_str_str(_sql_rez_wp, 5);
+			_otv_wp = scl.parser_str_str_str(_sql_rez_wp, 6);
+			try {
+				wp_upd();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
 	//Меняем цвет ячейки для даты в Action Plan
 	//Путем вычитания дней(которые берем из таблицы colors) из текущей даты узнаем каким цветом надо закрасить соответсвующую ячейку
 	@SuppressWarnings({ "unused", "unchecked" })

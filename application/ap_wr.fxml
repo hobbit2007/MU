@@ -24,7 +24,62 @@
          <children>
             <TabPane fx:id="tb_pn" prefHeight="760.0" prefWidth="1322.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="Work Order">
+              <Tab fx:id="tab_wp" text="Work Plan">
+                  <content>
+                    <AnchorPane fx:id="an_pn_wp" minHeight="0.0" minWidth="0.0" prefHeight="723.0" prefWidth="1322.0">
+                           <children>
+                              <VBox fx:id="vb_wp" prefHeight="743.0" prefWidth="1322.0">
+                                 <children>
+                                    <HBox fx:id="hb1_wp" alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="1322.0">
+                                       <children>
+                                          <ImageView fitHeight="70.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@haval.jpg" />
+                                             </image>
+                                          </ImageView>
+                                          <Label fx:id="title_wp" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="1063.0" text="WORK PLAN">
+                                             <font>
+                                                <Font name="System Bold Italic" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children></HBox>
+                                    <HBox fx:id="hb2_wp" alignment="CENTER" prefHeight="592.0" prefWidth="1322.0">
+                                    <children>
+                                    	<TableView fx:id="table_wp" prefHeight="541.0" prefWidth="1276.0">
+				                                <columns>
+				                                  <TableColumn fx:id="n_wp" prefWidth="75.0" sortable="false" text="№ AP" />
+				                                  <TableColumn fx:id="n_pm_wp" prefWidth="75.0" sortable="false" text="№ PM" />
+				                                    <TableColumn fx:id="type_wp" prefWidth="36.0" sortable="false" text="Тип" />
+				                                    <TableColumn fx:id="desc_wp" prefWidth="356.0" sortable="false" text="Описание" />
+				                                    <TableColumn fx:id="dd_wp" minWidth="0.0" prefWidth="95.0" sortable="false" text="Due Date" />
+				                                    <TableColumn fx:id="equip_wp" prefWidth="200.0" sortable="false" text="Оборудование" />
+				                                </columns>
+				                              </TableView>
+                                    </children>
+                                    </HBox>
+                                    <HBox fx:id="hb3_wp" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <HBox prefHeight="91.0" prefWidth="25.0" />
+                                          <JFXButton fx:id="upd_tbl_wp" text="Обновить таблицу">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </JFXButton>
+                                          <HBox prefHeight="100.0" prefWidth="17.0" />
+                                          <JFXButton fx:id="upd_rec_wp" text="Обновить запись">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </JFXButton>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                   </AnchorPane>
+                  </content>
+              </Tab>     
+                <Tab fx:id="tab_wo" text="Work Order">
                   <content>
                     <AnchorPane fx:id="an_pn2" minHeight="0.0" minWidth="0.0" prefHeight="723.0" prefWidth="1322.0">
                            <children>
@@ -138,7 +193,7 @@
                            
                   </content>
                 </Tab>
-                <Tab text="Work Recording">
+                <Tab fx:id="tab_wr" text="Work Recording">
                   <content>
                     <AnchorPane fx:id="an_pn_wr" minHeight="0.0" minWidth="0.0" prefHeight="723.0" prefWidth="1322.0">
                            <children>

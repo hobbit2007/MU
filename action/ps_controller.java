@@ -513,6 +513,12 @@ public class ps_controller {
 				tip.hide();
 			}
 		});
+		
+		//Ставим фокус и опускаемся на последнюю строку таблицы     
+        table_ps.requestFocus();
+        table_ps.getFocusModel().focus(0);
+        table_ps.getSelectionModel().selectLast();
+        table_ps.scrollTo(table_ps.getItems().size());
 	}
 	
 	private void initData()

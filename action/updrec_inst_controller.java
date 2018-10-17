@@ -485,6 +485,15 @@ public class updrec_inst_controller
 						chk_btn();
 					}
 				});
+				//!!!!!!!!!!!Отслеживаем изменение даты!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
+				    public void handle(ActionEvent e) 
+				    { 
+				       	chk_btn();
+					} 
+				}; 
+				date_change_pi.setOnAction(event);
+				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				
 		add_confirm_inst_upd.setOnAction(new EventHandler<ActionEvent>() {
 			
