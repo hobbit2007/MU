@@ -2205,7 +2205,7 @@ public class apwr_controller {
  							public void handle(ActionEvent event) {
  								
  								try {
- 									File inst_path = new File(qr._select_inst_for_wp(table_wp.getSelectionModel().getSelectedItem().getId()));
+ 									File inst_path = new File(qr._select_inst_for_wp(data.getId()));//table_wp.getSelectionModel().getSelectedItem()
  									mn._run_excel(inst_path);
  								}
  								catch (Exception e) {
