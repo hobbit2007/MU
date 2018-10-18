@@ -88,7 +88,7 @@ public class apwr_controller {
 									   status_wr, qty_wr, ap_num_wr; 
 	
 	@FXML
-	TableColumn<hmmr_wp_model, String> n_wp, n_pm_wp, type_wp, desc_wp, dd_wp, equip_wp, otv_task_wp, otv_wp;
+	TableColumn<hmmr_wp_model, String> n_wp, n_pm_wp, type_wp, desc_wp, dd_wp, equip_wp, otv_task_wp, otv_wp, col_tm_wp, col_oft_wp, col_otv_wp;
 	
 	@FXML
 	DatePicker begin_data, last_data;
@@ -148,6 +148,7 @@ public class apwr_controller {
 	ObservableList<String> _get_data_dly = FXCollections.observableArrayList();
 	public static ObservableList<hmmr_ap_model> _table_update = FXCollections.observableArrayList();
 	public static ObservableList<hmmr_wr_model> _table_update_wr = FXCollections.observableArrayList();
+	public static ObservableList<hmmr_wp_model> _table_update_wp = FXCollections.observableArrayList();
 	
 	public static List<hmmr_ap_model> row;
 	public static String _pmnum_ap, _type_ap, _description_ap, _due_date_ap, _equip_ap, _inst_ap, _oft_ap, _otv_ap, _id_ap, _idap_for_wr = "null", _icon;
@@ -594,6 +595,9 @@ public class apwr_controller {
 		desc_wp.setCellValueFactory(CellData -> CellData.getValue().DescProperty());
 		dd_wp.setCellValueFactory(CellData -> CellData.getValue().D_DProperty());
 		equip_wp.setCellValueFactory(CellData -> CellData.getValue().EquipProperty());
+		col_tm_wp.setCellValueFactory(CellData -> CellData.getValue().tsk_makerProperty());
+		col_oft_wp.setCellValueFactory(CellData -> CellData.getValue().OFTProperty());
+		col_otv_wp.setCellValueFactory(CellData -> CellData.getValue().OTVProperty());
 		col_action.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
 		
 		//agree_wr.setDisable(true);
@@ -819,6 +823,17 @@ public class apwr_controller {
 	            }
 			}
 		});
+		//Вызываем окно обновления по двойному клику на строке table WP
+				table_wp.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+					@Override
+					public void handle(MouseEvent event) {
+						// TODO Auto-generated method stub
+						if (event.getClickCount() == 2 ){
+							_fill_rec_wp(table_wp.getSelectionModel().getSelectedItem().getId());
+			            }
+					}
+				});
 			
 		final ObservableList<TableColumn<hmmr_ap_model, ?>> columns_otv = table_ap.getColumns();
 		otv.setCellValueFactory(
@@ -1805,6 +1820,16 @@ public class apwr_controller {
 		        table_ap.getColumns().get(0).setVisible(true);
 			}
 		     });
+		_table_update_wp.addListener(new ListChangeListener<hmmr_wp_model>() {
+		    @Override
+			public void onChanged(Change<? extends hmmr_wp_model> c) {
+				// TODO Auto-generated method stub
+		    	
+		    	table_wp.setItems(qr._select_data_wp(USER_S));
+		    	table_wp.getColumns().get(0).setVisible(false);
+		        table_wp.getColumns().get(0).setVisible(true);
+			}
+		     });
 		_table_update_wr.addListener(new ListChangeListener<hmmr_wr_model>() {
 		    @Override
 			public void onChanged(Change<? extends hmmr_wr_model> c) {
@@ -1897,17 +1922,7 @@ public class apwr_controller {
 				}
 			}
 		});
-		/*table_ap.setOnScroll(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				// TODO Auto-generated method stub
-				table_ap.setItems(qr._select_data_ap(USER_S));
-				table_ap.getColumns().get(0).setVisible(false);
-		        table_ap.getColumns().get(0).setVisible(true);
-			}
-		});*/
-		
+				
 		//Ставим фокус и опускаемся на последнюю строку таблицы     
         table_wr.requestFocus();
         table_wr.getFocusModel().focus(0);
@@ -2114,15 +2129,7 @@ public class apwr_controller {
                     			}
                     		});
             			 }
-                        table_wp.setOnMouseClicked(new EventHandler<Event>() {
-
-							@Override
-							public void handle(Event arg0) {
-								// TODO Auto-generated method stub
-								if(!conn_connector.USER_ROLE.equals("Technics"))
-                					upd_rec_wp.setDisable(false);
-							}
-						});
+                        
                         //устанавливаем checkbox если в базе в этом поле стоит 1
                    //     btn.setText(data.getap_num());
                         //запрещаем бегунку прокрутки возвращаться назад после нажатия кнопки
@@ -2136,7 +2143,7 @@ public class apwr_controller {
 								
 								//System.out.println("RECORD ID = " + table_ap.getSelectionModel().getSelectedItem().getId());
 								try {
-									File inst_path = new File(qr._select_inst_for_ap(table_ap.getSelectionModel().getSelectedItem().getId()));
+									File inst_path = new File(qr._select_inst_for_ap(data.getId()));//table_ap.getSelectionModel().getSelectedItem()
 									mn._run_excel(inst_path);
 								}
 								catch (Exception e) {
@@ -2184,56 +2191,19 @@ public class apwr_controller {
 
                      			@Override
                      			public void handle(Event event) {
-                     				// TODO Auto-generated method stub
-                     				
-                     				//upd_wr.setDisable(true);
-                     				
-                     				//mu_main_controller.getPrimaryStage().setAlwaysOnTop(false);
-                     				//try {
- 	                    				                  				
- 	                    				//Получаем № ap для использования его в таблице wr
- 	                    				//if(!table_wp.getSelectionModel().getSelectedItem().getId().equals("null") || table_wp.getSelectionModel().getSelectedItem().getId() != null) {
- 	                    				//	_idwp_for_wr = table_ap.getSelectionModel().getSelectedItem().getId();
- 	                    				//	add_wr.setDisable(false);
- 	                    				//	if(!conn_connector.USER_ROLE.equals("Technics"))
- 	                        			//		upd_ap.setDisable(false);
- 	                    				//}
-                     				
- 	                    				//_fill_rec(_idap_for_wr.substring(2));
- 	                    				//mu_main_controller.getPrimaryStage().setAlwaysOnTop(false);
- 	                    				//table_wr.setItems(qr._select_data_wr(fx_dp.toString(begin_data.getValue()), fx_dp.toString(last_data.getValue())));       				        				
- 	                    				           						
- 	                    				//col_action.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
- 	                    				//if(!conn_connector.USER_ROLE.equals("Technics")) {
- 	                    				//	upd_ap.setDisable(false);
- 	                    				//	print_tsk.setDisable(false);
- 	                    				//	export_excel.setDisable(false);
- 	                    				//}
- 	                    				table_wp.setEditable(true);
- 	                    				
-                     				//}
-                     				//catch (Exception e) {
-                     				//	print_tsk.setDisable(true);
-                     				//	export_excel.setDisable(true);
-                     				//	upd_ap.setDisable(true);
-                     				//	add_wr.setDisable(true);
- 									//}
+                     				table_wp.setEditable(true);
+ 	                    			if(!conn_connector.USER_ROLE.equals("Technics"))
+ 	                    				upd_rec_wp.setDisable(false);
                      			}
                      		});
              			 }
-                         
-                         //устанавливаем checkbox если в базе в этом поле стоит 1
-                    //     btn.setText(data.getap_num());
-                         //запрещаем бегунку прокрутки возвращаться назад после нажатия кнопки
-                         //btn.setFocusTraversable(false);
+                        
                          btn1.setOnAction(new EventHandler<ActionEvent>() {
  							
  							@SuppressWarnings("static-access")
  							@Override
  							public void handle(ActionEvent event) {
- 								// TODO Auto-generated method stub
  								
- 								//System.out.println("RECORD ID = " + table_ap.getSelectionModel().getSelectedItem().getId());
  								try {
  									File inst_path = new File(qr._select_inst_for_wp(table_wp.getSelectionModel().getSelectedItem().getId()));
  									mn._run_excel(inst_path);
@@ -2241,10 +2211,6 @@ public class apwr_controller {
  								catch (Exception e) {
  									scl._AlertDialog("Сначала выделите строку!", "Ошибка!");
  								}
-// 			                    	Runtime runtime = Runtime.getRuntime();
-// 			                    	if(inst_path.length() != 0)
-// 										runtime.exec("excel " + inst_path);
- 								//btn.setDisable(true);
  							}
  						});
 
@@ -2495,8 +2461,8 @@ public class apwr_controller {
 	//Заполняем переменные для использования в обновлении строки в WP
 		private void _fill_rec_wp(String str)
 		{
-			String _sql_rez_wp = qr._select_for_update_wp(str);
-			_id_wp = str; 
+			String _sql_rez_wp = qr._select_for_update_wp(str.substring(2));
+			_id_wp = str.substring(2); 
 			_pmnum_wp = scl.parser_str_str_str(_sql_rez_wp, 0);
 			_type_wp = scl.parser_str_str_str(_sql_rez_wp, 1);
 			_description_wp = scl.parser_str_str_str(_sql_rez_wp, 2);

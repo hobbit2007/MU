@@ -30,7 +30,7 @@ import share_class.s_class;
 public class updrec_inst_controller
 {
 	@FXML
-	ComboBox<String> typepm_inst_upd, cyclepm1_inst_upd, cyclepm2_inst_upd, pos_inst_upd, line_inst_upd, power_inst_upd, sinfo_inst_upd;
+	ComboBox<String> typepm_inst_upd, cyclepm1_inst_upd, cyclepm2_inst_upd, pos_inst_upd, line_inst_upd, power_inst_upd, sinfo_inst_upd, list_adm2, list_adm3, list_of1, list_of2;
 	
 	@FXML
 	TextField ninst_inst_upd, ver_inst_upd, mt_inst_upd, pmname_inst_upd, sdoc_txt_inst_upd, qtyspec_inst_upd, ptw_inst_upd, wt_inst_upd, adm2_inst_upd, adm3_inst_upd, of1_inst_upd, of2_inst_upd, inst_pdf_pi;
@@ -299,6 +299,50 @@ public class updrec_inst_controller
 							qty_weeks_inst_upd.setText("0");
 					}
 				});*/
+				
+		list_adm2.setItems(qr._select_pm_str("Admission_2"));	
+		list_adm2.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				adm2_inst_upd.setText(list_adm2.getValue());
+				chk_btn();
+			}
+		});
+		
+		list_adm3.setItems(qr._select_pm_str("Admission_3"));	
+		list_adm3.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				adm3_inst_upd.setText(list_adm3.getValue());
+				chk_btn();
+			}
+		});
+		
+		list_of1.setItems(qr._select_pm_str("Outfit_1"));	
+		list_of1.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				of1_inst_upd.setText(list_of1.getValue());
+				chk_btn();
+			}
+		});
+		
+		list_of2.setItems(qr._select_pm_str("Outfit_2"));	
+		list_of2.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				of2_inst_upd.setText(list_of2.getValue());
+				chk_btn();
+			}
+		});
 		
 		ninst_inst_upd.setText(pic._ninst_inst);
 		date_create_pi.setValue(fx_dp.fromString(pic._date_create));
@@ -322,6 +366,10 @@ public class updrec_inst_controller
 		line_inst_upd.getSelectionModel().select(pic._line_inst); 
 		power_inst_upd.getSelectionModel().select(pic._power_inst); 
 		sinfo_inst_upd.getSelectionModel().select(pic._sinfo_inst);
+		list_adm2.getSelectionModel().select(pic._adm2_inst);
+		list_adm3.getSelectionModel().select(pic._adm3_inst);
+		list_of1.getSelectionModel().select(pic._of1_inst);
+		list_of2.getSelectionModel().select(pic._of2_inst);
 		
 		add_cancel_inst_upd.setOnAction(new EventHandler<ActionEvent>() {
 			

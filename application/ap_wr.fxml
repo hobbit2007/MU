@@ -45,7 +45,7 @@
                                        </children></HBox>
                                     <HBox fx:id="hb2_wp" alignment="CENTER" prefHeight="592.0" prefWidth="1322.0">
                                     <children>
-                                    	<TableView fx:id="table_wp" prefHeight="541.0" prefWidth="1276.0">
+                                    	<TableView fx:id="table_wp" prefHeight="583.0" prefWidth="1206.0">
 				                                <columns>
 				                                  <TableColumn fx:id="n_wp" prefWidth="75.0" sortable="false" text="№ AP" />
 				                                  <TableColumn fx:id="n_pm_wp" prefWidth="75.0" sortable="false" text="№ PM" />
@@ -53,6 +53,9 @@
 				                                    <TableColumn fx:id="desc_wp" prefWidth="356.0" sortable="false" text="Описание" />
 				                                    <TableColumn fx:id="dd_wp" minWidth="0.0" prefWidth="95.0" sortable="false" text="Due Date" />
 				                                    <TableColumn fx:id="equip_wp" prefWidth="200.0" sortable="false" text="Оборудование" />
+                                                <TableColumn fx:id="col_tm_wp" prefWidth="75.0" text="Владелец" />
+                                                <TableColumn fx:id="col_oft_wp" prefWidth="75.0" text="Отв. за PM" />
+                                                <TableColumn fx:id="col_otv_wp" prefWidth="114.0" text="Отв. исполнитель" />
 				                                </columns>
 				                              </TableView>
                                     </children>

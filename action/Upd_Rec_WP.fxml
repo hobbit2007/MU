@@ -41,7 +41,7 @@
             <ComboBox fx:id="os_tsk" layoutX="200.0" layoutY="413.0" prefWidth="150.0" />
             <ComboBox fx:id="equip_tsk" layoutX="200.0" layoutY="453.0" prefWidth="150.0" />
             <Label fx:id="lbl_oft_ap" layoutX="17.0" layoutY="527.0" text="Ответственный" />
-            <Label fx:id="lbl_oft_ap1" layoutX="17.0" layoutY="542.0" text="за задачу:" />
+            <Label fx:id="lbl_oft_ap1" layoutX="17.0" layoutY="542.0" text="за PM:" />
             <ComboBox fx:id="oft_tsk" layoutX="200.0" layoutY="533.0" prefWidth="150.0" />
             <Label fx:id="lbl_otv_ap" layoutX="17.0" layoutY="568.0" text="Ответственный" />
             <Label fx:id="lbl_otv_ap1" layoutX="17.0" layoutY="584.0" text="исполонитель:" />

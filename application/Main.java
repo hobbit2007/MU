@@ -6,6 +6,7 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import share_class.s_class;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -15,6 +16,8 @@ public class Main extends Application {
 	private Stage primaryStage;
 	private AnchorPane rootLayout;
 	public static Stage pStage;
+	
+	s_class scl = new s_class();
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -56,9 +59,15 @@ public class Main extends Application {
         return pStage;
     }
 	//Запускаем на выполнение любой файл, не только Excel!!!!!
+	@SuppressWarnings("static-access")
 	public void _run_excel(File path) throws IOException
 	{
+		try {
 		getHostServices().showDocument(path.toURI().toURL().toExternalForm());
+		}
+		catch (Exception e) {
+			scl._AlertDialog("Указан неверный путь к файлу!", "Внимание!");
+		}
 	}
 	
 	

@@ -353,12 +353,12 @@ public class UpdRec_WP_Controller {
 			//			description_tsk.getText().length() != 0 && edate_tsk.getValue().toString().length() != 0)
 			//	{
 				//	err_msg.setVisible(false);
-					qr._update_rec_ap(pic._id_ap, numpm_tsk.getText(), type_tsk, description_tsk.getText(), edate_tsk.getValue(), sclass.parser_str(shop_tsk.getValue(), 0)+"."+group_tsk.getValue()+"."+sclass.parser_str(lm_tsk.getValue(), 0)+"."+sclass.parser_str(os_tsk.getValue(), 0)+"."+sclass.parser_str(equip_tsk.getValue(), 0), sclass.parser_str(oft_tsk.getValue(), 0), sclass.parser_str(otv_tsk.getValue(), 0), sclass.parser_str(shop_tsk.getValue(), 0));
+					qr._update_rec_ap(pic._id_wp, numpm_tsk.getText(), type_tsk, description_tsk.getText(), edate_tsk.getValue(), sclass.parser_str(shop_tsk.getValue(), 0)+"."+group_tsk.getValue()+"."+sclass.parser_str(lm_tsk.getValue(), 0)+"."+sclass.parser_str(os_tsk.getValue(), 0)+"."+sclass.parser_str(equip_tsk.getValue(), 0), sclass.parser_str(oft_tsk.getValue(), 0), sclass.parser_str(otv_tsk.getValue(), 0), sclass.parser_str(shop_tsk.getValue(), 0));
 					//pic.refreshTable_ap(apwr_controller.columns_ap);
 					 
-					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + pic._id_ap + " в таблице Work Plan");
+					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + pic._id_wp + " в таблице Work Plan");
 					//pic.refreshTable(pic.table_ap, pic.columns_ap, pic.row);
-					pic._table_update.addAll(qr._select_data_ap(pic.USER_S));
+					pic._table_update_wp.addAll(qr._select_data_wp(pic.USER_S));
 					stage = (Stage) add_tsk_upd.getScene().getWindow();
 					stage.close();
 			//	}
@@ -378,7 +378,14 @@ public class UpdRec_WP_Controller {
 				stage.close();
 			}
 		});
-		
+		otv_tsk.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+				if(!conn_connector.USER_ROLE.equals("Technics"))
+					add_tsk_upd.setDisable(false);
+			}
+		});
 	}
 	
 	private void lang_fun(String loc1, String loc2)

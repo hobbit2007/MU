@@ -27,7 +27,7 @@ import share_class.s_class;
 public class addrec_inst_controller
 {
 	@FXML
-	ComboBox<String> typepm_inst, cyclepm1_inst, cyclepm2_inst, pos_inst, line_inst, power_inst, sinfo_inst;
+	ComboBox<String> typepm_inst, cyclepm1_inst, cyclepm2_inst, pos_inst, line_inst, power_inst, sinfo_inst, list_adm2, list_adm3, list_of1, list_of2;
 	
 	@FXML
 	TextField ninst_inst, ver_inst, mt_inst, pmname_inst, sdoc_txt_inst, qtyspec_inst, ptw_inst, wt_inst, adm2_inst, adm3_inst, of1_inst, of2_inst,inst_pdf_pi;
@@ -293,7 +293,42 @@ public class addrec_inst_controller
 			    chk_btn();
 			}
 	   });
-		
+		list_adm2.setItems(qr._select_pm_str("Admission_2"));	
+		list_adm2.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				adm2_inst.setText(list_adm2.getValue());
+			}
+		});
+		list_adm3.setItems(qr._select_pm_str("Admission_3"));	
+		list_adm3.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				adm3_inst.setText(list_adm3.getValue());
+			}
+		});
+		list_of1.setItems(qr._select_pm_str("Outfit_1"));	
+		list_of1.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				of1_inst.setText(list_of1.getValue());
+			}
+		});
+		list_of2.setItems(qr._select_pm_str("Outfit_2"));	
+		list_of2.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				of2_inst.setText(list_of2.getValue());
+			}
+		});
 		
 	//Проверяем заполнение полей	
 		ninst_inst.setOnKeyReleased(new EventHandler<Event>() {

@@ -1682,9 +1682,9 @@ public class _query
 					String query = "null";
 					try {
 						if(otv == 1)
-							query = "select ID, L_Name_RUS, F_Name_RUS, Otchestvo from hmmr_mu_staff where user_del = 0 ORDER BY FIELD(Team, 'E', 'T', 'SL', 'SS', 'TL', 'GL', 'MS', 'D') ASC, L_Name_RUS ASC;";
+							query = "select ID, L_Name_RUS, F_Name_RUS, Otchestvo from hmmr_mu_staff where user_del = 0 ORDER BY FIELD(Team, 'E', 'T', 'SL', 'SS', 'TL', 'GL', 'MS', 'HOD', 'HOS') ASC, L_Name_RUS ASC;";
 						else
-							query ="select ID, L_Name_RUS, F_Name_RUS, Otchestvo from hmmr_mu_staff where user_del = 0 ORDER BY IF(Group_S="+"'"+shop+"'"+",Team = 'T',0) DESC, FIELD(Team, 'T', 'E', 'SL', 'SS', 'TL', 'GL', 'MS', 'D') ASC, L_Name_RUS ASC;";
+							query ="select ID, L_Name_RUS, F_Name_RUS, Otchestvo from hmmr_mu_staff where user_del = 0 ORDER BY IF(Group_S="+"'"+shop+"'"+",Team = 'T',0) DESC, FIELD(Team, 'T', 'E', 'SL', 'SS', 'TL', 'GL', 'MS', 'HOD', 'HOS') ASC, L_Name_RUS ASC;";
 						
 						cn.ConToDb();
 						stmt6 = cn.con.createStatement();
@@ -1855,7 +1855,7 @@ public class _query
 				        }
 					}
 					catch (SQLException e) {
-						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 1745!");
+						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 1829!");
 			        } finally {
 			            //close connection ,stmt and resultset here
 			        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -5377,7 +5377,7 @@ public class _query
 		@SuppressWarnings("static-access")
 		public void _update_rec_ap(String id, String PM_Num, String Type, String Description, LocalDate Due_Date, String Equipment, String Otv_For_Task, String Otv, String shop)
 		{
-			String query = "UPDATE hmmr_action_plan SET PM_Num = "+"'"+PM_Num+"'"+",Type = "+"'"+Type+"'"+",Description = "+"'"+Description+"'"+",Due_Date = "+"'"+Due_Date+"'"+",Equipment = "+"'"+Equipment+"'"+",Otv_For_Task = "+"'"+Otv_For_Task+"'"+",Otv = "+"'"+Otv+"'"+",shop = "+"'"+shop+"'"+",Icon = "+"'"+icon+"'"+" where id = "+"'"+id+"'"+";";
+			String query = "UPDATE hmmr_work_plan SET PM_Num = "+"'"+PM_Num+"'"+",Type = "+"'"+Type+"'"+",Description = "+"'"+Description+"'"+",Due_Date = "+"'"+Due_Date+"'"+",Equipment = "+"'"+Equipment+"'"+",Otv_For_Task = "+"'"+Otv_For_Task+"'"+",Otv = "+"'"+Otv+"'"+",shop = "+"'"+shop+"'"+" where id = "+"'"+id+"'"+";";
 			
 			try {
 				cn.ConToDb();
@@ -5393,5 +5393,42 @@ public class _query
 	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
 	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
 	        }
+		}
+		/**
+		 * Запрос для заполнения ComboBox значением, только с одним параметром для
+		 * записи в таблицу PM Instruction
+		 * @param str - Имя поля, значение которого надо вставить в ComboBox
+		 * @return - Возвращаем полученное значение
+		 */			
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<String> _select_pm_str(String str)
+		{
+			ObservableList<String> list = FXCollections.observableArrayList();
+			
+			try {
+				String query = "select "+str+" from pm_inst group by "+str+";";
+				
+				cn.ConToDb();
+				stmt6 = cn.con.createStatement();
+				rs6 = stmt6.executeQuery(query);
+							
+		        while (rs6.next()) {
+		        	if(rs6.getString(1) != null) {
+		        		String tpm = rs6.getString(1);			        					            
+			            list.add(tpm);
+		        	}    
+		        }
+
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 1109!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt6.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs6.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+
+			return list;
 		}
 }
