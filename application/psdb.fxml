@@ -25,31 +25,31 @@
                     <columns>
                         <TableColumn fx:id="col_num_ps" prefWidth="44.0" sortable="false" text="№" />
                       <TableColumn fx:id="col_company_ps" prefWidth="106.0" sortable="false" text="Company" />
-                      <TableColumn fx:id="col_plant_ps" prefWidth="75.0" text="Plant" />
-                        <TableColumn fx:id="col_shops_ps" prefWidth="75.0" text="Цех, сокр" />
-                        <TableColumn fx:id="col_groups_ps" prefWidth="84.0" text="Группа, сокр" />
-                        <TableColumn fx:id="col_lines_ps" prefWidth="84.0" text="Линия, сокр" />
-                        <TableColumn fx:id="col_oss_ps" prefWidth="104.0" text="Станция, сокр" />
-                        <TableColumn fx:id="col_equips_ps" prefWidth="96.0" text="Оборуд., сокр" />
-                        <TableColumn fx:id="col_shop_ps" prefWidth="55.0" text="Цех" />
-                  <TableColumn fx:id="col_group_ps" prefWidth="48.0" text="Группа" />
-                        <TableColumn fx:id="col_line_ps" prefWidth="57.0" text="Линия" />
-                        <TableColumn fx:id="col_os_ps" prefWidth="63.0" text="Станция" />
-                        <TableColumn fx:id="col_equip_ps" prefWidth="98.0" text="Оборудование" />
-                  <TableColumn fx:id="col_shoprus_ps" prefWidth="59.0" text="Цех,рус." />
-                  <TableColumn fx:id="col_grouprus_ps" prefWidth="74.0" text="Группа,рус." />
-                        <TableColumn fx:id="col_linerus_ps" prefWidth="75.0" text="Линия, рус." />
-                        <TableColumn fx:id="col_osrus_ps" prefWidth="83.0" text="Станция, рус." />
-                  <TableColumn fx:id="col_equiprus_ps" prefWidth="79.0" text="Оборуд.,рус." />
-                        <TableColumn fx:id="col_description_ps" prefWidth="192.0" text="Описание" />
-                        <TableColumn fx:id="col_equiplabel_ps" prefWidth="97.0" text="Equip Label" />
-                        <TableColumn fx:id="col_stationlabel_ps" prefWidth="108.0" text="Station Label" />
+                      <TableColumn fx:id="col_plant_ps" prefWidth="75.0" sortable="false" text="Plant" />
+                        <TableColumn fx:id="col_shops_ps" prefWidth="75.0" sortable="false" text="Цех, сокр" />
+                        <TableColumn fx:id="col_groups_ps" prefWidth="84.0" sortable="false" text="Группа, сокр" />
+                        <TableColumn fx:id="col_lines_ps" prefWidth="84.0" sortable="false" text="Линия, сокр" />
+                        <TableColumn fx:id="col_oss_ps" prefWidth="104.0" sortable="false" text="Станция, сокр" />
+                        <TableColumn fx:id="col_equips_ps" prefWidth="96.0" sortable="false" text="Оборуд., сокр" />
+                        <TableColumn fx:id="col_shop_ps" prefWidth="55.0" sortable="false" text="Цех" />
+                  <TableColumn fx:id="col_group_ps" prefWidth="48.0" sortable="false" text="Группа" />
+                        <TableColumn fx:id="col_line_ps" prefWidth="57.0" sortable="false" text="Линия" />
+                        <TableColumn fx:id="col_os_ps" prefWidth="63.0" sortable="false" text="Станция" />
+                        <TableColumn fx:id="col_equip_ps" prefWidth="98.0" sortable="false" text="Оборудование" />
+                  <TableColumn fx:id="col_shoprus_ps" prefWidth="59.0" sortable="false" text="Цех,рус." />
+                  <TableColumn fx:id="col_grouprus_ps" prefWidth="74.0" sortable="false" text="Группа,рус." />
+                        <TableColumn fx:id="col_linerus_ps" prefWidth="75.0" sortable="false" text="Линия, рус." />
+                        <TableColumn fx:id="col_osrus_ps" prefWidth="83.0" sortable="false" text="Станция, рус." />
+                  <TableColumn fx:id="col_equiprus_ps" prefWidth="79.0" sortable="false" text="Оборуд.,рус." />
+                        <TableColumn fx:id="col_description_ps" prefWidth="192.0" sortable="false" text="Описание" />
+                        <TableColumn fx:id="col_equiplabel_ps" prefWidth="97.0" sortable="false" text="Equip Label" />
+                        <TableColumn fx:id="col_stationlabel_ps" prefWidth="108.0" sortable="false" text="Station Label" />
                         <TableColumn fx:id="col_manual_ps" prefWidth="106.0" sortable="false" text="Manual" />
-                  <TableColumn fx:id="col_groupotv_ps" prefWidth="75.0" text="Группа ответственных" />
-                  <TableColumn fx:id="col_invnum_ps" prefWidth="75.0" text="Инв. №" />
-                  <TableColumn fx:id="col_numos_ps" prefWidth="75.0" text="№ Осн. Средства" />
-                  <TableColumn fx:id="col_startdate_ps" prefWidth="75.0" text="Дата запуска" />
-                  <TableColumn fx:id="col_cost_ps" prefWidth="75.0" text="Cost Center" />
+                  <TableColumn fx:id="col_groupotv_ps" prefWidth="75.0" sortable="false" text="Группа ответственных" />
+                  <TableColumn fx:id="col_invnum_ps" prefWidth="75.0" sortable="false" text="Инв. №" />
+                  <TableColumn fx:id="col_numos_ps" prefWidth="75.0" sortable="false" text="№ Осн. Средства" />
+                  <TableColumn fx:id="col_startdate_ps" prefWidth="75.0" sortable="false" text="Дата запуска" />
+                  <TableColumn fx:id="col_cost_ps" prefWidth="75.0" sortable="false" text="Cost Center" />
                         <TableColumn fx:id="col_location_ps" prefWidth="76.0" sortable="false" text="Location" />
                         <TableColumn fx:id="col_cham_ps" prefWidth="69.0" sortable="false" text="CHAMBER" />
                         <TableColumn fx:id="col_coord_ps" prefWidth="93.0" sortable="false" text="Координаты" />

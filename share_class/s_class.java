@@ -2,6 +2,7 @@ package share_class;
 
 
 import java.util.Optional;
+import java.util.Random;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
@@ -186,4 +187,23 @@ public class s_class {
 	{
 		tip.hide();
 	}
+	
+	//генерируем случайный пароль, только из цифр и только в размере 4, если надо буквенный снимаем комментарии
+	public static String generate() { //int from, int to
+	   String pass  = "";
+	   Random r     = new Random();
+	   int cntchars = 4;//from + r.nextInt(to - from + 1);
+       for (int i = 0; i < cntchars; ++i) {
+          char next = 0;
+          int range = 10;
+          switch(r.nextInt(1)) { //3
+            case 0: {next = '0'; range = 10;} break;
+            //case 1: {next = 'a'; range = 26;} break;
+            //case 2: {next = 'A'; range = 26;} break;
+          }
+          pass += (char)((r.nextInt(range)) + next);
+       }
+	   return pass;
+	}
+
 }

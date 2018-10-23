@@ -37,29 +37,29 @@
                      <children>
                         <TableView fx:id="table_inst" prefHeight="673.0" prefWidth="1805.0">
                           <columns>
-                            <TableColumn fx:id="col_id_inst" prefWidth="40.0" text="№" />
-                            <TableColumn fx:id="col_ninst_inst" prefWidth="134.0" text="№ инструкции" />
+                            <TableColumn fx:id="col_id_inst" prefWidth="40.0" sortable="false" text="№" />
+                            <TableColumn fx:id="col_ninst_inst" prefWidth="134.0" sortable="false" text="№ инструкции" />
                               <TableColumn fx:id="col_date_create_pi" prefWidth="75.0" sortable="false" text="Дата созд." />
                               <TableColumn fx:id="col_date_change_pi" prefWidth="75.0" sortable="false" text="Дата изм." />
                               <TableColumn fx:id="col_inst_pi" prefWidth="75.0" sortable="false" text="Инс-я PDF" />
-                              <TableColumn fx:id="col_ver_inst" prefWidth="51.0" text="Версия" />
-                              <TableColumn fx:id="col_mt_inst" prefWidth="84.0" text="Модель/Тип" />
-                              <TableColumn fx:id="col_pmn_inst" prefWidth="66.0" text="PM name" />
-                              <TableColumn fx:id="col_pmt_inst" prefWidth="75.0" text="PM Type" />
-                              <TableColumn fx:id="col_pmc1_inst" prefWidth="75.0" text="PM Cycle1" />
-                              <TableColumn fx:id="col_pmc2_inst" prefWidth="75.0" text="PM Cycle2" />
-                              <TableColumn fx:id="col_ool_inst" prefWidth="86.0" text="ON/OFF Line" />
-                              <TableColumn fx:id="col_oop_inst" prefWidth="92.0" text="ON/OFF Power" />
-                              <TableColumn fx:id="col_pos_inst" prefWidth="91.0" text="Должность" />
-                              <TableColumn fx:id="col_sinfo_inst" prefWidth="72.0" text="Ист. инф." />
-                              <TableColumn fx:id="col_sdoc_inst" prefWidth="68.0" text="Документ" />
-                              <TableColumn fx:id="col_qspec_inst" minWidth="0.0" prefWidth="109.0" text="Кол-во спец-ов" />
-                              <TableColumn fx:id="col_pty_inst" minWidth="0.0" prefWidth="108.0" text="Время подгот. работ, мин." />
-                              <TableColumn fx:id="col_wt_inst" minWidth="0.0" prefWidth="91.0" text="Время работы" />
-                              <TableColumn fx:id="col_adm2_inst" minWidth="0.0" prefWidth="61.0" text="Допуск 2" />
-                              <TableColumn fx:id="col_adm3_inst" minWidth="0.0" prefWidth="61.0" text="Допуск 3" />
-                              <TableColumn fx:id="col_of1_inst" minWidth="0.0" prefWidth="61.0" text="Наряд 1" />
-                              <TableColumn fx:id="col_of2_inst" minWidth="0.0" prefWidth="61.0" text="Наряд 2" />
+                              <TableColumn fx:id="col_ver_inst" prefWidth="51.0" sortable="false" text="Версия" />
+                              <TableColumn fx:id="col_mt_inst" prefWidth="84.0" sortable="false" text="Модель/Тип" />
+                              <TableColumn fx:id="col_pmn_inst" prefWidth="66.0" sortable="false" text="PM name" />
+                              <TableColumn fx:id="col_pmt_inst" prefWidth="75.0" sortable="false" text="PM Type" />
+                              <TableColumn fx:id="col_pmc1_inst" prefWidth="75.0" sortable="false" text="PM Cycle1" />
+                              <TableColumn fx:id="col_pmc2_inst" prefWidth="75.0" sortable="false" text="PM Cycle2" />
+                              <TableColumn fx:id="col_ool_inst" prefWidth="86.0" sortable="false" text="ON/OFF Line" />
+                              <TableColumn fx:id="col_oop_inst" prefWidth="92.0" sortable="false" text="ON/OFF Power" />
+                              <TableColumn fx:id="col_pos_inst" prefWidth="91.0" sortable="false" text="Должность" />
+                              <TableColumn fx:id="col_sinfo_inst" prefWidth="72.0" sortable="false" text="Ист. инф." />
+                              <TableColumn fx:id="col_sdoc_inst" prefWidth="68.0" sortable="false" text="Документ" />
+                              <TableColumn fx:id="col_qspec_inst" minWidth="0.0" prefWidth="109.0" sortable="false" text="Кол-во спец-ов" />
+                              <TableColumn fx:id="col_pty_inst" minWidth="0.0" prefWidth="108.0" sortable="false" text="Время подгот. работ, мин." />
+                              <TableColumn fx:id="col_wt_inst" minWidth="0.0" prefWidth="91.0" sortable="false" text="Время работы" />
+                              <TableColumn fx:id="col_adm2_inst" minWidth="0.0" prefWidth="61.0" sortable="false" text="Допуск 2" />
+                              <TableColumn fx:id="col_adm3_inst" minWidth="0.0" prefWidth="61.0" sortable="false" text="Допуск 3" />
+                              <TableColumn fx:id="col_of1_inst" minWidth="0.0" prefWidth="61.0" sortable="false" text="Наряд 1" />
+                              <TableColumn fx:id="col_of2_inst" minWidth="0.0" prefWidth="61.0" sortable="false" text="Наряд 2" />
                           </columns>
                            <HBox.margin>
                               <Insets left="25.0" />

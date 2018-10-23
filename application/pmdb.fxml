@@ -38,7 +38,7 @@
                         <HBox prefHeight="664.0" prefWidth="27.0" />
                         <TableView fx:id="table_pm" prefHeight="663.0" prefWidth="788.0">
                           <columns>
-                            <TableColumn fx:id="col_id_pm" prefWidth="49.0" text="№ PM" />
+                            <TableColumn fx:id="col_id_pm" prefWidth="49.0" sortable="false" text="№ PM" />
                             <TableColumn fx:id="col_ninst_pm" prefWidth="163.0" sortable="false" text="№ инструкции" />
                               <TableColumn fx:id="col_group_pm" prefWidth="91.0" sortable="false" text="Группа" />
                               <TableColumn fx:id="col_otv_pm" minWidth="0.0" prefWidth="99.0" sortable="false" text="Ответственный" />

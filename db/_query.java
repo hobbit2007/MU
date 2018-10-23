@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import action.Hmmr_Stuff_Model;
 import action.hmmr_ap_model;
 import action.hmmr_inst_model;
 import action.hmmr_pm_model;
@@ -1826,7 +1827,7 @@ public class _query
 					ObservableList<hmmr_ap_model> list = FXCollections.observableArrayList();
 					
 					try {
-						String query = "select id,PM_Num,Type,Description,Due_Date,Equipment,Instruction,Otv_For_Task,Otv,Tsk_maker,flag_otv,flag_oft,flag_tm,Icon from hmmr_action_plan where shop = "+"'"+shop+"'"+" AND del_rec = 0 ORDER BY FIELD(Icon, '1S', '2Q', '3P', '4M', '1') ASC;";
+						String query = "select hap.id,hap.PM_Num,hap.Type,hap.Description,hap.Due_Date,hap.Equipment,hap.Instruction,hap.Otv_For_Task,hap.Otv,hap.Tsk_maker,hap.flag_otv,hap.flag_oft,hap.flag_tm,hap.Icon from hmmr_action_plan hap INNER JOIN hmmr_mu_staff hms ON hap.Otv = hms.ID where del_rec = 0 AND if( "+"'"+shop+"'"+"='S' || "+"'"+shop+"'"+"='W', hms.Group_S='S,W', hms.Group_S="+"'"+shop+"'"+") ORDER BY FIELD(Icon, '1S', '2Q', '3P', '4M', '1') ASC;";//shop = "+"'"+shop+"'"+" AND 
 						
 						cn.ConToDb();
 						stmt12 = cn.con.createStatement();
@@ -1874,7 +1875,8 @@ public class _query
 					ObservableList<hmmr_ap_model> list = FXCollections.observableArrayList();
 					
 					try {
-						String query = "select id,PM_Num,Type,Description,Due_Date,Equipment,Instruction,Otv_For_Task,Otv,Tsk_maker,flag_otv,flag_oft,flag_tm,Icon from hmmr_action_plan where del_rec = 0 AND (shop = "+"'"+shop+"'"+" OR Otv_For_Task = "+"'"+oft+"'"+" OR Otv = "+"'"+oft+"'"+" OR Tsk_maker = "+"'"+oft+"'"+");";
+						//String query = "select id,PM_Num,Type,Description,Due_Date,Equipment,Instruction,Otv_For_Task,Otv,Tsk_maker,flag_otv,flag_oft,flag_tm,Icon from hmmr_action_plan where del_rec = 0 AND (shop = "+"'"+shop+"'"+" OR Otv_For_Task = "+"'"+oft+"'"+" OR Otv = "+"'"+oft+"'"+" OR Tsk_maker = "+"'"+oft+"'"+");";
+						String query = "select hap.id,hap.PM_Num,hap.Type,hap.Description,hap.Due_Date,hap.Equipment,hap.Instruction,hap.Otv_For_Task,hap.Otv,hap.Tsk_maker,hap.flag_otv,hap.flag_oft,hap.flag_tm,hap.Icon from hmmr_action_plan hap INNER JOIN hmmr_mu_staff hms ON hap.Otv = hms.ID where del_rec = 0 AND (if( "+"'"+shop+"'"+"='S' || "+"'"+shop+"'"+"='W', hms.Group_S='S,W', hms.Group_S="+"'"+shop+"'"+") OR Otv_For_Task = "+"'"+oft+"'"+" OR Otv = "+"'"+oft+"'"+" OR Tsk_maker = "+"'"+oft+"'"+") ORDER BY FIELD(Icon, '1S', '2Q', '3P', '4M', '1') ASC;";
 						
 						cn.ConToDb();
 						stmt12 = cn.con.createStatement();
@@ -1964,7 +1966,7 @@ public class _query
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 				
 ////////////////////////////////////////////////////////////////////////////////ACTION PLAN///////////////////////////////////////////////////////////////				
-				//Временный запрос для цеха S,W пока он еще не разделен
+				//Временный запрос для цеха S,W пока он еще не разделен !!!!!!!!СЕЙЧАС УЖЕ НЕ ИСПОЛЬЗУЕТСЯ С 2018-10-19!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				//Показываем все задачи по цеху
 				@SuppressWarnings({ "static-access"})
 				public ObservableList<hmmr_ap_model> _select_data_ap_sw(String oft)
@@ -1972,7 +1974,7 @@ public class _query
 					ObservableList<hmmr_ap_model> list = FXCollections.observableArrayList();
 					
 					try {
-						String query = "select id,PM_Num,Type,Description,Due_Date,Equipment,Instruction,Otv_For_Task,Otv,Tsk_maker,flag_otv,flag_oft,flag_tm,Icon from hmmr_action_plan where del_rec = 0 AND ((shop = 'S' OR shop = 'W') OR (Otv_For_Task = "+"'"+oft+"'"+" OR Otv = "+"'"+oft+"'"+" OR Tsk_maker = "+"'"+oft+"'"+"));";
+						String query = "select id,PM_Num,Type,Description,Due_Date,Equipment,Instruction,Otv_For_Task,Otv,Tsk_maker,flag_otv,flag_oft,flag_tm,Icon from hmmr_action_plan where del_rec = 0 AND ((shop = 'S' OR shop = 'W') OR (Otv_For_Task = "+"'"+oft+"'"+" OR Otv = "+"'"+oft+"'"+" OR Tsk_maker = "+"'"+oft+"'"+")) ORDER BY FIELD(Icon, '1S', '2Q', '3P', '4M', '1') ASC;";
 						
 						cn.ConToDb();
 						stmt12 = cn.con.createStatement();
@@ -2001,7 +2003,7 @@ public class _query
 				        }
 					}
 					catch (SQLException e) {
-						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 1881!");
+						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 1970!");
 			        } finally {
 			            //close connection ,stmt and resultset here
 			        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -5430,5 +5432,255 @@ public class _query
 		       }
 
 			return list;
+		}
+		/**
+		 * Показываем все задачи по цеху без исполнителя
+		 * @param shop - цех по которому необходимо показать задачи без исполнителя
+		 * @return - возвращаем в TableView полученный набор данных
+		 */
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<hmmr_ap_model> _select_data_without_otv(String shop)
+		{
+			ObservableList<hmmr_ap_model> list = FXCollections.observableArrayList();
+			
+			try {
+				
+				String query = "select hap.id,hap.PM_Num,hap.Type,hap.Description,hap.Due_Date,hap.Equipment,hap.Instruction,hap.Otv_For_Task,hap.Otv,hap.Tsk_maker,hap.flag_otv,hap.flag_oft,hap.flag_tm,hap.Icon from hmmr_action_plan hap INNER JOIN hmmr_mu_staff hms ON hap.Tsk_maker = hms.ID WHERE hap.Otv = 'need select' AND del_rec = 0 AND if( "+"'"+shop+"'"+"='S' || "+"'"+shop+"'"+"='W', hms.Group_S='S,W', hms.Group_S="+"'"+shop+"'"+");"; 
+				
+				cn.ConToDb();
+				stmt12 = cn.con.createStatement();
+				rs12 = stmt12.executeQuery(query);
+							
+		        while (rs12.next()) {
+		        	hmmr_ap_model hpm = new hmmr_ap_model();
+		        	if(rs12.getString(1) != null && rs12.getString(2) != null && rs12.getString(3) != null) {
+		        		hpm.Id.set("AP"+rs12.getString(1));
+		        		hpm.PM_Num.set(rs12.getString(2));
+		        		hpm.Type.set(rs12.getString(3));
+		        		hpm.Desc.set(rs12.getString(4));
+		        		hpm.Due_Date.set(rs12.getString(5));
+		        		hpm.Equip.set(rs12.getString(6));
+		        		hpm.inst_btn.set(rs12.getString(7));
+		        		hpm.OFT.set(rs12.getString(8));
+		        		hpm.OTV.set(rs12.getString(9));
+		        		hpm.tsk_maker.set(rs12.getString(10));
+		        		hpm.flag_otv.set(rs12.getString(11));
+		        		hpm.flag_oft.set(rs12.getString(12));
+		        		hpm.flag_tm.set(rs12.getString(13));
+		        		hpm.icon.set(rs12.getString(14));
+		        						        				            
+			            list.add(hpm);
+		        	}    
+		        }
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5446!");
+	        } finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt12.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs12.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+			return list;
+		}
+		/**
+		 * Заполняем данными таблицу формы staff редактор
+		 * @param id_num - id записи попорядку
+		 * @param STAFF_ID - id сотрудника
+		 * @param ID - сокращенное id сотрудника
+		 * @param L_Name_RUS - Фамилия
+		 * @param F_Name_RUS - Имя
+		 * @param Otchestvo - Отчество
+		 * @param DoB - Дата рождения
+		 * @param Sec - Секция
+		 * @param Group_S - Какой цех
+		 * @param Team - Какая команда (GL, TL, инженеры и т.д.) обозначаем (GL, TL, E, T)
+		 * @param Position_RUS - должность
+		 * @param GWM_ID - табельный номер
+		 * @param Date_of_Start - Дата начала работы
+		 * @param Cell_1 - Телефон
+		 * @param Address - Адрес
+		 * @param Avto - № машины
+		 * @param Shoes_size - Размер обуви
+		 * @param Clothes_size - Размер одежды
+		 * @return - возвращаем набор данных
+		 */
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<Hmmr_Stuff_Model> _select_data_staff() //String id_num, String STAFF_ID, String ID, String L_Name_RUS, String F_Name_RUS, String Otchestvo, String DoB, String Sec, String Group_S, String Team, String Position_RUS, String GWM_ID, String Date_of_Start, String Cell_1, String Address, String Avto, String Shoes_size, String Clothes_size
+		{
+			ObservableList<Hmmr_Stuff_Model> list = FXCollections.observableArrayList();
+			
+			try {
+				
+				String query = "SELECT hms.id_num, hms.STAFF_ID, hms.ID, hms.L_Name_RUS, hms.F_Name_RUS, hms.Otchestvo, hms.DoB, hms.Sec, hms.Group_S, hms.Team, hms.Position_RUS, hms.GWM_ID, hms.Date_of_Start, hms.Cell_1, hms.Address, hms.Avto, hms.Shoes_size, hms.Clothes_size, usr.login FROM hmmr_mu_staff hms INNER JOIN users usr ON usr.id = hms.user_id ORDER BY id_num ASC;"; 
+				
+				cn.ConToDb();
+				stmt12 = cn.con.createStatement();
+				rs12 = stmt12.executeQuery(query);
+							
+		        while (rs12.next()) {
+		        	Hmmr_Stuff_Model hsm = new Hmmr_Stuff_Model();
+		        	if(rs12.getString(1) != null && rs12.getString(2) != null && rs12.getString(3) != null) {
+		        		hsm.id.set(rs12.getString(1));
+		        		hsm.StaffId.set(rs12.getString(2));
+		        		hsm.ID.set(rs12.getString(3));
+		        		hsm.L_Name_Rus.set(rs12.getString(4));
+		        		hsm.F_Name_Rus.set(rs12.getString(5));
+		        		hsm.Otchestvo.set(rs12.getString(6));
+		        		hsm.DoB.set(rs12.getString(7));
+		        		hsm.Sec.set(rs12.getString(8));
+		        		hsm.Group_S.set(rs12.getString(9));
+		        		hsm.Team.set(rs12.getString(10));
+		        		hsm.Position_RUS.set(rs12.getString(11));
+		        		hsm.GWM_ID.set(rs12.getString(12));
+		        		hsm.Date_of_Start.set(rs12.getString(13));
+		        		hsm.Cell_1.set(rs12.getString(14));
+		        		hsm.Address.set(rs12.getString(15));
+		        		hsm.Avto.set(rs12.getString(16));
+		        		hsm.Shoes_Size.set(rs12.getString(17));
+		        		hsm.Clothes_Size.set(rs12.getString(18));
+		        		hsm.Login.set(rs12.getString(19));			        				            
+			            list.add(hsm);
+			        }    
+		        }
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5515!");
+	        } finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt12.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs12.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+			return list;
+		}
+		/**
+		 * Запрос для заполнения ComboBox значением, только с одним параметром для
+		 * записи в любую таблицу НАДО БЫЛО ДАВНО ЭТО СДЕЛАТЬ
+		 * @param tbl_name - имя таблицы из которой берем данные для заполнения ComboBox
+		 * @param str - Имя поля, значение которого надо вставить в ComboBox
+		 * @return - Возвращаем полученное значение
+		 */			
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<String> _select_list_str(String tbl_name, String str)
+		{
+			ObservableList<String> list = FXCollections.observableArrayList();
+			
+			try {
+				String query = "select "+str+" from "+tbl_name+" group by "+str+";";
+				
+				cn.ConToDb();
+				stmt6 = cn.con.createStatement();
+				rs6 = stmt6.executeQuery(query);
+							
+		        while (rs6.next()) {
+		        	if(rs6.getString(1) != null) {
+		        		String tpm = rs6.getString(1);			        					            
+			            list.add(tpm);
+		        	}    
+		        }
+
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5570!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt6.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs6.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+
+			return list;
+		}
+		/**
+		 * Вставляем запись в БД в таблицу hmmr_mu_staff
+		 * @param STAFF_ID
+		 * @param ID
+		 * @param user_id
+		 * @param L_Name_RUS
+		 * @param F_Name_RUS
+		 * @param Otchestvo
+		 * @param First_Name
+		 * @param Last_Name
+		 * @param DoB
+		 * @param Sec
+		 * @param Group_S
+		 * @param Team
+		 * @param WorkShift
+		 * @param Position
+		 * @param Position_RUS
+		 * @param GWM_ID
+		 * @param Date_of_Start
+		 * @param E_Mail
+		 * @param Skype
+		 * @param Cell_1
+		 * @param Cell_2
+		 * @param Address
+		 * @param Avto
+		 * @param Shoes_size
+		 * @param Clothes_size
+		 * @param Quit_Date
+		 */
+		@SuppressWarnings("static-access")
+		public void _insert_staff(String STAFF_ID, String ID, String user_id, String L_Name_RUS, String F_Name_RUS, String Otchestvo, String First_Name, String Last_Name, LocalDate DoB, 
+				String Sec, String Group_S, String Team, String WorkShift, String Position, String Position_RUS, String GWM_ID, LocalDate Date_of_Start, String E_Mail, 
+				String Skype, String Cell_1, String Cell_2, String Address, String Avto, String Shoes_size, String Clothes_size, LocalDate Quit_Date)
+		{
+			String query = "INSERT INTO hmmr_mu_staff (STAFF_ID, ID, user_id, L_Name_RUS, F_Name_RUS, Otchestvo, First_Name, Last_Name, DoB, Sec, Group_S, Team, WorkShift, Position,"
+					+ "Position_RUS, GWM_ID, Date_of_Start, E_Mail, Skype, Cell_1, Cell_2, Address, Avto, Shoes_size, Clothes_size, Quit_Date) "
+					+ "VALUES ("+"'"+STAFF_ID+"'"+","+"'"+ID+"'"+","+"'"+user_id+"'"+","+"'"+L_Name_RUS+"'"+","+"'"+F_Name_RUS+"'"+","+"'"+Otchestvo+"'"+","
+					+ ""+"'"+First_Name+"'"+","+"'"+Last_Name+"'"+","+"'"+DoB+"'"+","+"'"+Sec+"'"+","+"'"+Group_S+"'"+","
+					+ ""+"'"+Team+"'"+","+"'"+WorkShift+"'"+","+"'"+Position+"'"+","+"'"+Position_RUS+"'"+","+"'"+GWM_ID+"'"+","
+					+ ""+"'"+Date_of_Start+"'"+","+"'"+E_Mail+"'"+","+"'"+Skype+"'"+","+"'"+Cell_1+"'"+","
+					+ ""+"'"+Cell_2+"'"+","+"'"+Address+"'"+","+"'"+Avto+"'"+","+"'"+Shoes_size+"'"+","
+					+ ""+"'"+Clothes_size+"'"+","+"'"+Quit_Date+"'"+");";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "ADD STRING TO DB");
+				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5629!");
+			}
+		   	finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+		}
+		/**
+		 * Вставляем запись в БД в таблицу users
+		 * @param first_name
+		 * @param last_name
+		 * @param login
+		 * @param passwd
+		 * @param create_date
+		 * @param last_login
+		 * @param role
+		 */
+		@SuppressWarnings("static-access")
+		public void _insert_users(int id, String first_name, String last_name, String login, String passwd, LocalDate create_date, String role)
+		{
+			String query = "INSERT INTO users (id, first_name, last_name, login, passwd, create_date, role) "
+					+ "VALUES ("+id+","+"'"+first_name+"'"+","+"'"+last_name+"'"+","+"'"+login+"'"+","+"'"+passwd+"'"+","+"'"+create_date+"'"+","+ ""+"'"+role+"'"+");";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "ADD STRING TO DB");
+				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5667!");
+			}
+		   	finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
 		}
 }

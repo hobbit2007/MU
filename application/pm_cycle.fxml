@@ -17,12 +17,12 @@
          <children>
             <TableView fx:id="table_cycle" layoutX="23.0" layoutY="68.0" prefHeight="200.0" prefWidth="726.0">
               <columns>
-                <TableColumn fx:id="col_id" prefWidth="75.0" text="№" />
-                <TableColumn fx:id="col_type" prefWidth="75.0" text="Цикл" />
-                  <TableColumn fx:id="col_pereodic" prefWidth="113.0" />
-                  <TableColumn fx:id="col_begin_date" prefWidth="100.0" text="Дата начала" />
-                  <TableColumn fx:id="col_end_date" prefWidth="100.0" />
-                  <TableColumn fx:id="col_motohours" prefWidth="276.0" text="Моточасы" />
+                <TableColumn fx:id="col_id" prefWidth="75.0" sortable="false" text="№" />
+                <TableColumn fx:id="col_type" prefWidth="75.0" sortable="false" text="Цикл" />
+                  <TableColumn fx:id="col_pereodic" prefWidth="113.0" sortable="false" />
+                  <TableColumn fx:id="col_begin_date" prefWidth="100.0" sortable="false" text="Дата начала" />
+                  <TableColumn fx:id="col_end_date" prefWidth="100.0" sortable="false" />
+                  <TableColumn fx:id="col_motohours" prefWidth="276.0" sortable="false" text="Моточасы" />
               </columns>
             </TableView>
             <Label fx:id="lbl_dir" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="10.0" prefHeight="20.0" prefWidth="719.0" text="Справочник - PM_Cycle">

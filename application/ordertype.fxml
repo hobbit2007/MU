@@ -21,9 +21,9 @@
             </Label>
             <TableView fx:id="table_ot" layoutX="29.0" layoutY="60.0" prefHeight="270.0" prefWidth="399.0">
               <columns>
-                <TableColumn fx:id="num_ot" prefWidth="75.0" text="№" />
-                <TableColumn fx:id="name_ot" prefWidth="75.0" text="Название" />
-                  <TableColumn fx:id="desc_ot" prefWidth="243.0" text="Описание" />
+                <TableColumn fx:id="num_ot" prefWidth="75.0" sortable="false" text="№" />
+                <TableColumn fx:id="name_ot" prefWidth="75.0" sortable="false" text="Название" />
+                  <TableColumn fx:id="desc_ot" prefWidth="243.0" sortable="false" text="Описание" />
               </columns>
             </TableView>
             <ImageView fitHeight="40.0" fitWidth="154.0" layoutX="29.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">

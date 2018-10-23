@@ -16,9 +16,9 @@
          <children>
             <TableView fx:id="table_tpm" layoutX="23.0" layoutY="68.0" prefHeight="200.0" prefWidth="529.0">
               <columns>
-                <TableColumn fx:id="col_id_tpm" prefWidth="75.0" text="№" />
-                <TableColumn fx:id="col_type_tpm" prefWidth="140.0" text="Тип PM" />
-                  <TableColumn fx:id="col_desc_tpm" prefWidth="312.0" text="Описание" />
+                <TableColumn fx:id="col_id_tpm" prefWidth="75.0" sortable="false" text="№" />
+                <TableColumn fx:id="col_type_tpm" prefWidth="140.0" sortable="false" text="Тип PM" />
+                  <TableColumn fx:id="col_desc_tpm" prefWidth="312.0" sortable="false" text="Описание" />
               </columns>
             </TableView>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="24.0" prefHeight="17.0" prefWidth="503.0" text="Справочник - Type_PM">

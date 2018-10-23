@@ -27,6 +27,7 @@
                               <MenuItem fx:id="apwr" mnemonicParsing="false" onAction="#getPM_apwr" text="AP&amp;WR - Редактор" />
                               <MenuItem fx:id="psdb" mnemonicParsing="false" onAction="#get_PS" text="Plant Structure - Редактор" />
                               <MenuItem fx:id="pmplan" mnemonicParsing="false" onAction="#get_PM_Plan" text="PM Plan - Редактор" />
+                              <MenuItem fx:id="staff" mnemonicParsing="false" onAction="#getStaff" text="Staff - Редактор" />
                         </items>
                       </Menu>
                         <Menu fx:id="_dir" mnemonicParsing="false" text="Справочники">

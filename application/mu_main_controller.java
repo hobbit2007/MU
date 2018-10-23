@@ -37,7 +37,7 @@ public class mu_main_controller
 	VBox root1;
 	
 	@FXML
-	MenuItem pm_cyc, typepm, pm_inst, pm, psdb, about_program, apwr, pmplan, prior, gc, ot;
+	MenuItem pm_cyc, typepm, pm_inst, pm, psdb, about_program, apwr, pmplan, prior, gc, ot, staff;
 	
 	@FXML
 	MenuBar menubar_id;
@@ -100,11 +100,12 @@ public class mu_main_controller
 			prior.setDisable(true);
 			gc.setDisable(true);
 			ot.setDisable(true);
+			staff.setDisable(true);
 		}
 		
 		if(conn_connector.USER_ROLE.equals("Engeneer"))
 		{
-			pm_cyc.setDisable(true);
+			//pm_cyc.setDisable(true);
 			//typepm.setDisable(true);
 		}
 		
@@ -129,6 +130,7 @@ public class mu_main_controller
 			prior.setText(lngBndl.getString("prior"));
 			gc.setText(lngBndl.getString("lbl_gc"));
 			ot.setText(lngBndl.getString("lbl_ot"));
+			staff.setText(lngBndl.getString("lbl_staff"));
 		}
 		
 		if(conn_connector.LANG_ID == 0)
@@ -152,6 +154,7 @@ public class mu_main_controller
 			prior.setText(lngBndl.getString("prior"));
 			gc.setText(lngBndl.getString("lbl_gc"));
 			ot.setText(lngBndl.getString("lbl_ot"));
+			staff.setText(lngBndl.getString("lbl_staff"));
 		}
 		if(conn_connector.LANG_ID == 2)
 		{
@@ -174,6 +177,7 @@ public class mu_main_controller
 			prior.setText(lngBndl.getString("prior"));
 			gc.setText(lngBndl.getString("lbl_gc"));
 			ot.setText(lngBndl.getString("lbl_ot"));
+			staff.setText(lngBndl.getString("lbl_staff"));
 		}
 		if(conn_connector.LANG_ID == -1)
 		{
@@ -196,6 +200,7 @@ public class mu_main_controller
 			prior.setText(lngBndl.getString("prior"));
 			gc.setText(lngBndl.getString("lbl_gc"));
 			ot.setText(lngBndl.getString("lbl_ot"));
+			staff.setText(lngBndl.getString("lbl_staff"));
 		}
 		
 		//Автоматически вызываем окно Action Plan & Work Recording
@@ -406,6 +411,18 @@ public class mu_main_controller
 			}
 		}
 		
+		//Вызываем из меню Редактор персонала
+		@FXML
+		public void getStaff() {
+			Stage stage = new Stage();
+		       try {
+				staff_start(stage);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		protected void pmtype_start(Stage stage) throws IOException {
 			setPrimaryStage(stage);
 		    Parent root = FXMLLoader.load(getClass().getResource("type_pm.fxml"));
@@ -542,6 +559,19 @@ public class mu_main_controller
 		    
 	        Scene scene = new Scene(root);
 	        stage.setTitle("M&U - Order Type Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
+	        stage.setResizable(false);
+	        stage.setScene(scene);
+	        	        
+	        stage.show();
+	        
+		}
+		
+		protected void staff_start(Stage stage) throws IOException {
+			setPrimaryStage(stage);
+			Parent root = FXMLLoader.load(getClass().getResource("Staff.fxml"));
+		    
+	        Scene scene = new Scene(root);
+	        stage.setTitle("M&U - Staff Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
 	        stage.setResizable(false);
 	        stage.setScene(scene);
 	        	        

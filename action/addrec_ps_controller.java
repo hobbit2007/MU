@@ -1,6 +1,8 @@
 package action;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -92,6 +94,8 @@ public class addrec_ps_controller {
 		sclass._style(exp_ps);
 		
 		add_ps.setDisable(true);
+		LocalDate runDate = LocalDate.of(2018, Month.OCTOBER, 10);
+		startdate_ps.setValue(runDate);
 				
 		company_ps.setValue("HAVAL");
 		company_ps.setItems(qr._select_shop_ps("FL01_Company"));

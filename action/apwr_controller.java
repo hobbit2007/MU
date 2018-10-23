@@ -169,7 +169,7 @@ public class apwr_controller {
 	TableColumn<hmmr_ap_model, JFXButton> prior = new TableColumn<hmmr_ap_model, JFXButton>(prior_img);
 	TableColumn<hmmr_wp_model, Button> wp_inst = new TableColumn<hmmr_wp_model, Button>(inst_l);
 	Tooltip tip;
-	String str_set_btn = "Вызов окна редактирования таблиц БД", sort_filter = "Фильтр", sort_tsk = "Выполненные задачи", sort_clear_filter = "Сбросить фильтр";
+	String str_set_btn = "Вызов окна редактирования таблиц БД", sort_filter = "Фильтр", sort_tsk = "Выполненные задачи", sort_w_otv = "Задачи без исполнителя", sort_clear_filter = "Сбросить фильтр";
 	boolean chk_btn = true; //Проверяем какая из кнопок нажата: Личные - true; Показать все - false
 	public static int flag = 0; //Переменная нужна для обновления таблицы, например: если отсортировали таблицу по номеру, то при нажатии на кнопку обновить таблицу
 	//таблица примет первоначальный вид заполнения данными, а надо чтобы при нажатии на кнопку сохранился бы тот вид который стал во время сортировки
@@ -178,7 +178,7 @@ public class apwr_controller {
 	public static String  SORT_SHOP, SORT_RESP;
 	ObservableList<String> filtre = FXCollections.observableArrayList();
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked" })
 	@FXML
 	public void initialize()
 	{
@@ -400,6 +400,7 @@ public class apwr_controller {
 				filtre.removeAll(filtre);
 				filtre.add(sort_filter);
 				filtre.add(sort_tsk);
+				filtre.add(sort_w_otv);
 				filtre.add(sort_clear_filter);
 				filtre_apwr.getSelectionModel().selectFirst();
 				shop_resp_wr.setPromptText(sort_filter);
@@ -425,6 +426,7 @@ public class apwr_controller {
 				filtre.removeAll(filtre);
 				filtre.add(sort_filter);
 				filtre.add(sort_tsk);
+				filtre.add(sort_w_otv);
 				filtre.add(sort_clear_filter);
 				filtre_apwr.getSelectionModel().selectFirst();
 				shop_resp_wr.setPromptText(sort_filter);
@@ -450,6 +452,7 @@ public class apwr_controller {
 				filtre.removeAll(filtre);
 				filtre.add(sort_filter);
 				filtre.add(sort_tsk);
+				filtre.add(sort_w_otv);
 				filtre.add(sort_clear_filter);
 				filtre_apwr.getSelectionModel().selectFirst();
 				shop_resp_wr.setPromptText(sort_filter);
@@ -486,6 +489,7 @@ public class apwr_controller {
 		
 		filtre.add(sort_filter);
 		filtre.add(sort_tsk);
+		filtre.add(sort_w_otv);
 		filtre.add(sort_clear_filter);
 		
 		filtre_apwr.setItems(filtre);
@@ -495,48 +499,45 @@ public class apwr_controller {
 
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				// TODO Auto-generated method stub
+				//Вводим новую переменную SHOP_NAME_A т .к. в режиме Administrator мы можем просмотреть информацию по всем цехам, в любой другой
+				//роли кроме Administrator мы можем работать только со своим цехом
 				if(filtre_apwr.getSelectionModel().getSelectedIndex() == 1)
 				{
 					if(conn_connector.USER_ROLE.equals("Administrator"))
 					{
-						//Вводим новую переменную SHOP_NAME_A т .к. в режиме Administrator мы можем просмотреть информацию по всем цехам, в любой другой
-						//роли кроме Administrator мы можем работать только со своим цехом
-						//if (SHOP_NAME.equals("S,W"))
-						//{
-						//	table_ap.setItems(qr._select_data_exectsk("S,W"));
-						//	table_ap.getColumns().get(0).setVisible(false);
-					    //  table_ap.getColumns().get(0).setVisible(true);
-						//}
-						//else
-						//{
-						
 							table_ap.setItems(qr._select_data_exectsk(SHOP_NAME_A));
 							table_ap.getColumns().get(0).setVisible(false);
 					        table_ap.getColumns().get(0).setVisible(true);
 					        tableCellAlignCenter_green(dd_ap);
-						//}
 					}
 					else
 					{
-						//if (SHOP_NAME.equals("S,W"))
-						//{
-						//	table_ap.setItems(qr._select_data_exectsk("S,W"));
-						//	table_ap.getColumns().get(0).setVisible(false);
-					    //    table_ap.getColumns().get(0).setVisible(true);
-						//}
-						//else
-						//{
-						
 							table_ap.setItems(qr._select_data_exectsk(SHOP_NAME));
 							table_ap.getColumns().get(0).setVisible(false);
 					        table_ap.getColumns().get(0).setVisible(true);
 					        tableCellAlignCenter_green(dd_ap);
-						//}
 					}
 					
 				}
 				if(filtre_apwr.getSelectionModel().getSelectedIndex() == 2)
+				{
+					if(conn_connector.USER_ROLE.equals("Administrator"))
+					{
+							table_ap.setItems(qr._select_data_without_otv(SHOP_NAME_A));
+							table_ap.getColumns().get(0).setVisible(false);
+					        table_ap.getColumns().get(0).setVisible(true);
+					        tableCellAlignCenter_green(dd_ap);
+					}
+					else
+					{
+							table_ap.setItems(qr._select_data_without_otv(SHOP_NAME));
+							table_ap.getColumns().get(0).setVisible(false);
+					        table_ap.getColumns().get(0).setVisible(true);
+					        tableCellAlignCenter_green(dd_ap);
+					}
+					
+				}
+				if(filtre_apwr.getSelectionModel().getSelectedIndex() == 3)
 				{
 					if(conn_connector.USER_ROLE.equals("Administrator") || conn_connector.USER_ROLE.equals("Group Lead"))
 					{
@@ -809,6 +810,14 @@ public class apwr_controller {
 				if (event.getClickCount() == 2 ){
 					if(!conn_connector.USER_ROLE.equals("Technics"))
 						func_upd(table_ap.getSelectionModel().getSelectedItem().getId());
+					if(conn_connector.USER_ROLE.equals("Technics")) {
+						try {
+							addwr_start();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 	            }
 			}
 		});
@@ -1230,6 +1239,7 @@ public class apwr_controller {
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Ежедневный ППР добавляем напрямую в WO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		
 		_get_data_dly.addAll(qr._select_dly_wo(fx_dp.toString(date_cur)));
 		for(int j = 0; j < _get_data_dly.size(); j++) {  //new
 			_due_date_wo = scl.parser_str(_get_data_dly.get(j), 0);
@@ -1246,7 +1256,8 @@ public class apwr_controller {
 			_id_wo = scl.parser_str(_get_data_dly.get(j), 11);
 			_pm_exec_wo = scl.parser_str(_get_data_dly.get(j), 12);
 			_type_wo = "PM";
-			//if(_record.equals("0")) _insert_ap
+			//На выходных ППР не добавляем в WO			 
+			if(!date_cur.getDayOfWeek().toString().equals("SATURDAY") && !date_cur.getDayOfWeek().toString().equals("SUNDAY")) //_insert_ap  
 				qr._insert_ap(_id_pm_wo, _type_wo, _pmname_wo, fx_dp.fromString(_due_date_wo), _shop_wo+"."+_group_eq_wo+"."+_lm_wo+"."+_os_wo+"."+_equip_wo, _instruct_wo, _otf_wo, qr._select_userid_(_otf_wo), _shop_wo, "4M",_pm_exec_wo);
 			//Чтобы задача не добавлясь в WP каждый раз с запуском приложения, поэтому ставим признак - 1, после первого заполнения
 			qr._update_hpy_record(_id_wo, "1");
@@ -1406,22 +1417,22 @@ public class apwr_controller {
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
-				if (SHOP_NAME.equals("S,W"))
-				{
-					table_ap.setItems(qr._select_data_ap_sw(USER_S));
-					table_ap.getColumns().get(0).setVisible(false);
-			        table_ap.getColumns().get(0).setVisible(true);
-			        private_ap.setDisable(false);
-			        showall_ap.setDisable(true);
-				}
-				else
-				{
+				//if (SHOP_NAME.equals("S,W"))
+				//{
+				//	table_ap.setItems(qr._select_data_ap_sw(USER_S));
+				//	table_ap.getColumns().get(0).setVisible(false);
+			     //   table_ap.getColumns().get(0).setVisible(true);
+			      //  private_ap.setDisable(false);
+			      //  showall_ap.setDisable(true);
+				//}
+				//else
+				//{
 					table_ap.setItems(qr._select_data_ap_shop(SHOP_NAME, USER_S));
 					table_ap.getColumns().get(0).setVisible(false);
 			        table_ap.getColumns().get(0).setVisible(true);
 			        private_ap.setDisable(false);
 			        showall_ap.setDisable(true);
-				}
+				//}
 				if(conn_connector.USER_ROLE.equals("Administrator") || conn_connector.USER_ROLE.equals("Group Lead"))
 				{
 					assembly.setDisable(false);
@@ -1992,6 +2003,7 @@ public class apwr_controller {
 		
 		sort_filter = lngBndl.getString("sort_filter");
 		sort_tsk = lngBndl.getString("sort_tsk");
+		sort_w_otv = lngBndl.getString("sort_w_otv");
 		sort_clear_filter = lngBndl.getString("sort_clear_filter");
 		r_shop_wr.setText(lngBndl.getString("col_shop_pm"));
 		r_resp_wr.setText(lngBndl.getString("resp_wr"));
