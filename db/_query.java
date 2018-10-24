@@ -5512,7 +5512,7 @@ public class _query
 			
 			try {
 				
-				String query = "SELECT hms.id_num, hms.STAFF_ID, hms.ID, hms.L_Name_RUS, hms.F_Name_RUS, hms.Otchestvo, hms.DoB, hms.Sec, hms.Group_S, hms.Team, hms.Position_RUS, hms.GWM_ID, hms.Date_of_Start, hms.Cell_1, hms.Address, hms.Avto, hms.Shoes_size, hms.Clothes_size, usr.login FROM hmmr_mu_staff hms INNER JOIN users usr ON usr.id = hms.user_id ORDER BY id_num ASC;"; 
+				String query = "SELECT hms.id_num, hms.STAFF_ID, hms.ID, hms.L_Name_RUS, hms.F_Name_RUS, hms.Otchestvo, hms.DoB, hms.Sec, hms.Group_S, hms.Team, hms.Position_RUS, hms.GWM_ID, hms.Date_of_Start, hms.Cell_1, hms.Address, hms.Avto, hms.Shoes_size, hms.Clothes_size, usr.login FROM hmmr_mu_staff hms INNER JOIN users usr ON usr.id = hms.user_id where hms.user_del = 0 ORDER BY id_num ASC;"; 
 				
 				cn.ConToDb();
 				stmt12 = cn.con.createStatement();
@@ -5682,5 +5682,179 @@ public class _query
 		        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
 		        try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
 		       }
+		}
+		/**
+		 * Получаем данные для апдейта и подстановки их в форму апдейта для STAFF
+		 * @param id - id записи которую собираемся апдейтить
+		 * @return - возвращаем набор данных
+		 */
+		@SuppressWarnings("static-access")
+		public String _select_for_staff_str(int id)
+		{
+			String list = "null";
+			try {
+				String query = "SELECT hms.STAFF_ID, hms.ID, hms.L_Name_RUS, hms.F_Name_RUS, hms.Otchestvo, hms.DoB, hms.Sec, hms.Group_S, hms.Team, hms.Position_RUS, hms.GWM_ID, hms.Date_of_Start, hms.Cell_1, hms.Address, hms.Avto, hms.Shoes_size, hms.Clothes_size, usr.login, hms.Position, hms.WorkShift, hms.Last_Name, hms.First_Name, hms.E_Mail, hms.Skype, hms.Cell_2, hms.Quit_Date, usr.role, usr.passwd, usr.id FROM hmmr_mu_staff hms INNER JOIN users usr ON usr.id = hms.user_id where hms.user_del = 0 and hms.id_num = "+id+" ORDER BY hms.id_num ASC;";
+				
+				cn.ConToDb();
+				stmt15 = cn.con.createStatement();
+				rs15 = stmt15.executeQuery(query);
+				//log.log(Level.INFO, "CHANNEL WAS FOUND");
+		        while (rs15.next()) {
+		        	list = rs15.getString(1) + " - " + rs15.getString(2) + " - " + rs15.getString(3) + " - " + rs15.getString(4) + " - " + rs15.getString(5) + " - " + rs15.getString(6) + " - " + rs15.getString(7) + " - " + rs15.getString(8) + " - " + rs15.getString(9) + " - " + rs15.getString(10) + " - " + rs15.getString(11) + " - " + rs15.getString(12) + " - " + rs15.getString(13) + " - " + rs15.getString(14) + " - " + rs15.getString(15) + " - " + rs15.getString(16) + " - " + rs15.getString(17) + " - " + rs15.getString(18) + " - " + rs15.getString(19) + " - " + rs15.getString(20) + " - " + rs15.getString(21) + " - " + rs15.getString(22) + " - " + rs15.getString(23) + " - " + rs15.getString(24) + " - " + rs15.getString(25) + " - " + rs15.getString(26) + " - " + rs15.getString(27) + " - " + rs15.getString(28) + " - " + rs15.getString(29);
+		        }
+		    }
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5696!");
+	        } finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt15.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs15.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+			return list;
+		}
+		/**
+		 * Апдейтим запись в БД в таблице hmmr_mu_staff
+		 * @param id_num
+		 * @param STAFF_ID
+		 * @param ID
+		 * @param L_Name_RUS
+		 * @param F_Name_RUS
+		 * @param Otchestvo
+		 * @param First_Name
+		 * @param Last_Name
+		 * @param DoB
+		 * @param Sec
+		 * @param Group_S
+		 * @param Team
+		 * @param WorkShift
+		 * @param Position
+		 * @param Position_RUS
+		 * @param GWM_ID
+		 * @param Date_of_Start
+		 * @param E_Mail
+		 * @param Skype
+		 * @param Cell_1
+		 * @param Cell_2
+		 * @param Address
+		 * @param Avto
+		 * @param Shoes_size
+		 * @param Clothes_size
+		 * @param Quit_Date
+		 */
+		@SuppressWarnings("static-access")
+		public void _update_rec_staff(int id_num, String STAFF_ID, String ID, String L_Name_RUS, String F_Name_RUS, String Otchestvo, String First_Name, String Last_Name, LocalDate DoB, String Sec, String Group_S, String Team, String WorkShift, String Position, String Position_RUS, String GWM_ID, LocalDate Date_of_Start, String E_Mail, String Skype, String Cell_1, String Cell_2, String Address, String Avto, String Shoes_size, String Clothes_size, LocalDate Quit_Date)
+		{
+			String query = "UPDATE hmmr_mu_staff SET STAFF_ID = "+"'"+STAFF_ID+"'"+",ID = "+"'"+ID+"'"+",L_Name_RUS = "+"'"+L_Name_RUS+"'"+",F_Name_RUS = "+"'"+F_Name_RUS+"'"+",Otchestvo = "+"'"+Otchestvo+"'"+",First_Name = "+"'"+First_Name+"'"+",Last_Name = "+"'"+Last_Name+"'"+",DoB = "+"'"+DoB+"'"+",Sec = "+"'"+Sec+"'"+",Group_S = "+"'"+Group_S+"'"+",Team = "+"'"+Team+"'"+",WorkShift = "+"'"+WorkShift+"'"+",Position = "+"'"+Position+"'"+",Position_RUS = "+"'"+Position_RUS+"'"+",GWM_ID = "+"'"+GWM_ID+"'"+",Date_of_Start = "+"'"+Date_of_Start+"'"+",E_Mail = "+"'"+E_Mail+"'"+",Skype = "+"'"+Skype+"'"+",Cell_1 = "+"'"+Cell_1+"'"+",Cell_2 = "+"'"+Cell_2+"'"+",Address = "+"'"+Address+"'"+",Avto = "+"'"+Avto+"'"+",Shoes_size = "+"'"+Shoes_size+"'"+",Clothes_size = "+"'"+Clothes_size+"'"+",Quit_Date = "+"'"+Quit_Date+"'"+" where id_num = "+id_num+";";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5748!");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+		}
+		/**
+		 * Апдейтим запись в БД в таблице users
+		 * @param id
+		 * @param first_name
+		 * @param last_name
+		 * @param login
+		 * @param passwd
+		 * @param role
+		 */
+		@SuppressWarnings("static-access")
+		public void _update_rec_users(String id, String first_name, String last_name, String login, String passwd, String role)
+		{
+			String query = "UPDATE users SET first_name = "+"'"+first_name+"'"+",last_name = "+"'"+last_name+"'"+",login = "+"'"+login+"'"+",passwd = "+"'"+passwd+"'"+",role = "+"'"+role+"'"+" where id = "+"'"+id+"'"+";";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5777!");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+		}
+		/**
+		 * Удаляем запись из БД в таблице
+		 * @param Id - id записи которую удаляем
+		 * @param tbl_name - Имя таблицу из которой удаляем запись
+		 * @param field_name - Имя поля в которое ставим признак 1 - означающий что данная запись удалена
+		 * @param id_name - Имя поля в котором считаем id(Первичное автоинкрементное поле)
+		 */
+		@SuppressWarnings("static-access")
+		public void _update_rec_del(String Id, String tbl_name, String field_name, String id_name)
+		{
+			String query = "UPDATE "+tbl_name+" SET "+field_name+" = 1 where "+id_name+" = "+"'"+Id+"'"+";";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5802");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+		}
+		/**
+		 * Получаем одно значение из любой таблицы в БД
+		 * @param tbl_name - Имя таблицы в БД
+		 * @param str - Имя поля значение которого необходимо получить
+		 * @param del_name - Имя поля с признаком удаления
+		 * @param id_name - Имя поля с Id (Первичное с автоинкрементом) или другое уникальное
+		 * @param id - Значение id
+		 * @return
+		 */
+		@SuppressWarnings({ "static-access"})
+		public String _select_rec(String tbl_name, String str, String del_name, String id_name, String id)
+		{
+			String list = "NULL";
+			
+			try {
+				String query = "select "+str+" from "+tbl_name+" where "+del_name+" = 0 AND "+id_name+" = "+id+";";
+				
+				cn.ConToDb();
+				stmt6 = cn.con.createStatement();
+				rs6 = stmt6.executeQuery(query);
+							
+		        while (rs6.next()) {
+		        	if(rs6.getString(1) != null) {
+		        		list = rs6.getString(1);			        					            
+			        }    
+		        }
+
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5836!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt6.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs6.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+
+			return list;
 		}
 }

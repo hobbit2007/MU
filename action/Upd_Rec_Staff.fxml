@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="545.0" prefWidth="589.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="545.0" prefWidth="589.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="action.Updrec_Staff_Controller">
    <children>
       <Pane layoutY="3.0" prefHeight="555.0" prefWidth="737.0">
          <children>
@@ -45,9 +45,9 @@
                               <TextField fx:id="txt_fam_eng_staff" layoutX="161.0" layoutY="265.0" />
                               <DatePicker fx:id="d_dob_staff" layoutX="161.0" layoutY="315.0" prefHeight="25.0" prefWidth="149.0" />
                               <TextField fx:id="txt_email_staff" layoutX="161.0" layoutY="365.0" text="-" />
-                              <TextField fx:id="txt_skype_staff" layoutX="161.0" layoutY="415.0" promptText="-" />
+                              <TextField fx:id="txt_skype_staff" layoutX="161.0" layoutY="415.0" text="-" />
                               <TextField fx:id="txt_cell1_staff" layoutX="544.0" layoutY="65.0" />
-                              <TextField fx:id="txt_cell2_staff" layoutX="544.0" layoutY="115.0" promptText="-" />
+                              <TextField fx:id="txt_cell2_staff" layoutX="544.0" layoutY="115.0" text="-" />
                               <TextField fx:id="txt_adr_staff" layoutX="544.0" layoutY="165.0" />
                               <TextField fx:id="txt_avto_staff" layoutX="544.0" layoutY="215.0" text="-" />
                            </children>

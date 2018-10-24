@@ -1,8 +1,6 @@
 package action;
 
 import java.time.LocalDate;
-import java.time.Month;
-
 import com.jfoenix.controls.JFXButton;
 import application.conn_connector;
 import data.FxDatePickerConverter;
@@ -23,7 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import share_class.s_class;
 
-public class Addrec_Staff_Controller {
+public class Updrec_Staff_Controller {
 	
 	@FXML
 	TextField txt_fam_staff, txt_imya_staff, txt_otch_staff, txt_imya_eng_staff, txt_fam_eng_staff, txt_email_staff, txt_skype_staff, txt_cell1_staff, txt_cell2_staff, txt_adr_staff,
@@ -59,6 +57,7 @@ public class Addrec_Staff_Controller {
 	ObservableList<String> list_team = FXCollections.observableArrayList();
 	ObservableList<String> list_rule = FXCollections.observableArrayList();
 	
+	@SuppressWarnings("static-access")
 	@FXML
 	public void initialize()
 	{
@@ -122,8 +121,9 @@ public class Addrec_Staff_Controller {
 		list_pos_rus_staff.setItems(qr._select_list_str("hmmr_mu_staff", "Position_RUS"));
 		list_pos_staff.setItems(qr._select_list_str("hmmr_mu_staff", "Position"));
 		
-		LocalDate de = LocalDate.of(2018, Month.OCTOBER, 10);
-		d_dend_staff.setValue(de);
+		btn_add_staff.setDisable(true);
+		btn_gen_staff.setDisable(true);
+		txt_passwd_staff.setDisable(true);
 		
 		//разрешаем вводить только цифры и не больше трех
 		/*txt_cell1_staff.textProperty().addListener(new ChangeListener<String>() {
@@ -211,20 +211,6 @@ public class Addrec_Staff_Controller {
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
 				// TODO Auto-generated method stub
 				txt_pos_staff.setText(list_pos_staff.getValue());
-			}
-		});
-		
-		autorith.setOnSelectionChanged(new EventHandler<Event>() {
-			
-			@Override
-			public void handle(Event arg0) {
-				// TODO Auto-generated method stub
-				try {
-					txt_login_staff.setText(txt_gwm_staff.getText());
-				}
-				catch (Exception e) {
-					// TODO: handle exception
-				}
 			}
 		});
 		
@@ -380,36 +366,10 @@ public class Addrec_Staff_Controller {
 		});
 		btn_gen_staff.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@SuppressWarnings("static-access")
 			@Override
 			public void handle(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				txt_passwd_staff.setText(scl.generate());
-			}
-		});
-		btn_add_staff.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@SuppressWarnings("static-access")
-			@Override
-			public void handle(ActionEvent arg0) {
-				
-				int usr_id = Integer.parseInt(qr._select_last_id("users")) + 1;
-				qr._insert_staff(txt_staffid_staff.getText(), txt_ID_staff.getText(), String.valueOf(usr_id), txt_fam_staff.getText(), txt_imya_staff.getText(), txt_otch_staff.getText(), txt_imya_eng_staff.getText(), txt_fam_eng_staff.getText(), d_dob_staff.getValue(), list_sec_staff.getValue(), list_groups_staff.getValue(), list_team_staff.getValue(), txt_work_staff.getText(), txt_pos_staff.getText(), txt_pos_rus_staff.getText(), txt_gwm_staff.getText(), d_dbegin_staff.getValue(), txt_email_staff.getText(), txt_skype_staff.getText(), txt_cell1_staff.getText(), txt_cell2_staff.getText(), txt_adr_staff.getText(), txt_avto_staff.getText(), txt_shoes_staff.getText(), txt_clothe_staff.getText(), d_dend_staff.getValue());
-				qr._insert_users(usr_id, txt_imya_staff.getText(), txt_fam_staff.getText(), txt_login_staff.getText(), txt_passwd_staff.getText(), d_dbegin_staff.getValue(), Role);
-				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_mu_staff") + " в таблице STAFF");
-				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("users") + " в таблице Users");
-				sc._table_update_staff.addAll(qr._select_data_staff());
-				
-				stage = (Stage) btn_add_staff.getScene().getWindow();
-				stage.close();
-			}
-		});
-		btn_cancel_staff.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent arg0) {
-				stage = (Stage) btn_cancel_staff.getScene().getWindow();
-				stage.close();
 			}
 		});
 		list_sec_staff.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -507,8 +467,77 @@ public class Addrec_Staff_Controller {
 			} 
 		}; 
 		d_dbegin_staff.setOnAction(event1);
-	}
 		
+		txt_staffid_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 0));
+		txt_ID_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 1));
+		txt_fam_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 2));
+		txt_imya_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 3));
+		txt_otch_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 4));
+		d_dob_staff.setValue(fx_dp.fromString(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 5)));
+		list_sec_staff.getSelectionModel().select(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 6));
+		list_groups_staff.getSelectionModel().select(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 7));
+		list_team_staff.getSelectionModel().select(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 8));
+		list_pos_rus_staff.getSelectionModel().select(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 9));
+		txt_pos_rus_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 9));
+		txt_gwm_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 10));
+		d_dbegin_staff.setValue(fx_dp.fromString(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 11)));
+		txt_cell1_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 12));
+		txt_adr_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 13));
+		txt_avto_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 14));
+		txt_shoes_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 15));
+		txt_clothe_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 16));
+		txt_login_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 17));
+		txt_pos_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 18));
+		list_pos_staff.getSelectionModel().select(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 18));
+		txt_work_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 19));
+		txt_fam_eng_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 20));
+		txt_imya_eng_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 21));
+		txt_email_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 22));
+		txt_skype_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 23));
+		txt_cell2_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 24));
+		d_dend_staff.setValue(fx_dp.fromString(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 25)));
+		if(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 26).equals("Administrator"))
+			list_rule_staff.setValue("Administrator");
+		if(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 26).equals("Group Lead"))
+			list_rule_staff.setValue("Group Leader");
+		if(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 26).equals("Team Lead"))
+			list_rule_staff.setValue("Team Leader");
+		if(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 26).equals("Engeneer"))
+			list_rule_staff.setValue("Engineer");
+		if(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 26).equals("Technics"))
+			list_rule_staff.setValue("Technician");
+		
+		
+		if(conn_connector.USER_ROLE.equals("Administrator")) {
+			txt_passwd_staff.setText(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 27));
+			btn_gen_staff.setDisable(false);
+			txt_passwd_staff.setDisable(false);
+		}
+		
+		btn_add_staff.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				qr._update_rec_staff(sc._id_staff, txt_staffid_staff.getText(), txt_ID_staff.getText(), txt_fam_staff.getText(), txt_imya_staff.getText(), txt_otch_staff.getText(), txt_imya_eng_staff.getText(), txt_fam_eng_staff.getText(), d_dob_staff.getValue(), list_sec_staff.getValue(), list_groups_staff.getValue(), list_team_staff.getValue(), txt_work_staff.getText(), txt_pos_staff.getText(), txt_pos_rus_staff.getText(), txt_gwm_staff.getText(), d_dbegin_staff.getValue(), txt_email_staff.getText(), txt_skype_staff.getText(), txt_cell1_staff.getText(), txt_cell2_staff.getText(), txt_adr_staff.getText(), txt_avto_staff.getText(), txt_shoes_staff.getText(), txt_clothe_staff.getText(), d_dend_staff.getValue());
+				qr._update_rec_users(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 28), txt_imya_staff.getText(), txt_fam_staff.getText(), txt_login_staff.getText(), txt_passwd_staff.getText(), Role);
+				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + qr._select_last_id("hmmr_mu_staff") + " в таблице STAFF");
+				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + qr._select_last_id("users") + " в таблице Users");
+				sc._table_update_staff.addAll(qr._select_data_staff());
+				
+				stage = (Stage) btn_add_staff.getScene().getWindow();
+				stage.close();
+			}
+		});
+		btn_cancel_staff.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				stage = (Stage) btn_cancel_staff.getScene().getWindow();
+				stage.close();
+			}
+		});
+	}
+	
 	private void chk_btn()
 	{
 		try {
@@ -519,7 +548,7 @@ public class Addrec_Staff_Controller {
 					txt_ID_staff.getText().length() != 0 && txt_pos_rus_staff.getText().length() != 0 && txt_pos_staff.getText().length() != 0 &&
 					txt_work_staff.getText().length() != 0 && txt_gwm_staff.getText().length() != 0 && txt_shoes_staff.getText().length() != 0 && txt_clothe_staff.getText().length() != 0 &&
 					txt_login_staff.getText().length() != 0 && txt_passwd_staff.getText().length() != 0 && list_sec_staff.getValue().length() != 0 && list_groups_staff.getValue().length() != 0 &&
-					list_team_staff.getValue().length() != 0 && list_rule_staff.getValue().length() != 0 &&
+					list_team_staff.getValue().length() != 0 && list_pos_rus_staff.getValue().length() != 0 && list_pos_staff.getValue().length() != 0 && list_rule_staff.getValue().length() != 0 &&
 					d_dob_staff.getValue().toString().length() != 0 && d_dbegin_staff.getValue().toString().length() != 0)
 				btn_add_staff.setDisable(false);
 			else

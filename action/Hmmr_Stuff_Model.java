@@ -326,4 +326,8 @@ public class Hmmr_Stuff_Model {
 	public void setPasswd(SimpleStringProperty passwd) {
 		Passwd = passwd;
 	}
+	
+	public String getIdStr() {
+		return id.get();
+	}
 }

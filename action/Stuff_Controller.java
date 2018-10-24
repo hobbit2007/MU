@@ -1,6 +1,7 @@
 package action;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import com.jfoenix.controls.JFXButton;
 
@@ -18,10 +19,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -62,9 +67,11 @@ public class Stuff_Controller {
 	JFXButton add_staff, upd_staff, del_staff, upd_tbl_staff, cancel_staff;
 	
 	public static ObservableList<Hmmr_Stuff_Model> _table_update_staff = FXCollections.observableArrayList();
+	public static int _id_staff;
 	
 	_query qr = new _query();
 	s_class scl = new s_class();
+	Stage stage = new Stage();
 	
 	@FXML
 	public void initialize()
@@ -149,15 +156,85 @@ public class Stuff_Controller {
 		    	table_staff.setItems(qr._select_data_staff());
 		    	table_staff.getColumns().get(0).setVisible(false);
 			    table_staff.getColumns().get(0).setVisible(true);
+			    
+			    upd_staff.setDisable(true);
+			    del_staff.setDisable(true);
 		    }
 		});
 		table_staff.setOnMouseClicked(new EventHandler<Event>() {
 
 			@Override
 			public void handle(Event arg0) {
+				_id_staff = Integer.parseInt(table_staff.getSelectionModel().getSelectedItem().getIdStr());
 				upd_staff.setDisable(false);
 				if(!conn_connector.USER_ROLE.equals("Technics") || !conn_connector.USER_ROLE.equals("Engeneer"))
 					del_staff.setDisable(false);
+			}
+		});
+		upd_staff.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				try {
+					upd_staff_start();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		//Вызываем окно обновления по двойному клику на строке
+		table_staff.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				// TODO Auto-generated method stub
+				if (event.getClickCount() == 2 ){
+		               try {
+						upd_staff_start();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		           }
+			}
+		});
+		del_staff.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+			    alert.setTitle("M&U - Delete Record Window");
+			    Hmmr_Stuff_Model _hsm = table_staff.getSelectionModel().getSelectedItem();
+			    
+			    alert.setHeaderText("Вы действительно хотите удалить запись № = " + _hsm.getIdStr() + "?");
+			    //alert.setContentText("C:/MyFile.txt");
+			 
+			    // option != null.
+			    Optional<ButtonType> option = alert.showAndWait();
+			    if (option.get() == null) {
+			       //label.setText("No selection!");
+			    } else if (option.get() == ButtonType.OK) {
+			  	   _hsm = table_staff.getSelectionModel().getSelectedItem();
+			  	   try {
+			  	   func_del(_hsm.getIdStr());
+			  	   } catch (Exception e) {
+					// TODO: handle exception
+				}
+			    } else if (option.get() == ButtonType.CANCEL) {
+			       //label.setText("Cancelled!");
+			    } else {
+			       //label.setText("-");
+			    }
+			}
+			
+		});
+		upd_tbl_staff.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				table_staff.setItems(qr._select_data_staff());
+				table_staff.getColumns().get(0).setVisible(false);
+			    table_staff.getColumns().get(0).setVisible(true);
 			}
 		});
 	}
@@ -179,5 +256,25 @@ public class Stuff_Controller {
 		stage_set.setScene(scene);
 		stage_set.show();
 		}
-
+	protected void upd_staff_start() throws IOException
+	{
+		Parent root;
+		root = FXMLLoader.load(getClass().getResource("Upd_Rec_Staff.fxml"));
+		Scene scene = new Scene(root);
+		stage.setTitle("M&U - Update Record Window");
+		stage.setResizable(false);
+		stage.setScene(scene);
+		stage.show();
+	}
+	
+	private void func_del(String str)
+	{
+		
+		qr._update_rec_del(qr._select_rec("hmmr_mu_staff", "user_id", "user_del", "id_num", str), "users", "user_del", "id");
+		qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Удалил запись № = " + str + " в таблице users");
+		qr._update_rec_del(str, "hmmr_mu_staff", "user_del", "id_num");
+		qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Удалил запись № = " + str + " в таблице hmmr_mu_staff");
+		
+		_table_update_staff.addAll(qr._select_data_staff());
+	}
 }

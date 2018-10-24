@@ -765,7 +765,7 @@ public class addrec_ps_controller {
 					ps._table_update_ps.addAll(qr._select_data_filter_ps(ps._filter_shop, ps._filter_group, ps._filter_line, ps._filter_os));
 				if(ps.flag_ps == 5)
 					ps._table_update_ps.addAll(qr._select_data_filter_ps(ps._filter_shop, ps._filter_group, ps._filter_line, ps._filter_os, ps._filter_equip));
-				ps.refreshTable_ps(ps_controller.columns_ps);
+				//ps.refreshTable_ps(ps_controller.columns_ps);
 				stage = (Stage) add_ps.getScene().getWindow();
 				stage.close();
 			}
