@@ -556,7 +556,7 @@ public class updrec_inst_controller
 				//{
 				//	error_msg_upd.setVisible(false);
 					
-					qr._update_rec_inst(pic._id_inst, ninst_inst_upd.getText(), date_create_pi.getValue(), date_change_pi.getValue(), inst_pdf_pi.getText().replace('\\', '/'), ver_inst_upd.getText(), mt_inst_upd.getText(), pmname_inst_upd.getText(), sdoc_txt_inst_upd.getText().replace('\\', '/'), qtyspec_inst_upd.getText(), ptw_inst_upd.getText(), wt_inst_upd.getText(), adm2_inst_upd.getText(), adm3_inst_upd.getText(), of1_inst_upd.getText(), of2_inst_upd.getText(), typepm_inst_upd.getValue(), cyclepm1_inst_upd.getValue(), cyclepm2_inst_upd.getValue(), pos_inst_upd.getValue(), line_inst_upd.getValue(), power_inst_upd.getValue(), sinfo_inst_upd.getValue());
+					qr._update_rec_inst(pic._id_inst, ninst_inst_upd.getText(), date_create_pi.getValue(), date_change_pi.getValue(), inst_pdf_pi.getText().replace('\\', '/'), ver_inst_upd.getText(), mt_inst_upd.getText(), pmname_inst_upd.getText(), sdoc_txt_inst_upd.getText().replace('\\', '/'), qtyspec_inst_upd.getText(), ptw_inst_upd.getText(), wt_inst_upd.getText(), adm2_inst_upd.getText(), adm3_inst_upd.getText(), of1_inst_upd.getText(), of2_inst_upd.getText(), sclass.parser_str(typepm_inst_upd.getValue(), 0), cyclepm1_inst_upd.getValue(), cyclepm2_inst_upd.getValue(), pos_inst_upd.getValue(), line_inst_upd.getValue(), power_inst_upd.getValue(), sinfo_inst_upd.getValue());
 					
 					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + pic._id_inst + " в таблице PM Instruction");
 					

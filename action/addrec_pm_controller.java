@@ -1,11 +1,14 @@
 package action;
 
+import java.time.LocalDate;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
 import application.conn_connector;
+import data.FxDatePickerConverter;
 import db._query;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,9 +17,12 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import share_class.s_class;
 
@@ -34,7 +40,10 @@ public class addrec_pm_controller {
 	_query qr = new _query();
 	s_class sclass = new s_class();
 	pm_controller pc = new pm_controller();
+	FxDatePickerConverter fx_dp = new FxDatePickerConverter();
 	Tooltip tip;
+	LocalDate new_date;
+	static String _last_id;
 		
 	@FXML
 	public void initialize()
@@ -281,10 +290,33 @@ public class addrec_pm_controller {
 				
 				String eq_id_total = qr._select_data_filter_ps_id(sclass.parser_str(shop_pm.getValue(), 0), sclass.parser_str(group_pm.getValue(), 0), sclass.parser_str(lm_pm.getValue(), 0), sclass.parser_str(os_pm.getValue(), 0), sclass.parser_str(equip_pm.getValue(), 0));
 				qr._insert_pm(sclass.parser_str(ninst_pm.getValue(), 0), eq_id_total, group_eq.getValue(), sclass.parser_str(otv_pm.getValue(), 0), sclass.parser_str(ool_pm.getValue(), 0), sclass.parser_str(list_otv_isp_pm.getValue(), 0));
-			
-				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_pm") + " в таблице PM");
+				_last_id = qr._select_last_id("hmmr_pm");
+				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + _last_id + " в таблице PM");
 					
 				pc._table_update_pm.addAll(qr._select_data_pm());
+				
+				if(!qr._select_recStr("hmmr_group_cycle", "PM_StartDate", "del_rec", "PM_Group", group_eq.getValue()).equals("2018-10-10") && !sclass.parser_sql_str(qr._select_for_pmgroup(group_eq.getValue()), 0).equals(group_eq.getValue())) {
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+				    alert.setTitle("M&U - Внимание!");
+				    			    
+				    alert.setHeaderText("Добавить в PM Plan группу: "+group_eq.getValue()+"?\nВНИМАНИЕ!!! Дата старта будет: "+qr._select_recStr("hmmr_group_cycle", "PM_StartDate", "del_rec", "PM_Group", group_eq.getValue())+"!\nЕсли Вы не уверены в дате старта поставьте: 2018-10-10, тогда группа не будет добавлена в PM Plan!");
+				    
+				    Optional<ButtonType> option = alert.showAndWait();
+				    if (option.get() == null) {
+				      
+				    } else if (option.get() == ButtonType.OK) {
+				  	   try {
+				  		   new_date = fx_dp.fromString(qr._select_recStr("hmmr_group_cycle", "PM_StartDate", "del_rec", "PM_Group", group_eq.getValue()));
+				  		   new_pm_date();
+				  		   chk_btn();
+				  	   } catch (Exception e1) {
+						// TODO: handle exception
+					}
+				    } else if (option.get() == ButtonType.CANCEL) {
+				    	stage = (Stage) confirm_pm.getScene().getWindow();
+						stage.close();
+				    }
+			    }
 					
 				stage = (Stage) confirm_pm.getScene().getWindow();
 				stage.close();
@@ -338,16 +370,78 @@ public class addrec_pm_controller {
 		cancel_pm.setText(lngBndl.getString("cancel_tsk"));
 	}
 	
-		private void chk_btn()
-		{
-			try {
-			if(ninst_pm.getValue().length() != 0 && shop_pm.getValue().length() != 0 && group_pm.getValue().length() != 0 && lm_pm.getValue().length() != 0 && os_pm.getValue().length() != 0 && equip_pm.getValue().length() != 0 && group_eq.getValue().length() != 0 && ool_pm.getValue().length() != 0 && otv_pm.getValue().length() != 0)
-				confirm_pm.setDisable(false);
-			else
-				confirm_pm.setDisable(true);
-			}
-			catch (Exception e) {
-				// TODO: handle exception
-			}
+	private void new_pm_date()
+	{
+		String Otv_for_task = null;
+		
+		//находим Pm_id для группы для которой поменяли дату
+		//String pm_id = qr._select_pmid(group_eq.getValue());
+		//удаляем все записи из PM Plan группы для которой поменяли дату
+		//qr._update_new_date(txt_pm_group.getText());
+		
+//		if(!qr._select_recStr("hmmr_group_cycle", "PM_StartDate", "del_rec", "PM_Group", group_eq.getValue()).equals("2018-10-10")) {
+//			if(!sclass.parser_sql_str(qr._select_for_pmgroup(group_eq.getValue()), 0).equals(group_eq.getValue())) {
+//				try {
+					String before_pars = qr._select_for_pmplan(group_eq.getValue()).get(0);
+					String pereodic = sclass.parser_sql_str(before_pars, 0);
+					String b_date = fx_dp.toString(new_date);
+					
+						String e_date = sclass.parser_sql_str(before_pars, 2);
+						@SuppressWarnings("unused")
+						String shop = sclass.parser_sql_str(before_pars, 3);
+						Otv_for_task = sclass.parser_sql_str(before_pars, 4);
+						
+						int pm_group = Integer.parseInt(group_eq.getValue());
+						
+						int _count = Integer.parseInt(pereodic);
+						int _cnt = _count;
+						
+						int day_bdate = fx_dp.fromString(b_date).getDayOfMonth();
+						int month_bdate = fx_dp.fromString(b_date).getMonthValue();
+						int year_bdate = fx_dp.fromString(b_date).getYear();
+						
+						int day_edate = fx_dp.fromString(e_date).getDayOfMonth();
+						int month_edate = fx_dp.fromString(e_date).getMonthValue();
+						int year_edate = fx_dp.fromString(e_date).getYear();
+						
+						//Находим количество дней в течении которых должно выполняться ППР, а затем находим сколько надо создать записей в таблице hmmr_pm_year
+						int gen_day = Math.abs(day_edate - day_bdate);
+						int gen_month = Math.abs(month_edate - month_bdate)*30;
+						int gen_year = Math.abs(year_edate - year_bdate)*365;
+						
+						int _general = Math.round((gen_day + gen_month + gen_year)/_count);
+						
+						for (int i = 0; i < _general; i++) {
+							LocalDate days = LocalDate.of(year_bdate, month_bdate, day_bdate).plusDays(_count);//Расчитываем даты когда заявка должна быть выполнена
+							qr._insert_pm_year(_last_id, pm_group, days, Otv_for_task);
+							_count = _cnt + _count;
+						}
+					
+					
+//				}
+//				catch (Exception e) {
+//					scl._AlertDialog("Не найден номер инструкции или имя цикла переодичности задано некорректно!", "Ошибка!");
+//				}
+//			}
+//			else
+//			{
+//				sclass._AlertDialog("Группа "+ group_eq.getValue() +" уже добавлена в PM PLAN!", "Группа уже существует");
+//			}
+//		}
+//		else
+//			sclass._AlertDialog("Группа 0 не может быть добавлена в PM PLAN! Введите корректный номер группы!", "Ошибка!");
+	}
+	
+	private void chk_btn()
+	{
+		try {
+		if(ninst_pm.getValue().length() != 0 && shop_pm.getValue().length() != 0 && group_pm.getValue().length() != 0 && lm_pm.getValue().length() != 0 && os_pm.getValue().length() != 0 && equip_pm.getValue().length() != 0 && group_eq.getValue().length() != 0 && ool_pm.getValue().length() != 0 && otv_pm.getValue().length() != 0)
+			confirm_pm.setDisable(false);
+		else
+			confirm_pm.setDisable(true);
 		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 }

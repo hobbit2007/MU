@@ -3,9 +3,7 @@ package dir;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 import com.jfoenix.controls.JFXButton;
-
 import action.apwr_controller;
 import application.conn_connector;
 import data.FxDatePickerConverter;
@@ -46,6 +44,7 @@ public class addrec_groupcycle_controller {
 	FxDatePickerConverter fx_dp = new FxDatePickerConverter();
 	
 	private Stage stage;
+	LocalDate new_date;
 	
 	@FXML
 	public void initialize()
@@ -100,7 +99,20 @@ public class addrec_groupcycle_controller {
 				}
 			}
 		});
-		
+		txt_duration.setOnMouseEntered(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event arg0) {
+				scl._ToolTip("Количество дней на исполнение( Например: 7 )", txt_duration);
+			}
+		});
+		txt_duration.setOnMouseExited(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event arg0) {
+				scl._ToolTipHide();
+			}
+		});
 		list_pm_cycle.setItems(qr._select_cycle_inst());
 		
 		txt_pm_group.setOnKeyReleased(new EventHandler<Event>() {
@@ -136,6 +148,7 @@ public class addrec_groupcycle_controller {
 				qr._insert_gc(txt_pm_group.getText(), list_pm_cycle.getValue(), d_start_date.getValue(), txt_duration.getText(), txt_days_gc.getText());
 				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_group_cycle") + " в справочнике Группа-Период");
 				gcc._table_update_gc.addAll(qr._select_for_gc());
+				
 				stage = (Stage) add_rec.getScene().getWindow();
 				stage.close();
 			}

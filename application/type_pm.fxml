@@ -12,16 +12,17 @@
 
 <AnchorPane prefHeight="340.0" prefWidth="559.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dir.type_pm_controller">
    <children>
-      <Pane prefHeight="340.0" prefWidth="559.0">
+      <Pane prefHeight="340.0" prefWidth="584.0">
          <children>
-            <TableView fx:id="table_tpm" layoutX="23.0" layoutY="68.0" prefHeight="200.0" prefWidth="529.0">
+            <TableView fx:id="table_tpm" layoutX="23.0" layoutY="68.0" prefHeight="200.0" prefWidth="541.0">
               <columns>
                 <TableColumn fx:id="col_id_tpm" prefWidth="75.0" sortable="false" text="№" />
-                <TableColumn fx:id="col_type_tpm" prefWidth="140.0" sortable="false" text="Тип PM" />
-                  <TableColumn fx:id="col_desc_tpm" prefWidth="312.0" sortable="false" text="Описание" />
+                <TableColumn fx:id="col_type_tpm" prefWidth="77.0" sortable="false" text="Тип" />
+                  <TableColumn fx:id="col_name_tpm" prefWidth="75.0" text="Имя" />
+                  <TableColumn fx:id="col_desc_tpm" prefWidth="197.0" sortable="false" text="Описание" />
               </columns>
             </TableView>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="24.0" prefHeight="17.0" prefWidth="503.0" text="Справочник - Type_PM">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="24.0" prefHeight="17.0" prefWidth="503.0" text="Справочник - Activity Types">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>

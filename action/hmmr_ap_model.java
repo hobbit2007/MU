@@ -18,12 +18,13 @@ public class hmmr_ap_model {
 	public SimpleStringProperty flag_oft = new SimpleStringProperty();
 	public SimpleStringProperty flag_tm = new SimpleStringProperty();
 	public SimpleStringProperty icon = new SimpleStringProperty();
+	public SimpleStringProperty icon_at = new SimpleStringProperty();
 	
 	public hmmr_ap_model()
 	{
 		
 	}
-	public hmmr_ap_model(String Id, String PM_Num, String Type, String Desc, String Due_Date, String Equip, String inst_btn, String OFT, String OTV, String tsk_maker, String flag_otv, String flag_oft, String flag_tm, String icon)
+	public hmmr_ap_model(String Id, String PM_Num, String Type, String Desc, String Due_Date, String Equip, String inst_btn, String OFT, String OTV, String tsk_maker, String flag_otv, String flag_oft, String flag_tm, String icon, String icon_at)
 	{
 		this.Id.set(Id);
 		this.PM_Num.set(PM_Num);
@@ -39,6 +40,7 @@ public class hmmr_ap_model {
 		this.flag_oft.set(flag_oft);
 		this.flag_tm.set(flag_tm);
 		this.icon.set(icon);
+		this.icon_at.set(icon_at);
 	}
 	
 	public String getId() {
@@ -223,6 +225,19 @@ public class hmmr_ap_model {
         this.icon.set(icon);
     }
     
+    public String geticon_at() {
+        return icon_at.get();
+    }
+
+    public SimpleStringProperty icon_atProperty()
+    {
+    	return icon_at;
+    }
+    
+    public void seticon_at(String icon_at) {
+        this.icon_at.set(icon_at);
+    }
+    
     @Override
     public String toString() {
         return "hmmr_ap_model{" +
@@ -239,6 +254,7 @@ public class hmmr_ap_model {
                 ", flag_oft='" + flag_oft.get() + '\'' +
                 ", flag_tm='" + flag_tm.get() + '\'' +
                 ", icon='" + icon.get() + '\'' +
+                ", icon_at='" + icon_at.get() + '\'' +
                 '}';
     }
 }

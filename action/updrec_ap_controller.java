@@ -28,7 +28,7 @@ import share_class.s_class;
 public class updrec_ap_controller {
 	
 	@FXML
-	private ComboBox<String> shop_tsk, lm_tsk, os_tsk, equip_tsk, oft_tsk, otv_tsk, group_tsk, prior_ap;
+	private ComboBox<String> shop_tsk, lm_tsk, os_tsk, equip_tsk, oft_tsk, otv_tsk, group_tsk, prior_ap, list_at_ap;
 	
 	@FXML
 	TextField numpm_tsk;
@@ -44,7 +44,7 @@ public class updrec_ap_controller {
 	
 	@FXML
 	Label err_msg, lbl_create_tsk_ap_upd, lbl_num_pm, lbl_type_ap, lbl_desc_ap, lbl_dd_ap, lbl_shop_ap, lbl_group_ap, lbl_lm_ap, lbl_os_ap, lbl_equip_ap, 
-			lbl_oft_ap, lbl_oft_ap1, lbl_otv_ap, lbl_otv_ap1, lbl_tsk_maker_ap, lbl_prior;
+			lbl_oft_ap, lbl_oft_ap1, lbl_otv_ap, lbl_otv_ap1, lbl_tsk_maker_ap, lbl_prior, lbl_at_ap;
 	
 	@FXML
 	JFXButton add_tsk_upd, cancel_tsk;
@@ -60,6 +60,7 @@ public class updrec_ap_controller {
 	private Stage stage;
 	Tooltip tip;
 	String type_tsk;
+	int OtId = 0;
 	
 	@SuppressWarnings("static-access")
 	public void initialize()
@@ -78,6 +79,21 @@ public class updrec_ap_controller {
 			add_tsk_upd.setDisable(true);
 		
 		prior_ap.setItems(qr._select_prior());
+		
+		list_at_ap.setOnMouseClicked(new EventHandler<Event>() {
+			@Override
+			public void handle(Event arg0) {
+				if(!type_tsk.equals("Nothing")) {
+					if(type_tsk.equals("TSK"))
+						OtId = 3;
+					if(type_tsk.equals("CM"))
+						OtId = 2;
+					list_at_ap.setItems(qr._select_recArr("hmmr_activity_type", "Name", "Description", "del_rec", "ID_OT", OtId));
+				}
+				else
+					sclass._AlertDialog("Сначала выберите Тип: TSK или CM", "Внимание!");	
+			}
+		});
 		
 		shop_tsk.setItems(qr._select_shop_pm());
 		try {
@@ -377,6 +393,7 @@ public class updrec_ap_controller {
 		otv_tsk.getSelectionModel().select(pic._otv_ap);
 		edate_tsk.setValue(fx_dp.fromString(pic._due_date_ap));
 		prior_ap.getSelectionModel().select(pic._icon);
+		list_at_ap.getSelectionModel().select(pic._icon_at);
 		
 		if(type_tsk.equals("TSK")) {
 			tsk_ap.setDisable(true);
@@ -405,6 +422,14 @@ public class updrec_ap_controller {
 		edate_tsk.setOnAction(event);
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
+		list_at_ap.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+				chk_btn();
+			}
+		});
+		
 		add_tsk_upd.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -415,7 +440,7 @@ public class updrec_ap_controller {
 			//			description_tsk.getText().length() != 0 && edate_tsk.getValue().toString().length() != 0)
 			//	{
 				//	err_msg.setVisible(false);
-					qr._update_rec_ap(pic._id_ap, numpm_tsk.getText(), type_tsk, description_tsk.getText(), edate_tsk.getValue(), sclass.parser_str(shop_tsk.getValue(), 0)+"."+group_tsk.getValue()+"."+sclass.parser_str(lm_tsk.getValue(), 0)+"."+sclass.parser_str(os_tsk.getValue(), 0)+"."+sclass.parser_str(equip_tsk.getValue(), 0), sclass.parser_str(oft_tsk.getValue(), 0), sclass.parser_str(otv_tsk.getValue(), 0), sclass.parser_str(shop_tsk.getValue(), 0), sclass.parser_str(prior_ap.getValue(), 0));
+					qr._update_rec_ap(pic._id_ap, numpm_tsk.getText(), type_tsk, description_tsk.getText(), edate_tsk.getValue(), sclass.parser_str(shop_tsk.getValue(), 0)+"."+group_tsk.getValue()+"."+sclass.parser_str(lm_tsk.getValue(), 0)+"."+sclass.parser_str(os_tsk.getValue(), 0)+"."+sclass.parser_str(equip_tsk.getValue(), 0), sclass.parser_str(oft_tsk.getValue(), 0), sclass.parser_str(otv_tsk.getValue(), 0), sclass.parser_str(shop_tsk.getValue(), 0), sclass.parser_str(prior_ap.getValue(), 0), sclass.parser_str(list_at_ap.getValue(), 0));
 					//pic.refreshTable_ap(apwr_controller.columns_ap);
 					 
 					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + pic._id_ap + " в таблице Action Plan");
@@ -464,6 +489,7 @@ public class updrec_ap_controller {
 		lbl_otv_ap1.setText(lngBndl.getString("lbl_otv_ap1"));
 		lbl_tsk_maker_ap.setText(lngBndl.getString("lbl_tsk_maker_ap"));
 		lbl_prior.setText(lngBndl.getString("lbl_prior")+":");
+		lbl_at_ap.setText(lngBndl.getString("at_title")+":");
 		add_tsk_upd.setText(lngBndl.getString("lbl_apply"));
 		cancel_tsk.setText(lngBndl.getString("cancel_tsk"));
 	}
@@ -478,7 +504,7 @@ public class updrec_ap_controller {
 					oft_tsk.getValue().length() != 0 &&
 					group_tsk.getValue().length() != 0 && 
 					description_tsk.getText().length() != 0 &&
-					edate_tsk.getValue().toString().length() != 0) //otv_tsk.getValue().length() != 0 && 
+					edate_tsk.getValue().toString().length() != 0 && list_at_ap.getValue().length() != 0) //otv_tsk.getValue().length() != 0 && 
 			{
 				if(!conn_connector.USER_ROLE.equals("Technics"))
 					add_tsk_upd.setDisable(false);

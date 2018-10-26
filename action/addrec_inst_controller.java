@@ -500,7 +500,7 @@ public class addrec_inst_controller
 					
 					qr._insert_pm_inst(ninst_inst.getText(), date_create_pi.getValue(),date_change_pi.getValue(),inst_pdf_pi.getText().replace('\\', '/'),ver_inst.getText(), mt_inst.getText(), pmname_inst.getText(), sdoc_txt_inst.getText().replace('\\', '/'), 
 							           qtyspec_inst.getText(), ptw_inst.getText(), wt_inst.getText(), adm2_inst.getText(), adm3_inst.getText(), of1_inst.getText(),
-							           of2_inst.getText(), typepm_inst.getValue().toString(), cyclepm1_inst.getValue().toString(), cyclepm2_inst.getValue().toString(), 
+							           of2_inst.getText(), sclass.parser_str(typepm_inst.getValue().toString(), 0), cyclepm1_inst.getValue().toString(), cyclepm2_inst.getValue().toString(), 
 							           pos_inst.getValue().toString(), line_inst.getValue().toString(), power_inst.getValue().toString(), sinfo_inst.getValue().toString());
 					
 					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("pm_inst") + " в PM Instruction");

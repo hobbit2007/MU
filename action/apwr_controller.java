@@ -132,9 +132,9 @@ public class apwr_controller {
 	int _duration;
 	
 	@SuppressWarnings("unused")
-	private String _due_date, _instruct, _shop, _lm, _os, _equip, _id_pm, _pmname,_type, _otf, _id, _group_pm, _sql_rez, _group_eq, _pm_exec; 
+	private String _due_date, _instruct, _shop, _lm, _os, _equip, _id_pm, _pmname,_type, _otf, _id, _group_pm, _sql_rez, _group_eq, _pm_exec, _activity_type; 
 	@SuppressWarnings("unused")
-	private String _due_date_wo, _instruct_wo, _shop_wo, _lm_wo, _os_wo, _equip_wo, _id_pm_wo, _pmname_wo,_type_wo, _otf_wo, _id_wo, _group_pm_wo, _sql_rez_wo, _group_eq_wo, _pm_exec_wo; 
+	private String _due_date_wo, _instruct_wo, _shop_wo, _lm_wo, _os_wo, _equip_wo, _id_pm_wo, _pmname_wo,_type_wo, _otf_wo, _id_wo, _group_pm_wo, _sql_rez_wo, _group_eq_wo, _pm_exec_wo, _icon_at_wo; 
 	public Stage stage = new Stage();
 	//Thread t, b;
 	private boolean _flag = true;
@@ -151,7 +151,7 @@ public class apwr_controller {
 	public static ObservableList<hmmr_wp_model> _table_update_wp = FXCollections.observableArrayList();
 	
 	public static List<hmmr_ap_model> row;
-	public static String _pmnum_ap, _type_ap, _description_ap, _due_date_ap, _equip_ap, _inst_ap, _oft_ap, _otv_ap, _id_ap, _idap_for_wr = "null", _icon;
+	public static String _pmnum_ap, _type_ap, _description_ap, _due_date_ap, _equip_ap, _inst_ap, _oft_ap, _otv_ap, _id_ap, _idap_for_wr = "null", _icon, _icon_at;
 	public static String _pmnum_wp, _type_wp, _description_wp, _due_date_wp, _equip_wp, _inst_wp, _oft_wp, _otv_wp, _id_wp;
 	
 	public static String _id_wr, _qty_wr, _user_wr, _ap_num_wr, _data_wr, _equip_wr, _record_type_wr, _work_time,  _resp_wr,_resp2_wr,_resp3_wr,_resp4_wr, _status_wr, _shift_report_wr, 
@@ -159,7 +159,7 @@ public class apwr_controller {
 	_actual_date1,_actual_date2,_actual_date3,_actual_date4, _hours1,_hours1_2,_hours1_3,_hours1_4, _min1, _hours2,_hours2_2,_hours2_3,_hours2_4, _min2, _user_number;
 	public static String before_date, after_date;
 	String _get_text_btn;
-	private String conf_l, inst_l, c_resp, c_oft, c_own, lbl_assembly, lbl_paint, lbl_stamp, lbl_welding, prior_img;
+	private String conf_l, inst_l, c_resp, c_oft, c_own, lbl_assembly, lbl_paint, lbl_stamp, lbl_welding, prior_img, at_title;
 	public static String SHOP_NAME, USER_S;
 	TableColumn<hmmr_wr_model, Button> favoriteColumn = new TableColumn<hmmr_wr_model, Button>(conf_l);
 	TableColumn<hmmr_ap_model, Button> favoriteColumn2 = new TableColumn<hmmr_ap_model, Button>(inst_l);
@@ -167,6 +167,7 @@ public class apwr_controller {
 	TableColumn<hmmr_ap_model, Button> oft = new TableColumn<hmmr_ap_model, Button>(c_oft);
 	TableColumn<hmmr_ap_model, Button> tm = new TableColumn<hmmr_ap_model, Button>(c_own);
 	TableColumn<hmmr_ap_model, JFXButton> prior = new TableColumn<hmmr_ap_model, JFXButton>(prior_img);
+	TableColumn<hmmr_ap_model, JFXButton> at = new TableColumn<hmmr_ap_model, JFXButton>(at_title);
 	TableColumn<hmmr_wp_model, Button> wp_inst = new TableColumn<hmmr_wp_model, Button>(inst_l);
 	Tooltip tip;
 	String str_set_btn = "Вызов окна редактирования таблиц БД", sort_filter = "Фильтр", sort_tsk = "Выполненные задачи", sort_w_otv = "Задачи без исполнителя", sort_clear_filter = "Сбросить фильтр";
@@ -210,13 +211,13 @@ public class apwr_controller {
 			table_ap.setPrefHeight(screen_hight-200);
 			title_wo.setPrefWidth(900.0);
 			if(screen_width == 1920.0)
-				desc_ap.setPrefWidth(900.0);
+				desc_ap.setPrefWidth(830.0);
 			if(screen_width == 1768.0)
-				desc_ap.setPrefWidth(750.0);
+				desc_ap.setPrefWidth(880.0);
 			if(screen_width == 1600.0)
-				desc_ap.setPrefWidth(610.0);
+				desc_ap.setPrefWidth(540.0);
 			if(screen_width == 1440.0)
-				desc_ap.setPrefWidth(430.0);
+				desc_ap.setPrefWidth(360.0);
 			
 			an_pn_wr.setPrefWidth(screen_width - 20);
 			an_pn_wr.setPrefHeight(screen_hight - 20);
@@ -277,7 +278,7 @@ public class apwr_controller {
 			if(screen_width == 1600.0)
 				desc_wp.setPrefWidth(610.0);
 			if(screen_width == 1440.0)
-				desc_wp.setPrefWidth(430.0);
+				desc_wp.setPrefWidth(420.0);
 			
 		begin_data.setValue(LocalDate.now().minusDays(7));
 		last_data.setValue(LocalDate.now());
@@ -349,6 +350,7 @@ public class apwr_controller {
 			oft.setText(c_oft);
 			tm.setText(c_own);
 			prior.setText(prior_img);
+			at.setText(at_title);
 		}
 		if(conn_connector.LANG_ID == 1)
 		{
@@ -362,6 +364,7 @@ public class apwr_controller {
 			oft.setText(c_oft);
 			tm.setText(c_own);
 			prior.setText(prior_img);
+			at.setText(at_title);
 		}
 		if(conn_connector.LANG_ID == 2)
 		{
@@ -375,6 +378,7 @@ public class apwr_controller {
 			oft.setText(c_oft);
 			tm.setText(c_own);
 			prior.setText(prior_img);
+			at.setText(at_title);
 		}
 		
 		scl._style(upd_tbl_wp);
@@ -394,6 +398,7 @@ public class apwr_controller {
 				oft.setText(c_oft);
 				tm.setText(c_own);
 				prior.setText(prior_img);
+				at.setText(at_title);
 				rus_btn.setDisable(true);
 				chn_btn.setDisable(false);
 				usa_btn.setDisable(false);
@@ -420,6 +425,7 @@ public class apwr_controller {
 				oft.setText(c_oft);
 				tm.setText(c_own);
 				prior.setText(prior_img);
+				at.setText(at_title);
 				rus_btn.setDisable(false);
 				chn_btn.setDisable(false);
 				usa_btn.setDisable(true);
@@ -446,6 +452,7 @@ public class apwr_controller {
 				oft.setText(c_oft);
 				tm.setText(c_own);
 				prior.setText(prior_img);
+				at.setText(at_title);
 				rus_btn.setDisable(false);
 				chn_btn.setDisable(true);
 				usa_btn.setDisable(false);
@@ -1131,6 +1138,49 @@ public class apwr_controller {
                 });
         columns_prior.add(prior);
         
+        final ObservableList<TableColumn<hmmr_ap_model, ?>> columns_at = table_ap.getColumns();
+		at.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<hmmr_ap_model, JFXButton>, ObservableValue<JFXButton>>() {
+                	Tooltip tooltip = new Tooltip();
+                    @SuppressWarnings("static-access")
+					@Override
+                    public ObservableValue<JFXButton> call(TableColumn.CellDataFeatures<hmmr_ap_model, JFXButton> arg0) {
+                        hmmr_ap_model data = arg0.getValue();
+                        JFXButton iv = new JFXButton();
+                      //запрещаем бегунку прокрутки возвращаться назад после нажатия кнопки
+                        iv.setFocusTraversable(false);
+                        
+                        at.setStyle( "-fx-alignment: CENTER;");
+                        
+                        BufferedImage bufferedImage;
+						try {
+							if(!data.geticon_at().equals("1")) {
+								bufferedImage = ImageIO.read(new File(qr._select_recStr("hmmr_activity_type", "Icon", "del_rec", "Name", data.geticon_at())));
+								Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+								//iv.setImage(image);
+								iv.setGraphic(new ImageView(image));
+							}
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							scl._AlertDialog(e.getMessage()+" prior_controller", "Ошибка загрузки изображения");
+						}
+                        iv.setOnMouseEntered(new EventHandler<Event>() {
+
+							@Override
+							public void handle(Event event) {
+								// TODO Auto-generated method stub
+								tooltip.setText(qr._select_at_desc(data.getId().substring(2)));
+								tooltip.setStyle("-fx-font-size: 14px");
+								Tooltip.install(iv, tooltip);
+							}
+						});        		    
+                       
+                        return new SimpleObjectProperty<JFXButton>(iv);
+                    }
+                    
+                });
+        columns_at.add(at);
+        
 		//Устанавливаем подсказку для строки Описание в таблице AP
        /* table_ap.setRowFactory((hmmr_ap_model) -> { 
             return new TooltipTableRow<hmmr_ap_model>((hmmr_ap_model ham) -> { 
@@ -1170,7 +1220,7 @@ public class apwr_controller {
 					//Проверяем на совпадение расчетной даты с текущей и если совпадает создаем запись в Action Plan
 					if(_chk_cur_date.equals(_chk_new_date))
 					{
-						//Получаем поля необходимые для инсерта в Action Plan
+						//Получаем поля необходимые для инсерта в Work Plan
 						_get_field.addAll(qr._select_getfield_for_ap(_date));
 						for(int j = 0; j < _get_field.size(); j++) {  //new
 							_due_date = scl.parser_str(_get_field.get(j), 0);
@@ -1186,9 +1236,10 @@ public class apwr_controller {
 							_equip = scl.parser_str(_get_field.get(j), 10);
 							_id = scl.parser_str(_get_field.get(j), 11);
 							_pm_exec = scl.parser_str(_get_field.get(j), 12);
+							_activity_type = scl.parser_str(_get_field.get(j), 13);
 							_type = "PM";
 							//if(_record.equals("0")) _insert_ap
-								qr._insert_wp(_id_pm, _type, _pmname, _due_date, _shop+"."+_group_eq+"."+_lm+"."+_os+"."+_equip, _instruct, _otf, qr._select_userid_(_otf), _shop, "4M",_pm_exec);
+								qr._insert_wp(_id_pm, _type, _pmname, _due_date, _shop+"."+_group_eq+"."+_lm+"."+_os+"."+_equip, _instruct, _otf, qr._select_userid_(_otf), _shop, "4M",_pm_exec,_activity_type);
 							//Чтобы задача не добавлясь в WP каждый раз с запуском приложения, поэтому ставим признак - 1, после первого заполнения
 							qr._update_hpy_record(_id, "1");
 						}
@@ -1224,8 +1275,9 @@ public class apwr_controller {
 			//String _tm = scl.parser_str(_get_data_from_wp.get(l), 9);
 			String _icon = scl.parser_str(_get_data_from_wp.get(l), 13);
 			String _shop = scl.parser_str(_get_data_from_wp.get(l), 14);
+			String _act_type = scl.parser_str(_get_data_from_wp.get(l), 16);
 			
-			qr._insert_ap(_pm_num, _type, _desc, fx_dp.fromString(_dd).plusDays(_duration), _equip, _inst, _oft, qr._select_userid_(_oft), _shop, _icon, _otv);
+			qr._insert_ap(_pm_num, _type, _desc, fx_dp.fromString(_dd).plusDays(_duration), _equip, _inst, _oft, qr._select_userid_(_oft), _shop, _icon, _otv, _act_type);
 			//Удаляем PM из WP
 			qr._update_wp_record(_id);
 			
@@ -1255,10 +1307,11 @@ public class apwr_controller {
 			_equip_wo = scl.parser_str(_get_data_dly.get(j), 10);
 			_id_wo = scl.parser_str(_get_data_dly.get(j), 11);
 			_pm_exec_wo = scl.parser_str(_get_data_dly.get(j), 12);
+			_icon_at_wo = scl.parser_str(_get_data_dly.get(j), 13);
 			_type_wo = "PM";
 			//На выходных ППР не добавляем в WO			 
 			if(!date_cur.getDayOfWeek().toString().equals("SATURDAY") && !date_cur.getDayOfWeek().toString().equals("SUNDAY")) //_insert_ap  
-				qr._insert_ap(_id_pm_wo, _type_wo, _pmname_wo, fx_dp.fromString(_due_date_wo), _shop_wo+"."+_group_eq_wo+"."+_lm_wo+"."+_os_wo+"."+_equip_wo, _instruct_wo, _otf_wo, qr._select_userid_(_otf_wo), _shop_wo, "4M",_pm_exec_wo);
+				qr._insert_ap(_id_pm_wo, _type_wo, _pmname_wo, fx_dp.fromString(_due_date_wo), _shop_wo+"."+_group_eq_wo+"."+_lm_wo+"."+_os_wo+"."+_equip_wo, _instruct_wo, _otf_wo, qr._select_userid_(_otf_wo), _shop_wo, "4M",_pm_exec_wo,_icon_at_wo);
 			//Чтобы задача не добавлясь в WP каждый раз с запуском приложения, поэтому ставим признак - 1, после первого заполнения
 			qr._update_hpy_record(_id_wo, "1");
 		}
@@ -1989,6 +2042,7 @@ public class apwr_controller {
 		c_oft = lngBndl.getString("otv_task_ap");
 		c_own = lngBndl.getString("c_own");
 		prior_img = lngBndl.getString("prior");
+		at_title = lngBndl.getString("at_title");
 		str_set_btn = lngBndl.getString("str_set_btn");
 		
 		type_wp.setText(lngBndl.getString("type_ap"));
@@ -2345,6 +2399,7 @@ public class apwr_controller {
 		_oft_ap = scl.parser_str_str_str(_sql_rez, 5);
 		_otv_ap = scl.parser_str_str_str(_sql_rez, 6);
 		_icon = scl.parser_str_str_str(_sql_rez, 7);
+		_icon_at = scl.parser_str_str_str(_sql_rez, 8);
 		
 		try {
 			//_flag = false;

@@ -104,6 +104,21 @@ public class updrec_groupcycle_controller {
 				}
 			}
 		});
+		txt_duration.setOnMouseEntered(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event arg0) {
+				scl._ToolTip("Количество дней на исполнение( Например: 7 )", txt_duration);
+			}
+		});
+		txt_duration.setOnMouseExited(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event arg0) {
+				scl._ToolTipHide();
+			}
+		});
+		
 		
 		list_pm_cycle.setItems(qr._select_cycle_inst());
 		
@@ -166,7 +181,7 @@ public class updrec_groupcycle_controller {
 					// TODO: handle exception
 				}
 			    } else if (option.get() == ButtonType.CANCEL) {
-			       //label.setText("Cancelled!");
+			       return;
 			    } else {
 			       //label.setText("-");
 			    }
@@ -263,7 +278,7 @@ public class updrec_groupcycle_controller {
 					
 				}
 				catch (Exception e) {
-					scl._AlertDialog("Не найден номер инструкции или имя цикла переодичности задано некорректно!", "Ошибка!");
+					scl._AlertDialog("Не найдено не одного PM соответствующего группе: "+ txt_pm_group.getText() +" !", "Ошибка!");
 				}
 			}
 			else
