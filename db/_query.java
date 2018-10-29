@@ -37,7 +37,7 @@ public class _query
     private String total_rez_upd_pm, ninst_pm, eq_id, ool_pm, pm_resp, group_pm, pm_exec;
     private String total_rez_data, pereodic_pmplan, dbegin, dend, shop_pmplan, otv_plan;
     private String pmnum_ap, type_ap, description_ap, due_date_ap, equip_ap, oft_ap, otv_ap, total_rez_upd_ap, icon, icon_at;
-	private String shift_report, req_action, actual_time, actual_time1,actual_time2,actual_time3,actual_time4, data, equip, record_type, work_time, resp,resp2,resp3,resp4, status_wr, qty, ap_num, total_rez_upd_wr, actual_date,actual_date_2,actual_date_3,actual_date_4, actual_date1,actual_date2,actual_date3,actual_date4, user, hours1,hours1_2,hours1_3,hours1_4, min1, hours2,hours2_2,hours2_3,hours2_4, min2, user_number; 
+	private String shift_report, req_action, actual_time, actual_time1,actual_time2,actual_time3,actual_time4, data, equip, record_type, work_time, resp,resp2,resp3,resp4, status_wr, qty, ap_num, total_rez_upd_wr, actual_date,actual_date_2,actual_date_3,actual_date_4, actual_date1,actual_date2,actual_date3,actual_date4, user, hours1,hours1_2,hours1_3,hours1_4, min1, hours2,hours2_2,hours2_3,hours2_4, min2, user_number, activity_type; 
 	private String ap_num_plan, total_apnum_rez;
 	private String qty_chk = "null", total_qtychk_rez, wt_chk = "null", total_wtchk_rez;
 	private String a_date, a_date1, a_hours1, a_hours2;
@@ -538,7 +538,7 @@ public class _query
 		ObservableList<hmmr_wr_model> list = FXCollections.observableArrayList();
 	
 		try {
-			String query = "select id,Task_Description,Task_Report,CM_DownTime,WR_Work_Time,WR_End_Date,Equipment_Full,Record_Type,Task_Resp_ID,WR_Executor_Confirmed,WR_Host_Confirmed,ap_num,user_number,WR_Resp_Confirmed from hmmr_work_recording where WR_End_Date BETWEEN "+"'"+begin_data+"'"+" AND "+"'"+last_data+"'"+";";
+			String query = "select id,Task_Description,Task_Report,CM_DownTime,WR_Work_Time,WR_End_Date,Equipment_Full,Record_Type,Task_Resp_ID,WR_Executor_Confirmed,WR_Host_Confirmed,ap_num,user_number,WR_Resp_Confirmed,Activity_Type from hmmr_work_recording where WR_End_Date BETWEEN "+"'"+begin_data+"'"+" AND "+"'"+last_data+"'"+";";
 			
 			cn.ConToDb();
 			stmt16 = cn.con.createStatement();
@@ -560,7 +560,8 @@ public class _query
 	        		hpm.qtyProperty().set(rs16.getBoolean(11));
 	        		hpm.ap_num.set(rs16.getString(12));
 	        		hpm.user_id.set(rs16.getString(13));
-	        		hpm.userProperty().set(rs16.getBoolean(14));				        				            
+	        		hpm.userProperty().set(rs16.getBoolean(14));
+	        		hpm.icon_at.set(rs16.getString(15));
 		            list.add(hpm);
 	        	}    
 	        }
@@ -638,7 +639,7 @@ public class _query
 		ObservableList<hmmr_wr_model> list = FXCollections.observableArrayList();
 		
 		try {
-			String query = "select id,Task_Description,Task_Report,CM_DownTime,WR_Work_Time,WR_End_Date,Equipment_Full,Record_Type,Task_Resp_ID,WR_Executor_Confirmed,WR_Host_Confirmed,ap_num,user_number,WR_Resp_Confirmed from hmmr_work_recording WHERE ap_num = "+"'"+apnum+"'"+";";
+			String query = "select id,Task_Description,Task_Report,CM_DownTime,WR_Work_Time,WR_End_Date,Equipment_Full,Record_Type,Task_Resp_ID,WR_Executor_Confirmed,WR_Host_Confirmed,ap_num,user_number,WR_Resp_Confirmed,Activity_Type from hmmr_work_recording WHERE ap_num = "+"'"+apnum+"'"+";";
 			
 			cn.ConToDb();
 			stmt16 = cn.con.createStatement();
@@ -661,6 +662,7 @@ public class _query
 	        		hpm.ap_num.set(rs16.getString(12));
 	        		hpm.user_id.set(rs16.getString(13));
 	        		hpm.userProperty().set(rs16.getBoolean(14));
+	        		hpm.icon_at.set(rs16.getString(15));
 	        						        				            
 		            list.add(hpm);
 	        	}    
@@ -695,7 +697,7 @@ public class _query
 		ObservableList<hmmr_wr_model> list = FXCollections.observableArrayList();
 		
 		try {
-			String query = "select id,Task_Description,Task_Report,CM_DownTime,WR_Work_Time,WR_End_Date,Equipment_Full,Record_Type,Task_Resp_ID,WR_Executor_Confirmed,WR_Host_Confirmed,ap_num,user_number,WR_Resp_Confirmed from hmmr_work_recording WHERE WR_End_Date BETWEEN "+"'"+begin_data+"'"+" AND "+"'"+last_data+"'"+" AND FL_WSH = "+"'"+shop+"'"+";";
+			String query = "select id,Task_Description,Task_Report,CM_DownTime,WR_Work_Time,WR_End_Date,Equipment_Full,Record_Type,Task_Resp_ID,WR_Executor_Confirmed,WR_Host_Confirmed,ap_num,user_number,WR_Resp_Confirmed,Activity_Type from hmmr_work_recording WHERE WR_End_Date BETWEEN "+"'"+begin_data+"'"+" AND "+"'"+last_data+"'"+" AND FL_WSH = "+"'"+shop+"'"+";";
 			
 			cn.ConToDb();
 			stmt16 = cn.con.createStatement();
@@ -718,6 +720,7 @@ public class _query
 	        		hpm.ap_num.set(rs16.getString(12));
 	        		hpm.user_id.set(rs16.getString(13));
 	        		hpm.userProperty().set(rs16.getBoolean(14));
+	        		hpm.icon_at.set(rs16.getString(15));
 	        						        				            
 		            list.add(hpm);
 	        	}    
@@ -751,7 +754,7 @@ public class _query
 		ObservableList<hmmr_wr_model> list = FXCollections.observableArrayList();
 		
 		try {
-			String query = "select id,Task_Description,Task_Report,CM_DownTime,WR_Work_Time,WR_End_Date,Equipment_Full,Record_Type,Task_Resp_ID,WR_Executor_Confirmed,WR_Host_Confirmed,ap_num,user_number,WR_Resp_Confirmed from hmmr_work_recording WHERE WR_End_Date BETWEEN "+"'"+begin_data+"'"+" AND "+"'"+last_data+"'"+" AND Task_Resp_ID = "+"'"+resp+"'"+";";
+			String query = "select id,Task_Description,Task_Report,CM_DownTime,WR_Work_Time,WR_End_Date,Equipment_Full,Record_Type,Task_Resp_ID,WR_Executor_Confirmed,WR_Host_Confirmed,ap_num,user_number,WR_Resp_Confirmed,Activity_Type from hmmr_work_recording WHERE WR_End_Date BETWEEN "+"'"+begin_data+"'"+" AND "+"'"+last_data+"'"+" AND Task_Resp_ID = "+"'"+resp+"'"+";";
 			
 			cn.ConToDb();
 			stmt16 = cn.con.createStatement();
@@ -774,6 +777,7 @@ public class _query
 	        		hpm.ap_num.set(rs16.getString(12));
 	        		hpm.user_id.set(rs16.getString(13));
 	        		hpm.userProperty().set(rs16.getBoolean(14));
+	        		hpm.icon_at.set(rs16.getString(15));
 	        						        				            
 		            list.add(hpm);
 	        	}    
@@ -2091,9 +2095,9 @@ public class _query
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!WORK RECORDING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!		
 		//Вставляем запись в Work Recording
 				@SuppressWarnings("static-access")
-				public void _insert_wr(String ap_num, String userid, String WSH, String Group_EQ, String Line, String Station, String Equip, String equip, String record_type, Double wt, String resp, String resp1, String resp2, String resp3, String status_wr, String shift_report, String req_action, LocalDate actual_date, LocalDate actual_date_2, LocalDate actual_date_3, LocalDate actual_date_4, String actual_time, LocalDate actual_date1, LocalDate actual_date2, LocalDate actual_date3, LocalDate actual_date4, String actual_time1, String actual_time2, String actual_time3, String actual_time4, LocalTime hours1, LocalTime hours1_2, LocalTime hours1_3, LocalTime hours1_4, LocalTime hours2, LocalTime hours2_2, LocalTime hours2_3, LocalTime hours2_4, String b_gdw, String e_gdw, String b_gtw, String e_gtw)
+				public void _insert_wr(String ap_num, String userid, String WSH, String Group_EQ, String Line, String Station, String Equip, String equip, String record_type, Double wt, String resp, String resp1, String resp2, String resp3, String status_wr, String shift_report, String req_action, LocalDate actual_date, LocalDate actual_date_2, LocalDate actual_date_3, LocalDate actual_date_4, String actual_time, LocalDate actual_date1, LocalDate actual_date2, LocalDate actual_date3, LocalDate actual_date4, String actual_time1, String actual_time2, String actual_time3, String actual_time4, LocalTime hours1, LocalTime hours1_2, LocalTime hours1_3, LocalTime hours1_4, LocalTime hours2, LocalTime hours2_2, LocalTime hours2_3, LocalTime hours2_4, String b_gdw, String e_gdw, String b_gtw, String e_gtw, String icon_at)
 				{
-					String query = "INSERT INTO hmmr_work_recording (ap_num, user_number, FL_WSH, FL_Group, FL_Line, FL_Station, FL_Equipment, Equipment_Full, Record_Type, CM_Work_Time, Task_Resp_ID, _Resp2, _Resp3, _Resp4, WR_Executor_Confirmed, Task_Description, Task_Report, WR_Begin_Date, _Actual_Date_2, _Actual_Date_3, _Actual_Date_4, CM_DownTime, WR_End_Date, _Actual_Date2, _Actual_Date3, _Actual_Date4, WR_Work_Time, _Actual_Time2, _Actual_Time3, _Actual_Time4, WR_Work_Time_Begin, _Hours1_2, _Hours1_3, _Hours1_4, WR_Work_Time_End, _Hours2_2, _Hours2_3, _Hours2_4, CM_Date_Begin, CM_Date_End, CM_Time_Begin, CM_Time_End) VALUES ("+"'"+ap_num+"'"+","+ "'"+userid+"'"+","+"'"+WSH+"'"+","+"'"+Group_EQ+"'"+","+"'"+Line+"'"+","+"'"+Station+"'"+","+"'"+Equip+"'"+","+"'"+equip+"'"+","+"'"+record_type+"'"+","+"'"+wt+"'"+","+"'"+resp+"'"+","+"'"+resp1+"'"+","+"'"+resp2+"'"+","+"'"+resp3+"'"+","+"'"+status_wr+"'"+","+"'"+shift_report+"'"+","+"'"+req_action+"'"+","+"'"+actual_date+"'"+","+"'"+actual_date_2+"'"+","+"'"+actual_date_3+"'"+","+"'"+actual_date_4+"'"+","+"'"+actual_time+"'"+","+"'"+actual_date1+"'"+","+"'"+actual_date2+"'"+","+"'"+actual_date3+"'"+","+"'"+actual_date4+"'"+","+"'"+actual_time1+"'"+","+"'"+actual_time2+"'"+","+"'"+actual_time3+"'"+","+"'"+actual_time4+"'"+","+"'"+hours1+"'"+","+"'"+hours1_2+"'"+","+"'"+hours1_3+"'"+","+"'"+hours1_4+"'"+","+"'"+hours2+"'"+","+"'"+hours2_2+"'"+","+"'"+hours2_3+"'"+","+"'"+hours2_4+"'"+","+"'"+b_gdw+"'"+","+"'"+e_gdw+"'"+","+"'"+b_gtw+"'"+","+"'"+e_gtw+"'"+");";
+					String query = "INSERT INTO hmmr_work_recording (ap_num, user_number, FL_WSH, FL_Group, FL_Line, FL_Station, FL_Equipment, Equipment_Full, Record_Type, CM_Work_Time, Task_Resp_ID, _Resp2, _Resp3, _Resp4, WR_Executor_Confirmed, Task_Description, Task_Report, WR_Begin_Date, _Actual_Date_2, _Actual_Date_3, _Actual_Date_4, CM_DownTime, WR_End_Date, _Actual_Date2, _Actual_Date3, _Actual_Date4, WR_Work_Time, _Actual_Time2, _Actual_Time3, _Actual_Time4, WR_Work_Time_Begin, _Hours1_2, _Hours1_3, _Hours1_4, WR_Work_Time_End, _Hours2_2, _Hours2_3, _Hours2_4, CM_Date_Begin, CM_Date_End, CM_Time_Begin, CM_Time_End, Activity_Type) VALUES ("+"'"+ap_num+"'"+","+ "'"+userid+"'"+","+"'"+WSH+"'"+","+"'"+Group_EQ+"'"+","+"'"+Line+"'"+","+"'"+Station+"'"+","+"'"+Equip+"'"+","+"'"+equip+"'"+","+"'"+record_type+"'"+","+"'"+wt+"'"+","+"'"+resp+"'"+","+"'"+resp1+"'"+","+"'"+resp2+"'"+","+"'"+resp3+"'"+","+"'"+status_wr+"'"+","+"'"+shift_report+"'"+","+"'"+req_action+"'"+","+"'"+actual_date+"'"+","+"'"+actual_date_2+"'"+","+"'"+actual_date_3+"'"+","+"'"+actual_date_4+"'"+","+"'"+actual_time+"'"+","+"'"+actual_date1+"'"+","+"'"+actual_date2+"'"+","+"'"+actual_date3+"'"+","+"'"+actual_date4+"'"+","+"'"+actual_time1+"'"+","+"'"+actual_time2+"'"+","+"'"+actual_time3+"'"+","+"'"+actual_time4+"'"+","+"'"+hours1+"'"+","+"'"+hours1_2+"'"+","+"'"+hours1_3+"'"+","+"'"+hours1_4+"'"+","+"'"+hours2+"'"+","+"'"+hours2_2+"'"+","+"'"+hours2_3+"'"+","+"'"+hours2_4+"'"+","+"'"+b_gdw+"'"+","+"'"+e_gdw+"'"+","+"'"+b_gtw+"'"+","+"'"+e_gtw+"'"+","+"'"+icon_at+"'"+");";
 					
 					try {
 						cn.ConToDb();
@@ -2590,7 +2594,7 @@ public class _query
 				{
 
 					try {
-						String query = "select ap_num,WR_End_Date,Equipment_Full,Record_Type,CM_Work_Time,Task_Resp_ID,_Resp2,_Resp3,_Resp4,WR_Executor_Confirmed,Task_Description,Task_Report,WR_Host_Confirmed,WR_Begin_Date,_Actual_Date_2,_Actual_Date_3,_Actual_Date_4,CM_DownTime,WR_End_Date,_Actual_Date2,_Actual_Date3,_Actual_Date4,WR_Work_Time,_Actual_Time2,_Actual_Time3,_Actual_Time4,WR_Resp_Confirmed,WR_Work_Time_Begin,_Hours1_2,_Hours1_3,_Hours1_4,_Min1,WR_Work_Time_End,_Hours2_2,_Hours2_3,_Hours2_4,_Min2,user_number from hmmr_work_recording where id = "+"'"+id+"'"+";";
+						String query = "select ap_num,WR_End_Date,Equipment_Full,Record_Type,CM_Work_Time,Task_Resp_ID,_Resp2,_Resp3,_Resp4,WR_Executor_Confirmed,Task_Description,Task_Report,WR_Host_Confirmed,WR_Begin_Date,_Actual_Date_2,_Actual_Date_3,_Actual_Date_4,CM_DownTime,WR_End_Date,_Actual_Date2,_Actual_Date3,_Actual_Date4,WR_Work_Time,_Actual_Time2,_Actual_Time3,_Actual_Time4,WR_Resp_Confirmed,WR_Work_Time_Begin,_Hours1_2,_Hours1_3,_Hours1_4,_Min1,WR_Work_Time_End,_Hours2_2,_Hours2_3,_Hours2_4,_Min2,user_number,Activity_Type from hmmr_work_recording where id = "+"'"+id+"'"+";";
 						cn.ConToDb();
 						stmt15 = cn.con.createStatement();
 						rs15 = stmt15.executeQuery(query);
@@ -2634,8 +2638,9 @@ public class _query
 				        	hours2_4 = rs15.getString(36);
 				        	min2 = rs15.getString(37);
 				        	user_number = rs15.getString(38);
+				        	activity_type = rs15.getString(39);
 				        }
-				        total_rez_upd_wr = shift_report+";"+req_action+";"+actual_time+";"+actual_time1+";"+actual_time2+";"+actual_time3+";"+actual_time4+";"+data+";"+equip+";"+record_type+";"+resp+";"+resp2+";"+resp3+";"+resp4+";"+status_wr+";"+qty+";"+ap_num+";"+work_time+";"+actual_date+";"+actual_date_2+";"+actual_date_3+";"+actual_date_4+";"+actual_date1+";"+actual_date2+";"+actual_date3+";"+actual_date4+";"+user+";"+hours1+";"+hours1_2+";"+hours1_3+";"+hours1_4+";"+min1+";"+hours2+";"+hours2_2+";"+hours2_3+";"+hours2_4+";"+min2+";"+user_number;
+				        total_rez_upd_wr = shift_report+";"+req_action+";"+actual_time+";"+actual_time1+";"+actual_time2+";"+actual_time3+";"+actual_time4+";"+data+";"+equip+";"+record_type+";"+resp+";"+resp2+";"+resp3+";"+resp4+";"+status_wr+";"+qty+";"+ap_num+";"+work_time+";"+actual_date+";"+actual_date_2+";"+actual_date_3+";"+actual_date_4+";"+actual_date1+";"+actual_date2+";"+actual_date3+";"+actual_date4+";"+user+";"+hours1+";"+hours1_2+";"+hours1_3+";"+hours1_4+";"+min1+";"+hours2+";"+hours2_2+";"+hours2_3+";"+hours2_4+";"+min2+";"+user_number+";"+activity_type;
 //				        System.out.println("SELECT WORKED: "+total_rez);
 					}
 					catch (SQLException e) {
@@ -3485,9 +3490,9 @@ public class _query
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!WORK RECORDING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!				
 				//апдейтим запись в таблице WR
 				@SuppressWarnings("static-access")
-				public void _update_rec_wr(String id, String ap_num, String WSH, String Group_EQ, String Line, String Station, String Equip, String Equipment, String Record_Type, String Resp1,String Resp2,String Resp3,String Resp4, String Status, String Shift_Report, String Required_Action, LocalDate Actual_Date,LocalDate Actual_Date_2,LocalDate Actual_Date_3,LocalDate Actual_Date_4, String Actual_Time, LocalDate Actual_Date1,LocalDate Actual_Date2,LocalDate Actual_Date3,LocalDate Actual_Date4, String Actual_Time1,String Actual_Time2,String Actual_Time3,String Actual_Time4, LocalTime Hours1,LocalTime Hours1_2,LocalTime Hours1_3,LocalTime Hours1_4, LocalTime Hours2,LocalTime Hours2_2,LocalTime Hours2_3,LocalTime Hours2_4)
+				public void _update_rec_wr(String id, String ap_num, String WSH, String Group_EQ, String Line, String Station, String Equip, String Equipment, String Record_Type, String Resp1,String Resp2,String Resp3,String Resp4, String Status, String Shift_Report, String Required_Action, LocalDate Actual_Date,LocalDate Actual_Date_2,LocalDate Actual_Date_3,LocalDate Actual_Date_4, String Actual_Time, LocalDate Actual_Date1,LocalDate Actual_Date2,LocalDate Actual_Date3,LocalDate Actual_Date4, String Actual_Time1,String Actual_Time2,String Actual_Time3,String Actual_Time4, LocalTime Hours1,LocalTime Hours1_2,LocalTime Hours1_3,LocalTime Hours1_4, LocalTime Hours2,LocalTime Hours2_2,LocalTime Hours2_3,LocalTime Hours2_4, String Activity_Type)
 				{
-					String query = "UPDATE hmmr_work_recording SET ap_num = "+"'"+ap_num+"'"+",user_number = "+"'"+conn_connector.USER_ID+"'"+",FL_WSH = "+"'"+WSH+"'"+",FL_Group = "+"'"+Group_EQ+"'"+",FL_Line = "+"'"+Line+"'"+",FL_Station = "+"'"+Station+"'"+",FL_Equipment = "+"'"+Equip+"'"+",Equipment_Full = "+"'"+Equipment+"'"+",Record_Type = "+"'"+Record_Type+"'"+",Task_Resp_ID = "+"'"+Resp1+"'"+",_Resp2 = "+"'"+Resp2+"'"+",_Resp3 = "+"'"+Resp3+"'"+",_Resp4 = "+"'"+Resp4+"'"+",WR_Executor_Confirmed = "+"'"+Status+"'"+",Task_Description = "+"'"+Shift_Report+"'"+",Task_Report = "+"'"+Required_Action+"'"+",WR_Begin_Date = "+"'"+Actual_Date+"'"+",_Actual_Date_2 = "+"'"+Actual_Date_2+"'"+",_Actual_Date_3 = "+"'"+Actual_Date_3+"'"+",_Actual_Date_4 = "+"'"+Actual_Date_4+"'"+",CM_DownTime = "+"'"+Actual_Time+"'"+",WR_End_Date = "+"'"+Actual_Date1+"'"+",_Actual_Date2 = "+"'"+Actual_Date2+"'"+",_Actual_Date3 = "+"'"+Actual_Date3+"'"+",_Actual_Date4 = "+"'"+Actual_Date4+"'"+",WR_Work_Time = "+"'"+Actual_Time1+"'"+",_Actual_Time2 = "+"'"+Actual_Time2+"'"+",_Actual_Time3 = "+"'"+Actual_Time3+"'"+",_Actual_Time4 = "+"'"+Actual_Time4+"'"+",WR_Work_Time_Begin = "+"'"+Hours1+"'"+",_Hours1_2 = "+"'"+Hours1_2+"'"+",_Hours1_3 = "+"'"+Hours1_3+"'"+",_Hours1_4 = "+"'"+Hours1_4+"'"+",WR_Work_Time_End = "+"'"+Hours2+"'"+",_Hours2_2 = "+"'"+Hours2_2+"'"+",_Hours2_3 = "+"'"+Hours2_3+"'"+",_Hours2_4 = "+"'"+Hours2_4+"'"+" where id = "+"'"+id+"'"+";"; //"UPDATE pm_inst SET Type_PM = "+"'"+type+"'"+", Description = "+"'"+desc+"'"+" WHERE id = "+"'"+id+"'"+";";
+					String query = "UPDATE hmmr_work_recording SET ap_num = "+"'"+ap_num+"'"+",user_number = "+"'"+conn_connector.USER_ID+"'"+",FL_WSH = "+"'"+WSH+"'"+",FL_Group = "+"'"+Group_EQ+"'"+",FL_Line = "+"'"+Line+"'"+",FL_Station = "+"'"+Station+"'"+",FL_Equipment = "+"'"+Equip+"'"+",Equipment_Full = "+"'"+Equipment+"'"+",Record_Type = "+"'"+Record_Type+"'"+",Task_Resp_ID = "+"'"+Resp1+"'"+",_Resp2 = "+"'"+Resp2+"'"+",_Resp3 = "+"'"+Resp3+"'"+",_Resp4 = "+"'"+Resp4+"'"+",WR_Executor_Confirmed = "+"'"+Status+"'"+",Task_Description = "+"'"+Shift_Report+"'"+",Task_Report = "+"'"+Required_Action+"'"+",WR_Begin_Date = "+"'"+Actual_Date+"'"+",_Actual_Date_2 = "+"'"+Actual_Date_2+"'"+",_Actual_Date_3 = "+"'"+Actual_Date_3+"'"+",_Actual_Date_4 = "+"'"+Actual_Date_4+"'"+",CM_DownTime = "+"'"+Actual_Time+"'"+",WR_End_Date = "+"'"+Actual_Date1+"'"+",_Actual_Date2 = "+"'"+Actual_Date2+"'"+",_Actual_Date3 = "+"'"+Actual_Date3+"'"+",_Actual_Date4 = "+"'"+Actual_Date4+"'"+",WR_Work_Time = "+"'"+Actual_Time1+"'"+",_Actual_Time2 = "+"'"+Actual_Time2+"'"+",_Actual_Time3 = "+"'"+Actual_Time3+"'"+",_Actual_Time4 = "+"'"+Actual_Time4+"'"+",WR_Work_Time_Begin = "+"'"+Hours1+"'"+",_Hours1_2 = "+"'"+Hours1_2+"'"+",_Hours1_3 = "+"'"+Hours1_3+"'"+",_Hours1_4 = "+"'"+Hours1_4+"'"+",WR_Work_Time_End = "+"'"+Hours2+"'"+",_Hours2_2 = "+"'"+Hours2_2+"'"+",_Hours2_3 = "+"'"+Hours2_3+"'"+",_Hours2_4 = "+"'"+Hours2_4+"'"+",Activity_Type = "+"'"+Activity_Type+"'"+" where id = "+"'"+id+"'"+";"; //"UPDATE pm_inst SET Type_PM = "+"'"+type+"'"+", Description = "+"'"+desc+"'"+" WHERE id = "+"'"+id+"'"+";";
 					
 					try {
 						cn.ConToDb();
@@ -5979,4 +5984,176 @@ public class _query
 
 			return list;
 		}
+		/**
+		 * Апдайтим один параметр в WO 
+		 * @param icon_at - картинка activity type прараметра
+		 */
+		@SuppressWarnings("static-access")
+		public void _update_rec_ap_iconat(String icon_at, String id)
+		{
+			String query = "UPDATE hmmr_action_plan SET Icon_AT = "+"'"+icon_at+"'"+" WHERE id = "+id+";";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5989!");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+		}
+		/**
+		 * Получаем Полное описание к картинке вида работ, чтобы вывести его в виде подсказки
+		 * при наведении мышки на иконку вида работ в таблице Work Recording
+		 * @param id - id в AP чтобы получить имя вида работ, а по нему и полное описание
+		 * @return - Возвращаем полученный набор данных
+		 */
+		@SuppressWarnings({ "static-access"})
+		public String _select_at_desc_wr(String id)
+		{
+			String list = "null";
+			
+			try {
+				String query = "select hat.Description from hmmr_work_recording hwr INNER JOIN hmmr_activity_type hat ON hwr.Activity_Type = hat.Name AND hwr.id = "+"'"+id+"'"+";"; // AND ID_TSK = "+"'"+id+"'"+
+				
+				cn.ConToDb();
+				stmt6 = cn.con.createStatement();
+				rs6 = stmt6.executeQuery(query);
+							
+		        while (rs6.next()) {
+		        	if(rs6.getString(1) != null) {
+		        		list = rs6.getString(1);			        					            
+			        }    
+		        }
+
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4027");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt6.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs6.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+
+			return list;
+		}
+///////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  УДАЛИТЬ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!		
+		/**
+		 * Получаем Полное описание к картинке вида работ, чтобы вывести его в виде подсказки
+		 * при наведении мышки на иконку вида работ в таблице Work Recording
+		 * @param id - id в AP чтобы получить имя вида работ, а по нему и полное описание
+		 * @return - Возвращаем полученный набор данных
+		 */
+		@SuppressWarnings({ "static-access"})
+		public String _select_at_desc_wr1(String id)
+		{
+			String list = "null";
+			
+			try {
+				String query = "select hat.Description from hmmr_work_recording hwr INNER JOIN hmmr_activity_type hat ON hwr.Activity_Type = hat.Name AND hwr.id = "+"'"+id+"'"+";"; // AND ID_TSK = "+"'"+id+"'"+
+				
+				cn.ConToDb();
+				stmt6 = cn.con.createStatement();
+				rs6 = stmt6.executeQuery(query);
+							
+		        while (rs6.next()) {
+		        	if(rs6.getString(1) != null) {
+		        		list = rs6.getString(1);			        					            
+			        }    
+		        }
+
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4027");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt6.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs6.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+
+			return list;
+		}
+		
+		
+		/**
+		 * Получаем Полное описание к картинке вида работ, чтобы вывести его в виде подсказки
+		 * при наведении мышки на иконку вида работ в таблице Work Recording
+		 * @param id - id в AP чтобы получить имя вида работ, а по нему и полное описание
+		 * @return - Возвращаем полученный набор данных
+		 */
+		@SuppressWarnings({ "static-access"})
+		public String _select_at_desc_wr11(String id)
+		{
+			String list = "null";
+			
+			try {
+				String query = "select hat.Description from hmmr_work_recording hwr INNER JOIN hmmr_activity_type hat ON hwr.Activity_Type = hat.Name AND hwr.id = "+"'"+id+"'"+";"; // AND ID_TSK = "+"'"+id+"'"+
+				
+				cn.ConToDb();
+				stmt6 = cn.con.createStatement();
+				rs6 = stmt6.executeQuery(query);
+							
+		        while (rs6.next()) {
+		        	if(rs6.getString(1) != null) {
+		        		list = rs6.getString(1);			        					            
+			        }    
+		        }
+
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4027");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt6.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs6.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+
+			return list;
+		}
+		/**
+		 * Получаем Полное описание к картинке вида работ, чтобы вывести его в виде подсказки
+		 * при наведении мышки на иконку вида работ в таблице Work Recording
+		 * @param id - id в AP чтобы получить имя вида работ, а по нему и полное описание
+		 * @return - Возвращаем полученный набор данных
+		 */
+		@SuppressWarnings({ "static-access"})
+		public String _select_at_desc_wr111(String id)
+		{
+			String list = "null";
+			
+			try {
+				String query = "select hat.Description from hmmr_work_recording hwr INNER JOIN hmmr_activity_type hat ON hwr.Activity_Type = hat.Name AND hwr.id = "+"'"+id+"'"+";"; // AND ID_TSK = "+"'"+id+"'"+
+				
+				cn.ConToDb();
+				stmt6 = cn.con.createStatement();
+				rs6 = stmt6.executeQuery(query);
+							
+		        while (rs6.next()) {
+		        	if(rs6.getString(1) != null) {
+		        		list = rs6.getString(1);			        					            
+			        }    
+		        }
+
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4027");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt6.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs6.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+
+			return list;
+		}
+/////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }

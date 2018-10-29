@@ -63,7 +63,6 @@ public class addrec_prior_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -71,7 +70,6 @@ public class addrec_prior_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -79,7 +77,6 @@ public class addrec_prior_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -87,7 +84,6 @@ public class addrec_prior_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -126,7 +122,6 @@ public class addrec_prior_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				scl._ToolTip("Внимание! Размеры изображения не должны превышать 32х32 px!", b_exp_prior);
 			}
 		});
@@ -134,7 +129,6 @@ public class addrec_prior_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				scl._ToolTipHide();
 			}
 		});
@@ -142,7 +136,6 @@ public class addrec_prior_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				scl._ToolTip("Внимание! Размеры изображения не должны превышать 32х32 px!", t_icon_prior);
 			}
 		});
@@ -150,7 +143,6 @@ public class addrec_prior_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				scl._ToolTipHide();
 			}
 		});
@@ -159,7 +151,6 @@ public class addrec_prior_controller {
 			@SuppressWarnings("static-access")
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				qr._insert_prior(t_id_prior.getText(), t_name_prior.getText(), t_desc_prior.getText(), t_icon_prior.getText().replace('\\', '/'));
 				
 				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_mu_prior") + " в Справочнике приоритетов");
@@ -173,7 +164,6 @@ public class addrec_prior_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				stage = (Stage) b_cancel_prior.getScene().getWindow();
 				stage.close();
 			}
@@ -206,7 +196,7 @@ public class addrec_prior_controller {
 				b_add_prior.setDisable(true);
 			}
 			catch (Exception e) {
-				// TODO: handle exception
+				
 			}
 	}
 }

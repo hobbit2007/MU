@@ -150,7 +150,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				if(company_ps.getValue().length() != 0) {
 					plant_ps.setItems(qr._select_shop_ps("FL02_Plant"));
 					company_ps_t.setText(company_ps.getValue());
@@ -163,7 +162,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				if(plant_ps.getValue().length() != 0) {
 					shops_ps.setItems(qr._select_shop_ps("FL03_Shop_s", "FL03_Shop_ENG", "FL02_Plant", plant_ps.getValue()));
 					shop_ps.setItems(qr._select_shop_ps("FL03_Shop_s", "FL03_Shop_ENG", "FL02_Plant", plant_ps.getValue()));
@@ -177,7 +175,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				if(shops_ps.getValue().toString().length() != 0) {
 					groups_ps.valueProperty().set(null);
 					lines_ps.valueProperty().set(null);
@@ -199,7 +196,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				if(groups_ps.getValue().toString().length() != 0) {
 					lines_ps.valueProperty().set(null);
 					oss_ps.valueProperty().set(null);
@@ -219,7 +215,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				if(lines_ps.getValue().toString().length() != 0) {
 					try {
 						oss_ps.valueProperty().set(null);
@@ -234,7 +229,7 @@ public class updrec_ps_controller {
 						linerus_ps_t.setText(qr._select_shop_ps_str("FL05_Line_RUS", "FL05_Line_s", sclass.parser_str(lines_ps.getValue(), 0)));
 					}
 					catch (Exception e) {
-						// TODO: handle exception
+						
 					}
 				}
 			}
@@ -243,7 +238,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				if(oss_ps.getValue().toString().length() != 0) {
 					try {
 						equips_ps.valueProperty().set(null);
@@ -257,7 +251,7 @@ public class updrec_ps_controller {
 						osrus_ps_t.setText(qr._select_shop_ps_str("FL06_Station_RUS", "FL06_Station_s", sclass.parser_str(oss_ps.getValue(), 0)));
 					}
 					catch (Exception e) {
-						// TODO: handle exception
+						
 					}
 					
 				}
@@ -267,7 +261,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					equips_ps_t.setText(sclass.parser_str(equips_ps.getValue(), 0));
 					equip_ps_t.setText(sclass.parser_str(equips_ps.getValue(), 1));
@@ -276,7 +269,7 @@ public class updrec_ps_controller {
 					equiprus_ps_t.setText(equiprus_ps.getValue());
 				}
 				catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 				//stsupplier_ps.setItems(qr._select_shop_ps("Station_Supplier"));
 			}
@@ -285,7 +278,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				shoprus_ps_t.setText(shoprus_ps.getValue());
 			}
 		});
@@ -293,7 +285,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				grouprus_ps_t.setText(grouprus_ps.getValue());
 			}
 		});
@@ -301,7 +292,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				linerus_ps_t.setText(linerus_ps.getValue());
 			}
 		});
@@ -309,7 +299,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				osrus_ps_t.setText(osrus_ps.getValue());
 			}
 		});
@@ -317,7 +306,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				equiprus_ps_t.setText(equiprus_ps.getValue());
 			}
 		});
@@ -348,7 +336,7 @@ public class updrec_ps_controller {
 				        manual_ps_t.setText(phil.getPath());
 			    	}
 			    	catch (Exception e) {
-						// TODO: handle exception
+						
 					}
 			    }
 			}
@@ -369,7 +357,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				location_ps_t.setText(location_ps.getValue());
 				//room_ps.setItems(qr._select_shop_ps("Room_category"));
 			}
@@ -380,7 +367,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				cham_ps_t.setText(cham_ps.getValue());
 				//trcu_ps.setItems(qr._select_shop_ps("TR_CU"));
 			}
@@ -390,7 +376,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				trcu_ps_t.setText(trcu_ps.getValue());
 				//trcul_ps.setItems(qr._select_shop_ps("TR_CU_Link"));
 			}
@@ -400,7 +385,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				trcul_ps_t.setText(trcul_ps.getValue());
 				//hazardous_ps.setItems(qr._select_shop_ps("Hazardous"));
 			}
@@ -410,7 +394,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -419,7 +402,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				keyequip_ps_t.setText(keyequip_ps.getValue());
 				//type_ps.setItems(qr._select_shop_ps("Type"));
 			}
@@ -429,7 +411,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				type_ps_t.setText(type_ps.getValue());
 				//mtc_ps.setItems(qr._select_shop_ps("Main_Technical_Characteristic"));
 			}
@@ -439,7 +420,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				mtc_ps_t.setText(mtc_ps.getValue());
 				//respons_ps.setItems(qr._select_shop_ps("Responsobility"));
 			}
@@ -449,7 +429,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				respons_ps_t.setText(respons_ps.getValue());
 			}
 		});
@@ -459,7 +438,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -467,7 +445,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				}); 
@@ -475,7 +452,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -483,7 +459,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -491,7 +466,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -499,7 +473,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -507,7 +480,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -515,7 +487,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -523,7 +494,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -532,7 +502,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				}); 
@@ -540,7 +509,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				}); 
@@ -548,7 +516,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -556,7 +523,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -564,7 +530,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				}); 
@@ -572,7 +537,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -580,7 +544,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -588,7 +551,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -596,7 +558,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -604,7 +565,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -612,7 +572,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -620,7 +579,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -628,7 +586,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -636,7 +593,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -644,7 +600,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -652,7 +607,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -660,7 +614,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -668,7 +621,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -676,7 +628,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				}); 
@@ -684,7 +635,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -692,7 +642,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -700,7 +649,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -708,7 +656,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -716,7 +663,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				}); 
@@ -724,7 +670,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -732,7 +677,6 @@ public class updrec_ps_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -824,7 +768,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				//if(apwr_controller.SHOP_NAME.equals("W"))
 				//	equip_label = oss_ps_t.getText()+"."+sub_number_t.getText()+"-"+equips_ps_t.getText();
 				//else
@@ -857,7 +800,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				String _sql_rez = qr._select_for_update_ps(qr._select_data_prew(prev_id, "hmmr_plant_structure"));
 				
 				fill_fields(_sql_rez);
@@ -873,7 +815,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				String _sql_rez = qr._select_for_update_ps(qr._select_data_next(next_id, "hmmr_plant_structure"));
 				fill_fields(_sql_rez);
 				
@@ -887,7 +828,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				stage = (Stage) add_ps.getScene().getWindow();
 				stage.close();
 			}
@@ -896,7 +836,6 @@ public class updrec_ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				FileChooser fc = new FileChooser();
 			    fc.setTitle("Get Text");
 			    fc.getExtensionFilters().addAll(
@@ -1135,7 +1074,7 @@ public class updrec_ps_controller {
 				add_ps.setDisable(true);
 			}
 			catch (Exception e) {
-				// TODO: handle exception
+				
 			}
 	}
 }

@@ -141,11 +141,9 @@ public class Stuff_Controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				try {
 					addstaff_start();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -178,7 +176,6 @@ public class Stuff_Controller {
 				try {
 					upd_staff_start();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -187,12 +184,10 @@ public class Stuff_Controller {
 		table_staff.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
 				if (event.getClickCount() == 2 ){
 		               try {
 						upd_staff_start();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 		           }
@@ -218,7 +213,7 @@ public class Stuff_Controller {
 			  	   try {
 			  	   func_del(_hsm.getIdStr());
 			  	   } catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			    } else if (option.get() == ButtonType.CANCEL) {
 			       //label.setText("Cancelled!");

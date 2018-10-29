@@ -96,7 +96,6 @@ public class addrec_cycle_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip("необходимо указать переодичность ППР в днях. Например: еженедельно - 7 дней,\n "
 			      		+ " раз в две недели - 14 дней, раз в полгода - 182.5 дней, раз в год 365 дней и т.д.");
 				Point2D p = pereodic_cycle.localToScreen(pereodic_cycle.getLayoutBounds().getMaxX(), pereodic_cycle.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
@@ -107,7 +106,6 @@ public class addrec_cycle_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -116,7 +114,6 @@ public class addrec_cycle_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip("Это значение задает количество ППР, которые необходимо выполнить в будущем,\n " 
 						+ " например: Дата начала - 01.08.2018, Дата окончания - 01.09.2018 и в колонке Переодичность значение - 7 дней \n " 
 						+ " (т.е. еженедельно), тогда будет создано пять ППР - 01.08.2018; 08.08.2018; 15.08.2018; 23.08.2018 и 30.08.2018");
@@ -128,7 +125,6 @@ public class addrec_cycle_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});

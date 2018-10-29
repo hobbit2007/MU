@@ -83,7 +83,6 @@ public class conn_connector
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				LANG_ID = s_lan.getSelectionModel().getSelectedIndex();
 				
 				if(LANG_ID == 1)
@@ -150,7 +149,6 @@ public class conn_connector
 					cnt = cnt + 1;
 			      }
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
 		 
@@ -202,7 +200,6 @@ public class conn_connector
 	        try {
 				FXMLDocumentController(stage);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	        //Пишим логин и пароль в файл, если не поставлена галка Чужой компьютер

@@ -119,7 +119,6 @@ public class addrec_groupcycle_controller {
 
 			@Override
 			public void handle(Event arg0) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -127,7 +126,6 @@ public class addrec_groupcycle_controller {
 
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -135,7 +133,6 @@ public class addrec_groupcycle_controller {
 
 			@Override
 			public void handle(Event arg0) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -144,7 +141,6 @@ public class addrec_groupcycle_controller {
 			@SuppressWarnings("static-access")
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				qr._insert_gc(txt_pm_group.getText(), list_pm_cycle.getValue(), d_start_date.getValue(), txt_duration.getText(), txt_days_gc.getText());
 				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_group_cycle") + " в справочнике Группа-Период");
 				gcc._table_update_gc.addAll(qr._select_for_gc());
@@ -157,7 +153,6 @@ public class addrec_groupcycle_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				stage = (Stage) cancel_form.getScene().getWindow();
 				stage.close();
 			}
@@ -188,7 +183,7 @@ public class addrec_groupcycle_controller {
 				add_rec.setDisable(true);
 		}
 		catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 	}
 

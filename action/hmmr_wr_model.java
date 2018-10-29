@@ -19,13 +19,14 @@ public class hmmr_wr_model {
 	public SimpleStringProperty ap_num = new SimpleStringProperty();
 	public SimpleStringProperty user_id = new SimpleStringProperty();
 	private SimpleBooleanProperty user = new SimpleBooleanProperty();
+	public SimpleStringProperty icon_at = new SimpleStringProperty();
 	
 	public hmmr_wr_model()
 	{
 		
 	}
 	public hmmr_wr_model(String Id, String shift_report, String req_action, String actual_time, String actual_time1, String data, String equip, String record_type,
-			String resp, String status, Boolean qty, String ap_num, String user_id, Boolean user)
+			String resp, String status, Boolean qty, String ap_num, String user_id, Boolean user, String icon_at)
 	{
 		this.Id.set(Id);
 		this.shift_report.set(shift_report);
@@ -41,6 +42,7 @@ public class hmmr_wr_model {
 		this.ap_num.set(ap_num);
 		this.user_id.set(user_id);
 		this.user.set(user);
+		this.icon_at.set(icon_at);
 		}
 	
 	public String getId() {
@@ -225,6 +227,19 @@ public class hmmr_wr_model {
         this.user.set(user);
     }
     
+    public String geticon_at() {
+        return icon_at.get();
+    }
+
+    public SimpleStringProperty icon_atProperty()
+    {
+    	return icon_at;
+    }
+    
+    public void seticon_at(String icon_at) {
+        this.icon_at.set(icon_at);
+    }
+    
     @Override
     public String toString() {
         return "hmmr_wr_model{" +
@@ -242,6 +257,7 @@ public class hmmr_wr_model {
                 ", ap_num='" + ap_num.get() + '\'' +
                 ", user_id='" + user_id.get() + '\'' +
                 ", user='" + user.get() + '\'' +
+                ", icon_at='" + icon_at.get() + '\'' +
                 '}';
     }
 }

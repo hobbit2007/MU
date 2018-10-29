@@ -201,7 +201,6 @@ public class Addrec_Staff_Controller {
 
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-				// TODO Auto-generated method stub
 				txt_pos_rus_staff.setText(list_pos_rus_staff.getValue());
 			}
 		});
@@ -209,7 +208,6 @@ public class Addrec_Staff_Controller {
 
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-				// TODO Auto-generated method stub
 				txt_pos_staff.setText(list_pos_staff.getValue());
 			}
 		});
@@ -218,12 +216,11 @@ public class Addrec_Staff_Controller {
 			
 			@Override
 			public void handle(Event arg0) {
-				// TODO Auto-generated method stub
 				try {
 					txt_login_staff.setText(txt_gwm_staff.getText());
 				}
 				catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			}
 		});
@@ -383,7 +380,6 @@ public class Addrec_Staff_Controller {
 			@SuppressWarnings("static-access")
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				txt_passwd_staff.setText(scl.generate());
 			}
 		});
@@ -526,7 +522,7 @@ public class Addrec_Staff_Controller {
 				btn_add_staff.setDisable(true);
 			}
 			catch (Exception e) {
-				// TODO: handle exception
+				
 			}
 	}
 

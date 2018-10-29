@@ -22,8 +22,8 @@
             </Label>
             <Label fx:id="req_action_wr" layoutX="14.0" layoutY="173.0" text="Что сделано:" />
             <TextArea fx:id="req_action_wr_upd" layoutX="158.0" layoutY="164.0" prefHeight="88.0" prefWidth="200.0" wrapText="true" />
-            <Label fx:id="actual_time_wr" disable="true" layoutX="14.0" layoutY="271.0" text="Время простоя, мин:" />
-            <TextField fx:id="actual_time_wr_upd" disable="true" layoutX="160.0" layoutY="266.0" />
+            <Label fx:id="actual_time_wr" disable="true" layoutX="14.0" layoutY="270.0" text="Время простоя, мин:" />
+            <TextField fx:id="actual_time_wr_upd" disable="true" layoutX="160.0" layoutY="265.0" />
             <Label fx:id="actual_time1_wr" layoutX="14.0" layoutY="359.0" text="Время работы, мин:" />
             <TextField fx:id="actual_time1_wr_upd" disable="true" layoutX="160.0" layoutY="383.0" />
             <Label fx:id="lbl_shop_ap" layoutX="14.0" layoutY="663.0" text="Цех:" />
@@ -132,6 +132,8 @@
             <JFXTimePicker fx:id="b_picker_upd" layoutX="276.0" layoutY="345.0" prefHeight="28.0" prefWidth="87.0" />
             <DatePicker fx:id="w_data_e_upd" layoutX="366.0" layoutY="347.0" prefHeight="25.0" prefWidth="109.0" promptText="по:" />
             <JFXTimePicker fx:id="e_picker_upd" layoutX="483.0" layoutY="345.0" prefHeight="28.0" prefWidth="87.0" />
+            <Label fx:id="lbl_at_wr_upd" layoutX="331.0" layoutY="269.0" text="Вид работ:" />
+            <ComboBox fx:id="list_at_wr_upd" layoutX="400.0" layoutY="265.0" prefWidth="150.0" />
          </children>
       </Pane>
    </children>

@@ -111,7 +111,6 @@ public class type_pm_controller
 							
 							@Override
 							public void handle(ActionEvent event) {
-								// TODO Auto-generated method stub
 							}
 						});*/
                         
@@ -131,7 +130,6 @@ public class type_pm_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					//_flag = false;
 					typepm_add(stage);
@@ -140,7 +138,6 @@ public class type_pm_controller
 	        		//t.setDaemon(true);
 	        		//t.start();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -157,14 +154,13 @@ public class type_pm_controller
 		
 		@Override
 		public void handle(ActionEvent event) {
-			// TODO Auto-generated method stub
 			upd_tpm.setDisable(true);
 			del_tpm.setDisable(true);
 			type_pm _ccl1 = table_tpm.getSelectionModel().getSelectedItem();
 			try {
 			func_upd(_ccl1.getId());
 			} catch (Exception e) {
-				// TODO: handle exception
+				
 			}
 		}
 	});
@@ -173,8 +169,6 @@ public class type_pm_controller
 		
 		@Override
 		public void handle(ActionEvent event) {
-			// TODO Auto-generated method stub
-			
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 		    alert.setTitle("M&U - Delete Record Window");
 		    type_pm _ccl = table_tpm.getSelectionModel().getSelectedItem();
@@ -191,7 +185,7 @@ public class type_pm_controller
 		  	   try {
 		  	   func_del(_ccl.getId());
 		  	   } catch (Exception e) {
-				// TODO: handle exception
+				
 			}
 		    } else if (option.get() == ButtonType.CANCEL) {
 		       //label.setText("Cancelled!");
@@ -205,7 +199,6 @@ public class type_pm_controller
     table_tpm.setOnMousePressed(new EventHandler<MouseEvent>() {
     	@Override
     	public void handle(MouseEvent event) {
-    		// TODO Auto-generated method stub
     		if (event.getClickCount() == 2 ){
                    func_upd(table_tpm.getSelectionModel().getSelectedItem().getId());
                }
@@ -217,7 +210,6 @@ public class type_pm_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				upd_tpm.setDisable(false);
 				if(!conn_connector.USER_ROLE.equals("Technics") || !conn_connector.USER_ROLE.equals("Engeneer"))
 					del_tpm.setDisable(false);

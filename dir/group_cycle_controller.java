@@ -82,13 +82,11 @@ public class group_cycle_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				upd_rec.setDisable(true);
 				del_rec.setDisable(true);
 				try {
 					gc_add(stage);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -100,7 +98,7 @@ public class group_cycle_controller {
 				try {
 						func_upd();
 					} catch (Exception e) {
-						// TODO: handle exception
+						
 					}
 			}
 		});
@@ -108,7 +106,6 @@ public class group_cycle_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				stage = (Stage) cancel_form.getScene().getWindow();
 				stage.close();
 			}
@@ -125,14 +122,13 @@ public class group_cycle_controller {
 
 			@Override
 			public void handle(Event arg0) {
-				// TODO Auto-generated method stub
 				try {
 					_id_gc = Integer.parseInt(table_gc.getSelectionModel().getSelectedItem().getId());
 					upd_rec.setDisable(false);
 					del_rec.setDisable(false);
 				}
 				catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			}
 		});
@@ -140,7 +136,6 @@ public class group_cycle_controller {
 		table_gc.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
 				if (event.getClickCount() == 2 ){
 		               func_upd();
 		           }
@@ -150,8 +145,6 @@ public class group_cycle_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 			    alert.setTitle("M&U - Delete Record Window");
 			    hmmr_groupcycle_model _ccl = table_gc.getSelectionModel().getSelectedItem();
@@ -167,7 +160,7 @@ public class group_cycle_controller {
 			  	   func_del(_ccl.getId());
 			  	   del_rec.setDisable(true);
 			  	   } catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			    } else if (option.get() == ButtonType.CANCEL) {
 			       //label.setText("Cancelled!");

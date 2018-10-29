@@ -72,7 +72,6 @@ public class s_class {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				btn.setStyle("-fx-background-color: #e3faff; -fx-border-width: 2; -fx-border-color: #1680c2;");
 			}
 		});
@@ -81,7 +80,6 @@ public class s_class {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				btn.setStyle("-fx-background-color: #e7e7e7; -fx-border-width: 2; -fx-border-color: #1680c2;");
 			}
 		});
@@ -94,7 +92,6 @@ public class s_class {
 				
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				int qm = Integer.parseInt(rbtn.getText());
 				int _const = 180;
 				ObservableList<Integer> list = qr._select_data_moto();

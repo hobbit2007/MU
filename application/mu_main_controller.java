@@ -208,7 +208,6 @@ public class mu_main_controller
 		try {
 			apwr_start(stage);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
 		//Эти все листенеры нужны чтобы снять у окна ActionPlan&Work Recording признак поверх всех окон
@@ -217,7 +216,6 @@ public class mu_main_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				getPrimaryStage().setAlwaysOnTop(false);
 				getPrimaryStage().toBack();
 			}
@@ -226,7 +224,6 @@ public class mu_main_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				getPrimaryStage().setAlwaysOnTop(false);
 				getPrimaryStage().toBack();
 			}
@@ -235,7 +232,6 @@ public class mu_main_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				getPrimaryStage().setAlwaysOnTop(false);
 				getPrimaryStage().toBack();
 			}
@@ -244,7 +240,6 @@ public class mu_main_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				getPrimaryStage().setAlwaysOnTop(false);
 				getPrimaryStage().toBack();
 			}
@@ -253,7 +248,6 @@ public class mu_main_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				getPrimaryStage().setAlwaysOnTop(false);
 				getPrimaryStage().toBack();
 			}
@@ -262,7 +256,6 @@ public class mu_main_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				getPrimaryStage().setAlwaysOnTop(false);
 				getPrimaryStage().toBack();
 			}
@@ -271,7 +264,6 @@ public class mu_main_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				getPrimaryStage().setAlwaysOnTop(false);
 				getPrimaryStage().toBack();
 			}
@@ -285,7 +277,6 @@ public class mu_main_controller
         try {
 			pmcycle_start(stage);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -310,7 +301,6 @@ public class mu_main_controller
 	        try {
 				pmtype_start(stage);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -382,7 +372,6 @@ public class mu_main_controller
 	        try {
 				prior_start(stage);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -394,7 +383,6 @@ public class mu_main_controller
 		       try {
 				gc_start(stage);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -406,7 +394,6 @@ public class mu_main_controller
 		       try {
 				ot_start(stage);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -418,7 +405,6 @@ public class mu_main_controller
 		       try {
 				staff_start(stage);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

@@ -126,7 +126,6 @@ public class updrec_groupcycle_controller {
 
 			@Override
 			public void handle(Event arg0) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -134,7 +133,6 @@ public class updrec_groupcycle_controller {
 
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});*/
@@ -142,7 +140,6 @@ public class updrec_groupcycle_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -150,7 +147,6 @@ public class updrec_groupcycle_controller {
 
 			@Override
 			public void handle(Event arg0) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -178,7 +174,7 @@ public class updrec_groupcycle_controller {
 			  		   new_pm_date(gcc._id_gc);
 			  		   chk_btn();
 			  	   } catch (Exception e1) {
-					// TODO: handle exception
+					
 				}
 			    } else if (option.get() == ButtonType.CANCEL) {
 			       return;
@@ -193,7 +189,6 @@ public class updrec_groupcycle_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				qr._update_for_gc(gcc._id_gc, txt_pm_group.getText(), list_pm_cycle.getValue(), txt_days_gc.getText(), d_start_date.getValue(), txt_duration.getText());
 				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + qr._select_last_id("hmmr_group_cycle") + " в справочнике Группа-Период");
 				gcc._table_update_gc.addAll(qr._select_for_gc());
@@ -205,7 +200,6 @@ public class updrec_groupcycle_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				stage = (Stage) cancel_form.getScene().getWindow();
 				stage.close();
 			}
@@ -299,7 +293,7 @@ public class updrec_groupcycle_controller {
 				add_rec.setDisable(true);
 		}
 		catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 	}
 }

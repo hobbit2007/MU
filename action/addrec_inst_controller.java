@@ -185,7 +185,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip("Берем ППР из документации. Если в документации 1 вариант выполнения ППР, то в PM Cycle1 и PM Cycle2 \n"
 						+ " ставим одинаковые значения, например: ТО1 и ТО1, если в документации 2 варианта выполнения ППР, то в\n"
 						+ " PM Cycle1 и PM Cycle2 ставим разные значения, например: ТО1 и ТО1р");
@@ -197,7 +196,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -205,7 +203,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip("Берем ППР из документации. Если в документации 1 вариант выполнения ППР, то в PM Cycle1 и PM Cycle2 \n"
 						+ " ставим одинаковые значения, например: ТО1 и ТО1, если в документации 2 варианта выполнения ППР, то в\n"
 						+ " PM Cycle1 и PM Cycle2 ставим разные значения, например: ТО1 и ТО1р");
@@ -217,7 +214,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -227,7 +223,6 @@ public class addrec_inst_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				fc1.setInitialDirectory(new File(pathToPdf1));
 			    fc1.getExtensionFilters().addAll(
 			        new ExtensionFilter(
@@ -250,7 +245,7 @@ public class addrec_inst_controller
 				    	 sdoc_txt_inst.setText(phil.getPath());
 			    	}
 			    catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			    chk_btn();
 			}
@@ -287,7 +282,7 @@ public class addrec_inst_controller
 						inst_pdf_pi.setText(phil.getPath());
 			    	}
 			    	catch (Exception e) {
-						// TODO: handle exception
+						
 					}
 			    }
 			    chk_btn();
@@ -298,7 +293,6 @@ public class addrec_inst_controller
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				adm2_inst.setText(list_adm2.getValue());
 			}
 		});
@@ -307,7 +301,6 @@ public class addrec_inst_controller
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				adm3_inst.setText(list_adm3.getValue());
 			}
 		});
@@ -316,7 +309,6 @@ public class addrec_inst_controller
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				of1_inst.setText(list_of1.getValue());
 			}
 		});
@@ -325,7 +317,6 @@ public class addrec_inst_controller
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				of2_inst.setText(list_of2.getValue());
 			}
 		});
@@ -335,7 +326,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -343,7 +333,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -351,7 +340,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -359,7 +347,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -367,7 +354,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -375,7 +361,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -383,7 +368,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -391,7 +375,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -399,7 +382,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -407,7 +389,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -415,7 +396,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -423,7 +403,6 @@ public class addrec_inst_controller
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -431,7 +410,6 @@ public class addrec_inst_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -439,7 +417,6 @@ public class addrec_inst_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -447,7 +424,6 @@ public class addrec_inst_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -455,7 +431,6 @@ public class addrec_inst_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		}); 
@@ -463,7 +438,6 @@ public class addrec_inst_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -471,7 +445,6 @@ public class addrec_inst_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -479,7 +452,6 @@ public class addrec_inst_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -489,7 +461,7 @@ public class addrec_inst_controller
 			@SuppressWarnings("static-access")
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
+				
 			/*	if(ninst_inst.getText().length() != 0 && ver_inst.getText().length() != 0 && mt_inst.getText().length() != 0 && pmname_inst.getText().length() != 0 &&
 				   sdoc_txt_inst.getText().length() != 0 && qtyspec_inst.getText().length() != 0 && ptw_inst.getText().length() != 0 && wt_inst.getText().length() != 0 &&
 				   adm2_inst.getText().length() != 0 && adm3_inst.getText().length() != 0 && of1_inst.getText().length() != 0 && of2_inst.getText().length() != 0 &&
@@ -519,7 +491,6 @@ public class addrec_inst_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				stage = (Stage) add_cancel_inst.getScene().getWindow();
 				stage.close();
 			}
@@ -571,7 +542,7 @@ public class addrec_inst_controller
 				add_confirm_inst.setDisable(true);
 			}
 		catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 	}
 }

@@ -156,7 +156,7 @@ public class apwr_controller {
 	
 	public static String _id_wr, _qty_wr, _user_wr, _ap_num_wr, _data_wr, _equip_wr, _record_type_wr, _work_time,  _resp_wr,_resp2_wr,_resp3_wr,_resp4_wr, _status_wr, _shift_report_wr, 
 	_req_action_wr, _actual_time_wr, _actual_time1_wr,_actual_time2_wr,_actual_time3_wr,_actual_time4_wr, _actual_date,_actual_date_2,_actual_date_3,_actual_date_4, 
-	_actual_date1,_actual_date2,_actual_date3,_actual_date4, _hours1,_hours1_2,_hours1_3,_hours1_4, _min1, _hours2,_hours2_2,_hours2_3,_hours2_4, _min2, _user_number;
+	_actual_date1,_actual_date2,_actual_date3,_actual_date4, _hours1,_hours1_2,_hours1_3,_hours1_4, _min1, _hours2,_hours2_2,_hours2_3,_hours2_4, _min2, _user_number, _activity_type_wr;
 	public static String before_date, after_date;
 	String _get_text_btn;
 	private String conf_l, inst_l, c_resp, c_oft, c_own, lbl_assembly, lbl_paint, lbl_stamp, lbl_welding, prior_img, at_title;
@@ -168,6 +168,7 @@ public class apwr_controller {
 	TableColumn<hmmr_ap_model, Button> tm = new TableColumn<hmmr_ap_model, Button>(c_own);
 	TableColumn<hmmr_ap_model, JFXButton> prior = new TableColumn<hmmr_ap_model, JFXButton>(prior_img);
 	TableColumn<hmmr_ap_model, JFXButton> at = new TableColumn<hmmr_ap_model, JFXButton>(at_title);
+	TableColumn<hmmr_wr_model, JFXButton> at_wr = new TableColumn<hmmr_wr_model, JFXButton>(at_title);
 	TableColumn<hmmr_wp_model, Button> wp_inst = new TableColumn<hmmr_wp_model, Button>(inst_l);
 	Tooltip tip;
 	String str_set_btn = "Вызов окна редактирования таблиц БД", sort_filter = "Фильтр", sort_tsk = "Выполненные задачи", sort_w_otv = "Задачи без исполнителя", sort_clear_filter = "Сбросить фильтр";
@@ -233,23 +234,23 @@ public class apwr_controller {
 			table_wr.setPrefHeight(screen_hight-200);
 			
 			if(screen_width == 1920.0) {
-				shift_report_wr.setPrefWidth(520.0);
-				req_action_wr.setPrefWidth(520.0);
+				shift_report_wr.setPrefWidth(490.0);
+				req_action_wr.setPrefWidth(490.0);
 				title_wr.setPrefWidth(850.0);
 			}
 			if(screen_width == 1768.0) {
-				shift_report_wr.setPrefWidth(450.0);
-				req_action_wr.setPrefWidth(450.0);
+				shift_report_wr.setPrefWidth(420.0);
+				req_action_wr.setPrefWidth(420.0);
 				title_wr.setPrefWidth(750.0);
 			}
 			if(screen_width == 1600.0) {
-				shift_report_wr.setPrefWidth(360.0);
-				req_action_wr.setPrefWidth(360.0);
+				shift_report_wr.setPrefWidth(310.0);
+				req_action_wr.setPrefWidth(310.0);
 				title_wr.setPrefWidth(580.0);
 			}
 			if(screen_width == 1440.0) {
-				shift_report_wr.setPrefWidth(290.0);
-				req_action_wr.setPrefWidth(290.0);
+				shift_report_wr.setPrefWidth(250.0);
+				req_action_wr.setPrefWidth(250.0);
 			}
 			
 			sp_wr.setPrefWidth(screen_width);
@@ -351,6 +352,7 @@ public class apwr_controller {
 			tm.setText(c_own);
 			prior.setText(prior_img);
 			at.setText(at_title);
+			at_wr.setText(at_title);
 		}
 		if(conn_connector.LANG_ID == 1)
 		{
@@ -365,6 +367,7 @@ public class apwr_controller {
 			tm.setText(c_own);
 			prior.setText(prior_img);
 			at.setText(at_title);
+			at_wr.setText(at_title);
 		}
 		if(conn_connector.LANG_ID == 2)
 		{
@@ -379,6 +382,7 @@ public class apwr_controller {
 			tm.setText(c_own);
 			prior.setText(prior_img);
 			at.setText(at_title);
+			at_wr.setText(at_title);
 		}
 		
 		scl._style(upd_tbl_wp);
@@ -388,7 +392,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				conn_connector.LANG_ID = 0;
 				lang_fun("ru", "RU");
 				favoriteColumn.setText(conf_l);
@@ -399,6 +402,7 @@ public class apwr_controller {
 				tm.setText(c_own);
 				prior.setText(prior_img);
 				at.setText(at_title);
+				at_wr.setText(at_title);
 				rus_btn.setDisable(true);
 				chn_btn.setDisable(false);
 				usa_btn.setDisable(false);
@@ -415,7 +419,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				conn_connector.LANG_ID = 1;
 				lang_fun("en", "EN");
 				favoriteColumn.setText(conf_l);
@@ -426,6 +429,7 @@ public class apwr_controller {
 				tm.setText(c_own);
 				prior.setText(prior_img);
 				at.setText(at_title);
+				at_wr.setText(at_title);
 				rus_btn.setDisable(false);
 				chn_btn.setDisable(false);
 				usa_btn.setDisable(true);
@@ -442,7 +446,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				conn_connector.LANG_ID = 2;
 				lang_fun("zh", "CN");
 				favoriteColumn.setText(conf_l);
@@ -453,6 +456,7 @@ public class apwr_controller {
 				tm.setText(c_own);
 				prior.setText(prior_img);
 				at.setText(at_title);
+				at_wr.setText(at_title);
 				rus_btn.setDisable(false);
 				chn_btn.setDisable(true);
 				usa_btn.setDisable(false);
@@ -469,14 +473,12 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				//Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 			    
 			    Parent root = null;
 				try {
 					root = FXMLLoader.load(getClass().getResource("mu_main_window.fxml"));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				Stage stage_set = new Stage();
@@ -771,7 +773,6 @@ public class apwr_controller {
 							
 							@Override
 							public void handle(ActionEvent event) {
-								// TODO Auto-generated method stub
 								//mu_main_controller.getPrimaryStage().setAlwaysOnTop(false);
 								table_wr.setItems(qr._select_sort_apnum_wr(btn.getText().substring(2)));
 								ID_WR = btn.getText().substring(2);
@@ -804,7 +805,7 @@ public class apwr_controller {
 			        flag = 1;
 				}
 				catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			}
 		});
@@ -813,7 +814,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
 				if (event.getClickCount() == 2 ){
 					if(!conn_connector.USER_ROLE.equals("Technics"))
 						func_upd(table_ap.getSelectionModel().getSelectedItem().getId());
@@ -821,7 +821,6 @@ public class apwr_controller {
 						try {
 							addwr_start();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -833,7 +832,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
 				if (event.getClickCount() == 2 ){
 	                func_upd_wr(table_wr.getSelectionModel().getSelectedItem().getId());
 	            }
@@ -844,7 +842,6 @@ public class apwr_controller {
 
 					@Override
 					public void handle(MouseEvent event) {
-						// TODO Auto-generated method stub
 						if (event.getClickCount() == 2 ){
 							_fill_rec_wp(table_wp.getSelectionModel().getSelectedItem().getId());
 			            }
@@ -884,7 +881,7 @@ public class apwr_controller {
 							
 							@Override
 							public void handle(ActionEvent event) {
-								// TODO Auto-generated method stub
+								
 								if(!data.getflag_otv().equals("0")) {									
 								//Если задачу подтверждает ответственный за задачу в поле исполнитель AP
 							/*	if(qr._select_oft(data.getId().substring(2)).equals(USER_S))
@@ -962,7 +959,6 @@ public class apwr_controller {
 							
 							@Override
 							public void handle(ActionEvent event) {
-								// TODO Auto-generated method stub
 								if(!data.getflag_otv().equals("0") && !data.getflag_otv().equals("1")) {									
 								//Если задачу подтверждает ответственный за задачу в поле ответственный AP
 								if(qr._select_oft(data.getId().substring(2)).equals(USER_S))
@@ -1043,7 +1039,7 @@ public class apwr_controller {
 							
 							@Override
 							public void handle(ActionEvent event) {
-								// TODO Auto-generated method stub
+								
 							if(!data.getflag_otv().equals("0") && !data.getflag_oft().equals("0")) {									
 								//Если задачу подтвердил ее хозяин или если хозяин задачи совпадает с ответственным за задачу
 								if(qr._select_userid(data.getId().substring(2)).equals(conn_connector.USER_ID) && qr._select_oft(data.getId().substring(2)).equals(USER_S)) {
@@ -1118,14 +1114,12 @@ public class apwr_controller {
 								iv.setGraphic(new ImageView(image));
 							}
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							scl._AlertDialog(e.getMessage()+" prior_controller", "Ошибка загрузки изображения");
 						}
                         iv.setOnMouseEntered(new EventHandler<Event>() {
 
 							@Override
 							public void handle(Event event) {
-								// TODO Auto-generated method stub
 								tooltip.setText(qr._select_prior_desc(data.getId().substring(2)));
 								tooltip.setStyle("-fx-font-size: 14px");
 								Tooltip.install(iv, tooltip);
@@ -1161,14 +1155,12 @@ public class apwr_controller {
 								iv.setGraphic(new ImageView(image));
 							}
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							scl._AlertDialog(e.getMessage()+" prior_controller", "Ошибка загрузки изображения");
 						}
                         iv.setOnMouseEntered(new EventHandler<Event>() {
 
 							@Override
 							public void handle(Event event) {
-								// TODO Auto-generated method stub
 								tooltip.setText(qr._select_at_desc(data.getId().substring(2)));
 								tooltip.setStyle("-fx-font-size: 14px");
 								Tooltip.install(iv, tooltip);
@@ -1180,6 +1172,47 @@ public class apwr_controller {
                     
                 });
         columns_at.add(at);
+        
+        final ObservableList<TableColumn<hmmr_wr_model, ?>> columns_at_wr = table_wr.getColumns();
+		at_wr.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<hmmr_wr_model, JFXButton>, ObservableValue<JFXButton>>() {
+                	Tooltip tooltip = new Tooltip();
+                    @SuppressWarnings("static-access")
+					@Override
+                    public ObservableValue<JFXButton> call(TableColumn.CellDataFeatures<hmmr_wr_model, JFXButton> arg0) {
+                        hmmr_wr_model data = arg0.getValue();
+                        JFXButton iv = new JFXButton();
+                      //запрещаем бегунку прокрутки возвращаться назад после нажатия кнопки
+                        iv.setFocusTraversable(false);
+                        
+                        at_wr.setStyle( "-fx-alignment: CENTER;");
+                        
+                        BufferedImage bufferedImage;
+						try {
+							if(!data.geticon_at().equals("1")) {
+								bufferedImage = ImageIO.read(new File(qr._select_recStr("hmmr_activity_type", "Icon", "del_rec", "Name", data.geticon_at())));
+								Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+								//iv.setImage(image);
+								iv.setGraphic(new ImageView(image));
+							}
+						} catch (IOException e) {
+							scl._AlertDialog(e.getMessage()+" prior_controller", "Ошибка загрузки изображения");
+						}
+                        iv.setOnMouseEntered(new EventHandler<Event>() {
+
+							@Override
+							public void handle(Event event) {
+								tooltip.setText(qr._select_at_desc_wr(data.getId().substring(2)));
+								tooltip.setStyle("-fx-font-size: 14px");
+								Tooltip.install(iv, tooltip);
+							}
+						});        		    
+                       
+                        return new SimpleObjectProperty<JFXButton>(iv);
+                    }
+                    
+                });
+        columns_at_wr.add(at_wr);
         
 		//Устанавливаем подсказку для строки Описание в таблице AP
        /* table_ap.setRowFactory((hmmr_ap_model) -> { 
@@ -1326,12 +1359,10 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					upd_ap.setDisable(true);
 					pminst_add();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -1343,14 +1374,13 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				hmmr_ap_model _ccl1 = table_ap.getSelectionModel().getSelectedItem();
 				try {
 					//mu_main_controller.getPrimaryStage().setAlwaysOnTop(false);
 					upd_ap.setDisable(true);
 					func_upd(_ccl1.getId());
 				} catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			}
 		});
@@ -1359,14 +1389,13 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				hmmr_wp_model _ccl1 = table_wp.getSelectionModel().getSelectedItem();
 				try {
 					//mu_main_controller.getPrimaryStage().setAlwaysOnTop(false);
 					upd_rec_wp.setDisable(true);
 					_fill_rec_wp(_ccl1.getId());
 				} catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			}
 		});
@@ -1378,14 +1407,13 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				hmmr_wr_model _ccl1 = table_wr.getSelectionModel().getSelectedItem();
 				try {
 					//mu_main_controller.getPrimaryStage().setAlwaysOnTop(false);
 					upd_wr.setDisable(true);
 					func_upd_wr(_ccl1.getId());
 				} catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			}
 		});
@@ -1419,7 +1447,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				table_wr.setItems(qr._select_data_wr(fx_dp.toString(begin_data.getValue()), fx_dp.toString(last_data.getValue())));
 				table_wr.getColumns().get(0).setVisible(false);
 		        table_wr.getColumns().get(0).setVisible(true);
@@ -1431,8 +1458,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
-				
 				upd_wr.setDisable(false);
 				upd_ap.setDisable(true);
 				//mu_main_controller.getPrimaryStage().setAlwaysOnTop(false);
@@ -1445,7 +1470,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				table_ap.setItems(qr._select_data_ap(USER_S));
 				table_ap.getColumns().get(0).setVisible(false);
 		        table_ap.getColumns().get(0).setVisible(true);
@@ -1469,7 +1493,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				//if (SHOP_NAME.equals("S,W"))
 				//{
 				//	table_ap.setItems(qr._select_data_ap_sw(USER_S));
@@ -1502,7 +1525,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				table_ap.setItems(qr._select_data_all_shop("A"));
 				table_ap.getColumns().get(0).setVisible(false);
 		        table_ap.getColumns().get(0).setVisible(true);
@@ -1522,7 +1544,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				table_ap.setItems(qr._select_data_all_shop("P"));
 				table_ap.getColumns().get(0).setVisible(false);
 		        table_ap.getColumns().get(0).setVisible(true);
@@ -1542,7 +1563,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				table_ap.setItems(qr._select_data_all_shop("S"));
 				table_ap.getColumns().get(0).setVisible(false);
 		        table_ap.getColumns().get(0).setVisible(true);
@@ -1562,7 +1582,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				table_ap.setItems(qr._select_data_all_shop("W"));
 				table_ap.getColumns().get(0).setVisible(false);
 		        table_ap.getColumns().get(0).setVisible(true);
@@ -1586,7 +1605,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				begin_data.setValue(LocalDate.now().minusDays(7));
 				last_data.setValue(LocalDate.now());
 				table_wr.setItems(qr._select_data_wr(fx_dp.toString(begin_data.getValue()), fx_dp.toString(last_data.getValue())));
@@ -1603,7 +1621,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				if(chk_btn)
 				{
 					table_ap.setItems(qr._select_data_ap(USER_S));
@@ -1640,7 +1657,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				table_wp.setItems(qr._select_data_wp(USER_S));
 				table_wp.getColumns().get(0).setVisible(false);
 			    table_wp.getColumns().get(0).setVisible(true);
@@ -1695,7 +1711,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				try {
 	                // --- Show Jasper Report on click-----
 					new PrintReport().showReport(table_ap.getSelectionModel().getSelectedItem().getId().substring(2));
@@ -1711,7 +1726,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 	                // --- Show Jasper Report on click-----
 					new ExportToExcel().showReport(table_ap.getSelectionModel().getSelectedItem().getId().substring(2));
@@ -1725,7 +1739,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				//tip = new Tooltip(str_set_btn);
 				//Point2D p = set_btn.localToScreen(set_btn.getLayoutBounds().getMaxX(), set_btn.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        //tip.show(set_btn, p.getX(), p.getY());
@@ -1739,7 +1752,6 @@ public class apwr_controller {
 
 		//	@Override
 		//	public void handle(Event event) {
-				// TODO Auto-generated method stub
 		//		tip.hide();
 		//	}
 		//});
@@ -1747,7 +1759,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip("Русский");
 				Point2D p = rus_btn.localToScreen(rus_btn.getLayoutBounds().getMaxX(), rus_btn.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(rus_btn, p.getX(), p.getY());
@@ -1757,7 +1768,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -1765,7 +1775,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip("English");
 				Point2D p = usa_btn.localToScreen(usa_btn.getLayoutBounds().getMaxX(), usa_btn.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(usa_btn, p.getX(), p.getY());
@@ -1775,7 +1784,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -1783,7 +1791,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip("中文");
 				Point2D p = chn_btn.localToScreen(chn_btn.getLayoutBounds().getMaxX(), chn_btn.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(chn_btn, p.getX(), p.getY());
@@ -1793,7 +1800,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -1802,7 +1808,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(lbl_assembly);
 				Point2D p = assembly.localToScreen(assembly.getLayoutBounds().getMaxX(), assembly.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(assembly, p.getX(), p.getY());
@@ -1812,7 +1817,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -1821,7 +1825,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(lbl_paint);
 				Point2D p = paint.localToScreen(paint.getLayoutBounds().getMaxX(), paint.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(paint, p.getX(), p.getY());
@@ -1831,7 +1834,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -1840,7 +1842,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(lbl_stamp);
 				Point2D p = stamp.localToScreen(stamp.getLayoutBounds().getMaxX(), stamp.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(stamp, p.getX(), p.getY());
@@ -1850,7 +1851,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -1859,7 +1859,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(lbl_welding);
 				Point2D p = welding.localToScreen(welding.getLayoutBounds().getMaxX(), welding.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(welding, p.getX(), p.getY());
@@ -1869,7 +1868,6 @@ public class apwr_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -1877,9 +1875,7 @@ public class apwr_controller {
 		_table_update.addListener(new ListChangeListener<hmmr_ap_model>() {
 		    @Override
 			public void onChanged(Change<? extends hmmr_ap_model> c) {
-				// TODO Auto-generated method stub
-		    	
-		    	table_ap.setItems(qr._select_data_ap(USER_S));
+				table_ap.setItems(qr._select_data_ap(USER_S));
 		    	table_ap.getColumns().get(0).setVisible(false);
 		        table_ap.getColumns().get(0).setVisible(true);
 			}
@@ -1887,9 +1883,7 @@ public class apwr_controller {
 		_table_update_wp.addListener(new ListChangeListener<hmmr_wp_model>() {
 		    @Override
 			public void onChanged(Change<? extends hmmr_wp_model> c) {
-				// TODO Auto-generated method stub
-		    	
-		    	table_wp.setItems(qr._select_data_wp(USER_S));
+				table_wp.setItems(qr._select_data_wp(USER_S));
 		    	table_wp.getColumns().get(0).setVisible(false);
 		        table_wp.getColumns().get(0).setVisible(true);
 			}
@@ -1897,9 +1891,7 @@ public class apwr_controller {
 		_table_update_wr.addListener(new ListChangeListener<hmmr_wr_model>() {
 		    @Override
 			public void onChanged(Change<? extends hmmr_wr_model> c) {
-				// TODO Auto-generated method stub
-		    	
-		    	table_wr.setItems(qr._select_data_wr(fx_dp.toString(begin_data.getValue()), fx_dp.toString(last_data.getValue())));
+				table_wr.setItems(qr._select_data_wr(fx_dp.toString(begin_data.getValue()), fx_dp.toString(last_data.getValue())));
 		    	table_wr.getColumns().get(0).setVisible(false);
 		        table_wr.getColumns().get(0).setVisible(true);
 		        if(flag == 3)
@@ -1932,7 +1924,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				r_resp_wr.setSelected(false);
 				r_shop_wr.setSelected(true);
 								
@@ -1952,7 +1943,6 @@ public class apwr_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				r_resp_wr.setSelected(true);
 				r_shop_wr.setSelected(false);
 				
@@ -1964,7 +1954,6 @@ public class apwr_controller {
 
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				// TODO Auto-generated method stub
 				if(newValue != null)
 				{
 					if(r_shop_wr.isSelected()) {
@@ -2158,8 +2147,6 @@ public class apwr_controller {
 
                     			@Override
                     			public void handle(Event event) {
-                    				// TODO Auto-generated method stub
-                    				
                     				upd_wr.setDisable(true);
                     				
                     				//mu_main_controller.getPrimaryStage().setAlwaysOnTop(false);
@@ -2205,8 +2192,6 @@ public class apwr_controller {
 							@SuppressWarnings("static-access")
 							@Override
 							public void handle(ActionEvent event) {
-								// TODO Auto-generated method stub
-								
 								//System.out.println("RECORD ID = " + table_ap.getSelectionModel().getSelectedItem().getId());
 								try {
 									File inst_path = new File(qr._select_inst_for_ap(data.getId()));//table_ap.getSelectionModel().getSelectedItem()
@@ -2409,7 +2394,6 @@ public class apwr_controller {
     		//t.setDaemon(true);
     		//t.start();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -2456,6 +2440,7 @@ public class apwr_controller {
 		_hours2_4 = scl.parser_str_str_str(_sql_rez_wr, 35);
 		_min2 = scl.parser_str_str_str(_sql_rez_wr, 36);
 		_user_number = scl.parser_str_str_str(_sql_rez_wr, 37);
+		_activity_type_wr = scl.parser_str_str_str(_sql_rez_wr, 38);
 		//даты для сортировки таблицы
 		before_date = fx_dp.toString(begin_data.getValue());
 		after_date = fx_dp.toString(last_data.getValue());		
@@ -2469,7 +2454,6 @@ public class apwr_controller {
     		//t.setDaemon(true);
     		//t.start();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -2523,6 +2507,8 @@ public class apwr_controller {
 		_equip_ap = scl.parser_str_str_str(_sql_rez, 4);
 		_oft_ap = scl.parser_str_str_str(_sql_rez, 5);
 		_otv_ap = scl.parser_str_str_str(_sql_rez, 6);
+//		_icon = scl.parser_str_str_str(_sql_rez, 7);
+//		_icon_at = scl.parser_str_str_str(_sql_rez, 8);
 	}
 	
 	//Заполняем переменные для использования в обновлении строки в WP
@@ -2540,7 +2526,6 @@ public class apwr_controller {
 			try {
 				wp_upd();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

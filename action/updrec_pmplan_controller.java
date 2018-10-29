@@ -73,7 +73,6 @@ public class updrec_pmplan_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				qr._update_rec_pmplan(id_pmplan.getText(), data_pmplan.getValue(), scl.parser_str(oft_pmplan.getValue(), 0));
 				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + id_pmplan.getText() + " в таблице PM Plan");
 				
@@ -88,7 +87,6 @@ public class updrec_pmplan_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				stage = (Stage) cancel_pmplan.getScene().getWindow();
 				stage.close();
 			}
@@ -97,7 +95,6 @@ public class updrec_pmplan_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -105,7 +102,6 @@ public class updrec_pmplan_controller {
 
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -119,7 +115,7 @@ public class updrec_pmplan_controller {
 				upd_pmplan.setDisable(true);
 		}
 		catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 	}
 	

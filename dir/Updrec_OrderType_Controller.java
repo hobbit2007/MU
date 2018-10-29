@@ -50,7 +50,6 @@ public class Updrec_OrderType_Controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				qr._update_rec_ot(otc._id_ot, txt_name_ot.getText(), txt_desc_ot.getText());
 				
 				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_order_type") + " в Справочнике Order Type");
@@ -72,7 +71,6 @@ public class Updrec_OrderType_Controller {
 
 			@Override
 			public void handle(Event arg0) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -80,7 +78,6 @@ public class Updrec_OrderType_Controller {
 
 			@Override
 			public void handle(Event arg0) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -95,7 +92,7 @@ public class Updrec_OrderType_Controller {
 				add_ot.setDisable(true);
 			}
 			catch (Exception e) {
-				// TODO: handle exception
+				
 			}
 	}
 

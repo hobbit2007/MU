@@ -125,7 +125,6 @@ public class prior_controller {
 							Image image = SwingFXUtils.toFXImage(bufferedImage, null);
 							iv.setImage(image);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							scl._AlertDialog(e.getMessage()+" prior_controller", "Ошибка загрузки изображения");
 						}
                                                
@@ -135,7 +134,6 @@ public class prior_controller {
 							
 							@Override
 							public void handle(ActionEvent event) {
-								// TODO Auto-generated method stub
 							}
 						});*/
                         
@@ -173,7 +171,6 @@ public class prior_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				upd_prior.setDisable(false);
 				//устанавливаем права для кнопки удалить
 				if(!conn_connector.USER_ROLE.equals("Engeneer"))
@@ -190,7 +187,7 @@ public class prior_controller {
 				try {
 				func_upd(_ccl1.getId());
 				} catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 				
 			}
@@ -199,7 +196,6 @@ public class prior_controller {
       table_prior.setOnMousePressed(new EventHandler<MouseEvent>() {
       	@Override
       	public void handle(MouseEvent event) {
-      		// TODO Auto-generated method stub
       		if (event.getClickCount() == 2 ){
                      func_upd(table_prior.getSelectionModel().getSelectedItem().getId());
                  }
@@ -209,7 +205,6 @@ public class prior_controller {
 		
 		@Override
 		public void handle(ActionEvent event) {
-			// TODO Auto-generated method stub
 			stage = (Stage) cancel_prior.getScene().getWindow();
 			stage.close();
 		}
@@ -218,7 +213,6 @@ public class prior_controller {
 		
 		@Override
 		public void handle(ActionEvent event) {
-			// TODO Auto-generated method stub
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 		    alert.setTitle("M&U - Delete Record Window");
 		    hmmr_prior_model _ccl = table_prior.getSelectionModel().getSelectedItem();
@@ -232,7 +226,7 @@ public class prior_controller {
 		  	   try {
 		  	   func_del(_ccl.getId());
 		  	   } catch (Exception e) {
-				// TODO: handle exception
+				
 			}
 		    } else if (option.get() == ButtonType.CANCEL) {
 		       //label.setText("Cancelled!");

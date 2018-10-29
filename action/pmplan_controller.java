@@ -96,12 +96,11 @@ public class pmplan_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				try {
 					upd_pmplan.setDisable(false);
 				}
 				catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			}
 		});
@@ -110,14 +109,13 @@ public class pmplan_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				hmmr_pmplan_model _ccl1 = table_pmplan.getSelectionModel().getSelectedItem();
 				try {
 					//mu_main_controller.getPrimaryStage().setAlwaysOnTop(false);
 					upd_pmplan.setDisable(true);
 					func_upd(_ccl1.getId());
 				} catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			}
 		});
@@ -126,7 +124,6 @@ public class pmplan_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				table_pmplan.setItems(qr._select_data_pmplan(fx_dp.toString(b_data_pmplan.getValue()), fx_dp.toString(e_data_pmplan.getValue())));
 				table_pmplan.getColumns().get(0).setVisible(false);
 				table_pmplan.getColumns().get(0).setVisible(true);
@@ -139,7 +136,6 @@ public class pmplan_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				table_pmplan.setItems(qr._select_data_pmplan());
 				table_pmplan.getColumns().get(0).setVisible(false);
 				table_pmplan.getColumns().get(0).setVisible(true);
@@ -152,7 +148,6 @@ public class pmplan_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				if(flag == 1)
 				{
 					table_pmplan.setItems(qr._select_data_pmplan(fx_dp.toString(b_data_pmplan.getValue()), fx_dp.toString(e_data_pmplan.getValue())));
@@ -172,7 +167,6 @@ public class pmplan_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				stage = (Stage) cancel_pmplan.getScene().getWindow();
 				stage.close();
 			}
@@ -180,9 +174,7 @@ public class pmplan_controller {
 		_table_update_pmplan.addListener(new ListChangeListener<hmmr_pmplan_model>() {
 		    @Override
 			public void onChanged(Change<? extends hmmr_pmplan_model> c) {
-				// TODO Auto-generated method stub
-		    	
-		    	table_pmplan.setItems(qr._select_data_pmplan());
+				table_pmplan.setItems(qr._select_data_pmplan());
 		    	table_pmplan.getColumns().get(0).setVisible(false);
 		        table_pmplan.getColumns().get(0).setVisible(true);
 			}
@@ -191,7 +183,6 @@ public class pmplan_controller {
 		table_pmplan.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
 				if (event.getClickCount() == 2 ){
 		               func_upd(table_pmplan.getSelectionModel().getSelectedItem().getId());
 		           }
@@ -222,7 +213,6 @@ public class pmplan_controller {
     		//t.setDaemon(true);
     		//t.start();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

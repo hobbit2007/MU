@@ -113,7 +113,7 @@ public class addrec_ap_controller {
 				}
 			});
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 		
 		group_tsk.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -131,7 +131,7 @@ public class addrec_ap_controller {
 					//if(lm_wr_add.getValue().toString().length() != 0)
 					//	os_wr_add.setItems(qr._select_os_pm(sclass.parser_str(shop_wr_add.getValue(), 0), sclass.parser_str(lm_wr_add.getValue(), 0)));
 					} catch (Exception e) {
-						// TODO: handle exception
+						
 					}
 				chk_btn();
 			}
@@ -140,7 +140,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(group_tsk.getValue());
 				Point2D p = group_tsk.localToScreen(group_tsk.getLayoutBounds().getMaxX(), group_tsk.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(group_tsk, p.getX(), p.getY());
@@ -150,7 +149,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -166,7 +164,7 @@ public class addrec_ap_controller {
 						os_tsk.setItems(qr._select_os_pm(sclass.parser_str(group_tsk.getValue(), 0), sclass.parser_str(lm_tsk.getValue(), 0)));
 					}
 					} catch (Exception e) {
-						// TODO: handle exception
+						
 					}
 				chk_btn();
 			}
@@ -175,7 +173,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(lm_tsk.getValue());
 				Point2D p = lm_tsk.localToScreen(lm_tsk.getLayoutBounds().getMaxX(), lm_tsk.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(lm_tsk, p.getX(), p.getY());
@@ -185,7 +182,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -210,7 +206,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(os_tsk.getValue());
 				Point2D p = os_tsk.localToScreen(os_tsk.getLayoutBounds().getMaxX(), os_tsk.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(os_tsk, p.getX(), p.getY());
@@ -220,7 +215,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -230,7 +224,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(equip_tsk.getValue());
 				Point2D p = equip_tsk.localToScreen(equip_tsk.getLayoutBounds().getMaxX(), equip_tsk.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(equip_tsk, p.getX(), p.getY());
@@ -240,7 +233,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -261,7 +253,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(oft_tsk.getValue());
 				Point2D p = oft_tsk.localToScreen(oft_tsk.getLayoutBounds().getMaxX(), oft_tsk.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(oft_tsk, p.getX(), p.getY());
@@ -271,7 +262,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -293,7 +283,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -301,7 +290,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(otv_tsk.getValue());
 				Point2D p = otv_tsk.localToScreen(otv_tsk.getLayoutBounds().getMaxX(), otv_tsk.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(otv_tsk, p.getX(), p.getY());
@@ -311,7 +299,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -319,7 +306,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -327,7 +313,6 @@ public class addrec_ap_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				type_tsk = "TSK";
 				tsk_ap.setDisable(true);
 				cm_ap.setDisable(false);
@@ -348,7 +333,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(tsk_ap.getText());
 				Point2D p = tsk_ap.localToScreen(tsk_ap.getLayoutBounds().getMaxX(), tsk_ap.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(tsk_ap, p.getX(), p.getY());
@@ -358,7 +342,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -366,12 +349,11 @@ public class addrec_ap_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				type_tsk = "CM";
 				tsk_ap.setDisable(false);
 				cm_ap.setDisable(true);
 				_flag_bt = true;
-				list_at_ap.setDisable(true);
+				list_at_ap.setDisable(false);
 				
 				Platform.runLater(new Runnable() {
 				    @Override
@@ -387,7 +369,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(cm_ap.getText());
 				Point2D p = cm_ap.localToScreen(cm_ap.getLayoutBounds().getMaxX(), cm_ap.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(cm_ap, p.getX(), p.getY());
@@ -397,7 +378,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -405,7 +385,6 @@ public class addrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -423,18 +402,20 @@ public class addrec_ap_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
+				
 				//if(type_tsk.length() != 0 && shop_tsk.getValue().length() != 0 && group_tsk.getValue().length() != 0 && lm_tsk.getValue().length() != 0 && os_tsk.getValue().length() != 0 &&
 				//		equip_tsk.getValue().length() != 0 && oft_tsk.getValue().length() != 0 && otv_tsk.getValue().length() != 0 && 
 				//		description_tsk.getText().length() != 0 && edate_tsk.getValue().toString().length() != 0 )
 				//{
 				//	err_msg.setVisible(false);
-					qr._insert_ap1(type_tsk, description_tsk.getText(), edate_tsk.getValue(), sclass.parser_str(shop_tsk.getValue(), 0)+"."+group_tsk.getValue()+"."+sclass.parser_str(lm_tsk.getValue(), 0)+"."+sclass.parser_str(os_tsk.getValue(), 0)+"."+sclass.parser_str(equip_tsk.getValue(), 0), tsk_maker_ap.getText(), sclass.parser_str(oft_tsk.getValue(), 0), sclass.parser_str(otv_tsk.getValue(), 0), conn_connector.USER_ID, sclass.parser_str(shop_tsk.getValue(), 0), sclass.parser_str(prior_ap.getValue(), 0), sclass.parser_str(list_at_ap.getValue(), 0));
+				//if(type_tsk.equals("CM"))
+				//	list_at_ap.setValue("1");
+				qr._insert_ap1(type_tsk, description_tsk.getText(), edate_tsk.getValue(), sclass.parser_str(shop_tsk.getValue(), 0)+"."+group_tsk.getValue()+"."+sclass.parser_str(lm_tsk.getValue(), 0)+"."+sclass.parser_str(os_tsk.getValue(), 0)+"."+sclass.parser_str(equip_tsk.getValue(), 0), tsk_maker_ap.getText(), sclass.parser_str(oft_tsk.getValue(), 0), sclass.parser_str(otv_tsk.getValue(), 0), conn_connector.USER_ID, sclass.parser_str(shop_tsk.getValue(), 0), sclass.parser_str(prior_ap.getValue(), 0), sclass.parser_str(list_at_ap.getValue(), 0));
 					//pic.refreshTable_ap(apwr_controller.columns_ap);
-					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_action_plan") + " в Action Plan");
-					pic._table_update.addAll(qr._select_data_ap(pic.USER_S));
-					stage = (Stage) add_tsk.getScene().getWindow();
-					stage.close();
+				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_action_plan") + " в Action Plan");
+				pic._table_update.addAll(qr._select_data_ap(pic.USER_S));
+				stage = (Stage) add_tsk.getScene().getWindow();
+				stage.close();
 				//}
 				//else
 				//	err_msg.setVisible(true);
@@ -447,7 +428,6 @@ public class addrec_ap_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				stage = (Stage) cancel_tsk.getScene().getWindow();
 				stage.close();
 			}
@@ -492,13 +472,13 @@ public class addrec_ap_controller {
 					group_tsk.getValue().length() != 0 && 
 					prior_ap.getValue().length() != 0 &&
 					description_tsk.getText().length() != 0 &&
-					edate_tsk.getValue().toString().length() != 0 && list_at_ap.getValue().length() != 0 && _flag_bt) //otv_tsk.getValue().length() != 0 &&
+					edate_tsk.getValue().toString().length() != 0 && _flag_bt && list_at_ap.getValue().length() != 0) //otv_tsk.getValue().length() != 0 &&  
 				add_tsk.setDisable(false);
 			else
 				add_tsk.setDisable(true);
 			}
 		catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 	}
 }

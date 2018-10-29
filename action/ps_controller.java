@@ -177,11 +177,9 @@ public class ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					addps_start();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -192,7 +190,6 @@ public class ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				hmmr_ps_model _ccl1 = table_ps.getSelectionModel().getSelectedItem();
 				
 				upd_ps.setDisable(true);
@@ -204,11 +201,9 @@ public class ps_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				try {
 					ps_dup();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -218,7 +213,6 @@ public class ps_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				upd_ps.setDisable(false);
 				btn_duplicate.setDisable(false);
 				if(!conn_connector.USER_ROLE.equals("Technics") || !conn_connector.USER_ROLE.equals("Engeneer"))
@@ -227,7 +221,7 @@ public class ps_controller {
 					addrec_ps_controller._last_id = Integer.parseInt(table_ps.getSelectionModel().getSelectedItem().getId());
 				}
 				catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			}
 		});
@@ -235,7 +229,6 @@ public class ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				/*if(flag_ps == 0)
 					_table_update_ps.addAll(qr._select_data_ps());
 				if(flag_ps == 1)
@@ -262,7 +255,6 @@ public class ps_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 			    alert.setTitle("M&U - Delete Record Window");
 			    hmmr_ps_model _ccl = table_ps.getSelectionModel().getSelectedItem();
@@ -281,7 +273,7 @@ public class ps_controller {
 			  	   qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Удалил запись № = " + _ccl.getId() + " в таблице Plant Structure");
 			  	   _table_update_ps.addAll(qr._select_data_ps());
 			  	   } catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			    } else if (option.get() == ButtonType.CANCEL) {
 			       //label.setText("Cancelled!");
@@ -329,7 +321,6 @@ public class ps_controller {
 		table_ps.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
 				if (event.getClickCount() == 2 ){
 	                func_upd(table_ps.getSelectionModel().getSelectedItem().getId());
 	            }
@@ -361,7 +352,7 @@ public class ps_controller {
 				}
 			});
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 		
 		c_group.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -382,7 +373,7 @@ public class ps_controller {
 					//if(lm_wr_add.getValue().toString().length() != 0)
 					//	os_wr_add.setItems(qr._select_os_pm(sclass.parser_str(shop_wr_add.getValue(), 0), sclass.parser_str(lm_wr_add.getValue(), 0)));
 					} catch (Exception e) {
-						// TODO: handle exception
+						
 					}
 			}
 		});
@@ -390,7 +381,6 @@ public class ps_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(c_group.getValue());
 				Point2D p = c_group.localToScreen(c_group.getLayoutBounds().getMaxX(), c_group.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(c_group, p.getX(), p.getY());
@@ -400,7 +390,6 @@ public class ps_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -419,7 +408,7 @@ public class ps_controller {
 						flag_ps = 3;
 					}
 					} catch (Exception e) {
-						// TODO: handle exception
+						
 					}
 			}
 		});
@@ -427,7 +416,6 @@ public class ps_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(c_line.getValue());
 				Point2D p = c_line.localToScreen(c_line.getLayoutBounds().getMaxX(), c_line.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(c_line, p.getX(), p.getY());
@@ -437,7 +425,6 @@ public class ps_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -464,7 +451,6 @@ public class ps_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(c_os.getValue());
 				Point2D p = c_os.localToScreen(c_os.getLayoutBounds().getMaxX(), c_os.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(c_os, p.getX(), p.getY());
@@ -474,7 +460,6 @@ public class ps_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -491,7 +476,7 @@ public class ps_controller {
 					}
 				}
 				catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			}
 		});
@@ -499,7 +484,6 @@ public class ps_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(c_equip.getValue());
 				Point2D p = c_equip.localToScreen(c_equip.getLayoutBounds().getMaxX(), c_equip.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(c_equip, p.getX(), p.getY());
@@ -509,7 +493,6 @@ public class ps_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -600,7 +583,6 @@ public class ps_controller {
 		try {
 			ps_upd();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

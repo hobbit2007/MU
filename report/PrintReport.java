@@ -80,7 +80,7 @@ public class PrintReport extends JFrame {
 //export excel        		mn._run_excel(excelFile);
 				
 //export excel			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 //export excel				e.printStackTrace();
 //export excel			}
         	//btn.setDisable(true);
@@ -92,7 +92,7 @@ public class PrintReport extends JFrame {
 //	            try {
 //					Desktop.getDesktop().browse(new URI("m:/08.USER/U.14.RG/jasperoutput/StyledTextReport"+conn_connector.USER_ID+".html"));
 //				} catch (IOException | URISyntaxException e) {
-//					// TODO Auto-generated catch block
+//					
 //					e.printStackTrace();
 //				}
 //	        }

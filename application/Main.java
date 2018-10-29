@@ -26,7 +26,6 @@ public class Main extends Application {
 		try {
 			InitConn();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -46,7 +45,6 @@ public class Main extends Application {
 			primaryStage.show();
 			}
 			catch (Exception e) {
-				// TODO: handle exception
 				e.printStackTrace();
 			}
 	}

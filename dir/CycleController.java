@@ -96,7 +96,6 @@ public class CycleController
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					//_flag = false;
 					pmcycle_add(stage);
@@ -122,14 +121,13 @@ public class CycleController
 		
 		@Override
 		public void handle(ActionEvent event) {
-			// TODO Auto-generated method stub
 			upd_c.setDisable(true);
 			del_c.setDisable(true);
 			Cycle _ccl1 = table_cycle.getSelectionModel().getSelectedItem();
 			try {
 			func_upd(_ccl1.getId());
 			} catch (Exception e) {
-				// TODO: handle exception
+				
 			}
 		}
 	});
@@ -138,8 +136,6 @@ public class CycleController
 		
 		@Override
 		public void handle(ActionEvent event) {
-			// TODO Auto-generated method stub
-			
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 		    alert.setTitle("M&U - Delete Record Window");
 		    Cycle _ccl = table_cycle.getSelectionModel().getSelectedItem();
@@ -156,7 +152,7 @@ public class CycleController
 		  	   try {
 		  	   func_del(_ccl.getId());
 		  	   } catch (Exception e) {
-				// TODO: handle exception
+				
 			}
 		    } else if (option.get() == ButtonType.CANCEL) {
 		       //label.setText("Cancelled!");
@@ -182,7 +178,6 @@ public class CycleController
     table_cycle.setOnMousePressed(new EventHandler<MouseEvent>() {
     	@Override
     	public void handle(MouseEvent event) {
-    		// TODO Auto-generated method stub
     		if (event.getClickCount() == 2 ){
                    func_upd(table_cycle.getSelectionModel().getSelectedItem().getId());
                }

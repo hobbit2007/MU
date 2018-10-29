@@ -48,7 +48,6 @@ public class Addrec_OrderType_Controller {
 			@SuppressWarnings("static-access")
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				qr._insert_ot(txt_name_ot.getText(), txt_desc_ot.getText());
 				
 				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_order_type") + " в Справочнике Order Type");
@@ -70,7 +69,6 @@ public class Addrec_OrderType_Controller {
 
 			@Override
 			public void handle(Event arg0) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -78,7 +76,6 @@ public class Addrec_OrderType_Controller {
 
 			@Override
 			public void handle(Event arg0) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -93,7 +90,7 @@ public class Addrec_OrderType_Controller {
 				add_ot.setDisable(true);
 			}
 			catch (Exception e) {
-				// TODO: handle exception
+				
 			}
 	}
 

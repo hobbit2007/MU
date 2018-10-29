@@ -249,7 +249,6 @@ public class pm_controller {
 		table_pm.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
 				if (event.getClickCount() == 2 ){
 		               func_upd(table_pm.getSelectionModel().getSelectedItem().getId());
 		           }
@@ -261,7 +260,6 @@ public class pm_controller {
 
 				@Override
 				public void handle(Event event) {
-					// TODO Auto-generated method stub
 					upd_pm.setDisable(false);
 				//	if(!conn_connector.USER_ROLE.equals("Engeneer"))
 					del_pm.setDisable(false);
@@ -287,7 +285,6 @@ public class pm_controller {
 				
 				@Override
 				public void handle(ActionEvent event) {
-					// TODO Auto-generated method stub
 					upd_pm.setDisable(true);
 					del_pm.setDisable(true);
 					add_ap_pm.setDisable(true);
@@ -295,7 +292,7 @@ public class pm_controller {
 					try {
 					func_upd(_ccl1.getId());
 					} catch (Exception e) {
-						// TODO: handle exception
+						
 					}
 				}
 			});
@@ -303,8 +300,6 @@ public class pm_controller {
 				
 				@Override
 				public void handle(ActionEvent event) {
-					// TODO Auto-generated method stub
-					
 					Alert alert = new Alert(AlertType.CONFIRMATION);
 				    alert.setTitle("M&U - Delete Record Window");
 				    hmmr_pm_model _ccl = table_pm.getSelectionModel().getSelectedItem();
@@ -321,7 +316,7 @@ public class pm_controller {
 				  	   try {
 				  	   func_del(_ccl.getId());
 				  	   } catch (Exception e) {
-						// TODO: handle exception
+						
 					}
 				    } else if (option.get() == ButtonType.CANCEL) {
 				       //label.setText("Cancelled!");
@@ -334,7 +329,6 @@ public class pm_controller {
 				
 				@Override
 				public void handle(ActionEvent event) {
-					// TODO Auto-generated method stub
 					stage = (Stage) close_pm.getScene().getWindow();
 					stage.close();
 				}
@@ -344,7 +338,6 @@ public class pm_controller {
 				@SuppressWarnings("static-access")
 				@Override
 				public void handle(ActionEvent event) {
-					// TODO Auto-generated method stub
 					String Otv_for_task = null;
 					
 					hmmr_pm_model _ccl = table_pm.getSelectionModel().getSelectedItem();
@@ -411,7 +404,6 @@ public class pm_controller {
 				
 				@Override
 				public void handle(ActionEvent event) {
-					// TODO Auto-generated method stub
 					table_pm.setItems(qr._select_data_pm());
 					columns_pm.get(0).setVisible(false);
 				    columns_pm.get(0).setVisible(true);

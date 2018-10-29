@@ -198,7 +198,6 @@ public class pm_inst_controller
 		table_inst.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
 				if (event.getClickCount() == 2 ){
 		               func_upd(table_inst.getSelectionModel().getSelectedItem().getId());
 		           }
@@ -209,7 +208,6 @@ public class pm_inst_controller
 	    table_inst.setOnMouseClicked(new EventHandler<Event>() {
 			@Override
 			public void handle(Event event) {
-			// TODO Auto-generated method stub
 				upd_inst.setDisable(false);
 				//устанавливаем права для кнопки удалить
 				//if(!conn_connector.USER_ROLE.equals("Engeneer"))
@@ -242,7 +240,7 @@ public class pm_inst_controller
 				try {
 				func_upd(_ccl1.getId());
 				} catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			}
 		});
@@ -251,7 +249,6 @@ public class pm_inst_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				stage = (Stage) close_inst.getScene().getWindow();
 				stage.close();
 			}
@@ -261,8 +258,6 @@ public class pm_inst_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 			    alert.setTitle("M&U - Delete Record Window");
 			    hmmr_inst_model _ccl = table_inst.getSelectionModel().getSelectedItem();
@@ -279,7 +274,7 @@ public class pm_inst_controller
 			  	   try {
 			  	   func_del(_ccl.getId());
 			  	   } catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			    } else if (option.get() == ButtonType.CANCEL) {
 			       //label.setText("Cancelled!");
@@ -292,7 +287,6 @@ public class pm_inst_controller
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				table_inst.setItems(qr._select_data_pminst());
 				columns_inst.get(0).setVisible(false);
 			    columns_inst.get(0).setVisible(true);

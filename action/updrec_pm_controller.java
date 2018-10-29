@@ -64,7 +64,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						tip = new Tooltip(ninst_pm_upd.getValue());
 						Point2D p = ninst_pm_upd.localToScreen(ninst_pm_upd.getLayoutBounds().getMaxX(), ninst_pm_upd.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 				        tip.show(ninst_pm_upd, p.getX(), p.getY());
@@ -74,7 +73,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						tip.hide();
 					}
 				});
@@ -105,7 +103,7 @@ public class updrec_pm_controller {
 						}
 					});
 				} catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 				
 				group_pm_upd.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -121,7 +119,7 @@ public class updrec_pm_controller {
 							//if(lm_wr_add.getValue().toString().length() != 0)
 							//	os_wr_add.setItems(qr._select_os_pm(sclass.parser_str(shop_wr_add.getValue(), 0), sclass.parser_str(lm_wr_add.getValue(), 0)));
 							} catch (Exception e) {
-								// TODO: handle exception
+								
 							}
 						
 					}
@@ -130,7 +128,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						tip = new Tooltip(group_pm_upd.getValue());
 						Point2D p = group_pm_upd.localToScreen(group_pm_upd.getLayoutBounds().getMaxX(), group_pm_upd.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 				        tip.show(group_pm_upd, p.getX(), p.getY());
@@ -140,7 +137,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						tip.hide();
 					}
 				});
@@ -153,7 +149,7 @@ public class updrec_pm_controller {
 								os_pm_upd.setItems(qr._select_os_pm(sclass.parser_str(group_pm_upd.getValue(), 0), sclass.parser_str(lm_pm_upd.getValue(), 0)));
 							chk_btn();
 							} catch (Exception e) {
-								// TODO: handle exception
+								
 							}
 					}
 				});
@@ -161,7 +157,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						tip = new Tooltip(lm_pm_upd.getValue());
 						Point2D p = lm_pm_upd.localToScreen(lm_pm_upd.getLayoutBounds().getMaxX(), lm_pm_upd.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 				        tip.show(lm_pm_upd, p.getX(), p.getY());
@@ -171,7 +166,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						tip.hide();
 					}
 				});
@@ -193,7 +187,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						tip = new Tooltip(os_pm_upd.getValue());
 						Point2D p = os_pm_upd.localToScreen(os_pm_upd.getLayoutBounds().getMaxX(), os_pm_upd.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 				        tip.show(os_pm_upd, p.getX(), p.getY());
@@ -203,7 +196,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						tip.hide();
 					}
 				});
@@ -220,7 +212,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						tip = new Tooltip(equip_pm_upd.getValue());
 						Point2D p = equip_pm_upd.localToScreen(equip_pm_upd.getLayoutBounds().getMaxX(), equip_pm_upd.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 				        tip.show(equip_pm_upd, p.getX(), p.getY());
@@ -230,7 +221,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						tip.hide();
 					}
 				});*/
@@ -238,12 +228,11 @@ public class updrec_pm_controller {
 
 					@Override
 					public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-						// TODO Auto-generated method stub
 						try {
 						if(ninst_pm_upd.getValue().toString().length() != 0)
 							mtt_pm_upd.setItems(qr._select_mtt_pm(ninst_pm_upd.getValue()));
 						} catch (Exception e) {
-							// TODO: handle exception
+							
 						}
 					}
 				});
@@ -251,7 +240,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						tip = new Tooltip(mtt_pm_upd.getValue());
 						Point2D p = mtt_pm_upd.localToScreen(mtt_pm_upd.getLayoutBounds().getMaxX(), mtt_pm_upd.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 				        tip.show(mtt_pm_upd, p.getX(), p.getY());
@@ -261,7 +249,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
 						tip.hide();
 					}
 				});*/
@@ -285,7 +272,6 @@ public class updrec_pm_controller {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -293,7 +279,6 @@ public class updrec_pm_controller {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -301,7 +286,6 @@ public class updrec_pm_controller {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});*/
@@ -309,7 +293,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -317,7 +300,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -325,7 +307,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void handle(Event arg0) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -333,7 +314,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void handle(Event arg0) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});*/
@@ -342,7 +322,6 @@ public class updrec_pm_controller {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						// TODO Auto-generated method stub
 						stage = (Stage) cancel_pm_upd.getScene().getWindow();
 						stage.close();
 					}
@@ -365,7 +344,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -373,7 +351,6 @@ public class updrec_pm_controller {
 
 					@Override
 					public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-						// TODO Auto-generated method stub
 						chk_btn();
 					}
 				});
@@ -412,7 +389,7 @@ public class updrec_pm_controller {
 				confirm_pm_upd.setDisable(true);
 			}
 			catch (Exception e) {
-				// TODO: handle exception
+				
 			}
 	}
 }

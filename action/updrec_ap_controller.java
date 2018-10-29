@@ -113,7 +113,7 @@ public class updrec_ap_controller {
 				}
 			});
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 		
 		group_tsk.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -131,7 +131,7 @@ public class updrec_ap_controller {
 					//if(lm_wr_add.getValue().toString().length() != 0)
 					//	os_wr_add.setItems(qr._select_os_pm(sclass.parser_str(shop_wr_add.getValue(), 0), sclass.parser_str(lm_wr_add.getValue(), 0)));
 					} catch (Exception e) {
-						// TODO: handle exception
+						
 					}
 				chk_btn();
 				}
@@ -140,7 +140,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(group_tsk.getValue());
 				Point2D p = group_tsk.localToScreen(group_tsk.getLayoutBounds().getMaxX(), group_tsk.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(group_tsk, p.getX(), p.getY());
@@ -150,7 +149,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -167,7 +165,7 @@ public class updrec_ap_controller {
 						os_tsk.setItems(qr._select_os_pm(sclass.parser_str(group_tsk.getValue(), 0), sclass.parser_str(lm_tsk.getValue(), 0)));
 					}
 					} catch (Exception e) {
-						// TODO: handle exception
+						
 					}
 				chk_btn();
 				}
@@ -176,7 +174,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(lm_tsk.getValue());
 				Point2D p = lm_tsk.localToScreen(lm_tsk.getLayoutBounds().getMaxX(), lm_tsk.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(lm_tsk, p.getX(), p.getY());
@@ -186,7 +183,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -211,7 +207,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(os_tsk.getValue());
 				Point2D p = os_tsk.localToScreen(os_tsk.getLayoutBounds().getMaxX(), os_tsk.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(os_tsk, p.getX(), p.getY());
@@ -221,7 +216,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -231,7 +225,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(equip_tsk.getValue());
 				Point2D p = equip_tsk.localToScreen(equip_tsk.getLayoutBounds().getMaxX(), equip_tsk.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(equip_tsk, p.getX(), p.getY());
@@ -241,7 +234,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -262,7 +254,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(oft_tsk.getValue());
 				Point2D p = oft_tsk.localToScreen(oft_tsk.getLayoutBounds().getMaxX(), oft_tsk.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(oft_tsk, p.getX(), p.getY());
@@ -272,7 +263,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -294,7 +284,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(otv_tsk.getValue());
 				Point2D p = otv_tsk.localToScreen(otv_tsk.getLayoutBounds().getMaxX(), otv_tsk.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(otv_tsk, p.getX(), p.getY());
@@ -304,7 +293,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -312,7 +300,6 @@ public class updrec_ap_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				type_tsk = "TSK";
 				tsk_ap.setDisable(true);
 				cm_ap.setDisable(false);
@@ -322,7 +309,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(tsk_ap.getText());
 				Point2D p = tsk_ap.localToScreen(tsk_ap.getLayoutBounds().getMaxX(), tsk_ap.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(tsk_ap, p.getX(), p.getY());
@@ -332,7 +318,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -340,7 +325,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});
@@ -348,7 +332,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				// TODO Auto-generated method stub
 				chk_btn();
 			}
 		});*/
@@ -356,7 +339,6 @@ public class updrec_ap_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				type_tsk = "CM";
 				tsk_ap.setDisable(false);
 				cm_ap.setDisable(true);
@@ -366,7 +348,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip = new Tooltip(cm_ap.getText());
 				Point2D p = cm_ap.localToScreen(cm_ap.getLayoutBounds().getMaxX(), cm_ap.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
 		        tip.show(cm_ap, p.getX(), p.getY());
@@ -376,7 +357,6 @@ public class updrec_ap_controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				tip.hide();
 			}
 		});
@@ -434,8 +414,7 @@ public class updrec_ap_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-			//	if(type_tsk.length() != 0 && shop_tsk.getValue().length() != 0 && lm_tsk.getValue().length() != 0 && os_tsk.getValue().length() != 0 &&
+				//	if(type_tsk.length() != 0 && shop_tsk.getValue().length() != 0 && lm_tsk.getValue().length() != 0 && os_tsk.getValue().length() != 0 &&
 			//			equip_tsk.getValue().length() != 0 && oft_tsk.getValue().length() != 0 && otv_tsk.getValue().length() != 0 && numpm_tsk.getText().length() != 0 &&
 			//			description_tsk.getText().length() != 0 && edate_tsk.getValue().toString().length() != 0)
 			//	{
@@ -460,7 +439,6 @@ public class updrec_ap_controller {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				stage = (Stage) cancel_tsk.getScene().getWindow();
 				stage.close();
 			}
@@ -513,7 +491,7 @@ public class updrec_ap_controller {
 				add_tsk_upd.setDisable(true);
 			}
 		catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 	}
 }

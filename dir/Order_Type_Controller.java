@@ -108,7 +108,6 @@ public class Order_Type_Controller {
 
 			@Override
 			public void handle(Event event) {
-				// TODO Auto-generated method stub
 				upd_ot.setDisable(false);
 				//устанавливаем права для кнопки удалить
 				if(!conn_connector.USER_ROLE.equals("Engeneer"))
@@ -125,7 +124,7 @@ public class Order_Type_Controller {
 				try {
 				func_upd(_ccl1.getIdStr());
 				} catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 				
 			}
@@ -134,7 +133,6 @@ public class Order_Type_Controller {
       table_ot.setOnMousePressed(new EventHandler<MouseEvent>() {
       	@Override
       	public void handle(MouseEvent event) {
-      		// TODO Auto-generated method stub
       		if (event.getClickCount() == 2 ){
                      func_upd(table_ot.getSelectionModel().getSelectedItem().getIdStr());
                  }
@@ -144,7 +142,6 @@ public class Order_Type_Controller {
 		
 		@Override
 		public void handle(ActionEvent event) {
-			// TODO Auto-generated method stub
 			stage = (Stage) cancel_ot.getScene().getWindow();
 			stage.close();
 		}
@@ -153,7 +150,6 @@ public class Order_Type_Controller {
 		
 		@Override
 		public void handle(ActionEvent event) {
-			// TODO Auto-generated method stub
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 		    alert.setTitle("M&U - Delete Record Window");
 		    Hmmr_OrderType_Model _ccl = table_ot.getSelectionModel().getSelectedItem();
@@ -167,7 +163,7 @@ public class Order_Type_Controller {
 		  	   try {
 		  	   func_del(_ccl.getIdStr());
 		  	   } catch (Exception e) {
-				// TODO: handle exception
+				
 			}
 		    } else if (option.get() == ButtonType.CANCEL) {
 		       //label.setText("Cancelled!");

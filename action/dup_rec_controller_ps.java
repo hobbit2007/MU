@@ -77,7 +77,7 @@ public class dup_rec_controller_ps {
 						}
 				}
 				catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 				stage = (Stage) dup_rec_add.getScene().getWindow();
 				stage.close();
@@ -95,7 +95,6 @@ public class dup_rec_controller_ps {
 
 			@Override
 			public void handle(Event arg0) {
-				// TODO Auto-generated method stub
 				if(num_rec_ps.getText().length() != 0)
 					dup_rec_add.setDisable(false);
 			}
