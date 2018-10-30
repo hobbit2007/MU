@@ -2507,8 +2507,8 @@ public class apwr_controller {
 		_equip_ap = scl.parser_str_str_str(_sql_rez, 4);
 		_oft_ap = scl.parser_str_str_str(_sql_rez, 5);
 		_otv_ap = scl.parser_str_str_str(_sql_rez, 6);
-//		_icon = scl.parser_str_str_str(_sql_rez, 7);
-//		_icon_at = scl.parser_str_str_str(_sql_rez, 8);
+		_icon = scl.parser_str_str_str(_sql_rez, 7);
+		_icon_at = scl.parser_str_str_str(_sql_rez, 8);
 	}
 	
 	//Заполняем переменные для использования в обновлении строки в WP

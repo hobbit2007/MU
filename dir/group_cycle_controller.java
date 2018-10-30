@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import action.apwr_controller;
 import application.conn_connector;
+import application.mu_main_controller;
 import db._query;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -26,6 +27,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import share_class.TooltippedTableCell;
 import share_class.s_class;
 
 public class group_cycle_controller {
@@ -78,6 +81,9 @@ public class group_cycle_controller {
 		col_start_date.setCellValueFactory(CellData -> CellData.getValue().getpm_startdate());
 		col_duration.setCellValueFactory(CellData -> CellData.getValue().getpm_duration());
 		
+		TooltippedTableCell.flag_ui = 2;
+		col_group_pm.setCellFactory(TooltippedTableCell.forTableColumn());
+		
 		add_rec.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -106,6 +112,7 @@ public class group_cycle_controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
+				TooltippedTableCell.flag_ui = 1;
 				stage = (Stage) cancel_form.getScene().getWindow();
 				stage.close();
 			}
@@ -149,7 +156,7 @@ public class group_cycle_controller {
 			    alert.setTitle("M&U - Delete Record Window");
 			    hmmr_groupcycle_model _ccl = table_gc.getSelectionModel().getSelectedItem();
 			    
-			    alert.setHeaderText("Вы действительно хотите удалить запись № = " + _ccl.getId() + "?");
+			    alert.setHeaderText("Вы действительно хотите удалить запись № = " + _ccl.getId() + "?\nВНИМАНИЕ!!! Группа № "+_ccl.getId()+" будет полностью удалена и из PM PLAN!!!");
 			    
 			    Optional<ButtonType> option = alert.showAndWait();
 			    if (option.get() == null) {
@@ -167,6 +174,13 @@ public class group_cycle_controller {
 			    } else {
 			       //label.setText("-");
 			    }
+			}
+		});
+		mu_main_controller.getPrimaryStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent arg0) {
+				TooltippedTableCell.flag_ui = 1;
 			}
 		});
 	}
@@ -203,7 +217,11 @@ public class group_cycle_controller {
 	}
 	private void func_del(String str)
 	{
+		//при удалении группы из справочника эта группа будет также удалена и из PM PLAN
+		qr._delete_for_pmplan(qr._select_rec("hmmr_group_cycle", "PM_Group", "del_rec", "id", str));
+		
 		qr._delete_for_gc(str);
+		
 		qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Удалил запись № = " + str + " в справочнике Группа-Период");
 		_table_update_gc.addAll(qr._select_for_gc());
 	}

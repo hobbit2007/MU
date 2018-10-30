@@ -3,6 +3,8 @@ package data;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 import javafx.util.StringConverter;
 
 	@SuppressWarnings("rawtypes")
@@ -21,7 +23,7 @@ import javafx.util.StringConverter;
         public FxDatePickerConverter(String pattern)
 	    {
 	        this.pattern = pattern;
-	        tFormatter = DateTimeFormatter.ofPattern(pattern);
+	        tFormatter = DateTimeFormatter.ofPattern(pattern).withLocale(Locale.US);
 	    }
    
 	    // Корвертируем String в LocalDate

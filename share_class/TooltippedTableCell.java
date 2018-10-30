@@ -1,5 +1,6 @@
 package share_class;
 
+import db._query;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Cell;
@@ -20,6 +21,8 @@ import javafx.util.converter.DefaultStringConverter;
  * </code>
  */
 public class TooltippedTableCell<S, T> extends TableCell<S, T> {
+	_query qr = new _query();
+	public static int flag_ui = 1;
     public static <S> Callback<TableColumn<S, String>, TableCell<S, String>> forTableColumn() {
         return forTableColumn(new DefaultStringConverter());
     }
@@ -48,7 +51,7 @@ public class TooltippedTableCell<S, T> extends TableCell<S, T> {
             tooltip.setStyle("-fx-font-size: 14px");
             tooltip.prefWidthProperty().bind(cell.widthProperty());
             cell.setTooltip(tooltip);
-
+          
         }
     }
 
@@ -81,10 +84,35 @@ public class TooltippedTableCell<S, T> extends TableCell<S, T> {
         return converterProperty().get();
     }
 
+    //Вызываем подсказку для формы таблицы в справочнике Группа-Период
+    private void updateItem_gc(final Cell<T> cell_gc, final StringConverter<T> converter_gc) {
+
+        if (cell_gc.isEmpty()) {
+            cell_gc.setText(null);
+            cell_gc.setTooltip(null);
+
+        } else {
+            cell_gc.setText(getItemText(cell_gc, converter_gc));
+
+            Tooltip tooltip = new Tooltip(qr._select_recArrStr("hmmr_pm", "Instruction_num", "del_rec", "PM_Group", cell_gc.getText()).toString());
+           // tooltip.setWrapText(true);
+            tooltip.setMinWidth(700.0);
+            //tooltip.setMinHeight(300.0);
+            tooltip.setStyle("-fx-font-size: 14px");
+            tooltip.prefWidthProperty().bind(cell_gc.widthProperty());
+            tooltip.setWrapText(true);
+            cell_gc.setTooltip(tooltip);
+          
+        }
+    }
+
 
     @Override
     public void updateItem(T item, boolean empty) {
         super.updateItem(item, empty);
-        updateItem(this, getConverter());
+        if(flag_ui == 1)
+        	updateItem(this, getConverter());
+        else
+        	updateItem_gc(this, getConverter());
     }
 }

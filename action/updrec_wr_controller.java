@@ -5,10 +5,8 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTimePicker;
-
 import application.conn_connector;
 import data.FxDatePickerConverter;
 import db._query;
@@ -440,6 +438,8 @@ public class updrec_wr_controller {
 								OtId = 3;
 							if(record_type_wr_upd.getValue().equals("CM"))
 								OtId = 2;
+							if(record_type_wr_upd.getValue().equals("PM"))
+								OtId = 1;
 							list_at_wr_upd.setItems(qr._select_recArr("hmmr_activity_type", "Name", "Description", "del_rec", "ID_OT", OtId));
 						
 					}

@@ -5938,7 +5938,7 @@ public class _query
 
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5917!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5927!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -5974,7 +5974,7 @@ public class _query
 
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4027");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5963");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -5999,7 +5999,7 @@ public class _query
 				stmt.executeUpdate(query);
 				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5989!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5994!");
 			}
 	    	finally {
 	            //close connection ,stmt and resultset here
@@ -6034,7 +6034,7 @@ public class _query
 
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4027");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6023");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -6044,20 +6044,46 @@ public class _query
 
 			return list;
 		}
-///////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  УДАЛИТЬ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!		
 		/**
-		 * Получаем Полное описание к картинке вида работ, чтобы вывести его в виде подсказки
-		 * при наведении мышки на иконку вида работ в таблице Work Recording
-		 * @param id - id в AP чтобы получить имя вида работ, а по нему и полное описание
-		 * @return - Возвращаем полученный набор данных
+		 * Удаляем строку в БД из таблицы hmmr_group_cycle
+		 * @param id - id записи которую удаляем
+		 */
+		@SuppressWarnings("static-access")
+		public void _delete_for_pmplan(String group)
+		{
+			try {
+				String query = "update hmmr_pm_year set record_del = 1 where PM_Group = "+"'"+group+"'"+";";
+				
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6055!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+		}
+		/**
+		 * Получаем два значения из любой таблицы в БД СТРОКА МАССИВ
+		 * @param tbl_name - Имя таблицы в БД
+		 * @param str - Имя поля значение которого необходимо получить
+		 * @param str1 - Имя второго поля значение которого необходимо получить
+		 * @param del_name - Имя поля с признаком удаления
+		 * @param id_name - Имя поля с Id (Первичное с автоинкрементом) или другое уникальное
+		 * @param id - Значение id
+		 * @return
 		 */
 		@SuppressWarnings({ "static-access"})
-		public String _select_at_desc_wr1(String id)
+		public ObservableList<String> _select_recArrStr(String tbl_name, String str, String del_name, String id_name, String id)
 		{
-			String list = "null";
+			ObservableList<String> list = FXCollections.observableArrayList();
 			
 			try {
-				String query = "select hat.Description from hmmr_work_recording hwr INNER JOIN hmmr_activity_type hat ON hwr.Activity_Type = hat.Name AND hwr.id = "+"'"+id+"'"+";"; // AND ID_TSK = "+"'"+id+"'"+
+				String query = "select "+str+" from "+tbl_name+" where "+del_name+" = 0 AND "+id_name+" = "+"'"+id+"'"+";";
 				
 				cn.ConToDb();
 				stmt6 = cn.con.createStatement();
@@ -6065,13 +6091,13 @@ public class _query
 							
 		        while (rs6.next()) {
 		        	if(rs6.getString(1) != null) {
-		        		list = rs6.getString(1);			        					            
+		        		list.add(rs6.getString(1));			        					            
 			        }    
 		        }
 
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4027");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6086!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -6082,78 +6108,4 @@ public class _query
 			return list;
 		}
 		
-		
-		/**
-		 * Получаем Полное описание к картинке вида работ, чтобы вывести его в виде подсказки
-		 * при наведении мышки на иконку вида работ в таблице Work Recording
-		 * @param id - id в AP чтобы получить имя вида работ, а по нему и полное описание
-		 * @return - Возвращаем полученный набор данных
-		 */
-		@SuppressWarnings({ "static-access"})
-		public String _select_at_desc_wr11(String id)
-		{
-			String list = "null";
-			
-			try {
-				String query = "select hat.Description from hmmr_work_recording hwr INNER JOIN hmmr_activity_type hat ON hwr.Activity_Type = hat.Name AND hwr.id = "+"'"+id+"'"+";"; // AND ID_TSK = "+"'"+id+"'"+
-				
-				cn.ConToDb();
-				stmt6 = cn.con.createStatement();
-				rs6 = stmt6.executeQuery(query);
-							
-		        while (rs6.next()) {
-		        	if(rs6.getString(1) != null) {
-		        		list = rs6.getString(1);			        					            
-			        }    
-		        }
-
-			}
-			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4027");
-		       } finally {
-		           //close connection ,stmt and resultset here
-		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
-		        try { stmt6.close(); } catch(SQLException se) { /*can't do anything */ }
-		        try { rs6.close(); } catch(SQLException se) { /*can't do anything */ }
-		       }
-
-			return list;
-		}
-		/**
-		 * Получаем Полное описание к картинке вида работ, чтобы вывести его в виде подсказки
-		 * при наведении мышки на иконку вида работ в таблице Work Recording
-		 * @param id - id в AP чтобы получить имя вида работ, а по нему и полное описание
-		 * @return - Возвращаем полученный набор данных
-		 */
-		@SuppressWarnings({ "static-access"})
-		public String _select_at_desc_wr111(String id)
-		{
-			String list = "null";
-			
-			try {
-				String query = "select hat.Description from hmmr_work_recording hwr INNER JOIN hmmr_activity_type hat ON hwr.Activity_Type = hat.Name AND hwr.id = "+"'"+id+"'"+";"; // AND ID_TSK = "+"'"+id+"'"+
-				
-				cn.ConToDb();
-				stmt6 = cn.con.createStatement();
-				rs6 = stmt6.executeQuery(query);
-							
-		        while (rs6.next()) {
-		        	if(rs6.getString(1) != null) {
-		        		list = rs6.getString(1);			        					            
-			        }    
-		        }
-
-			}
-			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 4027");
-		       } finally {
-		           //close connection ,stmt and resultset here
-		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
-		        try { stmt6.close(); } catch(SQLException se) { /*can't do anything */ }
-		        try { rs6.close(); } catch(SQLException se) { /*can't do anything */ }
-		       }
-
-			return list;
-		}
-/////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }

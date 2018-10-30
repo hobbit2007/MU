@@ -219,6 +219,8 @@ public class addrec_wr_controller {
 						OtId = 3;
 					if(record_type_wr_add.getValue().equals("CM"))
 						OtId = 2;
+					if(record_type_wr_add.getValue().equals("PM"))
+						OtId = 1;
 					list_at_wr.setItems(qr._select_recArr("hmmr_activity_type", "Name", "Description", "del_rec", "ID_OT", OtId));
 				
 			}
