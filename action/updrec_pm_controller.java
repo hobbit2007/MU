@@ -83,7 +83,7 @@ public class updrec_pm_controller {
 
 					@Override
 					public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-						group_eq_upd.setItems(qr._select_pm_group(ninst_pm_upd.getValue()));				
+						group_eq_upd.setItems(qr._select_pm_group(sclass.parser_str(ninst_pm_upd.getValue(), 0)));				
 					}
 				});
 				list_otv_isp_upd.setItems(qr._select_fio_for_ap(2, apwr_controller.SHOP_NAME));

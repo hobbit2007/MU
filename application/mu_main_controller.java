@@ -37,7 +37,7 @@ public class mu_main_controller
 	VBox root1;
 	
 	@FXML
-	MenuItem pm_cyc, typepm, pm_inst, pm, psdb, about_program, apwr, pmplan, prior, gc, ot, staff;
+	MenuItem pm_cyc, typepm, pm_inst, pm, psdb, about_program, apwr, pmplan, prior, gc, ot, staff, parttype, partchar;
 	
 	@FXML
 	MenuBar menubar_id;
@@ -46,7 +46,7 @@ public class mu_main_controller
 	HBox hbox_id;
 	
 	@FXML
-	Menu _action, _dir, _rep, _set, _ext;
+	Menu _action, _dir, _rep, _set, _ext, _store;
 	
 	@FXML
 	BorderPane _bpane;
@@ -101,12 +101,14 @@ public class mu_main_controller
 			gc.setDisable(true);
 			ot.setDisable(true);
 			staff.setDisable(true);
+			_store.setDisable(true);
 		}
 		
 		if(conn_connector.USER_ROLE.equals("Engeneer"))
 		{
 			//pm_cyc.setDisable(true);
 			//typepm.setDisable(true);
+			_store.setDisable(true);
 		}
 		
 		if(conn_connector.LANG_ID == 1)
@@ -119,6 +121,7 @@ public class mu_main_controller
 			_rep.setText(lngBndl.getString("_rep"));
 			_set.setText(lngBndl.getString("_set"));
 			_ext.setText(lngBndl.getString("_ext"));
+			_store.setText(lngBndl.getString("_store"));
 			pm_cyc.setText(lngBndl.getString("pm_cyc"));
 			typepm.setText(lngBndl.getString("typepm_key"));
 			pm_inst.setText(lngBndl.getString("pm_inst"));
@@ -131,6 +134,8 @@ public class mu_main_controller
 			gc.setText(lngBndl.getString("lbl_gc"));
 			ot.setText(lngBndl.getString("lbl_ot"));
 			staff.setText(lngBndl.getString("lbl_staff"));
+			parttype.setText(lngBndl.getString("part_type"));
+			partchar.setText(lngBndl.getString("part_char"));
 		}
 		
 		if(conn_connector.LANG_ID == 0)
@@ -143,6 +148,7 @@ public class mu_main_controller
 			_rep.setText(lngBndl.getString("_rep"));
 			_set.setText(lngBndl.getString("_set"));
 			_ext.setText(lngBndl.getString("_ext"));
+			_store.setText(lngBndl.getString("_store"));
 			pm_cyc.setText(lngBndl.getString("pm_cyc"));
 			typepm.setText(lngBndl.getString("typepm_key"));
 			pm_inst.setText(lngBndl.getString("pm_inst"));
@@ -155,6 +161,8 @@ public class mu_main_controller
 			gc.setText(lngBndl.getString("lbl_gc"));
 			ot.setText(lngBndl.getString("lbl_ot"));
 			staff.setText(lngBndl.getString("lbl_staff"));
+			parttype.setText(lngBndl.getString("part_type"));
+			partchar.setText(lngBndl.getString("part_char"));
 		}
 		if(conn_connector.LANG_ID == 2)
 		{
@@ -166,6 +174,7 @@ public class mu_main_controller
 			_rep.setText(lngBndl.getString("_rep"));
 			_set.setText(lngBndl.getString("_set"));
 			_ext.setText(lngBndl.getString("_ext"));
+			_store.setText(lngBndl.getString("_store"));
 			pm_cyc.setText(lngBndl.getString("pm_cyc"));
 			typepm.setText(lngBndl.getString("typepm_key"));
 			pm_inst.setText(lngBndl.getString("pm_inst"));
@@ -178,6 +187,8 @@ public class mu_main_controller
 			gc.setText(lngBndl.getString("lbl_gc"));
 			ot.setText(lngBndl.getString("lbl_ot"));
 			staff.setText(lngBndl.getString("lbl_staff"));
+			parttype.setText(lngBndl.getString("part_type"));
+			partchar.setText(lngBndl.getString("part_char"));
 		}
 		if(conn_connector.LANG_ID == -1)
 		{
@@ -189,6 +200,7 @@ public class mu_main_controller
 			_rep.setText(lngBndl.getString("_rep"));
 			_set.setText(lngBndl.getString("_set"));
 			_ext.setText(lngBndl.getString("_ext"));
+			_store.setText(lngBndl.getString("_store"));
 			pm_cyc.setText(lngBndl.getString("pm_cyc"));
 			typepm.setText(lngBndl.getString("typepm_key"));
 			pm_inst.setText(lngBndl.getString("pm_inst"));
@@ -201,6 +213,8 @@ public class mu_main_controller
 			gc.setText(lngBndl.getString("lbl_gc"));
 			ot.setText(lngBndl.getString("lbl_ot"));
 			staff.setText(lngBndl.getString("lbl_staff"));
+			parttype.setText(lngBndl.getString("part_type"));
+			partchar.setText(lngBndl.getString("part_char"));
 		}
 		
 		//Автоматически вызываем окно Action Plan & Work Recording
@@ -409,6 +423,28 @@ public class mu_main_controller
 			}
 		}
 		
+		//Вызываем из меню Редактор справочника склада - Part Type
+		@FXML
+		public void getPart() {
+			Stage stage = new Stage();
+		       try {
+				part_start(stage);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//Вызываем из меню Редактор справочника склада - Part Char
+		@FXML
+		public void getPartChar() {
+			Stage stage = new Stage();
+		       try {
+				partchar_start(stage);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		protected void pmtype_start(Stage stage) throws IOException {
 			setPrimaryStage(stage);
 		    Parent root = FXMLLoader.load(getClass().getResource("type_pm.fxml"));
@@ -476,14 +512,14 @@ public class mu_main_controller
 		
 		protected void ps_start(Stage stage) throws IOException {
 			setPrimaryStage(stage);
-			Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+			//Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 			
 			Parent root = FXMLLoader.load(getClass().getResource("psdb.fxml"));
 		    
 	        Scene scene = new Scene(root);
 	        stage.setTitle("M&U - Plant Structure Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
-	        stage.setWidth(primaryScreenBounds.getWidth() - 531);
-	        stage.setHeight(primaryScreenBounds.getHeight() - 25);
+	        //stage.setWidth(primaryScreenBounds.getWidth() - 531);
+	        //stage.setHeight(primaryScreenBounds.getHeight() - 25);
 	        stage.setResizable(true);
 	        //stage.initModality(Modality.APPLICATION_MODAL);
 	        stage.setScene(scene);
@@ -558,6 +594,32 @@ public class mu_main_controller
 		    
 	        Scene scene = new Scene(root);
 	        stage.setTitle("M&U - Staff Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
+	        stage.setResizable(false);
+	        stage.setScene(scene);
+	        	        
+	        stage.show();
+	        
+		}
+		
+		protected void part_start(Stage stage) throws IOException {
+			setPrimaryStage(stage);
+			Parent root = FXMLLoader.load(getClass().getResource("Part.fxml"));
+		    
+	        Scene scene = new Scene(root);
+	        stage.setTitle("M&U - Part Type Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
+	        stage.setResizable(false);
+	        stage.setScene(scene);
+	        	        
+	        stage.show();
+	        
+		}
+		
+		protected void partchar_start(Stage stage) throws IOException {
+			setPrimaryStage(stage);
+			Parent root = FXMLLoader.load(getClass().getResource("PartChar.fxml"));
+		    
+	        Scene scene = new Scene(root);
+	        stage.setTitle("M&U - Part Char Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
 	        stage.setResizable(false);
 	        stage.setScene(scene);
 	        	        

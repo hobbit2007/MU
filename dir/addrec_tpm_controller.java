@@ -39,7 +39,7 @@ public class addrec_tpm_controller
 	_query qr = new _query();
 	type_pm_controller tpm = new type_pm_controller();
 	
-	private static String pathToPdf = "\\\\10.168.170.49\\MU\\Img";
+	private static String pathToPdf = "\\\\10.168.170.253\\MU\\Img";
 	
 	public addrec_tpm_controller()
 	{

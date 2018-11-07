@@ -8,7 +8,7 @@ import share_class.s_class;
 
 public class _connect {
 
-	private static final String url = "jdbc:mysql://10.168.170.49:3306/hmmr_mu";
+	private static final String url = "jdbc:mysql://10.168.170.253:3306/hmmr_mu";
     private static final String user = "hmmr";
     private static final String password = "Ro145437";
     public static Connection con;

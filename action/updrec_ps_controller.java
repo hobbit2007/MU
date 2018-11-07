@@ -8,6 +8,8 @@ import application.conn_connector;
 import data.FxDatePickerConverter;
 import db._query;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -92,6 +94,41 @@ public class updrec_ps_controller {
 		sclass._style(exp_ps);
 		//sclass._style(btn_left);
 		//sclass._style(btn_right);
+		
+		osnum_ps_t.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if(!newValue.isEmpty()) {
+		
+				if (!newValue.matches("\\d*|#|\\*")) {
+					osnum_ps_t.setText(newValue.replaceAll("[^\\d|#|\\*]", ""));
+		        }
+				if(newValue.length() > 15) {
+					
+					osnum_ps_t.setText(newValue.replaceAll("[0-9]", ""));
+	            	
+				}
+			}
+			}
+		});
+		invnum_ps_t.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if(!newValue.isEmpty()) {
+		
+				if (!newValue.matches("\\d*|#|\\*")) {
+					invnum_ps_t.setText(newValue.replaceAll("[^\\d|#|\\*]", ""));
+		        }
+				if(newValue.length() > 15) {
+					
+					invnum_ps_t.setText(newValue.replaceAll("[0-9]", ""));
+	            	
+				}
+			}
+			}
+		});
 		
 		Platform.runLater(() -> {
 			Image imageOk = new Image(getClass().getResourceAsStream("left.png"));
@@ -680,6 +717,20 @@ public class updrec_ps_controller {
 						chk_btn();
 					}
 				});
+				invnum_ps_t.setOnKeyReleased(new EventHandler<Event>() {
+
+					@Override
+					public void handle(Event arg0) {
+						chk_btn();
+					}
+				});
+				osnum_ps_t.setOnKeyReleased(new EventHandler<Event>() {
+
+					@Override
+					public void handle(Event arg0) {
+						chk_btn();
+					}
+				});
 		
 		melec_ps_t.setText("-");
 		mair_ps_t.setText("-");
@@ -729,7 +780,7 @@ public class updrec_ps_controller {
 		equip_ps_t.setText(ps._equip_ps);
 		manual_ps_t.setText(ps._manual_ps);
 		invnum_ps_t.setText(ps._invnum_ps);
-		osnum_ps_t.setText(ps._os_ps);
+		osnum_ps_t.setText(ps._numos_ps);
 		startdate_ps.setValue(fx_dp.fromString(ps._startdate_ps));
 		costcenter_ps.getSelectionModel().select(ps._cost_ps);
 		stsupplier_ps_t.setText(ps._stsupplier_ps); 
@@ -909,7 +960,7 @@ public class updrec_ps_controller {
 		equip_ps_t.setText(ps._equip_ps);
 		manual_ps_t.setText(ps._manual_ps);
 		invnum_ps_t.setText(ps._invnum_ps);
-		osnum_ps_t.setText(ps._os_ps);
+		osnum_ps_t.setText(ps._numos_ps);
 		startdate_ps.setValue(fx_dp.fromString(ps._startdate_ps));
 		costcenter_ps.getSelectionModel().select(ps._cost_ps);
 		stsupplier_ps_t.setText(ps._stsupplier_ps); 
@@ -1068,7 +1119,8 @@ public class updrec_ps_controller {
 					type_ps_t.getText().length() != 0 && sn_ps_t.getText().length() != 0 && manuf_ps_t.getText().length() != 0 && mtc_ps_t.getText().length() != 0 &&
 					respons_ps_t.getText().length() != 0 && melec_ps_t.getText().length() != 0 && mair_ps_t.getText().length() != 0 && mwater_ps_t.getText().length() != 0 &&
 					mcwater_ps_t.getText().length() != 0 && mhwater_ps_t.getText().length() != 0 && rowater_ps_t.getText().length() != 0 && mgas_ps_t.getText().length() != 0 &&
-					line_ps_t.getText().length() != 0 && linerus_ps_t.getText().length() != 0 && os_ps_t.getText().length() != 0 && osrus_ps_t.getText().length() != 0 && description_ps_t.getText().length() != 0)
+					line_ps_t.getText().length() != 0 && linerus_ps_t.getText().length() != 0 && os_ps_t.getText().length() != 0 && osrus_ps_t.getText().length() != 0 && description_ps_t.getText().length() != 0
+					&& invnum_ps_t.getText().length() != 0 && osnum_ps_t.getText().length() != 0)
 				add_ps.setDisable(false);
 			else
 				add_ps.setDisable(true);

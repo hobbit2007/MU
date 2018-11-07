@@ -87,7 +87,7 @@ public class addrec_pm_controller {
 
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-				group_eq.setItems(qr._select_pm_group(ninst_pm.getValue()));				
+				group_eq.setItems(qr._select_pm_group(sclass.parser_str(ninst_pm.getValue(), 0)));				
 			}
 		});
 				
@@ -295,7 +295,7 @@ public class addrec_pm_controller {
 				    } else if (option.get() == ButtonType.OK) {
 				  	   try {
 				  		   new_date = fx_dp.fromString(qr._select_recStr("hmmr_group_cycle", "PM_StartDate", "del_rec", "PM_Group", group_eq.getValue()));
-				  		   new_pm_date();
+				  		   new_pm_date(fx_dp.toString(new_date));
 				  		   chk_btn();
 				  	   } catch (Exception e1) {
 						
@@ -355,7 +355,7 @@ public class addrec_pm_controller {
 		cancel_pm.setText(lngBndl.getString("cancel_tsk"));
 	}
 	
-	private void new_pm_date()
+	private void new_pm_date(String chk_date)
 	{
 		String Otv_for_task = null;
 		
@@ -367,41 +367,42 @@ public class addrec_pm_controller {
 //		if(!qr._select_recStr("hmmr_group_cycle", "PM_StartDate", "del_rec", "PM_Group", group_eq.getValue()).equals("2018-10-10")) {
 //			if(!sclass.parser_sql_str(qr._select_for_pmgroup(group_eq.getValue()), 0).equals(group_eq.getValue())) {
 //				try {
-					String before_pars = qr._select_for_pmplan(group_eq.getValue()).get(0);
-					String pereodic = sclass.parser_sql_str(before_pars, 0);
-					String b_date = fx_dp.toString(new_date);
+		if(!chk_date.equals("2018-10-10")) {
+			String before_pars = qr._select_for_pmplan(group_eq.getValue()).get(0);
+			String pereodic = sclass.parser_sql_str(before_pars, 0);
+			String b_date = fx_dp.toString(new_date);
 					
-						String e_date = sclass.parser_sql_str(before_pars, 2);
-						@SuppressWarnings("unused")
-						String shop = sclass.parser_sql_str(before_pars, 3);
-						Otv_for_task = sclass.parser_sql_str(before_pars, 4);
+			String e_date = sclass.parser_sql_str(before_pars, 2);
+			@SuppressWarnings("unused")
+			String shop = sclass.parser_sql_str(before_pars, 3);
+			Otv_for_task = sclass.parser_sql_str(before_pars, 4);
 						
-						int pm_group = Integer.parseInt(group_eq.getValue());
+			int pm_group = Integer.parseInt(group_eq.getValue());
 						
-						int _count = Integer.parseInt(pereodic);
-						int _cnt = _count;
+			int _count = Integer.parseInt(pereodic);
+			int _cnt = _count;
 						
-						int day_bdate = fx_dp.fromString(b_date).getDayOfMonth();
-						int month_bdate = fx_dp.fromString(b_date).getMonthValue();
-						int year_bdate = fx_dp.fromString(b_date).getYear();
+			int day_bdate = fx_dp.fromString(b_date).getDayOfMonth();
+			int month_bdate = fx_dp.fromString(b_date).getMonthValue();
+			int year_bdate = fx_dp.fromString(b_date).getYear();
 						
-						int day_edate = fx_dp.fromString(e_date).getDayOfMonth();
-						int month_edate = fx_dp.fromString(e_date).getMonthValue();
-						int year_edate = fx_dp.fromString(e_date).getYear();
+			int day_edate = fx_dp.fromString(e_date).getDayOfMonth();
+			int month_edate = fx_dp.fromString(e_date).getMonthValue();
+			int year_edate = fx_dp.fromString(e_date).getYear();
 						
-						//Находим количество дней в течении которых должно выполняться ППР, а затем находим сколько надо создать записей в таблице hmmr_pm_year
-						int gen_day = Math.abs(day_edate - day_bdate);
-						int gen_month = Math.abs(month_edate - month_bdate)*30;
-						int gen_year = Math.abs(year_edate - year_bdate)*365;
+			//Находим количество дней в течении которых должно выполняться ППР, а затем находим сколько надо создать записей в таблице hmmr_pm_year
+			int gen_day = Math.abs(day_edate - day_bdate);
+			int gen_month = Math.abs(month_edate - month_bdate)*30;
+			int gen_year = Math.abs(year_edate - year_bdate)*365;
 						
-						int _general = Math.round((gen_day + gen_month + gen_year)/_count);
+			int _general = Math.round((gen_day + gen_month + gen_year)/_count);
 						
-						for (int i = 0; i < _general; i++) {
-							LocalDate days = LocalDate.of(year_bdate, month_bdate, day_bdate).plusDays(_count);//Расчитываем даты когда заявка должна быть выполнена
-							qr._insert_pm_year(_last_id, pm_group, days, Otv_for_task);
-							_count = _cnt + _count;
-						}
-					
+			for (int i = 0; i < _general; i++) {
+				LocalDate days = LocalDate.of(year_bdate, month_bdate, day_bdate).plusDays(_count);//Расчитываем даты когда заявка должна быть выполнена
+				qr._insert_pm_year(_last_id, pm_group, days, Otv_for_task);
+				_count = _cnt + _count;
+			}
+		}		
 					
 //				}
 //				catch (Exception e) {

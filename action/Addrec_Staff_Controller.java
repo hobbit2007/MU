@@ -390,14 +390,16 @@ public class Addrec_Staff_Controller {
 			public void handle(ActionEvent arg0) {
 				
 				int usr_id = Integer.parseInt(qr._select_last_id("users")) + 1;
-				qr._insert_staff(txt_staffid_staff.getText(), txt_ID_staff.getText(), String.valueOf(usr_id), txt_fam_staff.getText(), txt_imya_staff.getText(), txt_otch_staff.getText(), txt_imya_eng_staff.getText(), txt_fam_eng_staff.getText(), d_dob_staff.getValue(), list_sec_staff.getValue(), list_groups_staff.getValue(), list_team_staff.getValue(), txt_work_staff.getText(), txt_pos_staff.getText(), txt_pos_rus_staff.getText(), txt_gwm_staff.getText(), d_dbegin_staff.getValue(), txt_email_staff.getText(), txt_skype_staff.getText(), txt_cell1_staff.getText(), txt_cell2_staff.getText(), txt_adr_staff.getText(), txt_avto_staff.getText(), txt_shoes_staff.getText(), txt_clothe_staff.getText(), d_dend_staff.getValue());
-				qr._insert_users(usr_id, txt_imya_staff.getText(), txt_fam_staff.getText(), txt_login_staff.getText(), txt_passwd_staff.getText(), d_dbegin_staff.getValue(), Role);
-				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_mu_staff") + " в таблице STAFF");
-				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("users") + " в таблице Users");
-				sc._table_update_staff.addAll(qr._select_data_staff());
+				if(qr._flag_error) {
+					qr._insert_staff(txt_staffid_staff.getText(), txt_ID_staff.getText(), String.valueOf(usr_id), txt_fam_staff.getText(), txt_imya_staff.getText(), txt_otch_staff.getText(), txt_imya_eng_staff.getText(), txt_fam_eng_staff.getText(), d_dob_staff.getValue(), list_sec_staff.getValue(), list_groups_staff.getValue(), list_team_staff.getValue(), txt_work_staff.getText(), txt_pos_staff.getText(), txt_pos_rus_staff.getText(), txt_gwm_staff.getText(), d_dbegin_staff.getValue(), txt_email_staff.getText(), txt_skype_staff.getText(), txt_cell1_staff.getText(), txt_cell2_staff.getText(), txt_adr_staff.getText(), txt_avto_staff.getText(), txt_shoes_staff.getText(), txt_clothe_staff.getText(), d_dend_staff.getValue());
+					qr._insert_users(usr_id, txt_imya_staff.getText(), txt_fam_staff.getText(), txt_login_staff.getText(), txt_passwd_staff.getText(), d_dbegin_staff.getValue(), Role);
+					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_mu_staff") + " в таблице STAFF");
+					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("users") + " в таблице Users");
+					sc._table_update_staff.addAll(qr._select_data_staff());
 				
-				stage = (Stage) btn_add_staff.getScene().getWindow();
-				stage.close();
+					stage = (Stage) btn_add_staff.getScene().getWindow();
+					stage.close();
+				}
 			}
 		});
 		btn_cancel_staff.setOnAction(new EventHandler<ActionEvent>() {

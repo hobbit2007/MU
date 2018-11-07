@@ -39,7 +39,7 @@
                            <children>
                               <TableView fx:id="table_staff" prefHeight="517.0" prefWidth="1171.0">
                                 <columns>
-                                  <TableColumn fx:id="col_num_staff" prefWidth="38.0" sortable="false" text="№" />
+                                  <TableColumn fx:id="col_num_staff" prefWidth="38.0" text="№" />
                                   <TableColumn fx:id="col_staff_id" prefWidth="48.000030517578125" sortable="false" text="Staff ID" />
                                     <TableColumn fx:id="col_id_staff" prefWidth="35.0" sortable="false" text="ID" />
                                     <TableColumn fx:id="col_fam_staff" prefWidth="75.0" sortable="false" text="Фамилия" />
@@ -51,7 +51,7 @@
                                     <TableColumn fx:id="col_team_staff" prefWidth="35.0" sortable="false" text="Team" />
                                     <TableColumn fx:id="col_position_staff" prefWidth="75.0" sortable="false" text="Должность" />
                                     <TableColumn fx:id="col_gwm_staff" prefWidth="65.0" sortable="false" text="GWM ID" />
-                                    <TableColumn fx:id="col_ds_staff" prefWidth="75.0" sortable="false" text="Дата старта" />
+                                    <TableColumn fx:id="col_ds_staff" prefWidth="75.0" text="Дата старта" />
                                     <TableColumn fx:id="col_cell_staff" prefWidth="75.0" sortable="false" text="Телефон" />
                                     <TableColumn fx:id="col_adr_staff" prefWidth="48.0" sortable="false" text="Адрес" />
                                     <TableColumn fx:id="col_avto_staff" prefWidth="55.0" sortable="false" text="№ авто" />

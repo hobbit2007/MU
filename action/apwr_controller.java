@@ -210,7 +210,7 @@ public class apwr_controller {
 			hb3.setPrefHeight(70.0);
 			table_ap.setPrefWidth(screen_width-100);
 			table_ap.setPrefHeight(screen_hight-200);
-			title_wo.setPrefWidth(900.0);
+			title_wo.setPrefWidth(830.0);
 			if(screen_width == 1920.0)
 				desc_ap.setPrefWidth(830.0);
 			if(screen_width == 1768.0)
@@ -548,7 +548,7 @@ public class apwr_controller {
 				}
 				if(filtre_apwr.getSelectionModel().getSelectedIndex() == 3)
 				{
-					if(conn_connector.USER_ROLE.equals("Administrator") || conn_connector.USER_ROLE.equals("Group Lead"))
+					if(conn_connector.USER_ROLE.equals("Administrator"))
 					{
 						table_ap.setItems(qr._select_data_all_shop(SHOP_NAME_A));
 						table_ap.getColumns().get(0).setVisible(false);
@@ -741,10 +741,9 @@ public class apwr_controller {
 									table_ap.getColumns().get(0).setVisible(false);
 							        table_ap.getColumns().get(0).setVisible(true);
 								}
-								
 							}
 						});
-                        
+                        qr._update_calc_field(data.getId().substring(2));
                         return new SimpleObjectProperty<Button>(btn);
                     }
 
@@ -919,7 +918,7 @@ public class apwr_controller {
 								}
 							}
 						});
-                        
+                        qr._update_calc_field(data.getId().substring(2));
                         return new SimpleObjectProperty<Button>(btn);
                     }
 
@@ -999,7 +998,7 @@ public class apwr_controller {
 								}
 							}
 						});
-                        
+                        qr._update_calc_field(data.getId().substring(2));
                         return new SimpleObjectProperty<Button>(btn);
                     }
 
@@ -1067,6 +1066,7 @@ public class apwr_controller {
 									qr._update_otv_ap(data.getId().substring(2), "flag_oft", "2");
 									qr._update_otv_ap(data.getId().substring(2), "flag_otv", "2");
 									btn.setStyle("-fx-background-color: green");
+									qr._update_calc_field(data.getId().substring(2));
 									qr._update_deleterec_ap(data.getId().substring(2));
 									table_ap.setItems(qr._select_data_ap(USER_S));
 									table_ap.getColumns().get(0).setVisible(false);
@@ -1104,7 +1104,7 @@ public class apwr_controller {
                         iv.setFocusTraversable(false);
                         
                         prior.setStyle( "-fx-alignment: CENTER;");
-                        
+                 //       String test = data.geticon();
                         BufferedImage bufferedImage;
 						try {
 							if(!data.geticon().equals("1")) {
@@ -1145,7 +1145,7 @@ public class apwr_controller {
                         iv.setFocusTraversable(false);
                         
                         at.setStyle( "-fx-alignment: CENTER;");
-                        
+                       // String test = data.geticon_at();
                         BufferedImage bufferedImage;
 						try {
 							if(!data.geticon_at().equals("1")) {
@@ -1308,7 +1308,7 @@ public class apwr_controller {
 			//String _tm = scl.parser_str(_get_data_from_wp.get(l), 9);
 			String _icon = scl.parser_str(_get_data_from_wp.get(l), 13);
 			String _shop = scl.parser_str(_get_data_from_wp.get(l), 14);
-			String _act_type = scl.parser_str(_get_data_from_wp.get(l), 16);
+			String _act_type = scl.parser_str(_get_data_from_wp.get(l), 15);
 			
 			qr._insert_ap(_pm_num, _type, _desc, fx_dp.fromString(_dd).plusDays(_duration), _equip, _inst, _oft, qr._select_userid_(_oft), _shop, _icon, _otv, _act_type);
 			//Удаляем PM из WP

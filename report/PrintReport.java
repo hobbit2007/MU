@@ -31,7 +31,7 @@ public class PrintReport extends JFrame {
 //			location = "m:/08.USER/U.14.RG/Blank_Letter_xls.jrxml";
 //			location = "C:\\Report\\Blank_Letter_xls.jrxml";
 //			location = "\\\\hmmr-ds415\\hmmr_share\\Maintenance_and_Utility_Department\\08.USER\\U.14.RG\\Blank_Letter_xls.jrxml";			
-			location = "\\\\10.168.170.49\\MU\\Blank_Letter_xls.jrxml";
+			location = "\\\\10.168.170.253\\MU\\Blank_Letter_xls.jrxml";
 	        String reportSrcFile = location;//"C:\\Work\\Blank_Letter.jrxml";
 	        
 	        // First, compile jrxml file.

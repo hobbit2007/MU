@@ -37,7 +37,7 @@ public class updrec_tpm_controller
 	_query qr = new _query();
 	type_pm_controller tpm = new type_pm_controller();
 	
-	static String pathToPdf = "\\\\10.168.170.49\\MU\\Img";
+	static String pathToPdf = "\\\\10.168.170.253\\MU\\Img";
 	
 	public updrec_tpm_controller()
 	{

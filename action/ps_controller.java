@@ -25,12 +25,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -53,7 +57,16 @@ public class ps_controller {
 	JFXButton add_ps, upd_ps, del_ps, upd_table, btn_duplicate;
 	
 	@FXML
-	javafx.scene.control.ScrollPane sp_ps;
+	ScrollPane sp_ps;
+	
+	@FXML
+	AnchorPane ap_ps;
+	
+	@FXML
+	VBox vb_ps;
+	
+	@FXML
+	HBox hb1, hb2, hb3, hb4;
 	
 	@FXML
 	private ComboBox<String> c_shop, c_group, c_line, c_os, c_equip;
@@ -84,16 +97,36 @@ public class ps_controller {
 		Double screen_width = primaryScreenBounds.getWidth();
 		Double screen_hight = primaryScreenBounds.getHeight(); 
 		
-		sp_ps.setPrefWidth(screen_width - 530);
+		sp_ps.setPrefWidth(screen_width);
+		sp_ps.setPrefHeight(screen_hight);
+		ap_ps.setPrefWidth(screen_width - 20);
+		ap_ps.setPrefHeight(screen_hight - 20);
+		vb_ps.setPrefWidth(screen_width - 20);
+		vb_ps.setPrefHeight(screen_hight - 20);
+		hb1.setPrefWidth(screen_width - 20);
+		hb1.setPrefHeight(30.0);
+		hb2.setPrefWidth(screen_width - 20);
+		hb2.setPrefHeight(50.0);
+		hb3.setPrefWidth(screen_width - 20);
+		hb3.setPrefHeight(screen_hight - 220);
+		hb4.setPrefWidth(screen_width - 20);
+		hb4.setPrefHeight(70.0);
+		table_ps.setPrefWidth(screen_width-70);
+		table_ps.setPrefHeight(screen_hight-200);
+		
+		
+		
+/*		sp_ps.setPrefWidth(screen_width - 530);
 		sp_ps.setPrefHeight(screen_hight - 30);
 		
 		table_ps.setPrefHeight(screen_hight - 230);
+		table_ps.setPrefWidth(screen_width - 70);
 		
 		add_ps.setLayoutY(screen_hight - 110);
 		upd_ps.setLayoutY(screen_hight - 110);
 		del_ps.setLayoutY(screen_hight - 110);
 		upd_table.setLayoutY(screen_hight - 110);
-		btn_duplicate.setLayoutY(screen_hight - 110);
+		btn_duplicate.setLayoutY(screen_hight - 110);*/
 		
 		upd_ps.setDisable(true);
 		del_ps.setDisable(true);

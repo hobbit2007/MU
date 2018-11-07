@@ -215,13 +215,13 @@ public class pm_controller {
 		col_otv_pm.setCellValueFactory(CellData -> CellData.getValue().OtvProperty());
 		col_isp_pm.setCellValueFactory(CellData -> CellData.getValue().Otv_IspProperty());
 		
-		col_id_pm.setSortable(false);
-		col_ninst_pm.setSortable(false);
+//		col_id_pm.setSortable(false);
+//		col_ninst_pm.setSortable(false);
 //		col_eq_id.setSortable(false);
 //		col_lm_pm.setSortable(false);
 //		col_os_pm.setSortable(false);
 //		col_equip_pm.setSortable(false);
-		col_group_pm.setSortable(false);
+//		col_group_pm.setSortable(false);
 //		col_group_eq.setSortable(false);
 //		col_pmn_pm.setSortable(false);
 //		col_pmc_pm.setSortable(false);

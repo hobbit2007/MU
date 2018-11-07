@@ -34,24 +34,29 @@ public class addrec_wr_controller {
 	TextArea shift_report_wr_add, req_action_wr_add;
 	
 	@FXML
-	TextField actual_time_wr_add, actual_time1_wr_add1, actual_time1_wr_add2, actual_time1_wr_add3, actual_time1_wr_add, numap_wr_add;// wmb, wsb, wme, wse;
+	TextField actual_time_wr_add, actual_time1_wr_add1, actual_time1_wr_add2, actual_time1_wr_add3, actual_time1_wr_add, numap_wr_add, actual_time1_wr_add4, actual_time1_wr_add5,
+	actual_time1_wr_add6, actual_time1_wr_add7, actual_time1_wr_add8;// wmb, wsb, wme, wse;
 	
 	@FXML
-	DatePicker w_data_begin, w_data_begin1, w_data_begin2, w_data_begin3, w_data_begin15, w_data_end, w_data_end1, w_data_end2, w_data_end3, w_data_end15;
+	DatePicker w_data_begin, w_data_begin1, w_data_begin2, w_data_begin3, w_data_begin15, w_data_end, w_data_end1, w_data_end2, w_data_end3, w_data_end15, w_data_begin4,
+	w_data_begin5, w_data_begin6, w_data_begin7, w_data_begin8, w_data_end4, w_data_end5, w_data_end6, w_data_end7, w_data_end8;
 	
 	@FXML 
-	ComboBox<String> shop_wr_add, lm_wr_add, os_wr_add, equip_wr_add, record_type_wr_add, resp_wr_add, status_wr_add, group_wr_add, resp_wr_add1, resp_wr_add2, resp_wr_add3, list_at_wr;
+	ComboBox<String> shop_wr_add, lm_wr_add, os_wr_add, equip_wr_add, record_type_wr_add, resp_wr_add, status_wr_add, group_wr_add, resp_wr_add1, resp_wr_add2, resp_wr_add3, list_at_wr,
+	resp_wr_add4, resp_wr_add5, resp_wr_add6, resp_wr_add7, resp_wr_add8;
 	
 	@FXML
 	Label err_msg, lbl_add_rec_wr, shift_report_wr, req_action_wr, lbl_trt_wr, actual_time_wr, actual_time1_wr, 
 	lbl_shop_ap, lbl_group_ap, lbl_lm_ap, lbl_os_ap, lbl_equip_ap, record_type_wr, resp_wr, status_wr, lbl_trt_wr1, lbl_trt_wr2, lbl_trt_wr3, actual_time1_wr1,
-	actual_time1_wr2, actual_time1_wr3, resp_wr1, resp_wr2, resp_wr3, lbl_at_wr;
+	actual_time1_wr2, actual_time1_wr3, resp_wr1, resp_wr2, resp_wr3, lbl_at_wr, actual_time1_wr4, actual_time1_wr5, actual_time1_wr6, actual_time1_wr7, actual_time1_wr8, resp_wr4,
+	resp_wr5, resp_wr6, resp_wr7, resp_wr8;
 	
 	@FXML
-	JFXButton add_wr_add, cancel_wr_add, plus, plus1, plus2, minus1, minus2, minus3;
+	JFXButton add_wr_add, cancel_wr_add, plus, plus1, plus2, minus1, minus2, minus3, plus3, plus4, plus5, plus6, plus7, minus4, minus5, minus6, minus7, minus8;
 	
 	@FXML
-	JFXTimePicker b_picker, b_picker1, b_picker2, b_picker3, b_picker15, e_picker, e_picker1, e_picker2, e_picker3, e_picker15;
+	JFXTimePicker b_picker, b_picker1, b_picker2, b_picker3, b_picker15, e_picker, e_picker1, e_picker2, e_picker3, e_picker15, b_picker4, b_picker5, b_picker6, b_picker7, b_picker8,
+	e_picker4, e_picker5, e_picker6, e_picker7, e_picker8;
 	
 	@FXML
 	Pane pane;
@@ -119,6 +124,33 @@ public class addrec_wr_controller {
 		e_picker3._24HourViewProperty();
 		e_picker3.setIs24HourView(true);
 		
+		b_picker4._24HourViewProperty();
+		b_picker4.setIs24HourView(true);		
+		e_picker4._24HourViewProperty();
+		e_picker4.setIs24HourView(true);
+		
+		b_picker5._24HourViewProperty();
+		b_picker5.setIs24HourView(true);
+		e_picker5._24HourViewProperty();
+		e_picker5.setIs24HourView(true);
+		
+		b_picker6._24HourViewProperty();
+		b_picker6.setIs24HourView(true);
+		e_picker6._24HourViewProperty();
+		e_picker6.setIs24HourView(true);
+		
+		b_picker7._24HourViewProperty();
+		b_picker7.setIs24HourView(true);
+		e_picker7._24HourViewProperty();
+		e_picker7.setIs24HourView(true);
+		
+		b_picker8._24HourViewProperty();
+		b_picker8.setIs24HourView(true);
+		e_picker8._24HourViewProperty();
+		e_picker8.setIs24HourView(true);
+		
+		b_picker15._24HourViewProperty();
+		b_picker15.setIs24HourView(true);
 		e_picker15._24HourViewProperty();
 		e_picker15.setIs24HourView(true);
 		
@@ -248,6 +280,31 @@ public class addrec_wr_controller {
 		b_picker3.setValue(LocalTime.parse(fx_time.toStringt(LocalTime.now())));
 		e_picker3.setValue(LocalTime.parse(fx_time.toStringt(LocalTime.now().plusHours(1))));
 		
+		w_data_begin4.setValue(LocalDate.now());
+		w_data_end4.setValue(LocalDate.now());
+		b_picker4.setValue(LocalTime.parse(fx_time.toStringt(LocalTime.now())));
+		e_picker4.setValue(LocalTime.parse(fx_time.toStringt(LocalTime.now().plusHours(1))));
+		
+		w_data_begin5.setValue(LocalDate.now());
+		w_data_end5.setValue(LocalDate.now());
+		b_picker5.setValue(LocalTime.parse(fx_time.toStringt(LocalTime.now())));
+		e_picker5.setValue(LocalTime.parse(fx_time.toStringt(LocalTime.now().plusHours(1))));
+		
+		w_data_begin6.setValue(LocalDate.now());
+		w_data_end6.setValue(LocalDate.now());
+		b_picker6.setValue(LocalTime.parse(fx_time.toStringt(LocalTime.now())));
+		e_picker6.setValue(LocalTime.parse(fx_time.toStringt(LocalTime.now().plusHours(1))));
+		
+		w_data_begin7.setValue(LocalDate.now());
+		w_data_end7.setValue(LocalDate.now());
+		b_picker7.setValue(LocalTime.parse(fx_time.toStringt(LocalTime.now())));
+		e_picker7.setValue(LocalTime.parse(fx_time.toStringt(LocalTime.now().plusHours(1))));
+		
+		w_data_begin8.setValue(LocalDate.now());
+		w_data_end8.setValue(LocalDate.now());
+		b_picker8.setValue(LocalTime.parse(fx_time.toStringt(LocalTime.now())));
+		e_picker8.setValue(LocalTime.parse(fx_time.toStringt(LocalTime.now().plusHours(1))));
+		
 		w_data_begin15.setValue(LocalDate.now());
 		w_data_end15.setValue(LocalDate.now());
 		b_picker15.setValue(LocalTime.parse(fx_time.toStringt(LocalTime.now())));
@@ -256,12 +313,21 @@ public class addrec_wr_controller {
 		actual_time1_wr_add1.setText("0");
 		actual_time1_wr_add2.setText("0");
 		actual_time1_wr_add3.setText("0");
-		
+		actual_time1_wr_add4.setText("0");
+		actual_time1_wr_add5.setText("0");
+		actual_time1_wr_add6.setText("0");
+		actual_time1_wr_add7.setText("0");
+		actual_time1_wr_add8.setText("0");
+				
 		resp_wr_add1.setValue("0");
 		resp_wr_add2.setValue("0");
 		resp_wr_add3.setValue("0");
-		
-		
+		resp_wr_add4.setValue("0");
+		resp_wr_add5.setValue("0");
+		resp_wr_add6.setValue("0");
+		resp_wr_add7.setValue("0");
+		resp_wr_add8.setValue("0");
+				
 		//инициализируем комбобоксы
 		String line1 = new String("PM");
 		String line2 = new String("TSK");
@@ -428,6 +494,11 @@ public class addrec_wr_controller {
 						resp_wr_add1.setItems(qr._select_fio_for_ap(2, sclass.parser_str(shop_wr_add.getValue(), 0)));
 						resp_wr_add2.setItems(qr._select_fio_for_ap(2, sclass.parser_str(shop_wr_add.getValue(), 0)));
 						resp_wr_add3.setItems(qr._select_fio_for_ap(2, sclass.parser_str(shop_wr_add.getValue(), 0)));
+						resp_wr_add4.setItems(qr._select_fio_for_ap(2, sclass.parser_str(shop_wr_add.getValue(), 0)));
+						resp_wr_add5.setItems(qr._select_fio_for_ap(2, sclass.parser_str(shop_wr_add.getValue(), 0)));
+						resp_wr_add6.setItems(qr._select_fio_for_ap(2, sclass.parser_str(shop_wr_add.getValue(), 0)));
+						resp_wr_add7.setItems(qr._select_fio_for_ap(2, sclass.parser_str(shop_wr_add.getValue(), 0)));
+						resp_wr_add8.setItems(qr._select_fio_for_ap(2, sclass.parser_str(shop_wr_add.getValue(), 0)));
 					} catch (Exception e) {
 					}
 					chk_btn();
@@ -572,14 +643,25 @@ public class addrec_wr_controller {
 					b_gtw = "00:00";
 					e_gtw = "00:00";
 				}
-				
+				//Варианты добавления иконки вида работ для CM и нет
 				if(!record_type_wr_add.getValue().equals("CM")) {
 					list_at_wr.setValue(qr._select_rec("hmmr_action_plan", "Icon_AT", "del_rec", "id", numap_wr_add.getText().substring(2)));
 				}
 				else
 					qr._update_rec_ap_iconat(sclass.parser_str(list_at_wr.getValue(), 0), numap_wr_add.getText().substring(2));
+								
+				//Пересчитываем время работы техника, чтоб не было косяков
+				actual_time1_wr_add.setText(""+ fix_time(w_data_begin, w_data_end, b_picker, e_picker));
+				actual_time1_wr_add1.setText(""+ fix_time(w_data_begin1, w_data_end1, b_picker1, e_picker1));
+				actual_time1_wr_add2.setText(""+ fix_time(w_data_begin2, w_data_end2, b_picker2, e_picker2));
+				actual_time1_wr_add3.setText(""+ fix_time(w_data_begin3, w_data_end3, b_picker3, e_picker3));
+				actual_time1_wr_add4.setText(""+ fix_time(w_data_begin4, w_data_end4, b_picker4, e_picker4));
+				actual_time1_wr_add5.setText(""+ fix_time(w_data_begin5, w_data_end5, b_picker5, e_picker5));
+				actual_time1_wr_add6.setText(""+ fix_time(w_data_begin6, w_data_end6, b_picker6, e_picker6));
+				actual_time1_wr_add7.setText(""+ fix_time(w_data_begin7, w_data_end7, b_picker7, e_picker7));
+				actual_time1_wr_add8.setText(""+ fix_time(w_data_begin8, w_data_end8, b_picker8, e_picker8));
 					
-				qr._insert_wr(numap_wr_add.getText().substring(2), conn_connector.USER_ID, sclass.parser_str(shop_wr_add.getValue(), 0), group_wr_add.getValue(), sclass.parser_str(lm_wr_add.getValue(), 0), sclass.parser_str(os_wr_add.getValue(), 0), sclass.parser_str(equip_wr_add.getValue(), 0), sclass.parser_str(shop_wr_add.getValue(), 0)+"."+group_wr_add.getValue()+"."+sclass.parser_str(lm_wr_add.getValue(), 0)+"."+sclass.parser_str(os_wr_add.getValue(), 0)+"."+sclass.parser_str(equip_wr_add.getValue(), 0), record_type_wr_add.getValue(), wt_rezult, sclass.parser_str(resp_wr_add.getValue(), 0), sclass.parser_str(resp_wr_add1.getValue(), 0), sclass.parser_str(resp_wr_add2.getValue(), 0), sclass.parser_str(resp_wr_add3.getValue(), 0), status_wr_add.getValue(), shift_report_wr_add.getText(), req_action_wr_add.getText(), w_data_begin.getValue(), w_data_begin1.getValue(), w_data_begin2.getValue(), w_data_begin3.getValue(), actual_time_wr_add.getText(), w_data_end.getValue(), w_data_end1.getValue(), w_data_end2.getValue(), w_data_end3.getValue(), actual_time1_wr_add.getText(), actual_time1_wr_add1.getText(), actual_time1_wr_add2.getText(), actual_time1_wr_add3.getText(), b_picker.getValue(), b_picker1.getValue(), b_picker2.getValue(), b_picker3.getValue(), e_picker.getValue(), e_picker1.getValue(), e_picker2.getValue(), e_picker3.getValue(), b_gdw, e_gdw, b_gtw, e_gtw, sclass.parser_str(list_at_wr.getValue(), 0));
+				qr._insert_wr(numap_wr_add.getText().substring(2), conn_connector.USER_ID, sclass.parser_str(shop_wr_add.getValue(), 0), group_wr_add.getValue(), sclass.parser_str(lm_wr_add.getValue(), 0), sclass.parser_str(os_wr_add.getValue(), 0), sclass.parser_str(equip_wr_add.getValue(), 0), sclass.parser_str(shop_wr_add.getValue(), 0)+"."+group_wr_add.getValue()+"."+sclass.parser_str(lm_wr_add.getValue(), 0)+"."+sclass.parser_str(os_wr_add.getValue(), 0)+"."+sclass.parser_str(equip_wr_add.getValue(), 0), record_type_wr_add.getValue(), wt_rezult, sclass.parser_str(resp_wr_add.getValue(), 0), sclass.parser_str(resp_wr_add1.getValue(), 0), sclass.parser_str(resp_wr_add2.getValue(), 0), sclass.parser_str(resp_wr_add3.getValue(), 0), status_wr_add.getValue(), shift_report_wr_add.getText(), req_action_wr_add.getText(), w_data_begin.getValue(), w_data_begin1.getValue(), w_data_begin2.getValue(), w_data_begin3.getValue(), actual_time_wr_add.getText(), w_data_end.getValue(), w_data_end1.getValue(), w_data_end2.getValue(), w_data_end3.getValue(), actual_time1_wr_add.getText(), actual_time1_wr_add1.getText(), actual_time1_wr_add2.getText(), actual_time1_wr_add3.getText(), b_picker.getValue(), b_picker1.getValue(), b_picker2.getValue(), b_picker3.getValue(), e_picker.getValue(), e_picker1.getValue(), e_picker2.getValue(), e_picker3.getValue(), b_gdw, e_gdw, b_gtw, e_gtw, sclass.parser_str(list_at_wr.getValue(), 0), sclass.parser_str(resp_wr_add4.getValue(), 0), sclass.parser_str(resp_wr_add5.getValue(), 0), sclass.parser_str(resp_wr_add6.getValue(), 0), sclass.parser_str(resp_wr_add7.getValue(), 0), sclass.parser_str(resp_wr_add8.getValue(), 0), w_data_begin4.getValue(), w_data_begin5.getValue(), w_data_begin6.getValue(), w_data_begin7.getValue(), w_data_begin8.getValue(), w_data_end4.getValue(), w_data_end5.getValue(), w_data_end6.getValue(), w_data_end7.getValue(), w_data_end8.getValue(), actual_time1_wr_add4.getText(), actual_time1_wr_add5.getText(), actual_time1_wr_add6.getText(), actual_time1_wr_add7.getText(), actual_time1_wr_add8.getText(), b_picker4.getValue(), b_picker5.getValue(), b_picker6.getValue(), b_picker7.getValue(), b_picker8.getValue(), e_picker4.getValue(), e_picker5.getValue(), e_picker6.getValue(), e_picker7.getValue(), e_picker8.getValue());
 				//pic.refreshTable_wr(apwr_controller.columns_wr, apwr_controller.before_date, apwr_controller.after_date);
 					
 				qr._insert_history(conn_connector.USER_ID, pic.USER_S + " - Добавил запись № = " + qr._select_last_id("hmmr_work_recording") + " в таблице Work Recording");
@@ -600,7 +682,7 @@ public class addrec_wr_controller {
 					//Если СМ то для всех остальных кроме первого техника время общего ремонта = 0
 					wt_rezult = 0;
 						
-					qr._insert_wr(numap_wr_add.getText().substring(2), conn_connector.USER_ID, sclass.parser_str(shop_wr_add.getValue(), 0), group_wr_add.getValue(), sclass.parser_str(lm_wr_add.getValue(), 0), sclass.parser_str(os_wr_add.getValue(), 0), sclass.parser_str(equip_wr_add.getValue(), 0), sclass.parser_str(shop_wr_add.getValue(), 0)+"."+group_wr_add.getValue()+"."+sclass.parser_str(lm_wr_add.getValue(), 0)+"."+sclass.parser_str(os_wr_add.getValue(), 0)+"."+sclass.parser_str(equip_wr_add.getValue(), 0), record_type_wr_add.getValue(), wt_rezult, sclass.parser_str(qr._select_resp(id_wr, "_Resp2"), 0), "0", "0", "0", status_wr_add.getValue(), shift_report_wr_add.getText(), req_action_wr_add.getText(), b_data, w_data_begin.getValue(), w_data_begin2.getValue(), w_data_begin3.getValue(), actual_time_wr_add.getText(), e_data, w_data_end.getValue(), w_data_end2.getValue(), w_data_end3.getValue(), at, "0", "0", "0", b_time, b_picker.getValue(), b_picker2.getValue(), b_picker3.getValue(), e_time, e_picker.getValue(), e_picker2.getValue(), e_picker3.getValue(), b_gdw, e_gdw, b_gtw, e_gtw, sclass.parser_str(list_at_wr.getValue(), 0));
+					qr._insert_wr(numap_wr_add.getText().substring(2), conn_connector.USER_ID, sclass.parser_str(shop_wr_add.getValue(), 0), group_wr_add.getValue(), sclass.parser_str(lm_wr_add.getValue(), 0), sclass.parser_str(os_wr_add.getValue(), 0), sclass.parser_str(equip_wr_add.getValue(), 0), sclass.parser_str(shop_wr_add.getValue(), 0)+"."+group_wr_add.getValue()+"."+sclass.parser_str(lm_wr_add.getValue(), 0)+"."+sclass.parser_str(os_wr_add.getValue(), 0)+"."+sclass.parser_str(equip_wr_add.getValue(), 0), record_type_wr_add.getValue(), wt_rezult, sclass.parser_str(qr._select_resp(id_wr, "_Resp2"), 0), "0", "0", "0", status_wr_add.getValue(), shift_report_wr_add.getText(), req_action_wr_add.getText(), b_data, w_data_begin.getValue(), w_data_begin2.getValue(), w_data_begin3.getValue(), actual_time_wr_add.getText(), e_data, w_data_end.getValue(), w_data_end2.getValue(), w_data_end3.getValue(), at, "0", "0", "0", b_time, b_picker.getValue(), b_picker2.getValue(), b_picker3.getValue(), e_time, e_picker.getValue(), e_picker2.getValue(), e_picker3.getValue(), b_gdw, e_gdw, b_gtw, e_gtw, sclass.parser_str(list_at_wr.getValue(), 0), sclass.parser_str(resp_wr_add4.getValue(), 0), sclass.parser_str(resp_wr_add5.getValue(), 0), sclass.parser_str(resp_wr_add6.getValue(), 0), sclass.parser_str(resp_wr_add7.getValue(), 0), sclass.parser_str(resp_wr_add8.getValue(), 0), w_data_begin4.getValue(), w_data_begin5.getValue(), w_data_begin6.getValue(), w_data_begin7.getValue(), w_data_begin8.getValue(), w_data_end4.getValue(), w_data_end5.getValue(), w_data_end6.getValue(), w_data_end7.getValue(), w_data_end8.getValue(), actual_time1_wr_add4.getText(), actual_time1_wr_add5.getText(), actual_time1_wr_add6.getText(), actual_time1_wr_add7.getText(), actual_time1_wr_add8.getText(), b_picker4.getValue(), b_picker5.getValue(), b_picker6.getValue(), b_picker7.getValue(), b_picker8.getValue(), e_picker4.getValue(), e_picker5.getValue(), e_picker6.getValue(), e_picker7.getValue(), e_picker8.getValue());
 					qr._update_r_wr(id_wr, "_Resp2", "0");
 					qr._update_r_wr(id_wr, "_Actual_Time2", "0");
 				}
@@ -613,7 +695,7 @@ public class addrec_wr_controller {
 					String at = qr._select_b_hours(id_wr, "_Actual_Time3");
 					wt_rezult = 0;
 						
-					qr._insert_wr(numap_wr_add.getText().substring(2), conn_connector.USER_ID, sclass.parser_str(shop_wr_add.getValue(), 0), group_wr_add.getValue(), sclass.parser_str(lm_wr_add.getValue(), 0), sclass.parser_str(os_wr_add.getValue(), 0), sclass.parser_str(equip_wr_add.getValue(), 0), sclass.parser_str(shop_wr_add.getValue(), 0)+"."+group_wr_add.getValue()+"."+sclass.parser_str(lm_wr_add.getValue(), 0)+"."+sclass.parser_str(os_wr_add.getValue(), 0)+"."+sclass.parser_str(equip_wr_add.getValue(), 0), record_type_wr_add.getValue(), wt_rezult, sclass.parser_str(qr._select_resp(id_wr, "_Resp3"), 0), "0", "0", "0", status_wr_add.getValue(), shift_report_wr_add.getText(), req_action_wr_add.getText(), b_data, w_data_begin.getValue(), w_data_begin2.getValue(), w_data_begin3.getValue(), actual_time_wr_add.getText(), e_data, w_data_end.getValue(), w_data_end2.getValue(), w_data_end3.getValue(), at, "0", "0", "0", b_time, b_picker.getValue(), b_picker2.getValue(), b_picker3.getValue(), e_time, e_picker.getValue(), e_picker2.getValue(), e_picker3.getValue(), b_gdw, e_gdw, b_gtw, e_gtw, sclass.parser_str(list_at_wr.getValue(), 0));
+					qr._insert_wr(numap_wr_add.getText().substring(2), conn_connector.USER_ID, sclass.parser_str(shop_wr_add.getValue(), 0), group_wr_add.getValue(), sclass.parser_str(lm_wr_add.getValue(), 0), sclass.parser_str(os_wr_add.getValue(), 0), sclass.parser_str(equip_wr_add.getValue(), 0), sclass.parser_str(shop_wr_add.getValue(), 0)+"."+group_wr_add.getValue()+"."+sclass.parser_str(lm_wr_add.getValue(), 0)+"."+sclass.parser_str(os_wr_add.getValue(), 0)+"."+sclass.parser_str(equip_wr_add.getValue(), 0), record_type_wr_add.getValue(), wt_rezult, sclass.parser_str(qr._select_resp(id_wr, "_Resp3"), 0), "0", "0", "0", status_wr_add.getValue(), shift_report_wr_add.getText(), req_action_wr_add.getText(), b_data, w_data_begin.getValue(), w_data_begin2.getValue(), w_data_begin3.getValue(), actual_time_wr_add.getText(), e_data, w_data_end.getValue(), w_data_end2.getValue(), w_data_end3.getValue(), at, "0", "0", "0", b_time, b_picker.getValue(), b_picker2.getValue(), b_picker3.getValue(), e_time, e_picker.getValue(), e_picker2.getValue(), e_picker3.getValue(), b_gdw, e_gdw, b_gtw, e_gtw, sclass.parser_str(list_at_wr.getValue(), 0), sclass.parser_str(resp_wr_add4.getValue(), 0), sclass.parser_str(resp_wr_add5.getValue(), 0), sclass.parser_str(resp_wr_add6.getValue(), 0), sclass.parser_str(resp_wr_add7.getValue(), 0), sclass.parser_str(resp_wr_add8.getValue(), 0), w_data_begin4.getValue(), w_data_begin5.getValue(), w_data_begin6.getValue(), w_data_begin7.getValue(), w_data_begin8.getValue(), w_data_end4.getValue(), w_data_end5.getValue(), w_data_end6.getValue(), w_data_end7.getValue(), w_data_end8.getValue(), actual_time1_wr_add4.getText(), actual_time1_wr_add5.getText(), actual_time1_wr_add6.getText(), actual_time1_wr_add7.getText(), actual_time1_wr_add8.getText(), b_picker4.getValue(), b_picker5.getValue(), b_picker6.getValue(), b_picker7.getValue(), b_picker8.getValue(), e_picker4.getValue(), e_picker5.getValue(), e_picker6.getValue(), e_picker7.getValue(), e_picker8.getValue());
 					qr._update_r_wr(id_wr, "_Resp3", "0");
 					qr._update_r_wr(id_wr, "_Actual_Time3", "0");
 				}
@@ -626,9 +708,74 @@ public class addrec_wr_controller {
 					String at = qr._select_b_hours(id_wr, "_Actual_Time4");
 					wt_rezult = 0;
 						
-					qr._insert_wr(numap_wr_add.getText().substring(2), conn_connector.USER_ID, sclass.parser_str(shop_wr_add.getValue(), 0), group_wr_add.getValue(), sclass.parser_str(lm_wr_add.getValue(), 0), sclass.parser_str(os_wr_add.getValue(), 0), sclass.parser_str(equip_wr_add.getValue(), 0), sclass.parser_str(shop_wr_add.getValue(), 0)+"."+group_wr_add.getValue()+"."+sclass.parser_str(lm_wr_add.getValue(), 0)+"."+sclass.parser_str(os_wr_add.getValue(), 0)+"."+sclass.parser_str(equip_wr_add.getValue(), 0), record_type_wr_add.getValue(), wt_rezult, sclass.parser_str(qr._select_resp(id_wr, "_Resp4"), 0), "0", "0", "0", status_wr_add.getValue(), shift_report_wr_add.getText(), req_action_wr_add.getText(), b_data, w_data_begin.getValue(), w_data_begin2.getValue(), w_data_begin3.getValue(), actual_time_wr_add.getText(), e_data, w_data_end.getValue(), w_data_end2.getValue(), w_data_end3.getValue(), at, "0", "0", "0", b_time, b_picker.getValue(), b_picker2.getValue(), b_picker3.getValue(), e_time, e_picker.getValue(), e_picker2.getValue(), e_picker3.getValue(), b_gdw, e_gdw, b_gtw, e_gtw, sclass.parser_str(list_at_wr.getValue(), 0));
+					qr._insert_wr(numap_wr_add.getText().substring(2), conn_connector.USER_ID, sclass.parser_str(shop_wr_add.getValue(), 0), group_wr_add.getValue(), sclass.parser_str(lm_wr_add.getValue(), 0), sclass.parser_str(os_wr_add.getValue(), 0), sclass.parser_str(equip_wr_add.getValue(), 0), sclass.parser_str(shop_wr_add.getValue(), 0)+"."+group_wr_add.getValue()+"."+sclass.parser_str(lm_wr_add.getValue(), 0)+"."+sclass.parser_str(os_wr_add.getValue(), 0)+"."+sclass.parser_str(equip_wr_add.getValue(), 0), record_type_wr_add.getValue(), wt_rezult, sclass.parser_str(qr._select_resp(id_wr, "_Resp4"), 0), "0", "0", "0", status_wr_add.getValue(), shift_report_wr_add.getText(), req_action_wr_add.getText(), b_data, w_data_begin.getValue(), w_data_begin2.getValue(), w_data_begin3.getValue(), actual_time_wr_add.getText(), e_data, w_data_end.getValue(), w_data_end2.getValue(), w_data_end3.getValue(), at, "0", "0", "0", b_time, b_picker.getValue(), b_picker2.getValue(), b_picker3.getValue(), e_time, e_picker.getValue(), e_picker2.getValue(), e_picker3.getValue(), b_gdw, e_gdw, b_gtw, e_gtw, sclass.parser_str(list_at_wr.getValue(), 0), sclass.parser_str(resp_wr_add4.getValue(), 0), sclass.parser_str(resp_wr_add5.getValue(), 0), sclass.parser_str(resp_wr_add6.getValue(), 0), sclass.parser_str(resp_wr_add7.getValue(), 0), sclass.parser_str(resp_wr_add8.getValue(), 0), w_data_begin4.getValue(), w_data_begin5.getValue(), w_data_begin6.getValue(), w_data_begin7.getValue(), w_data_begin8.getValue(), w_data_end4.getValue(), w_data_end5.getValue(), w_data_end6.getValue(), w_data_end7.getValue(), w_data_end8.getValue(), actual_time1_wr_add4.getText(), actual_time1_wr_add5.getText(), actual_time1_wr_add6.getText(), actual_time1_wr_add7.getText(), actual_time1_wr_add8.getText(), b_picker4.getValue(), b_picker5.getValue(), b_picker6.getValue(), b_picker7.getValue(), b_picker8.getValue(), e_picker4.getValue(), e_picker5.getValue(), e_picker6.getValue(), e_picker7.getValue(), e_picker8.getValue());
 					qr._update_r_wr(id_wr, "_Resp4", "0");
 					qr._update_r_wr(id_wr, "_Actual_Time4", "0");
+				}
+				if(!qr._select_resp(id_wr, "_Resp5").equals("0"))
+				{
+					LocalDate b_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date_5"));
+					LocalDate e_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date5"));
+					LocalTime b_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours1_5"));
+					LocalTime e_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours2_5"));
+					String at = qr._select_b_hours(id_wr, "_Actual_Time5");
+					wt_rezult = 0;
+						
+					qr._insert_wr(numap_wr_add.getText().substring(2), conn_connector.USER_ID, sclass.parser_str(shop_wr_add.getValue(), 0), group_wr_add.getValue(), sclass.parser_str(lm_wr_add.getValue(), 0), sclass.parser_str(os_wr_add.getValue(), 0), sclass.parser_str(equip_wr_add.getValue(), 0), sclass.parser_str(shop_wr_add.getValue(), 0)+"."+group_wr_add.getValue()+"."+sclass.parser_str(lm_wr_add.getValue(), 0)+"."+sclass.parser_str(os_wr_add.getValue(), 0)+"."+sclass.parser_str(equip_wr_add.getValue(), 0), record_type_wr_add.getValue(), wt_rezult, sclass.parser_str(qr._select_resp(id_wr, "_Resp5"), 0), "0", "0", "0", status_wr_add.getValue(), shift_report_wr_add.getText(), req_action_wr_add.getText(), b_data, w_data_begin.getValue(), w_data_begin2.getValue(), w_data_begin3.getValue(), actual_time_wr_add.getText(), e_data, w_data_end.getValue(), w_data_end2.getValue(), w_data_end3.getValue(), at, "0", "0", "0", b_time, b_picker.getValue(), b_picker2.getValue(), b_picker3.getValue(), e_time, e_picker.getValue(), e_picker2.getValue(), e_picker3.getValue(), b_gdw, e_gdw, b_gtw, e_gtw, sclass.parser_str(list_at_wr.getValue(), 0), sclass.parser_str(resp_wr_add4.getValue(), 0), sclass.parser_str(resp_wr_add5.getValue(), 0), sclass.parser_str(resp_wr_add6.getValue(), 0), sclass.parser_str(resp_wr_add7.getValue(), 0), sclass.parser_str(resp_wr_add8.getValue(), 0), w_data_begin4.getValue(), w_data_begin5.getValue(), w_data_begin6.getValue(), w_data_begin7.getValue(), w_data_begin8.getValue(), w_data_end4.getValue(), w_data_end5.getValue(), w_data_end6.getValue(), w_data_end7.getValue(), w_data_end8.getValue(), actual_time1_wr_add4.getText(), actual_time1_wr_add5.getText(), actual_time1_wr_add6.getText(), actual_time1_wr_add7.getText(), actual_time1_wr_add8.getText(), b_picker4.getValue(), b_picker5.getValue(), b_picker6.getValue(), b_picker7.getValue(), b_picker8.getValue(), e_picker4.getValue(), e_picker5.getValue(), e_picker6.getValue(), e_picker7.getValue(), e_picker8.getValue());
+					qr._update_r_wr(id_wr, "_Resp5", "0");
+					qr._update_r_wr(id_wr, "_Actual_Time5", "0");
+				}
+				if(!qr._select_resp(id_wr, "_Resp6").equals("0"))
+				{
+					LocalDate b_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date_6"));
+					LocalDate e_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date6"));
+					LocalTime b_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours1_6"));
+					LocalTime e_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours2_6"));
+					String at = qr._select_b_hours(id_wr, "_Actual_Time6");
+					wt_rezult = 0;
+						
+					qr._insert_wr(numap_wr_add.getText().substring(2), conn_connector.USER_ID, sclass.parser_str(shop_wr_add.getValue(), 0), group_wr_add.getValue(), sclass.parser_str(lm_wr_add.getValue(), 0), sclass.parser_str(os_wr_add.getValue(), 0), sclass.parser_str(equip_wr_add.getValue(), 0), sclass.parser_str(shop_wr_add.getValue(), 0)+"."+group_wr_add.getValue()+"."+sclass.parser_str(lm_wr_add.getValue(), 0)+"."+sclass.parser_str(os_wr_add.getValue(), 0)+"."+sclass.parser_str(equip_wr_add.getValue(), 0), record_type_wr_add.getValue(), wt_rezult, sclass.parser_str(qr._select_resp(id_wr, "_Resp6"), 0), "0", "0", "0", status_wr_add.getValue(), shift_report_wr_add.getText(), req_action_wr_add.getText(), b_data, w_data_begin.getValue(), w_data_begin2.getValue(), w_data_begin3.getValue(), actual_time_wr_add.getText(), e_data, w_data_end.getValue(), w_data_end2.getValue(), w_data_end3.getValue(), at, "0", "0", "0", b_time, b_picker.getValue(), b_picker2.getValue(), b_picker3.getValue(), e_time, e_picker.getValue(), e_picker2.getValue(), e_picker3.getValue(), b_gdw, e_gdw, b_gtw, e_gtw, sclass.parser_str(list_at_wr.getValue(), 0), sclass.parser_str(resp_wr_add4.getValue(), 0), sclass.parser_str(resp_wr_add5.getValue(), 0), sclass.parser_str(resp_wr_add6.getValue(), 0), sclass.parser_str(resp_wr_add7.getValue(), 0), sclass.parser_str(resp_wr_add8.getValue(), 0), w_data_begin4.getValue(), w_data_begin5.getValue(), w_data_begin6.getValue(), w_data_begin7.getValue(), w_data_begin8.getValue(), w_data_end4.getValue(), w_data_end5.getValue(), w_data_end6.getValue(), w_data_end7.getValue(), w_data_end8.getValue(), actual_time1_wr_add4.getText(), actual_time1_wr_add5.getText(), actual_time1_wr_add6.getText(), actual_time1_wr_add7.getText(), actual_time1_wr_add8.getText(), b_picker4.getValue(), b_picker5.getValue(), b_picker6.getValue(), b_picker7.getValue(), b_picker8.getValue(), e_picker4.getValue(), e_picker5.getValue(), e_picker6.getValue(), e_picker7.getValue(), e_picker8.getValue());
+					qr._update_r_wr(id_wr, "_Resp6", "0");
+					qr._update_r_wr(id_wr, "_Actual_Time6", "0");
+				}
+				if(!qr._select_resp(id_wr, "_Resp7").equals("0"))
+				{
+					LocalDate b_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date_7"));
+					LocalDate e_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date7"));
+					LocalTime b_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours1_7"));
+					LocalTime e_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours2_7"));
+					String at = qr._select_b_hours(id_wr, "_Actual_Time7");
+					wt_rezult = 0;
+						
+					qr._insert_wr(numap_wr_add.getText().substring(2), conn_connector.USER_ID, sclass.parser_str(shop_wr_add.getValue(), 0), group_wr_add.getValue(), sclass.parser_str(lm_wr_add.getValue(), 0), sclass.parser_str(os_wr_add.getValue(), 0), sclass.parser_str(equip_wr_add.getValue(), 0), sclass.parser_str(shop_wr_add.getValue(), 0)+"."+group_wr_add.getValue()+"."+sclass.parser_str(lm_wr_add.getValue(), 0)+"."+sclass.parser_str(os_wr_add.getValue(), 0)+"."+sclass.parser_str(equip_wr_add.getValue(), 0), record_type_wr_add.getValue(), wt_rezult, sclass.parser_str(qr._select_resp(id_wr, "_Resp7"), 0), "0", "0", "0", status_wr_add.getValue(), shift_report_wr_add.getText(), req_action_wr_add.getText(), b_data, w_data_begin.getValue(), w_data_begin2.getValue(), w_data_begin3.getValue(), actual_time_wr_add.getText(), e_data, w_data_end.getValue(), w_data_end2.getValue(), w_data_end3.getValue(), at, "0", "0", "0", b_time, b_picker.getValue(), b_picker2.getValue(), b_picker3.getValue(), e_time, e_picker.getValue(), e_picker2.getValue(), e_picker3.getValue(), b_gdw, e_gdw, b_gtw, e_gtw, sclass.parser_str(list_at_wr.getValue(), 0), sclass.parser_str(resp_wr_add4.getValue(), 0), sclass.parser_str(resp_wr_add5.getValue(), 0), sclass.parser_str(resp_wr_add6.getValue(), 0), sclass.parser_str(resp_wr_add7.getValue(), 0), sclass.parser_str(resp_wr_add8.getValue(), 0), w_data_begin4.getValue(), w_data_begin5.getValue(), w_data_begin6.getValue(), w_data_begin7.getValue(), w_data_begin8.getValue(), w_data_end4.getValue(), w_data_end5.getValue(), w_data_end6.getValue(), w_data_end7.getValue(), w_data_end8.getValue(), actual_time1_wr_add4.getText(), actual_time1_wr_add5.getText(), actual_time1_wr_add6.getText(), actual_time1_wr_add7.getText(), actual_time1_wr_add8.getText(), b_picker4.getValue(), b_picker5.getValue(), b_picker6.getValue(), b_picker7.getValue(), b_picker8.getValue(), e_picker4.getValue(), e_picker5.getValue(), e_picker6.getValue(), e_picker7.getValue(), e_picker8.getValue());
+					qr._update_r_wr(id_wr, "_Resp7", "0");
+					qr._update_r_wr(id_wr, "_Actual_Time7", "0");
+				}
+				if(!qr._select_resp(id_wr, "_Resp8").equals("0"))
+				{
+					LocalDate b_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date_8"));
+					LocalDate e_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date8"));
+					LocalTime b_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours1_8"));
+					LocalTime e_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours2_8"));
+					String at = qr._select_b_hours(id_wr, "_Actual_Time8");
+					wt_rezult = 0;
+						
+					qr._insert_wr(numap_wr_add.getText().substring(2), conn_connector.USER_ID, sclass.parser_str(shop_wr_add.getValue(), 0), group_wr_add.getValue(), sclass.parser_str(lm_wr_add.getValue(), 0), sclass.parser_str(os_wr_add.getValue(), 0), sclass.parser_str(equip_wr_add.getValue(), 0), sclass.parser_str(shop_wr_add.getValue(), 0)+"."+group_wr_add.getValue()+"."+sclass.parser_str(lm_wr_add.getValue(), 0)+"."+sclass.parser_str(os_wr_add.getValue(), 0)+"."+sclass.parser_str(equip_wr_add.getValue(), 0), record_type_wr_add.getValue(), wt_rezult, sclass.parser_str(qr._select_resp(id_wr, "_Resp8"), 0), "0", "0", "0", status_wr_add.getValue(), shift_report_wr_add.getText(), req_action_wr_add.getText(), b_data, w_data_begin.getValue(), w_data_begin2.getValue(), w_data_begin3.getValue(), actual_time_wr_add.getText(), e_data, w_data_end.getValue(), w_data_end2.getValue(), w_data_end3.getValue(), at, "0", "0", "0", b_time, b_picker.getValue(), b_picker2.getValue(), b_picker3.getValue(), e_time, e_picker.getValue(), e_picker2.getValue(), e_picker3.getValue(), b_gdw, e_gdw, b_gtw, e_gtw, sclass.parser_str(list_at_wr.getValue(), 0), sclass.parser_str(resp_wr_add4.getValue(), 0), sclass.parser_str(resp_wr_add5.getValue(), 0), sclass.parser_str(resp_wr_add6.getValue(), 0), sclass.parser_str(resp_wr_add7.getValue(), 0), sclass.parser_str(resp_wr_add8.getValue(), 0), w_data_begin4.getValue(), w_data_begin5.getValue(), w_data_begin6.getValue(), w_data_begin7.getValue(), w_data_begin8.getValue(), w_data_end4.getValue(), w_data_end5.getValue(), w_data_end6.getValue(), w_data_end7.getValue(), w_data_end8.getValue(), actual_time1_wr_add4.getText(), actual_time1_wr_add5.getText(), actual_time1_wr_add6.getText(), actual_time1_wr_add7.getText(), actual_time1_wr_add8.getText(), b_picker4.getValue(), b_picker5.getValue(), b_picker6.getValue(), b_picker7.getValue(), b_picker8.getValue(), e_picker4.getValue(), e_picker5.getValue(), e_picker6.getValue(), e_picker7.getValue(), e_picker8.getValue());
+					qr._update_r_wr(id_wr, "_Resp8", "0");
+					qr._update_r_wr(id_wr, "_Actual_Time8", "0");
+				}
+				if(!qr._select_resp(id_wr, "_Resp9").equals("0"))
+				{
+					LocalDate b_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date_9"));
+					LocalDate e_data = fx_dp.fromString(qr._select_b_hours(id_wr, "_Actual_Date9"));
+					LocalTime b_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours1_9"));
+					LocalTime e_time = fx_time.fromStringt(qr._select_b_hours(id_wr, "_Hours2_9"));
+					String at = qr._select_b_hours(id_wr, "_Actual_Time9");
+					wt_rezult = 0;
+						
+					qr._insert_wr(numap_wr_add.getText().substring(2), conn_connector.USER_ID, sclass.parser_str(shop_wr_add.getValue(), 0), group_wr_add.getValue(), sclass.parser_str(lm_wr_add.getValue(), 0), sclass.parser_str(os_wr_add.getValue(), 0), sclass.parser_str(equip_wr_add.getValue(), 0), sclass.parser_str(shop_wr_add.getValue(), 0)+"."+group_wr_add.getValue()+"."+sclass.parser_str(lm_wr_add.getValue(), 0)+"."+sclass.parser_str(os_wr_add.getValue(), 0)+"."+sclass.parser_str(equip_wr_add.getValue(), 0), record_type_wr_add.getValue(), wt_rezult, sclass.parser_str(qr._select_resp(id_wr, "_Resp9"), 0), "0", "0", "0", status_wr_add.getValue(), shift_report_wr_add.getText(), req_action_wr_add.getText(), b_data, w_data_begin.getValue(), w_data_begin2.getValue(), w_data_begin3.getValue(), actual_time_wr_add.getText(), e_data, w_data_end.getValue(), w_data_end2.getValue(), w_data_end3.getValue(), at, "0", "0", "0", b_time, b_picker.getValue(), b_picker2.getValue(), b_picker3.getValue(), e_time, e_picker.getValue(), e_picker2.getValue(), e_picker3.getValue(), b_gdw, e_gdw, b_gtw, e_gtw, sclass.parser_str(list_at_wr.getValue(), 0), sclass.parser_str(resp_wr_add4.getValue(), 0), sclass.parser_str(resp_wr_add5.getValue(), 0), sclass.parser_str(resp_wr_add6.getValue(), 0), sclass.parser_str(resp_wr_add7.getValue(), 0), sclass.parser_str(resp_wr_add8.getValue(), 0), w_data_begin4.getValue(), w_data_begin5.getValue(), w_data_begin6.getValue(), w_data_begin7.getValue(), w_data_begin8.getValue(), w_data_end4.getValue(), w_data_end5.getValue(), w_data_end6.getValue(), w_data_end7.getValue(), w_data_end8.getValue(), actual_time1_wr_add4.getText(), actual_time1_wr_add5.getText(), actual_time1_wr_add6.getText(), actual_time1_wr_add7.getText(), actual_time1_wr_add8.getText(), b_picker4.getValue(), b_picker5.getValue(), b_picker6.getValue(), b_picker7.getValue(), b_picker8.getValue(), e_picker4.getValue(), e_picker5.getValue(), e_picker6.getValue(), e_picker7.getValue(), e_picker8.getValue());
+					qr._update_r_wr(id_wr, "_Resp9", "0");
+					qr._update_r_wr(id_wr, "_Actual_Time9", "0");
 				}
 				//рефрешим таблицу AP
 				pic._table_update_wr.addAll(qr._select_data_wr(apwr_controller.before_date, apwr_controller.after_date));
@@ -774,7 +921,7 @@ public class addrec_wr_controller {
 				resp_wr_add3.setDisable(false);
 				actual_time1_wr3.setDisable(false);
 				actual_time1_wr_add3.setDisable(true);
-				plus2.setDisable(false);
+				plus3.setDisable(false);
 				minus2.setDisable(true);
 				minus3.setDisable(false);
 				plus.setDisable(true);
@@ -802,12 +949,257 @@ public class addrec_wr_controller {
 				resp_wr_add3.setDisable(true);
 				actual_time1_wr3.setDisable(true);
 				actual_time1_wr_add3.setDisable(true);
-				//plus1.setDisable(false);
+				plus3.setDisable(true);
 				//minus1.setDisable(false);
 				//plus.setDisable(false);
 				plus2.setDisable(false);
 				minus2.setDisable(false);
 				minus3.setDisable(true);
+			}
+		});
+		plus3.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				w_data_begin4.setDisable(false);
+				b_picker4.setDisable(false);
+				w_data_end4.setDisable(false);
+				e_picker4.setDisable(false);
+				resp_wr4.setDisable(false);
+				resp_wr_add4.setDisable(false);
+				actual_time1_wr4.setDisable(false);
+				actual_time1_wr_add4.setDisable(true);
+				plus4.setDisable(false);
+				minus2.setDisable(true);
+				minus4.setDisable(false);
+				plus.setDisable(true);
+				//plus1.setDisable(true);
+				//plus2.setDisable(true);
+				plus3.setDisable(true);
+				minus3.setDisable(true);
+				
+				w_data_begin4.setValue(w_data_begin.getValue());
+				w_data_end4.setValue(w_data_end.getValue());
+				b_picker4.setValue(b_picker.getValue());
+				e_picker4.setValue(e_picker.getValue());
+				
+				actual_time1_wr_add4.setText(""+fix_time(w_data_begin4, w_data_end4, b_picker4, e_picker4));
+			}
+		});
+		minus4.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				w_data_begin4.setDisable(true);
+				b_picker4.setDisable(true);
+				w_data_end4.setDisable(true);
+				e_picker4.setDisable(true);
+				resp_wr4.setDisable(true);
+				resp_wr_add4.setDisable(true);
+				actual_time1_wr4.setDisable(true);
+				actual_time1_wr_add4.setDisable(true);
+				plus3.setDisable(true);
+				//minus1.setDisable(false);
+				plus4.setDisable(true);
+				plus3.setDisable(false);
+				minus3.setDisable(false);
+				minus4.setDisable(true);
+			}
+		});
+		plus4.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				w_data_begin5.setDisable(false);
+				b_picker5.setDisable(false);
+				w_data_end5.setDisable(false);
+				e_picker5.setDisable(false);
+				resp_wr5.setDisable(false);
+				resp_wr_add5.setDisable(false);
+				actual_time1_wr5.setDisable(false);
+				actual_time1_wr_add5.setDisable(true);
+				plus5.setDisable(false);
+				minus3.setDisable(true);
+				minus4.setDisable(true);
+				minus5.setDisable(false);
+				plus.setDisable(true);
+//				plus1.setDisable(true);
+				plus3.setDisable(true);
+				plus4.setDisable(true);
+				
+				w_data_begin5.setValue(w_data_begin.getValue());
+				w_data_end5.setValue(w_data_end.getValue());
+				b_picker5.setValue(b_picker.getValue());
+				e_picker5.setValue(e_picker.getValue());
+				
+				actual_time1_wr_add5.setText(""+fix_time(w_data_begin5, w_data_end5, b_picker5, e_picker5));
+			}
+		});
+		minus5.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				w_data_begin5.setDisable(true);
+				b_picker5.setDisable(true);
+				w_data_end5.setDisable(true);
+				e_picker5.setDisable(true);
+				resp_wr5.setDisable(true);
+				resp_wr_add5.setDisable(true);
+				actual_time1_wr5.setDisable(true);
+				actual_time1_wr_add5.setDisable(true);
+				plus4.setDisable(true);
+				//minus1.setDisable(false);
+				plus5.setDisable(true);
+				plus4.setDisable(false);
+				minus4.setDisable(false);
+				minus5.setDisable(true);
+			}
+		});
+		plus5.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				w_data_begin6.setDisable(false);
+				b_picker6.setDisable(false);
+				w_data_end6.setDisable(false);
+				e_picker6.setDisable(false);
+				resp_wr6.setDisable(false);
+				resp_wr_add6.setDisable(false);
+				actual_time1_wr6.setDisable(false);
+				actual_time1_wr_add6.setDisable(true);
+				plus6.setDisable(false);
+				minus4.setDisable(true);
+				minus5.setDisable(true);
+				minus6.setDisable(false);
+				plus.setDisable(true);
+//				plus1.setDisable(true);
+				plus4.setDisable(true);
+				plus5.setDisable(true);
+				
+				w_data_begin6.setValue(w_data_begin.getValue());
+				w_data_end6.setValue(w_data_end.getValue());
+				b_picker6.setValue(b_picker.getValue());
+				e_picker6.setValue(e_picker.getValue());
+				
+				actual_time1_wr_add6.setText(""+fix_time(w_data_begin6, w_data_end6, b_picker6, e_picker6));
+			}
+		});
+		minus6.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				w_data_begin6.setDisable(true);
+				b_picker6.setDisable(true);
+				w_data_end6.setDisable(true);
+				e_picker6.setDisable(true);
+				resp_wr6.setDisable(true);
+				resp_wr_add6.setDisable(true);
+				actual_time1_wr6.setDisable(true);
+				actual_time1_wr_add6.setDisable(true);
+				//plus5.setDisable(true);
+				//minus1.setDisable(false);
+				plus6.setDisable(true);
+				plus5.setDisable(false);
+				minus5.setDisable(false);
+				minus6.setDisable(true);
+			}
+		});
+		plus6.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				w_data_begin7.setDisable(false);
+				b_picker7.setDisable(false);
+				w_data_end7.setDisable(false);
+				e_picker7.setDisable(false);
+				resp_wr7.setDisable(false);
+				resp_wr_add7.setDisable(false);
+				actual_time1_wr7.setDisable(false);
+				actual_time1_wr_add7.setDisable(true);
+				plus7.setDisable(false);
+				minus5.setDisable(true);
+				minus6.setDisable(true);
+				minus7.setDisable(false);
+				plus.setDisable(true);
+//				plus1.setDisable(true);
+				plus5.setDisable(true);
+				plus6.setDisable(true);
+				
+				w_data_begin7.setValue(w_data_begin.getValue());
+				w_data_end7.setValue(w_data_end.getValue());
+				b_picker7.setValue(b_picker.getValue());
+				e_picker7.setValue(e_picker.getValue());
+				
+				actual_time1_wr_add7.setText(""+fix_time(w_data_begin7, w_data_end7, b_picker7, e_picker7));
+			}
+		});
+		minus7.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				w_data_begin7.setDisable(true);
+				b_picker7.setDisable(true);
+				w_data_end7.setDisable(true);
+				e_picker7.setDisable(true);
+				resp_wr7.setDisable(true);
+				resp_wr_add7.setDisable(true);
+				actual_time1_wr7.setDisable(true);
+				actual_time1_wr_add7.setDisable(true);
+				//plus5.setDisable(true);
+				//minus1.setDisable(false);
+				plus7.setDisable(true);
+				plus6.setDisable(false);
+				minus6.setDisable(false);
+				minus7.setDisable(true);
+			}
+		});
+		plus7.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				w_data_begin8.setDisable(false);
+				b_picker8.setDisable(false);
+				w_data_end8.setDisable(false);
+				e_picker8.setDisable(false);
+				resp_wr8.setDisable(false);
+				resp_wr_add8.setDisable(false);
+				actual_time1_wr8.setDisable(false);
+				actual_time1_wr_add8.setDisable(true);
+				
+				minus6.setDisable(true);
+				minus7.setDisable(true);
+				minus8.setDisable(false);
+				plus.setDisable(true);
+//				plus1.setDisable(true);
+				plus6.setDisable(true);
+				plus7.setDisable(true);
+				
+				w_data_begin8.setValue(w_data_begin.getValue());
+				w_data_end8.setValue(w_data_end.getValue());
+				b_picker8.setValue(b_picker.getValue());
+				e_picker8.setValue(e_picker.getValue());
+				
+				actual_time1_wr_add8.setText(""+fix_time(w_data_begin8, w_data_end8, b_picker8, e_picker8));
+			}
+		});
+		minus8.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				w_data_begin8.setDisable(true);
+				b_picker8.setDisable(true);
+				w_data_end8.setDisable(true);
+				e_picker8.setDisable(true);
+				resp_wr8.setDisable(true);
+				resp_wr_add8.setDisable(true);
+				actual_time1_wr8.setDisable(true);
+				actual_time1_wr_add8.setDisable(true);
+				//plus5.setDisable(true);
+				//minus1.setDisable(false);
+				
+				plus7.setDisable(false);
+				minus7.setDisable(false);
+				minus8.setDisable(true);
 			}
 		});
 		e_picker.setOnMouseClicked(new EventHandler<Event>() {
@@ -839,6 +1231,41 @@ public class addrec_wr_controller {
 				actual_time1_wr_add3.setText(""+ fix_time(w_data_begin3, w_data_end3, b_picker3, e_picker3));
 			}
 		});
+		e_picker4.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				actual_time1_wr_add4.setText(""+ fix_time(w_data_begin4, w_data_end4, b_picker4, e_picker4));
+			}
+		});
+		e_picker5.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				actual_time1_wr_add5.setText(""+ fix_time(w_data_begin5, w_data_end5, b_picker5, e_picker5));
+			}
+		});
+		e_picker6.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				actual_time1_wr_add6.setText(""+ fix_time(w_data_begin6, w_data_end6, b_picker6, e_picker6));
+			}
+		});
+		e_picker7.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				actual_time1_wr_add7.setText(""+ fix_time(w_data_begin7, w_data_end7, b_picker7, e_picker7));
+			}
+		});
+		e_picker8.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				actual_time1_wr_add8.setText(""+ fix_time(w_data_begin8, w_data_end8, b_picker8, e_picker8));
+			}
+		});
 		//Пересчитываем время работы техника, если кликнули не только по часикам, но и в любом месте панели
 		pane.setOnMouseClicked(new EventHandler<Event>() {
 
@@ -848,6 +1275,11 @@ public class addrec_wr_controller {
 				actual_time1_wr_add1.setText(""+ fix_time(w_data_begin1, w_data_end1, b_picker1, e_picker1));
 				actual_time1_wr_add2.setText(""+ fix_time(w_data_begin2, w_data_end2, b_picker2, e_picker2));
 				actual_time1_wr_add3.setText(""+ fix_time(w_data_begin3, w_data_end3, b_picker3, e_picker3));
+				actual_time1_wr_add4.setText(""+ fix_time(w_data_begin4, w_data_end4, b_picker4, e_picker4));
+				actual_time1_wr_add5.setText(""+ fix_time(w_data_begin5, w_data_end5, b_picker5, e_picker5));
+				actual_time1_wr_add6.setText(""+ fix_time(w_data_begin6, w_data_end6, b_picker6, e_picker6));
+				actual_time1_wr_add7.setText(""+ fix_time(w_data_begin7, w_data_end7, b_picker7, e_picker7));
+				actual_time1_wr_add8.setText(""+ fix_time(w_data_begin8, w_data_end8, b_picker8, e_picker8));
 			}
 		});
 		//Пересчитываем время работы техника, если кликнули не только по часикам, но и при клике на один из ComboBox выбора исполнителя
@@ -880,11 +1312,39 @@ public class addrec_wr_controller {
 			}
 		});
 		
-		resp_wr_add1.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+		resp_wr_add4.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-								
+				actual_time1_wr_add4.setText(""+ fix_time(w_data_begin4, w_data_end4, b_picker4, e_picker4));				
+			}
+		});
+		resp_wr_add5.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				actual_time1_wr_add5.setText(""+ fix_time(w_data_begin5, w_data_end5, b_picker5, e_picker5));				
+			}
+		});
+		resp_wr_add6.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				actual_time1_wr_add6.setText(""+ fix_time(w_data_begin6, w_data_end6, b_picker6, e_picker6));				
+			}
+		});
+		resp_wr_add7.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				actual_time1_wr_add7.setText(""+ fix_time(w_data_begin7, w_data_end7, b_picker7, e_picker7));				
+			}
+		});
+		resp_wr_add8.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				actual_time1_wr_add8.setText(""+ fix_time(w_data_begin8, w_data_end8, b_picker8, e_picker8));				
 			}
 		});
 		//Если СМ то активируем поля нужные для заполнения СМ

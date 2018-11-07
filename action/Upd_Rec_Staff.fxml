@@ -43,7 +43,7 @@
                               <TextField fx:id="txt_otch_staff" layoutX="161.0" layoutY="165.0" />
                               <TextField fx:id="txt_imya_eng_staff" layoutX="161.0" layoutY="215.0" />
                               <TextField fx:id="txt_fam_eng_staff" layoutX="161.0" layoutY="265.0" />
-                              <DatePicker fx:id="d_dob_staff" layoutX="161.0" layoutY="315.0" prefHeight="25.0" prefWidth="149.0" />
+                              <DatePicker fx:id="d_dob_staff" editable="false" layoutX="161.0" layoutY="315.0" prefHeight="25.0" prefWidth="149.0" />
                               <TextField fx:id="txt_email_staff" layoutX="161.0" layoutY="365.0" text="-" />
                               <TextField fx:id="txt_skype_staff" layoutX="161.0" layoutY="415.0" text="-" />
                               <TextField fx:id="txt_cell1_staff" layoutX="544.0" layoutY="65.0" />
@@ -89,8 +89,8 @@
                               <TextField fx:id="txt_gwm_staff" layoutX="537.0" layoutY="65.0" />
                               <TextField fx:id="txt_shoes_staff" layoutX="537.0" layoutY="115.0" />
                               <TextField fx:id="txt_clothe_staff" layoutX="537.0" layoutY="165.0" />
-                              <DatePicker fx:id="d_dbegin_staff" layoutX="537.0" layoutY="215.0" prefHeight="25.0" prefWidth="149.0" />
-                              <DatePicker fx:id="d_dend_staff" layoutX="537.0" layoutY="265.0" prefHeight="25.0" prefWidth="149.0" />
+                              <DatePicker fx:id="d_dbegin_staff" editable="false" layoutX="537.0" layoutY="215.0" prefHeight="25.0" prefWidth="149.0" />
+                              <DatePicker fx:id="d_dend_staff" editable="false" layoutX="537.0" layoutY="265.0" prefHeight="25.0" prefWidth="149.0" />
                            </children>
                         </AnchorPane>
                   </content>

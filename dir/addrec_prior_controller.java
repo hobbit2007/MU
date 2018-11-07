@@ -39,7 +39,7 @@ public class addrec_prior_controller {
 	s_class scl = new s_class();
 	prior_controller pic = new prior_controller();
 	private Stage stage;
-	private static String pathToPdf = "\\\\10.168.170.49\\MU\\Img";
+	private static String pathToPdf = "\\\\10.168.170.253\\MU\\Img";
 	
 	@FXML
 	public void initialize()

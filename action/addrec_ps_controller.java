@@ -10,6 +10,8 @@ import com.jfoenix.controls.JFXButton;
 
 import application.conn_connector;
 import db._query;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -92,6 +94,41 @@ public class addrec_ps_controller {
 		sclass._style(add_ps);
 		sclass._style(cancel_ps);
 		sclass._style(exp_ps);
+		
+		osnum_ps_t.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if(!newValue.isEmpty()) {
+		
+				if (!newValue.matches("\\d*|#|\\*")) {
+					osnum_ps_t.setText(newValue.replaceAll("[^\\d|#|\\*]", ""));
+		        }
+				if(newValue.length() > 15) {
+					
+					osnum_ps_t.setText(newValue.replaceAll("[0-9]", ""));
+	            	
+				}
+			}
+			}
+		});
+		invnum_ps_t.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if(!newValue.isEmpty()) {
+		
+				if (!newValue.matches("\\d*|#|\\*")) {
+					invnum_ps_t.setText(newValue.replaceAll("[^\\d|#|\\*]", ""));
+		        }
+				if(newValue.length() > 15) {
+					
+					invnum_ps_t.setText(newValue.replaceAll("[0-9]", ""));
+	            	
+				}
+			}
+			}
+		});
 		
 		add_ps.setDisable(true);
 		LocalDate runDate = LocalDate.of(2018, Month.OCTOBER, 10);

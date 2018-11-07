@@ -37,8 +37,8 @@
                      <children>
                         <TableView fx:id="table_inst" prefHeight="673.0" prefWidth="1805.0">
                           <columns>
-                            <TableColumn fx:id="col_id_inst" prefWidth="40.0" sortable="false" text="№" />
-                            <TableColumn fx:id="col_ninst_inst" prefWidth="134.0" sortable="false" text="№ инструкции" />
+                            <TableColumn fx:id="col_id_inst" prefWidth="40.0" text="№" />
+                            <TableColumn fx:id="col_ninst_inst" prefWidth="134.0" text="№ инструкции" />
                               <TableColumn fx:id="col_date_create_pi" prefWidth="75.0" sortable="false" text="Дата созд." />
                               <TableColumn fx:id="col_date_change_pi" prefWidth="75.0" sortable="false" text="Дата изм." />
                               <TableColumn fx:id="col_inst_pi" prefWidth="75.0" sortable="false" text="Инс-я PDF" />

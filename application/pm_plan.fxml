@@ -22,9 +22,9 @@
             </Label>
             <TableView fx:id="table_pmplan" layoutX="25.0" layoutY="85.0" prefHeight="411.0" prefWidth="429.0">
               <columns>
-                <TableColumn fx:id="col_num_pmplan" prefWidth="97.0" sortable="false" text="№" />
-                  <TableColumn fx:id="col_group_pm_pmplan" prefWidth="75.0" sortable="false" text="Группа" />
-                <TableColumn fx:id="col_dd_pmplan" prefWidth="104.0" sortable="false" text="Due Date" />
+                <TableColumn fx:id="col_num_pmplan" prefWidth="97.0" text="№" />
+                  <TableColumn fx:id="col_group_pm_pmplan" prefWidth="75.0" text="Группа" />
+                <TableColumn fx:id="col_dd_pmplan" prefWidth="104.0" text="Due Date" />
                 <TableColumn fx:id="col_resp_pmplan" prefWidth="142.0" sortable="false" text="Ответственный" />
               </columns>
             </TableView>

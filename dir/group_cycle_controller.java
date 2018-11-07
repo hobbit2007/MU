@@ -170,7 +170,7 @@ public class group_cycle_controller {
 					
 				}
 			    } else if (option.get() == ButtonType.CANCEL) {
-			       //label.setText("Cancelled!");
+			       return;
 			    } else {
 			       //label.setText("-");
 			    }

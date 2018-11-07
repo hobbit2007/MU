@@ -52,7 +52,7 @@ public class addrec_inst_controller
 	File dataFile = null;
 	Tooltip tip;
 	
-	private static String pathToPdf = "\\\\10.168.170.49\\MU\\Instruction_PDF", pathToPdf1 = "C://";//user.home
+	private static String pathToPdf = "\\\\10.168.170.253\\MU\\Instruction_PDF", pathToPdf1 = "C://";//user.home
 			
 	@FXML
 	public void initialize()

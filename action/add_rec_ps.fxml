@@ -14,7 +14,7 @@
    <content>
       <Pane prefHeight="857.0" prefWidth="1189.0">
          <children>
-            <Label fx:id="head_ps" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="30.0" prefHeight="20.0" prefWidth="1224.0" text="Добавление записи в Plant Structure">
+            <Label fx:id="head_ps" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="30.0" prefHeight="20.0" prefWidth="1224.0" text="Добавление записи в Function Location">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>

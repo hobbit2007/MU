@@ -47,11 +47,11 @@
                                     <children>
                                     	<TableView fx:id="table_wp" prefHeight="583.0" prefWidth="1206.0">
 				                                <columns>
-				                                  <TableColumn fx:id="n_wp" prefWidth="75.0" sortable="false" text="№ AP" />
+				                                  <TableColumn fx:id="n_wp" prefWidth="75.0" text="№ AP" />
 				                                  <TableColumn fx:id="n_pm_wp" prefWidth="75.0" sortable="false" text="№ PM" />
 				                                    <TableColumn fx:id="type_wp" prefWidth="36.0" sortable="false" text="Тип" />
 				                                    <TableColumn fx:id="desc_wp" prefWidth="356.0" sortable="false" text="Описание" />
-				                                    <TableColumn fx:id="dd_wp" minWidth="0.0" prefWidth="95.0" sortable="false" text="Due Date" />
+				                                    <TableColumn fx:id="dd_wp" minWidth="0.0" prefWidth="95.0" text="Due Date" />
 				                                    <TableColumn fx:id="equip_wp" prefWidth="200.0" sortable="false" text="Оборудование" />
                                                 <TableColumn fx:id="col_tm_wp" prefWidth="75.0" text="Владелец" />
                                                 <TableColumn fx:id="col_oft_wp" prefWidth="75.0" text="Отв. за PM" />
@@ -122,11 +122,11 @@
 				                        <HBox prefHeight="369.0" prefWidth="24.0" />
 				                              <TableView fx:id="table_ap" prefHeight="541.0" prefWidth="1276.0">
 				                                <columns>
-				                                  <TableColumn fx:id="n_ap" prefWidth="75.0" sortable="false" text="№ AP" />
+				                                  <TableColumn fx:id="n_ap" prefWidth="75.0" text="№ AP" />
 				                                  <TableColumn fx:id="n_pm_ap" prefWidth="75.0" sortable="false" text="№ PM" />
 				                                    <TableColumn fx:id="type_ap" prefWidth="36.0" sortable="false" text="Тип" />
 				                                    <TableColumn fx:id="desc_ap" prefWidth="356.0" sortable="false" text="Описание" />
-				                                    <TableColumn fx:id="dd_ap" minWidth="0.0" prefWidth="95.0" sortable="false" text="Due Date" />
+				                                    <TableColumn fx:id="dd_ap" minWidth="0.0" prefWidth="95.0" text="Due Date" />
 				                                    <TableColumn fx:id="equip_ap" prefWidth="200.0" sortable="false" text="Оборудование" />
 				                                </columns>
 				                              </TableView>
@@ -233,16 +233,16 @@
 				                        <HBox prefHeight="380.0" prefWidth="13.0" />
 				                              <TableView fx:id="table_wr" prefHeight="613.0" prefWidth="1297.0">
 				                                <columns>
-				                                  <TableColumn fx:id="num_wr" prefWidth="75.0" sortable="false" text="№ WR" />
+				                                  <TableColumn fx:id="num_wr" prefWidth="75.0" text="№ WR" />
 				                                  <TableColumn fx:id="shift_report_wr" prefWidth="250.00003051757812" sortable="false" text="Описание" />
 				                                    <TableColumn fx:id="req_action_wr" prefWidth="260.0" sortable="false" text="Что сделано" />
 				                                    <TableColumn fx:id="actual_time_wr" prefWidth="58.0" sortable="false" text="Время простоя, мин" />
 				                                    <TableColumn fx:id="actual_time1_wr" prefWidth="61.0" sortable="false" text="Время работы, мин" />
-				                                    <TableColumn fx:id="data_wr" prefWidth="85.0" sortable="false" text="Дата" />
+				                                    <TableColumn fx:id="data_wr" prefWidth="85.0" text="Дата" />
 				                                    <TableColumn fx:id="equip_wr" prefWidth="176.0" sortable="false" text="Оборудование" />
 				                                    <TableColumn fx:id="record_type_wr" prefWidth="32.0" sortable="false" text="Тип" />
 				                                    <TableColumn fx:id="resp_wr" prefWidth="103.0" sortable="false" text="Исполнитель" />
-				                                    <TableColumn fx:id="status_wr" prefWidth="53.0" sortable="false" text="Статус" />
+				                                    <TableColumn fx:id="status_wr" prefWidth="53.0" text="Статус" />
 				                                </columns>
 				                              </TableView>
 				                     </children>

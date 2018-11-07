@@ -160,8 +160,8 @@ public class pm_inst_controller
 		col_of1_inst.setCellValueFactory(CellData -> CellData.getValue().OF_1Property());
 		col_of2_inst.setCellValueFactory(CellData -> CellData.getValue().OF_2Property());
 				
-		col_id_inst.setSortable(false);
-		col_ninst_inst.setSortable(false);
+		//col_id_inst.setSortable(false);
+		//col_ninst_inst.setSortable(false);
 		col_ver_inst.setSortable(false);
 		col_mt_inst.setSortable(false);
 		col_pmn_inst.setSortable(false);
