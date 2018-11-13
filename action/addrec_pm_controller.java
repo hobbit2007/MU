@@ -10,8 +10,10 @@ import com.jfoenix.controls.JFXButton;
 import application.conn_connector;
 import data.FxDatePickerConverter;
 import db._query;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -21,6 +23,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -45,6 +48,7 @@ public class addrec_pm_controller {
 	LocalDate new_date;
 	static String _last_id;
 		
+	@SuppressWarnings("static-access")
 	@FXML
 	public void initialize()
 	{
@@ -59,6 +63,47 @@ public class addrec_pm_controller {
 		
 		//инициализируем данные комбобоксов
 		ninst_pm.setItems(qr._select_instr_pm());
+		ninst_pm.requestFocus();
+		
+		FilteredList<String> filteredItems = new FilteredList<String>(qr._select_instr_pm(), p -> true);
+		
+		ninst_pm.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+            final TextField editor = ninst_pm.getEditor();
+            final String selected = ninst_pm.getSelectionModel().getSelectedItem();
+            
+            editor.requestFocus();
+                      
+            // This needs run on the GUI thread to avoid the error described
+            // here: https://bugs.openjdk.java.net/browse/JDK-8081700.
+            Platform.runLater(() -> {
+                // If the no item in the list is selected or the selected item
+                // isn't equal to the current input, we refilter the list.
+                if (selected == null || !selected.equals(editor.getText())) {
+                    filteredItems.setPredicate(item -> {
+                        // We return true for any items that starts with the
+                        // same letters as the input. We use toUpperCase to
+                        // avoid case sensitivity.
+                        if (item.toUpperCase().startsWith(newValue.toUpperCase())) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+                }
+            });
+        });
+		
+		if(!pc._num_inst_last.equals("NULL")) {
+			ninst_pm.setValue(pc._num_inst_last);//pc._num_inst_last.substring(0, pc._num_inst_last.length() - 1)  
+			ninst_pm.setItems(filteredItems);
+			ninst_pm.getEditor().requestFocus();
+			Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                	ninst_pm.getEditor().positionCaret(pc._num_inst_last.length());
+                }
+           });
+	}
 		confirm_pm.setDisable(true);
 		
 		sclass._style(confirm_pm);
@@ -87,7 +132,13 @@ public class addrec_pm_controller {
 
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-				group_eq.setItems(qr._select_pm_group(sclass.parser_str(ninst_pm.getValue(), 0)));				
+				try {
+					ninst_pm.getEditor().selectPositionCaret(pc._num_inst_last.length());
+					group_eq.setItems(qr._select_pm_group(sclass.parser_str(ninst_pm.getValue(), 0)));
+				}
+				catch (Exception e) {
+					
+				}
 			}
 		});
 				
@@ -254,6 +305,7 @@ public class addrec_pm_controller {
 				}
 			}
 		});
+		
 		String line1 = new String("ON");
 		String line2 = new String("OFF");
 		ool_pm.getItems().addAll(line1, line2);
@@ -269,7 +321,6 @@ public class addrec_pm_controller {
 		
 		confirm_pm.setOnAction(new EventHandler<ActionEvent>() {
 			
-			@SuppressWarnings("static-access")
 			@Override
 			public void handle(ActionEvent event) {
 				
@@ -282,6 +333,8 @@ public class addrec_pm_controller {
 				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + _last_id + " в таблице PM");
 					
 				pc._table_update_pm.addAll(qr._select_data_pm());
+				
+				pc._num_inst_last = sclass.parser_str(ninst_pm.getValue(), 0);
 				
 				if(!qr._select_recStr("hmmr_group_cycle", "PM_StartDate", "del_rec", "PM_Group", group_eq.getValue()).equals("2018-10-10") && !sclass.parser_sql_str(qr._select_for_pmgroup(group_eq.getValue()), 0).equals(group_eq.getValue())) {
 					Alert alert = new Alert(AlertType.CONFIRMATION);

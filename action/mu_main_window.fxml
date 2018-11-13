@@ -29,6 +29,12 @@
                               <MenuItem fx:id="psdb" mnemonicParsing="false" onAction="#get_PS" text="Plant Structure - Редактор" />
                               <MenuItem fx:id="pmplan" mnemonicParsing="false" onAction="#get_PM_Plan" text="PM Plan - Редактор" />
                               <MenuItem fx:id="staff" mnemonicParsing="false" onAction="#getStaff" text="Staff - Редактор" />
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <Menu fx:id="_action_store" mnemonicParsing="false" text="Склад">
+                                <items>
+                                  <MenuItem fx:id="spdb" mnemonicParsing="false" onAction="#getSP" text="SP DB - Редактор" />
+                                </items>
+                              </Menu>
                         </items>
                       </Menu>
                         <Menu fx:id="_dir" mnemonicParsing="false" text="Справочники">

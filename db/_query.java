@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import action.Hmmr_SP_Model;
 import action.Hmmr_Stuff_Model;
 import action.hmmr_ap_model;
 import action.hmmr_inst_model;
@@ -1260,7 +1261,7 @@ public class _query
 		ObservableList<String> list = FXCollections.observableArrayList();
 		
 		try {
-			String query = "select FL03_Shop_s, FL03_Shop_ENG from hmmr_plant_structure group by FL03_Shop_s, FL03_Shop_ENG;";
+			String query = "select FL03_Shop_s, FL03_Shop_ENG from hmmr_plant_structure where status = 0 group by FL03_Shop_s, FL03_Shop_ENG;";
 			
 			cn.ConToDb();
 			stmt6 = cn.con.createStatement();
@@ -1299,7 +1300,7 @@ public class _query
 		ObservableList<String> list = FXCollections.observableArrayList();
 		
 		try {
-			String query = "select FL05_Line_s, FL05_Line_ENG from hmmr_plant_structure where FL04_Group_s ="+"'"+group+"'"+" group by FL05_Line_s, FL05_Line_ENG;";
+			String query = "select FL05_Line_s, FL05_Line_ENG from hmmr_plant_structure where FL04_Group_s ="+"'"+group+"'"+" AND status = 0 group by FL05_Line_s, FL05_Line_ENG;";
 			
 			cn.ConToDb();
 			stmt6 = cn.con.createStatement();
@@ -1338,7 +1339,7 @@ public class _query
 		ObservableList<String> list = FXCollections.observableArrayList();
 		
 		try {
-			String query = "select FL04_Group_s from hmmr_plant_structure where FL03_Shop_s ="+"'"+shop+"'"+" group by FL04_Group_s;";
+			String query = "select FL04_Group_s from hmmr_plant_structure where FL03_Shop_s ="+"'"+shop+"'"+" AND status = 0 group by FL04_Group_s;";
 			
 			cn.ConToDb();
 			stmt6 = cn.con.createStatement();
@@ -1375,7 +1376,7 @@ public class _query
 					ObservableList<String> list = FXCollections.observableArrayList();
 					
 					try {
-						String query = "select FL06_Station_s, FL06_Station_ENG from hmmr_plant_structure where FL04_Group_s ="+"'"+group+"'"+" AND FL05_Line_s = "+"'"+lm+"'"+" group by FL06_Station_s, FL06_Station_ENG;";
+						String query = "select FL06_Station_s, FL06_Station_ENG from hmmr_plant_structure where FL04_Group_s ="+"'"+group+"'"+" AND FL05_Line_s = "+"'"+lm+"'"+" AND status = 0 group by FL06_Station_s, FL06_Station_ENG;";
 						
 						cn.ConToDb();
 						stmt6 = cn.con.createStatement();
@@ -1410,7 +1411,7 @@ public class _query
 					ObservableList<String> list = FXCollections.observableArrayList();
 					
 					try {
-						String query = "select FL07_Equipment_s, FL07_Equipment_ENG from hmmr_plant_structure where FL06_Station_s ="+"'"+os+"'"+" AND FL04_Group_s = "+"'"+grp+"'"+" AND FL05_Line_s = "+"'"+lm+"'"+" group by FL07_Equipment_s, FL07_Equipment_ENG;";
+						String query = "select FL07_Equipment_s, FL07_Equipment_ENG from hmmr_plant_structure where FL06_Station_s ="+"'"+os+"'"+" AND FL04_Group_s = "+"'"+grp+"'"+" AND FL05_Line_s = "+"'"+lm+"'"+" AND status = 0 group by FL07_Equipment_s, FL07_Equipment_ENG;";
 						
 						cn.ConToDb();
 						stmt6 = cn.con.createStatement();
@@ -4535,7 +4536,7 @@ public class _query
 		
 //***************************************************** PLANT STRUCTURE ********************************************************		
 		/**
-		 * Вставляем последню запись в таблицу Plant Structure
+		 * Вставляем запись в таблицу Plant Structure
 		 * @param id - id строки которую надо продублировать
 		 */
 		@SuppressWarnings("static-access")
@@ -6361,7 +6362,228 @@ public class _query
 		        }
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6149!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6338!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt12.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs12.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+			return list;
+		}
+		@SuppressWarnings("static-access")
+		public void _update_rec_users(String id, String first_name, String last_name, String login, String role)
+		{
+			String query = "UPDATE users SET first_name = "+"'"+first_name+"'"+",last_name = "+"'"+last_name+"'"+",login = "+"'"+login+"'"+",role = "+"'"+role+"'"+" where id = "+"'"+id+"'"+";";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6376!");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+		}
+		/**
+		 * Вставляем запись в таблицу hmmr_pm
+		 * @param id - id строки которую надо продублировать
+		 */
+		@SuppressWarnings("static-access")
+		public void _insert_pm_dup(int id)
+		{
+			String query = "INSERT INTO hmmr_pm (user_id, Instruction_num, Eq_ID, PM_Group, PM_Resp, OnOff_Line, PM_Executor) "
+					+ "SELECT user_id, Instruction_num, Eq_ID, PM_Group, PM_Resp, OnOff_Line, PM_Executor FROM hmmr_pm WHERE id = "+id+";";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "ADD STRING TO DB");
+				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6400!");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+		}
+		
+		/**
+		 * Вставляем запись в таблицу hmmr_part_characteristic
+		 * @param txt_pcn
+		 * @param txt_pcne
+		 * @param txt_pst
+		 * @param txt_pste
+		 * @param txt_pcn1
+		 * @param txt_pcn2
+		 * @param txt_pcn3
+		 * @param txt_pcn4
+		 * @param list_pt
+		 * @param list_spk
+		 */
+		@SuppressWarnings("static-access")
+		public void _insert_partchar(String txt_pcn, String txt_pcne, String list_pt, String list_spk, String txt_pst, String txt_pste, String txt_pcn1, String txt_pcn2, String txt_pcn3, String txt_pcn4)
+		{
+			String query = "INSERT INTO hmmr_part_characteristic(Part_Characteristic_Name, Part_Characteristic_Name_ENG, Part_Type, SP_KIND, Part_Sub_Type, Part_Sub_Type_ENG, Part_Characteristic_Name_1, Part_Characteristic_Name_2, Part_Characteristic_Name_3, Part_Characteristic_Name_4) VALUES ("+"'"+txt_pcn+"'"+","+"'"+txt_pcne+"'"+","+"'"+list_pt+"'"+","+"'"+list_spk+"'"+","+"'"+txt_pst+"'"+","+"'"+txt_pste+"'"+","+"'"+txt_pcn1+"'"+","+"'"+txt_pcn2+"'"+","+"'"+txt_pcn3+"'"+","+"'"+txt_pcn4+"'"+");";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "ADD STRING TO DB");
+				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6436!");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+		}
+		/**
+		 * Получаем значение полей, чтобы вставить их в соответствующие элементы для формы обновления справочника Part Char
+		 * @param id - id записи для обновления
+		 * @return - возвращаем набор данных
+		 */
+		@SuppressWarnings("static-access")
+		public String _select_for_update_partchar(String id)
+		{
+			String total_rez_upd_part = "NULL";
+			try {
+				String query = "select Part_Characteristic_Name, Part_Characteristic_Name_ENG, Part_Type, SP_KIND, Part_Sub_Type, Part_Sub_Type_ENG, Part_Characteristic_Name_1, Part_Characteristic_Name_2, Part_Characteristic_Name_3, Part_Characteristic_Name_4 from hmmr_part_characteristic where id = "+"'"+id+"'"+";";
+				
+				String Part_Characteristic_Name = "NULL", Part_Characteristic_Name_ENG = "NULL", Part_Type = "NULL", SP_KIND = "NULL", Part_Sub_Type = "NULL", Part_Sub_Type_ENG = "NULL", Part_Characteristic_Name_1 = "NULL", Part_Characteristic_Name_2 = "NULL", Part_Characteristic_Name_3 = "NULL", Part_Characteristic_Name_4 = "NULL"; 
+				
+				cn.ConToDb();
+				stmt9 = cn.con.createStatement();
+				rs9 = stmt9.executeQuery(query);
+				//log.log(Level.INFO, "CHANNEL WAS FOUND");
+		        while (rs9.next()) {
+		        	Part_Characteristic_Name = rs9.getString(1);
+		        	Part_Characteristic_Name_ENG = rs9.getString(2);
+		        	Part_Type = rs9.getString(3);
+		        	SP_KIND = rs9.getString(4);
+		        	Part_Sub_Type = rs9.getString(5);
+		        	Part_Sub_Type_ENG = rs9.getString(6);
+		        	Part_Characteristic_Name_1 = rs9.getString(7);
+		        	Part_Characteristic_Name_2 = rs9.getString(8);
+		        	Part_Characteristic_Name_3 = rs9.getString(9);
+		        	Part_Characteristic_Name_4 = rs9.getString(10);
+		        	
+		        }
+		        total_rez_upd_part = Part_Characteristic_Name+";"+Part_Characteristic_Name_ENG+";"+Part_Type+";"+SP_KIND+";"+Part_Sub_Type+";"+Part_Sub_Type_ENG+";"+Part_Characteristic_Name_1+";"+Part_Characteristic_Name_2+";"+Part_Characteristic_Name_3+";"+Part_Characteristic_Name_4;
+//		        System.out.println("SELECT WORKED: "+total_rez);
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6466!");
+	        } finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt9.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs9.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+			return total_rez_upd_part;
+		}
+		/**
+		 * Апдейтим запись в hmmr_part_characteristic
+		 * @param id
+		 * @param first_name
+		 * @param last_name
+		 * @param login
+		 * @param role
+		 */
+		@SuppressWarnings("static-access")
+		public void _update_partchar(String id, String txt_pcn, String txt_pcne, String list_pt, String list_spk, String txt_pst, String txt_pste, String txt_pcn1, String txt_pcn2, String txt_pcn3, String txt_pcn4)
+		{
+			String query = "UPDATE hmmr_part_characteristic SET Part_Characteristic_Name = "+"'"+txt_pcn+"'"+",Part_Characteristic_Name_ENG = "+"'"+txt_pcne+"'"+",Part_Type = "+"'"+list_pt+"'"+",SP_KIND = "+"'"+list_spk+"'"+",Part_Sub_Type = "+"'"+txt_pst+"'"+",Part_Sub_Type_ENG = "+"'"+txt_pste+"'"+",Part_Characteristic_Name_1 = "+"'"+txt_pcn1+"'"+",Part_Characteristic_Name_2 = "+"'"+txt_pcn2+"'"+",Part_Characteristic_Name_3 = "+"'"+txt_pcn3+"'"+",Part_Characteristic_Name_4 = "+"'"+txt_pcn4+"'"+" where id = "+"'"+id+"'"+";";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6509!");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+		}
+		/**
+		 * Заполняем данными таблицу при открытии окна из меню Действия->Склад->SP - Редактор
+		 * @return - возвращаем набор данных
+		 */
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<Hmmr_SP_Model> _select_data_sp()
+		{
+			ObservableList<Hmmr_SP_Model> list = FXCollections.observableArrayList();
+			
+			try {
+				String query = "SELECT id, HMMR_Material_Num, Manufacturer, Model, Article, Single_Complex_Sub, SP_MU_Description_RUS, SP_FD_Description, SP_Supplier_Description, Kind, SP_Part_Type, SP_Sub_Part_Type, Part_Characteristic_1, Part_Characteristic_2, Part_Characteristic_3, Part_Characteristic_4, Qty_S, Qty_W, Qty_P, Qty_A, Price, Key_No_Backup_Yes, Key_No_Backup_No, Key_Yes_Backup_Yes, Key_Yes_Backup_No, Risk_Breakage, Delivery_Time, Replacement_Model, Qty_Interchangeability, Qty_Identify_SP, Identity_SP, Coefficient, MIN, BATCH FROM hmmr_sp_db WHERE del_rec = 0;";
+							
+				cn.ConToDb();
+				stmt12 = cn.con.createStatement();
+				rs12 = stmt12.executeQuery(query);
+				 			
+		        while (rs12.next()) {
+		        	Hmmr_SP_Model hsm = new Hmmr_SP_Model();
+		        	if(rs12.getString(1) != null && rs12.getString(2) != null && rs12.getString(3) != null) {
+		        		hsm.Id.set(rs12.getString(1));
+		        		hsm.HMMR_Material_Num.set(rs12.getString(2));
+		        		hsm.Manufacturer.set(rs12.getString(3));
+		        		hsm.Model.set(rs12.getString(4));
+		        		hsm.Article.set(rs12.getString(5));
+		        		hsm.Single_Complex_Sub.set(rs12.getString(6));
+		        		hsm.SP_MU_Description_RUS.set(rs12.getString(7));
+		        		hsm.SP_FD_Description.set(rs12.getString(8));
+		        		hsm.SP_Supplier_Description.set(rs12.getString(9));
+		        		hsm.Kind.set(rs12.getString(10));
+		        		hsm.SP_Part_Type.set(rs12.getString(11));
+		        		hsm.SP_Sub_Part_Type.set(rs12.getString(12));
+		        		hsm.Part_Characteristic_1.set(rs12.getString(13));
+		        		hsm.Part_Characteristic_2.set(rs12.getString(14));
+		        		hsm.Part_Characteristic_3.set(rs12.getString(15));
+		        		hsm.Part_Characteristic_4.set(rs12.getString(16));
+		        		hsm.Qty_S.set(rs12.getString(17));
+		        		hsm.Qty_W.set(rs12.getString(18));
+		        		hsm.Qty_P.set(rs12.getString(19));
+		        		hsm.Qty_A.set(rs12.getString(20));
+		        		hsm.Price.set(rs12.getString(21));
+		        		hsm.Key_No_Backup_Yes.set(rs12.getString(22));
+		        		hsm.Key_No_Backup_No.set(rs12.getString(23));
+		        		hsm.Key_Yes_Backup_Yes.set(rs12.getString(24));
+		        		hsm.Key_Yes_Backup_No.set(rs12.getString(25));
+		        		hsm.Risk_Breakage.set(rs12.getString(26));
+		        		hsm.Delivery_Time.set(rs12.getString(27));
+		        		hsm.Replacement_Model.set(rs12.getString(28));
+		        		hsm.Qty_Interchangeability.set(rs12.getString(29));
+		        		hsm.Qty_Identify_SP.set(rs12.getString(30));
+		        		hsm.Identity_SP.set(rs12.getString(31));
+		        		hsm.Coefficient.set(rs12.getString(32));
+		        		hsm.MIN.set(rs12.getString(33));
+		        		hsm.BATCH.set(rs12.getString(34));
+		        				        						        				            
+			            list.add(hsm);
+		        	}    
+		        }
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6537!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }

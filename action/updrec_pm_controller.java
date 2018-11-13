@@ -7,8 +7,10 @@ import com.jfoenix.controls.JFXButton;
 
 import application.conn_connector;
 import db._query;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -59,6 +61,37 @@ public class updrec_pm_controller {
 		confirm_pm_upd.setDisable(true);
 		//инициализируем данные комбобоксов
 				ninst_pm_upd.setItems(qr._select_instr_pm());
+				
+				//Устанавливаем фокус и делаем фильтр по последней введенной инструкции
+				ninst_pm_upd.requestFocus();
+				
+				FilteredList<String> filteredItems = new FilteredList<String>(qr._select_instr_pm(), p -> true);
+				
+				ninst_pm_upd.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+		            final TextField editor = ninst_pm_upd.getEditor();
+		            final String selected = ninst_pm_upd.getSelectionModel().getSelectedItem();
+		            
+		            editor.requestFocus();
+		                      
+		            // This needs run on the GUI thread to avoid the error described
+		            // here: https://bugs.openjdk.java.net/browse/JDK-8081700.
+		            Platform.runLater(() -> {
+		                // If the no item in the list is selected or the selected item
+		                // isn't equal to the current input, we refilter the list.
+		                if (selected == null || !selected.equals(editor.getText())) {
+		                    filteredItems.setPredicate(item -> {
+		                        // We return true for any items that starts with the
+		                        // same letters as the input. We use toUpperCase to
+		                        // avoid case sensitivity.
+		                        if (item.toUpperCase().startsWith(newValue.toUpperCase())) {
+		                            return true;
+		                        } else {
+		                            return false;
+		                        }
+		                    });
+		                }
+		            });
+		        });
 				
 				ninst_pm_upd.setOnMouseEntered(new EventHandler<Event>() {
 
@@ -267,6 +300,15 @@ public class updrec_pm_controller {
 				equip_pm_upd.setText(qr._select_fillpm_equip(pc._eq_id_upd));
 				group_eq_upd.getSelectionModel().select(pc._group_pm_upd);
 				list_otv_isp_upd.getSelectionModel().select(pc._pm_exec);
+				
+				ninst_pm_upd.setItems(filteredItems);
+				ninst_pm_upd.getEditor().requestFocus();
+				Platform.runLater(new Runnable() {
+	                @Override
+	                public void run() {
+	                	ninst_pm_upd.getEditor().positionCaret(ninst_pm_upd.getEditor().getText().length());
+	                }
+	           });
 				
 				/*pmname_pm_upd.setOnAction(new EventHandler<ActionEvent>() {
 					

@@ -106,7 +106,7 @@
                               </Label>
                               <Label fx:id="lbl_login_staff" layoutX="63.0" layoutY="103.0" text="Логин:" />
                               <Label fx:id="lbl_passwd_staff" layoutX="63.0" layoutY="152.0" text="Пароль:" />
-                              <Label fx:id="lbl_rule_staff" layoutX="63.0" layoutY="203.0" text="Роль:" />
+                              <Label fx:id="lbl_rule_staff" layoutX="63.0" layoutY="203.0" text="Права доступа:" />
                               <ComboBox fx:id="list_rule_staff" layoutX="162.0" layoutY="199.0" prefWidth="150.0" />
                               <TextField fx:id="txt_passwd_staff" layoutX="163.0" layoutY="148.0" />
                               <TextField fx:id="txt_login_staff" layoutX="163.0" layoutY="99.0" />

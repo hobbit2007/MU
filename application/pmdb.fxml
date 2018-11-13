@@ -89,6 +89,12 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
+                        <HBox prefHeight="100.0" prefWidth="17.0" />
+                        <JFXButton fx:id="dup_rec_pm" text="Дублировать x записей">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                   </HBox>
                </children>

@@ -355,13 +355,7 @@ public class Updrec_Staff_Controller {
 				chk_btn();
 			}
 		});
-		txt_passwd_staff.setOnKeyReleased(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event arg0) {
-				chk_btn();
-			}
-		});
+		
 		btn_gen_staff.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -515,12 +509,21 @@ public class Updrec_Staff_Controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				qr._update_rec_staff(sc._id_staff, txt_staffid_staff.getText(), txt_ID_staff.getText(), txt_fam_staff.getText(), txt_imya_staff.getText(), txt_otch_staff.getText(), txt_imya_eng_staff.getText(), txt_fam_eng_staff.getText(), d_dob_staff.getValue(), list_sec_staff.getValue(), list_groups_staff.getValue(), list_team_staff.getValue(), txt_work_staff.getText(), txt_pos_staff.getText(), txt_pos_rus_staff.getText(), txt_gwm_staff.getText(), d_dbegin_staff.getValue(), txt_email_staff.getText(), txt_skype_staff.getText(), txt_cell1_staff.getText(), txt_cell2_staff.getText(), txt_adr_staff.getText(), txt_avto_staff.getText(), txt_shoes_staff.getText(), txt_clothe_staff.getText(), d_dend_staff.getValue());
-				qr._update_rec_users(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 28), txt_imya_staff.getText(), txt_fam_staff.getText(), txt_login_staff.getText(), txt_passwd_staff.getText(), Role);
-				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + qr._select_last_id("hmmr_mu_staff") + " в таблице STAFF");
-				qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + qr._select_last_id("users") + " в таблице Users");
-				sc._table_update_staff.addAll(qr._select_data_staff());
-				
+				if(conn_connector.USER_ROLE.equals("Administrator")) {
+					qr._update_rec_staff(sc._id_staff, txt_staffid_staff.getText(), txt_ID_staff.getText(), txt_fam_staff.getText(), txt_imya_staff.getText(), txt_otch_staff.getText(), txt_imya_eng_staff.getText(), txt_fam_eng_staff.getText(), d_dob_staff.getValue(), list_sec_staff.getValue(), list_groups_staff.getValue(), list_team_staff.getValue(), txt_work_staff.getText(), txt_pos_staff.getText(), txt_pos_rus_staff.getText(), txt_gwm_staff.getText(), d_dbegin_staff.getValue(), txt_email_staff.getText(), txt_skype_staff.getText(), txt_cell1_staff.getText(), txt_cell2_staff.getText(), txt_adr_staff.getText(), txt_avto_staff.getText(), txt_shoes_staff.getText(), txt_clothe_staff.getText(), d_dend_staff.getValue());
+					qr._update_rec_users(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 28), txt_imya_staff.getText(), txt_fam_staff.getText(), txt_login_staff.getText(), txt_passwd_staff.getText(), Role);
+					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + qr._select_last_id("hmmr_mu_staff") + " в таблице STAFF");
+					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + qr._select_last_id("users") + " в таблице Users");
+					sc._table_update_staff.addAll(qr._select_data_staff());
+				}
+				else
+				{
+					qr._update_rec_staff(sc._id_staff, txt_staffid_staff.getText(), txt_ID_staff.getText(), txt_fam_staff.getText(), txt_imya_staff.getText(), txt_otch_staff.getText(), txt_imya_eng_staff.getText(), txt_fam_eng_staff.getText(), d_dob_staff.getValue(), list_sec_staff.getValue(), list_groups_staff.getValue(), list_team_staff.getValue(), txt_work_staff.getText(), txt_pos_staff.getText(), txt_pos_rus_staff.getText(), txt_gwm_staff.getText(), d_dbegin_staff.getValue(), txt_email_staff.getText(), txt_skype_staff.getText(), txt_cell1_staff.getText(), txt_cell2_staff.getText(), txt_adr_staff.getText(), txt_avto_staff.getText(), txt_shoes_staff.getText(), txt_clothe_staff.getText(), d_dend_staff.getValue());
+					qr._update_rec_users(scl.parser_str(qr._select_for_staff_str(sc._id_staff), 28), txt_imya_staff.getText(), txt_fam_staff.getText(), txt_login_staff.getText(), Role);
+					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + qr._select_last_id("hmmr_mu_staff") + " в таблице STAFF");
+					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + qr._select_last_id("users") + " в таблице Users");
+					sc._table_update_staff.addAll(qr._select_data_staff());
+				}
 				stage = (Stage) btn_add_staff.getScene().getWindow();
 				stage.close();
 			}
@@ -544,7 +547,7 @@ public class Updrec_Staff_Controller {
 					txt_avto_staff.getText().length() != 0 && txt_staffid_staff.getText().length() != 0 &&
 					txt_ID_staff.getText().length() != 0 && txt_pos_rus_staff.getText().length() != 0 && txt_pos_staff.getText().length() != 0 &&
 					txt_work_staff.getText().length() != 0 && txt_gwm_staff.getText().length() != 0 && txt_shoes_staff.getText().length() != 0 && txt_clothe_staff.getText().length() != 0 &&
-					txt_login_staff.getText().length() != 0 && txt_passwd_staff.getText().length() != 0 && list_sec_staff.getValue().length() != 0 && list_groups_staff.getValue().length() != 0 &&
+					txt_login_staff.getText().length() != 0 && list_sec_staff.getValue().length() != 0 && list_groups_staff.getValue().length() != 0 &&
 					list_team_staff.getValue().length() != 0 && list_pos_rus_staff.getValue().length() != 0 && list_pos_staff.getValue().length() != 0 && list_rule_staff.getValue().length() != 0 &&
 					d_dob_staff.getValue().toString().length() != 0 && d_dbegin_staff.getValue().toString().length() != 0)
 				btn_add_staff.setDisable(false);

@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="522.0" prefWidth="552.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1">
+<AnchorPane prefHeight="522.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dir.Addrec_PartChar_Controller">
    <children>
       <Pane prefHeight="522.0" prefWidth="552.0">
          <children>

@@ -1,11 +1,26 @@
 package dir;
 
+import java.io.IOException;
+
 import com.jfoenix.controls.JFXButton;
 
+import application.mu_main_controller;
 import db._query;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import share_class.s_class;
 
 public class PartChar_Controller {
@@ -20,8 +35,13 @@ public class PartChar_Controller {
 	@FXML
 	JFXButton btn_add_pc, btn_upd_pc, btn_del_pc, btn_upd_tbl_pc, btn_cancel_pc;
 	
+	public static ObservableList<Hmmr_PartChar_Model> _table_update_partchar = FXCollections.observableArrayList();
+	public static boolean _flag_window_pc = true;
+	public static String _id_part_char = "0";
+	
 	_query qr = new _query();
 	s_class scl = new s_class();
+	Stage stage = new Stage();
 	
 	@FXML
 	public void initialize()
@@ -48,10 +68,93 @@ public class PartChar_Controller {
 		col_Part_Characteristic_Name_2.setCellValueFactory(CellData -> CellData.getValue().getPart_Characteristic_Name_2());
 		col_Part_Characteristic_Name_3.setCellValueFactory(CellData -> CellData.getValue().getPart_Characteristic_Name_3());
 		col_Part_Characteristic_Name_4.setCellValueFactory(CellData -> CellData.getValue().getPart_Characteristic_Name_4());
+		
+		btn_add_pc.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				btn_upd_pc.setDisable(true);
+				btn_del_pc.setDisable(true);
+				
+				_flag_window_pc = true;
+			try {					
+				part_add(stage);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			}
+		});
+		
+		_table_update_partchar.addListener(new ListChangeListener<Hmmr_PartChar_Model> () {
+
+			@Override
+			public void onChanged(Change<? extends Hmmr_PartChar_Model> arg0) {
+				table_partchar.setItems(qr._select_data_partchar());
+				table_partchar.getColumns().get(0).setVisible(false);
+		        table_partchar.getColumns().get(0).setVisible(true);
+			}
+			
+		});
+		table_partchar.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event arg0) {
+				btn_upd_pc.setDisable(false);
+				btn_del_pc.setDisable(false);
+				try {
+					_id_part_char = table_partchar.getSelectionModel().getSelectedItem().getIdStr();
+				}
+				catch (Exception e) {
+					
+				}
+			}
+		});
+		table_partchar.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				_flag_window_pc = false;
+				_id_part_char = table_partchar.getSelectionModel().getSelectedItem().getIdStr();
+				try {
+					part_add(stage);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		btn_upd_pc.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				_flag_window_pc = false;
+				btn_upd_pc.setDisable(true);
+				btn_del_pc.setDisable(true);
+				try {
+					part_add(stage);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	void initData()
 	{
 		table_partchar.setItems(qr._select_data_partchar());
 	}
+	
+	protected void part_add(Stage stage) throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("Add_Rec_PartChar.fxml"));
+		   
+	    Scene scene = new Scene(root);
+	    Stage stage_set = new Stage();
+	    stage_set.setTitle("M&U - Add Record Window");
+	    stage_set.setResizable(false);
+	    stage_set.initModality(Modality.WINDOW_MODAL);
+	    stage_set.initOwner(mu_main_controller.getPrimaryStage());
+	    stage_set.setScene(scene);
+	    stage_set.show();
+	}
+	
 }

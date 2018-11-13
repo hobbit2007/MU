@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import application.conn_connector;
+import application.mu_main_controller;
 import data.FxDatePickerConverter;
 import db._query;
 import javafx.beans.property.SimpleObjectProperty;
@@ -32,6 +33,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -46,7 +48,7 @@ public class pm_controller {
 	TableColumn<hmmr_pm_model, String> col_id_pm, col_ninst_pm, col_group_pm, col_ool_pm, col_otv_pm, col_isp_pm; //col_group_eq, col_lm_pm, col_os_pm, col_equip_pm, col_pmn_pm, col_pmc_pm, col_pmtype_pm, 
 	
 	@FXML
-	JFXButton add_ap_pm, add_pm, upd_pm, del_pm, close_pm, upd_table_pm;
+	JFXButton add_ap_pm, add_pm, upd_pm, del_pm, close_pm, upd_table_pm, dup_rec_pm;
 	
 	public static String _id_pm, _ninst_pm_upd, _eq_id_upd,_group_pm_upd, _ool_pm_upd, _otv, _pm_exec;// _group_eq_upd, _lm_pm_upd, _os_pm_upd, _equip_pm_upd, _pmn_pm_upd, _pmc_pm_upd, _pmtype_pm_upd, 
 	
@@ -70,6 +72,9 @@ public class pm_controller {
 	private String name_col = "Оборудование";
 	public static ObservableList<hmmr_pm_model> _table_update_pm = FXCollections.observableArrayList();
 	TableColumn<hmmr_pm_model, String> col_eq_id = new TableColumn<hmmr_pm_model, String>(name_col);
+	
+	public static int _Id_Dup_Pm = 0;
+	public static String _num_inst_last = "NULL"; //Номер последней выбранной инструкции
 	
 	@FXML
 	public void initialize()
@@ -167,6 +172,7 @@ public class pm_controller {
 		upd_pm.setDisable(true);
 		del_pm.setDisable(true);
 		add_ap_pm.setDisable(true);
+		dup_rec_pm.setDisable(true);
 		
 		if(conn_connector.LANG_ID == 1)
 			lang_fun("en", "EN");
@@ -183,6 +189,7 @@ public class pm_controller {
 		scl._style(del_pm);
 		scl._style(close_pm);
 		scl._style(upd_table_pm);
+		scl._style(dup_rec_pm);
 		//Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 		//Double screen_width = primaryScreenBounds.getWidth();
 		//Double screen_hight = primaryScreenBounds.getHeight(); 
@@ -264,6 +271,8 @@ public class pm_controller {
 				//	if(!conn_connector.USER_ROLE.equals("Engeneer"))
 					del_pm.setDisable(false);
 					add_ap_pm.setDisable(false);
+					dup_rec_pm.setDisable(false);
+					_Id_Dup_Pm = Integer.parseInt(table_pm.getSelectionModel().getSelectedItem().getId());
 				}
 			});
 	        add_pm.setOnAction(new EventHandler<ActionEvent>() {
@@ -274,6 +283,7 @@ public class pm_controller {
 	    				upd_pm.setDisable(true);
 	    				del_pm.setDisable(true);
 	    				add_ap_pm.setDisable(true);
+	    				dup_rec_pm.setDisable(true);
 	    				
 	    				pm_add(stage);
 	    			} catch (IOException e) {
@@ -288,6 +298,7 @@ public class pm_controller {
 					upd_pm.setDisable(true);
 					del_pm.setDisable(true);
 					add_ap_pm.setDisable(true);
+					dup_rec_pm.setDisable(true);
 					hmmr_pm_model _ccl1 = table_pm.getSelectionModel().getSelectedItem();
 					try {
 					func_upd(_ccl1.getId());
@@ -422,6 +433,19 @@ public class pm_controller {
 	        table_pm.getFocusModel().focus(0);
 	        table_pm.getSelectionModel().selectLast();
 	        table_pm.scrollTo(table_pm.getItems().size());
+	        
+	        dup_rec_pm.setOnAction(new EventHandler<ActionEvent>() {
+				
+				@Override
+				public void handle(ActionEvent arg0) {
+					try {
+						pm_dup();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
 	}
 	
 	private void initData()
@@ -502,4 +526,17 @@ public class pm_controller {
 		close_pm.setText(lngBndl.getString("cancel_tsk"));
 		upd_table_pm.setText(lngBndl.getString("upd_table_wr"));
 	}
+	
+	//Вызываем окно дублирования записи
+		protected void pm_dup() throws IOException {
+			Parent root = FXMLLoader.load(getClass().getResource("duplicate_rec_pm.fxml"));
+			Scene scene = new Scene(root);
+		    Stage stage_set = new Stage();
+			stage_set.initModality(Modality.WINDOW_MODAL);	
+			stage_set.initOwner(mu_main_controller.getPrimaryStage());
+		    stage_set.setTitle("M&U - Duplicate Record Window");
+		    stage_set.setResizable(false);
+		    stage_set.setScene(scene);
+		    stage_set.show();
+		}
 }

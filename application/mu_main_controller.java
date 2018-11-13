@@ -37,7 +37,7 @@ public class mu_main_controller
 	VBox root1;
 	
 	@FXML
-	MenuItem pm_cyc, typepm, pm_inst, pm, psdb, about_program, apwr, pmplan, prior, gc, ot, staff, parttype, partchar;
+	MenuItem pm_cyc, typepm, pm_inst, pm, psdb, about_program, apwr, pmplan, prior, gc, ot, staff, parttype, partchar, spdb;
 	
 	@FXML
 	MenuBar menubar_id;
@@ -46,7 +46,7 @@ public class mu_main_controller
 	HBox hbox_id;
 	
 	@FXML
-	Menu _action, _dir, _rep, _set, _ext, _store;
+	Menu _action, _dir, _rep, _set, _ext, _store, _action_store;
 	
 	@FXML
 	BorderPane _bpane;
@@ -102,13 +102,14 @@ public class mu_main_controller
 			ot.setDisable(true);
 			staff.setDisable(true);
 			_store.setDisable(true);
+			_action_store.setDisable(true);
 		}
 		
 		if(conn_connector.USER_ROLE.equals("Engeneer"))
 		{
 			//pm_cyc.setDisable(true);
 			//typepm.setDisable(true);
-			_store.setDisable(true);
+			//_store.setDisable(true);
 		}
 		
 		if(conn_connector.LANG_ID == 1)
@@ -122,6 +123,7 @@ public class mu_main_controller
 			_set.setText(lngBndl.getString("_set"));
 			_ext.setText(lngBndl.getString("_ext"));
 			_store.setText(lngBndl.getString("_store"));
+			_action_store.setText(lngBndl.getString("_store"));
 			pm_cyc.setText(lngBndl.getString("pm_cyc"));
 			typepm.setText(lngBndl.getString("typepm_key"));
 			pm_inst.setText(lngBndl.getString("pm_inst"));
@@ -136,6 +138,7 @@ public class mu_main_controller
 			staff.setText(lngBndl.getString("lbl_staff"));
 			parttype.setText(lngBndl.getString("part_type"));
 			partchar.setText(lngBndl.getString("part_char"));
+			spdb.setText(lngBndl.getString("sp_db"));
 		}
 		
 		if(conn_connector.LANG_ID == 0)
@@ -149,6 +152,7 @@ public class mu_main_controller
 			_set.setText(lngBndl.getString("_set"));
 			_ext.setText(lngBndl.getString("_ext"));
 			_store.setText(lngBndl.getString("_store"));
+			_action_store.setText(lngBndl.getString("_store"));
 			pm_cyc.setText(lngBndl.getString("pm_cyc"));
 			typepm.setText(lngBndl.getString("typepm_key"));
 			pm_inst.setText(lngBndl.getString("pm_inst"));
@@ -163,6 +167,7 @@ public class mu_main_controller
 			staff.setText(lngBndl.getString("lbl_staff"));
 			parttype.setText(lngBndl.getString("part_type"));
 			partchar.setText(lngBndl.getString("part_char"));
+			spdb.setText(lngBndl.getString("sp_db"));
 		}
 		if(conn_connector.LANG_ID == 2)
 		{
@@ -175,6 +180,7 @@ public class mu_main_controller
 			_set.setText(lngBndl.getString("_set"));
 			_ext.setText(lngBndl.getString("_ext"));
 			_store.setText(lngBndl.getString("_store"));
+			_action_store.setText(lngBndl.getString("_store"));
 			pm_cyc.setText(lngBndl.getString("pm_cyc"));
 			typepm.setText(lngBndl.getString("typepm_key"));
 			pm_inst.setText(lngBndl.getString("pm_inst"));
@@ -189,6 +195,7 @@ public class mu_main_controller
 			staff.setText(lngBndl.getString("lbl_staff"));
 			parttype.setText(lngBndl.getString("part_type"));
 			partchar.setText(lngBndl.getString("part_char"));
+			spdb.setText(lngBndl.getString("sp_db"));
 		}
 		if(conn_connector.LANG_ID == -1)
 		{
@@ -201,6 +208,7 @@ public class mu_main_controller
 			_set.setText(lngBndl.getString("_set"));
 			_ext.setText(lngBndl.getString("_ext"));
 			_store.setText(lngBndl.getString("_store"));
+			_action_store.setText(lngBndl.getString("_store"));
 			pm_cyc.setText(lngBndl.getString("pm_cyc"));
 			typepm.setText(lngBndl.getString("typepm_key"));
 			pm_inst.setText(lngBndl.getString("pm_inst"));
@@ -215,6 +223,7 @@ public class mu_main_controller
 			staff.setText(lngBndl.getString("lbl_staff"));
 			parttype.setText(lngBndl.getString("part_type"));
 			partchar.setText(lngBndl.getString("part_char"));
+			spdb.setText(lngBndl.getString("sp_db"));
 		}
 		
 		//Автоматически вызываем окно Action Plan & Work Recording
@@ -445,6 +454,17 @@ public class mu_main_controller
 			}
 		}
 		
+		//Вызываем из меню Редактор SP DB
+		@FXML
+		public void getSP() {
+			Stage stage = new Stage();
+		       try {
+				sp_start(stage);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		protected void pmtype_start(Stage stage) throws IOException {
 			setPrimaryStage(stage);
 		    Parent root = FXMLLoader.load(getClass().getResource("type_pm.fxml"));
@@ -621,6 +641,19 @@ public class mu_main_controller
 	        Scene scene = new Scene(root);
 	        stage.setTitle("M&U - Part Char Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
 	        stage.setResizable(false);
+	        stage.setScene(scene);
+	        	        
+	        stage.show();
+	        
+		}
+		
+		protected void sp_start(Stage stage) throws IOException {
+			setPrimaryStage(stage);
+			Parent root = FXMLLoader.load(getClass().getResource("SpDb.fxml"));
+		    
+	        Scene scene = new Scene(root);
+	        stage.setTitle("M&U - SP DB Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
+	        //stage.setResizable(false);
 	        stage.setScene(scene);
 	        	        
 	        stage.show();
