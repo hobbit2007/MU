@@ -33,6 +33,7 @@
                               <Menu fx:id="_action_store" mnemonicParsing="false" text="Склад">
                                 <items>
                                   <MenuItem fx:id="spdb" mnemonicParsing="false" onAction="#getSP" text="SP DB - Редактор" />
+                                    <MenuItem fx:id="parts" mnemonicParsing="false" onAction="#getParts" text="Parts Specification - Редактор" />
                                 </items>
                               </Menu>
                         </items>
@@ -48,6 +49,7 @@
                               <Menu fx:id="_store" mnemonicParsing="false" text="Склад">
                                 <items>
                                   <MenuItem fx:id="parttype" mnemonicParsing="false" onAction="#getPart" text="Part Type - Редактор" />
+                                    <MenuItem fx:id="partchardir" mnemonicParsing="false" onAction="#getPartCharDir" text="Part Char - Редактор" />
                                     <MenuItem fx:id="partchar" mnemonicParsing="false" onAction="#getPartChar" text="Part Characteristic - Редактор" />
                                 </items>
                               </Menu>

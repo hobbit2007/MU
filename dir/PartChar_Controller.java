@@ -29,7 +29,7 @@ public class PartChar_Controller {
 	TableView<Hmmr_PartChar_Model> table_partchar = new TableView<>();
 	
 	@FXML
-	TableColumn<Hmmr_PartChar_Model, String> col_id_pc, col_Part_Characteristic_Name, col_Part_Characteristic_Name_ENG, col_Part_Type, col_SP_KIND, col_Part_Sub_Type, 
+	TableColumn<Hmmr_PartChar_Model, String> col_id_pc, col_Part_Type, col_SP_KIND, col_Part_Sub_Type, 
 		col_Part_Sub_Type_ENG, col_Part_Characteristic_Name_1, col_Part_Characteristic_Name_2, col_Part_Characteristic_Name_3, col_Part_Characteristic_Name_4;
 	
 	@FXML
@@ -58,8 +58,6 @@ public class PartChar_Controller {
 		initData();
 		
 		col_id_pc.setCellValueFactory(CellData -> CellData.getValue().getId());
-		col_Part_Characteristic_Name.setCellValueFactory(CellData -> CellData.getValue().getPart_Characteristic_Name());
-		col_Part_Characteristic_Name_ENG.setCellValueFactory(CellData -> CellData.getValue().getPart_Characteristic_Name_ENG());
 		col_Part_Type.setCellValueFactory(CellData -> CellData.getValue().getPart_Type());
 		col_SP_KIND.setCellValueFactory(CellData -> CellData.getValue().getSP_KIND());
 		col_Part_Sub_Type.setCellValueFactory(CellData -> CellData.getValue().getPart_Sub_Type());
@@ -112,13 +110,15 @@ public class PartChar_Controller {
 		table_partchar.setOnMousePressed(new EventHandler<MouseEvent>() {
 
 			@Override
-			public void handle(MouseEvent arg0) {
-				_flag_window_pc = false;
-				_id_part_char = table_partchar.getSelectionModel().getSelectedItem().getIdStr();
-				try {
-					part_add(stage);
-				} catch (IOException e) {
-					e.printStackTrace();
+			public void handle(MouseEvent event) {
+				if (event.getClickCount() == 2 ){
+					_flag_window_pc = false;
+					_id_part_char = table_partchar.getSelectionModel().getSelectedItem().getIdStr();
+					try {
+						part_add(stage);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		});
@@ -132,7 +132,6 @@ public class PartChar_Controller {
 				try {
 					part_add(stage);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

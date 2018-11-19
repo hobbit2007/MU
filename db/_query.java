@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import action.Hmmr_PartS_Model;
 import action.Hmmr_SP_Model;
 import action.Hmmr_Stuff_Model;
 import action.hmmr_ap_model;
@@ -18,6 +19,7 @@ import action.hmmr_wr_model;
 import application.conn_connector;
 import dir.Cycle;
 import dir.Hmmr_OrderType_Model;
+import dir.Hmmr_PartCharDir_Model;
 import dir.Hmmr_PartChar_Model;
 import dir.Hmmr_Part_Model;
 import dir.hmmr_groupcycle_model;
@@ -5957,6 +5959,44 @@ public class _query
 			return list;
 		}
 		/**
+		 * Получаем все значения парой из любой таблицы в БД ЧИСЛО МАССИВ
+		 * @param tbl_name - Имя таблицы в БД
+		 * @param str - Имя поля значение которого необходимо получить
+		 * @param str1 - Имя второго поля значение которого необходимо получить
+		 * @param del_name - Имя поля с признаком удаления
+		 * @return
+		 */
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<String> _select_recArr(String tbl_name, String str, String str1, String del_name)
+		{
+			ObservableList<String> list = FXCollections.observableArrayList();
+			
+			try {
+				String query = "select "+str+","+str1+" from "+tbl_name+" where "+del_name+" = 0;";
+				
+				cn.ConToDb();
+				stmt6 = cn.con.createStatement();
+				rs6 = stmt6.executeQuery(query);
+							
+		        while (rs6.next()) {
+		        	if(rs6.getString(1) != null) {
+		        		list.add(rs6.getString(1) + " - " + rs6.getString(2));			        					            
+			        }    
+		        }
+
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5927!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt6.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs6.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+
+			return list;
+		}
+		/**
 		 * Получаем Полное описание к картинке вида работ, чтобы вывести его в виде подсказки
 		 * при наведении мышки на иконку вида работ в таблице Action Plan
 		 * @param id - id в AP чтобы получить имя вида работ, а по нему и полное описание
@@ -6336,7 +6376,7 @@ public class _query
 			ObservableList<Hmmr_PartChar_Model> list = FXCollections.observableArrayList();
 			
 			try {
-				String query = "select id, Part_Characteristic_Name, Part_Characteristic_Name_ENG, Part_Type, SP_KIND, Part_Sub_Type, Part_Sub_Type_ENG, Part_Characteristic_Name_1, Part_Characteristic_Name_2, Part_Characteristic_Name_3, Part_Characteristic_Name_4 from hmmr_part_characteristic where del_rec = 0;";
+				String query = "select id, Part_Type, SP_KIND, Part_Sub_Type, Part_Sub_Type_ENG, Part_Characteristic_Name_1, Part_Characteristic_Name_2, Part_Characteristic_Name_3, Part_Characteristic_Name_4 from hmmr_part_characteristic where del_rec = 0;";
 							
 				cn.ConToDb();
 				stmt12 = cn.con.createStatement();
@@ -6346,16 +6386,14 @@ public class _query
 		        	Hmmr_PartChar_Model hpm = new Hmmr_PartChar_Model();
 		        	if(rs12.getString(1) != null && rs12.getString(2) != null && rs12.getString(3) != null) {
 		        		hpm.Id.set(rs12.getString(1));
-		        		hpm.Part_Characteristic_Name.set(rs12.getString(2));
-		        		hpm.Part_Characteristic_Name_ENG.set(rs12.getString(3));
-		        		hpm.Part_Type.set(rs12.getString(4));
-		        		hpm.SP_KIND.set(rs12.getString(5));
-		        		hpm.Part_Sub_Type.set(rs12.getString(6));
-		        		hpm.Part_Sub_Type_ENG.set(rs12.getString(7));
-		        		hpm.Part_Characteristic_Name_1.set(rs12.getString(8));
-		        		hpm.Part_Characteristic_Name_2.set(rs12.getString(9));
-		        		hpm.Part_Characteristic_Name_3.set(rs12.getString(10));
-		        		hpm.Part_Characteristic_Name_4.set(rs12.getString(11));
+		        		hpm.Part_Type.set(rs12.getString(2));
+		        		hpm.SP_KIND.set(rs12.getString(3));
+		        		hpm.Part_Sub_Type.set(rs12.getString(4));
+		        		hpm.Part_Sub_Type_ENG.set(rs12.getString(5));
+		        		hpm.Part_Characteristic_Name_1.set(rs12.getString(6));
+		        		hpm.Part_Characteristic_Name_2.set(rs12.getString(7));
+		        		hpm.Part_Characteristic_Name_3.set(rs12.getString(8));
+		        		hpm.Part_Characteristic_Name_4.set(rs12.getString(9));
 		        				        						        				            
 			            list.add(hpm);
 		        	}    
@@ -6420,8 +6458,6 @@ public class _query
 		
 		/**
 		 * Вставляем запись в таблицу hmmr_part_characteristic
-		 * @param txt_pcn
-		 * @param txt_pcne
 		 * @param txt_pst
 		 * @param txt_pste
 		 * @param txt_pcn1
@@ -6432,9 +6468,9 @@ public class _query
 		 * @param list_spk
 		 */
 		@SuppressWarnings("static-access")
-		public void _insert_partchar(String txt_pcn, String txt_pcne, String list_pt, String list_spk, String txt_pst, String txt_pste, String txt_pcn1, String txt_pcn2, String txt_pcn3, String txt_pcn4)
+		public void _insert_partchar(String list_pt, String list_spk, String txt_pst, String txt_pste, String txt_pcn1, String txt_pcn2, String txt_pcn3, String txt_pcn4)
 		{
-			String query = "INSERT INTO hmmr_part_characteristic(Part_Characteristic_Name, Part_Characteristic_Name_ENG, Part_Type, SP_KIND, Part_Sub_Type, Part_Sub_Type_ENG, Part_Characteristic_Name_1, Part_Characteristic_Name_2, Part_Characteristic_Name_3, Part_Characteristic_Name_4) VALUES ("+"'"+txt_pcn+"'"+","+"'"+txt_pcne+"'"+","+"'"+list_pt+"'"+","+"'"+list_spk+"'"+","+"'"+txt_pst+"'"+","+"'"+txt_pste+"'"+","+"'"+txt_pcn1+"'"+","+"'"+txt_pcn2+"'"+","+"'"+txt_pcn3+"'"+","+"'"+txt_pcn4+"'"+");";
+			String query = "INSERT INTO hmmr_part_characteristic(Part_Type, SP_KIND, Part_Sub_Type, Part_Sub_Type_ENG, Part_Characteristic_Name_1, Part_Characteristic_Name_2, Part_Characteristic_Name_3, Part_Characteristic_Name_4) VALUES ("+"'"+list_pt+"'"+","+"'"+list_spk+"'"+","+"'"+txt_pst+"'"+","+"'"+txt_pste+"'"+","+"'"+txt_pcn1+"'"+","+"'"+txt_pcn2+"'"+","+"'"+txt_pcn3+"'"+","+"'"+txt_pcn4+"'"+");";
 			
 			try {
 				cn.ConToDb();
@@ -6462,28 +6498,26 @@ public class _query
 		{
 			String total_rez_upd_part = "NULL";
 			try {
-				String query = "select Part_Characteristic_Name, Part_Characteristic_Name_ENG, Part_Type, SP_KIND, Part_Sub_Type, Part_Sub_Type_ENG, Part_Characteristic_Name_1, Part_Characteristic_Name_2, Part_Characteristic_Name_3, Part_Characteristic_Name_4 from hmmr_part_characteristic where id = "+"'"+id+"'"+";";
+				String query = "select Part_Type, SP_KIND, Part_Sub_Type, Part_Sub_Type_ENG, Part_Characteristic_Name_1, Part_Characteristic_Name_2, Part_Characteristic_Name_3, Part_Characteristic_Name_4 from hmmr_part_characteristic where id = "+"'"+id+"'"+";";
 				
-				String Part_Characteristic_Name = "NULL", Part_Characteristic_Name_ENG = "NULL", Part_Type = "NULL", SP_KIND = "NULL", Part_Sub_Type = "NULL", Part_Sub_Type_ENG = "NULL", Part_Characteristic_Name_1 = "NULL", Part_Characteristic_Name_2 = "NULL", Part_Characteristic_Name_3 = "NULL", Part_Characteristic_Name_4 = "NULL"; 
+				String Part_Type = "NULL", SP_KIND = "NULL", Part_Sub_Type = "NULL", Part_Sub_Type_ENG = "NULL", Part_Characteristic_Name_1 = "NULL", Part_Characteristic_Name_2 = "NULL", Part_Characteristic_Name_3 = "NULL", Part_Characteristic_Name_4 = "NULL"; 
 				
 				cn.ConToDb();
 				stmt9 = cn.con.createStatement();
 				rs9 = stmt9.executeQuery(query);
 				//log.log(Level.INFO, "CHANNEL WAS FOUND");
 		        while (rs9.next()) {
-		        	Part_Characteristic_Name = rs9.getString(1);
-		        	Part_Characteristic_Name_ENG = rs9.getString(2);
-		        	Part_Type = rs9.getString(3);
-		        	SP_KIND = rs9.getString(4);
-		        	Part_Sub_Type = rs9.getString(5);
-		        	Part_Sub_Type_ENG = rs9.getString(6);
-		        	Part_Characteristic_Name_1 = rs9.getString(7);
-		        	Part_Characteristic_Name_2 = rs9.getString(8);
-		        	Part_Characteristic_Name_3 = rs9.getString(9);
-		        	Part_Characteristic_Name_4 = rs9.getString(10);
+		        	Part_Type = rs9.getString(1);
+		        	SP_KIND = rs9.getString(2);
+		        	Part_Sub_Type = rs9.getString(3);
+		        	Part_Sub_Type_ENG = rs9.getString(4);
+		        	Part_Characteristic_Name_1 = rs9.getString(5);
+		        	Part_Characteristic_Name_2 = rs9.getString(6);
+		        	Part_Characteristic_Name_3 = rs9.getString(7);
+		        	Part_Characteristic_Name_4 = rs9.getString(8);
 		        	
 		        }
-		        total_rez_upd_part = Part_Characteristic_Name+";"+Part_Characteristic_Name_ENG+";"+Part_Type+";"+SP_KIND+";"+Part_Sub_Type+";"+Part_Sub_Type_ENG+";"+Part_Characteristic_Name_1+";"+Part_Characteristic_Name_2+";"+Part_Characteristic_Name_3+";"+Part_Characteristic_Name_4;
+		        total_rez_upd_part = Part_Type+";"+SP_KIND+";"+Part_Sub_Type+";"+Part_Sub_Type_ENG+";"+Part_Characteristic_Name_1+";"+Part_Characteristic_Name_2+";"+Part_Characteristic_Name_3+";"+Part_Characteristic_Name_4;
 //		        System.out.println("SELECT WORKED: "+total_rez);
 			}
 			catch (SQLException e) {
@@ -6505,9 +6539,9 @@ public class _query
 		 * @param role
 		 */
 		@SuppressWarnings("static-access")
-		public void _update_partchar(String id, String txt_pcn, String txt_pcne, String list_pt, String list_spk, String txt_pst, String txt_pste, String txt_pcn1, String txt_pcn2, String txt_pcn3, String txt_pcn4)
+		public void _update_partchar(String id, String list_pt, String list_spk, String txt_pst, String txt_pste, String txt_pcn1, String txt_pcn2, String txt_pcn3, String txt_pcn4)
 		{
-			String query = "UPDATE hmmr_part_characteristic SET Part_Characteristic_Name = "+"'"+txt_pcn+"'"+",Part_Characteristic_Name_ENG = "+"'"+txt_pcne+"'"+",Part_Type = "+"'"+list_pt+"'"+",SP_KIND = "+"'"+list_spk+"'"+",Part_Sub_Type = "+"'"+txt_pst+"'"+",Part_Sub_Type_ENG = "+"'"+txt_pste+"'"+",Part_Characteristic_Name_1 = "+"'"+txt_pcn1+"'"+",Part_Characteristic_Name_2 = "+"'"+txt_pcn2+"'"+",Part_Characteristic_Name_3 = "+"'"+txt_pcn3+"'"+",Part_Characteristic_Name_4 = "+"'"+txt_pcn4+"'"+" where id = "+"'"+id+"'"+";";
+			String query = "UPDATE hmmr_part_characteristic SET Part_Type = "+"'"+list_pt+"'"+",SP_KIND = "+"'"+list_spk+"'"+",Part_Sub_Type = "+"'"+txt_pst+"'"+",Part_Sub_Type_ENG = "+"'"+txt_pste+"'"+",Part_Characteristic_Name_1 = "+"'"+txt_pcn1+"'"+",Part_Characteristic_Name_2 = "+"'"+txt_pcn2+"'"+",Part_Characteristic_Name_3 = "+"'"+txt_pcn3+"'"+",Part_Characteristic_Name_4 = "+"'"+txt_pcn4+"'"+" where id = "+"'"+id+"'"+";";
 			
 			try {
 				cn.ConToDb();
@@ -6591,5 +6625,475 @@ public class _query
 		        try { rs12.close(); } catch(SQLException se) { /*can't do anything */ }
 		       }
 			return list;
+		}
+		/**
+		 * Заполняем таблицу формы справочника склада Part Char Dir из БД
+		 * @return - Возвращаем набор данных для заполнения таблицы
+		 */
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<Hmmr_PartCharDir_Model> _select_data_partchardir()
+		{
+			ObservableList<Hmmr_PartCharDir_Model> list = FXCollections.observableArrayList();
+			
+			try {
+				String query = "select id, Part_Char, Part_Char_Eng from hmmr_partchar_dir where del_rec = 0;";
+							
+				cn.ConToDb();
+				stmt12 = cn.con.createStatement();
+				rs12 = stmt12.executeQuery(query);
+							
+		        while (rs12.next()) {
+		        	Hmmr_PartCharDir_Model hpm = new Hmmr_PartCharDir_Model();
+		        	if(rs12.getString(1) != null && rs12.getString(2) != null && rs12.getString(3) != null) {
+		        		hpm.Id.set(rs12.getString(1));
+		        		hpm.Part_Char.set(rs12.getString(2));
+		        		hpm.Part_Char_Eng.set(rs12.getString(3));
+		        				        						        				            
+			            list.add(hpm);
+		        	}    
+		        }
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6606!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt12.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs12.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+			return list;
+		}
+		/**
+		 * Вставляем запись в БД для таблицы hmmr_partchar_dir
+		 * @param Part_Char - название части оборудование
+		 * @param Part_Char_Eng - название части оборудование на английском
+		 */
+		@SuppressWarnings("static-access")
+		public void _insert_partchartdir(String Part_Char, String Part_Char_Eng)
+		{
+			String query = "INSERT INTO hmmr_partchar_dir (Part_Char, Part_Char_Eng) "
+					+ "VALUES ("+"'"+Part_Char+"'"+","+"'"+Part_Char_Eng+"'"+");";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "ADD STRING TO DB");
+				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6641!");
+			}
+		   	finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+		}
+		/**
+		 * Апдейтим запись в БД для таблицы hmmr_partchar_dir
+		 * @param id - id записи для апдейта
+		 * @param Part_Char
+		 * @param Part_Char_Eng
+		 */
+		@SuppressWarnings("static-access")
+		public void _update_field_partchardir(String id, String Part_Char, String Part_Char_Eng)
+		{
+			try {
+				String query = "UPDATE hmmr_partchar_dir SET Part_Char = "+"'"+Part_Char+"'"+",Part_Char_Eng = "+"'"+Part_Char_Eng+"'"+" where id = "+id+";";
+				
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6670!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+		}
+		@SuppressWarnings("static-access")
+		public void _update_partchardir_del(String Id)
+		{
+			String query = "UPDATE hmmr_partchar_dir SET del_rec = 1 where id = "+"'"+Id+"'"+";"; //"UPDATE pm_inst SET Type_PM = "+"'"+type+"'"+", Description = "+"'"+desc+"'"+" WHERE id = "+"'"+id+"'"+";";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6310");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+		}
+		/**
+		 * Получаем значение полей, чтобы вставить их в соответствующие элементы для формы обновления справочника Part Char Dir
+		 * @param id - id записи для обновления
+		 * @return - возвращаем набор данных
+		 */
+		@SuppressWarnings("static-access")
+		public String _select_for_update_partchardir(String id)
+		{
+			String total_rez_upd_part = "NULL";
+			try {
+				String query = "select Part_Char, Part_Char_Eng from hmmr_partchar_dir where id = "+"'"+id+"'"+";";
+				
+				String part_char = "NULL", part_char_eng = "NULL"; 
+				
+				cn.ConToDb();
+				stmt9 = cn.con.createStatement();
+				rs9 = stmt9.executeQuery(query);
+				//log.log(Level.INFO, "CHANNEL WAS FOUND");
+		        while (rs9.next()) {
+		        	part_char = rs9.getString(1);
+		        	part_char_eng = rs9.getString(2);
+		        	
+		        }
+		        total_rez_upd_part = part_char+";"+part_char_eng;
+//		        System.out.println("SELECT WORKED: "+total_rez);
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6715!");
+	        } finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt9.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs9.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+			return total_rez_upd_part;
+		}
+		@SuppressWarnings("static-access")
+		public void _insert_sp(String HMMR_Material_Num, String Manufacturer, String Model, String Article, String Single_Complex_Sub, String SP_MU_Description_RUS, String SP_FD_Description, String SP_Supplier_Description, String Price, String Risk_Breakage, String Delivery_Time, String Replacement_Model, String Identity_SP, String Coefficient)
+		{
+			String query = "INSERT INTO hmmr_sp_db (HMMR_Material_Num, Manufacturer, Model, Article, Single_Complex_Sub, SP_MU_Description_RUS, SP_FD_Description, SP_Supplier_Description, Price, Risk_Breakage, Delivery_Time, Replacement_Model, Identity_SP, Coefficient) "
+					+ "VALUES ("+"'"+HMMR_Material_Num+"'"+","+"'"+Manufacturer+"'"+","+"'"+Model+"'"+","+"'"+Article+"'"+","+"'"+Single_Complex_Sub+"'"+","+"'"+SP_MU_Description_RUS+"'"+","+"'"+SP_FD_Description+"'"+","+"'"+SP_Supplier_Description+"'"+","+"'"+Price+"'"+","+"'"+Risk_Breakage+"'"+","+"'"+Delivery_Time+"'"+","+"'"+Replacement_Model+"'"+","+"'"+Identity_SP+"'"+","+"'"+Coefficient+"'"+");";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "ADD STRING TO DB");
+				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6738!");
+			}
+		   	finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+		}
+		/**
+		 * Получаем одно значение из любой таблицы в БД ТЕКСТ
+		 * @param tbl_name - Имя таблицы в БД
+		 * @param str - Имя поля значение которого необходимо получить
+		 * @param del_name - Имя поля с признаком удаления
+		 * @param id_name - Имя поля с Id (Первичное с автоинкрементом) или другое уникальное
+		 * @param id - Значение
+		 * @param field - имя произвольного поля
+		 * @param field_value - значение для произвольного поля
+		 * @return - значение выбранного поля
+		 */
+		@SuppressWarnings({ "static-access"})
+		public String _select_recStr(String tbl_name, String str, String del_name, String id_name, String id, String field, String field_value)
+		{
+			String list = "NULL";
+			
+			try {
+				String query = "select "+str+" from "+tbl_name+" where "+del_name+" = 0 AND "+id_name+" = "+"'"+id+"'"+" AND "+field+" = "+"'"+field_value+"'"+";";
+				
+				cn.ConToDb();
+				stmt6 = cn.con.createStatement();
+				rs6 = stmt6.executeQuery(query);
+							
+		        while (rs6.next()) {
+		        	if(rs6.getString(1) != null) {
+		        		list = rs6.getString(1);			        					            
+		        	}    
+		       }
+
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6195!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt6.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs6.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+
+			return list;
+		}
+		/**
+		 * Получаем значение полей, чтобы вставить их в соответствующие элементы для формы обновления SP DB
+		 * @param id - id записи для обновления
+		 * @return - возвращаем набор данных
+		 */
+		@SuppressWarnings("static-access")
+		public String _select_for_update_sp(String id)
+		{
+			String total_rez_upd_part = "NULL";
+			try {
+				String query = "select HMMR_Material_Num, Manufacturer, Model, Article, Single_Complex_Sub, SP_MU_Description_RUS, SP_FD_Description, SP_Supplier_Description, Price, Risk_Breakage, Delivery_Time, Replacement_Model, Identity_SP, Coefficient from hmmr_sp_db where id = "+"'"+id+"'"+";";
+				
+				String HMMR_Material_Num = "NULL", Manufacturer = "NULL", Model = "NULL", Article = "NULL", Single_Complex_Sub = "NULL", SP_MU_Description_RUS = "NULL", 
+						SP_FD_Description = "NULL", SP_Supplier_Description = "NULL", Price = "NULL", Risk_Breakage = "NULL", Delivery_Time = "NULL", Replacement_Model = "NULL", 
+						Identity_SP = "NULL", Coefficient = "NULL"; 
+				
+				cn.ConToDb();
+				stmt9 = cn.con.createStatement();
+				rs9 = stmt9.executeQuery(query);
+				//log.log(Level.INFO, "CHANNEL WAS FOUND");
+		        while (rs9.next()) {
+		        	HMMR_Material_Num = rs9.getString(1);
+		        	Manufacturer = rs9.getString(2);
+		        	Model = rs9.getString(3);
+		        	Article = rs9.getString(4);
+		        	Single_Complex_Sub = rs9.getString(5);
+		        	SP_MU_Description_RUS = rs9.getString(6);
+		        	SP_FD_Description = rs9.getString(7);
+		        	SP_Supplier_Description = rs9.getString(8);
+		        	Price = rs9.getString(9);
+		        	Risk_Breakage = rs9.getString(10);
+		        	Delivery_Time = rs9.getString(11);
+		        	Replacement_Model = rs9.getString(12);
+		        	Identity_SP = rs9.getString(13);
+		        	Coefficient = rs9.getString(14);
+		        	
+		        }
+		        total_rez_upd_part = HMMR_Material_Num+";"+Manufacturer+";"+Model+";"+Article+";"+Single_Complex_Sub+";"+SP_MU_Description_RUS+";"+SP_FD_Description+";"+SP_Supplier_Description+";"+Price+";"+Risk_Breakage+";"+Delivery_Time+";"+Replacement_Model+";"+Identity_SP+";"+Coefficient;
+//		        System.out.println("SELECT WORKED: "+total_rez);
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6466!");
+	        } finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt9.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs9.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+			return total_rez_upd_part;
+		}
+		/**
+		 * Апдейтим запись в SP DB
+		 * @param Id
+		 */
+		@SuppressWarnings("static-access")
+		public void _update_sp(String Id, String HMMR_Material_Num, String Manufacturer, String Model, String Article, String Single_Complex_Sub, String SP_MU_Description_RUS, String SP_FD_Description, String SP_Supplier_Description, String Price, String Risk_Breakage, String Delivery_Time, String Replacement_Model, String Identity_SP, String Coefficient)
+		{
+			String query = "UPDATE hmmr_sp_db SET HMMR_Material_Num = "+"'"+HMMR_Material_Num+"'"+",Manufacturer = "+"'"+Manufacturer+"'"+",Model = "+"'"+Model+"'"+",Article = "+"'"+Article+"'"+",Single_Complex_Sub = "+"'"+Single_Complex_Sub+"'"+",SP_MU_Description_RUS = "+"'"+SP_MU_Description_RUS+"'"+",SP_FD_Description = "+"'"+SP_FD_Description+"'"+",SP_Supplier_Description = "+"'"+SP_Supplier_Description+"'"+",Price = "+"'"+Price+"'"+",Risk_Breakage = "+"'"+Risk_Breakage+"'"+",Delivery_Time = "+"'"+Delivery_Time+"'"+",Replacement_Model = "+"'"+Replacement_Model+"'"+",Identity_SP = "+"'"+Identity_SP+"'"+",Coefficient = "+"'"+Coefficient+"'"+" where id = "+"'"+Id+"'"+";"; //"UPDATE pm_inst SET Type_PM = "+"'"+type+"'"+", Description = "+"'"+desc+"'"+" WHERE id = "+"'"+id+"'"+";";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6893");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+		}
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<Hmmr_PartS_Model> _select_data_parts()
+		{
+			ObservableList<Hmmr_PartS_Model> list = FXCollections.observableArrayList();
+			
+			try {
+				String query = "SELECT id, HMMR_Material_Num, Equipment, Drawing, Position_On_Drawing, Key_No_Backup_Yes, Key_No_Backup_No, Key_Yes_Backup_Yes, Key_Yes_Backup_No FROM hmmr_parts_spec WHERE del_rec = 0;";
+							
+				cn.ConToDb();
+				stmt12 = cn.con.createStatement();
+				rs12 = stmt12.executeQuery(query);
+				 			
+		        while (rs12.next()) {
+		        	Hmmr_PartS_Model hpsm = new Hmmr_PartS_Model();
+		        	if(rs12.getString(1) != null && rs12.getString(2) != null && rs12.getString(3) != null) {
+		        		hpsm.Id.set(rs12.getString(1));
+		        		hpsm.HMMR_Material_Num.set(rs12.getString(2));
+		        		hpsm.Equipment.set(rs12.getString(3));
+		        		hpsm.Drawing.set(rs12.getString(4));
+		        		hpsm.Position_On_Drawing.set(rs12.getString(5));
+		        		hpsm.Key_No_Backup_Yes.set(rs12.getString(6));
+		        		hpsm.Key_No_Backup_No.set(rs12.getString(7));
+		        		hpsm.Key_Yes_Backup_Yes.set(rs12.getString(8));
+		        		hpsm.Key_Yes_Backup_No.set(rs12.getString(9));
+		        				        				        						        				            
+			            list.add(hpsm);
+		        	}    
+		        }
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6917!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt12.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs12.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+			return list;
+		}
+		/**
+		 * Заполняем комбобокс номер материала 
+		 * @return
+		 */
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<String> _select_num()
+		{
+			ObservableList<String> list = FXCollections.observableArrayList();
+			
+			try {
+				String query = "select HMMR_Material_Num, SP_MU_Description_RUS from hmmr_sp_db where CHAR_LENGTH(HMMR_Material_Num) < 13 AND del_rec = 0 ORDER BY HMMR_Material_Num;";
+				
+				cn.ConToDb();
+				stmt6 = cn.con.createStatement();
+				rs6 = stmt6.executeQuery(query);
+							
+		        while (rs6.next()) {
+		        	//typepm_model_inst tpm = new typepm_model_inst();
+		        	if(rs6.getString(1) != null) {
+		        		//tpm.settypepm(rs6.getString(1));
+		        		String instr = rs6.getString(1) + " - " + rs6.getString(2);			        					            
+			            list.add(instr);
+		        	}    
+		        }
+//		        System.out.println("SELECT WORKED DATA: "+list);
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6960!");
+	        } finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt6.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs6.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+//			System.out.println("ARRAYLIST: "+list);
+			return list;
+		}
+		@SuppressWarnings("static-access")
+		public void _insert_parts(String HMMR_Material_Num, String Equipment, String Drawing, String Position_On_Drawing, String Key_No_Backup_Yes, String Key_No_Backup_No, String Key_Yes_Backup_Yes, String Key_Yes_Backup_No)
+		{
+			String query = "INSERT INTO hmmr_parts_spec (HMMR_Material_Num, Equipment, Drawing, Position_On_Drawing, Key_No_Backup_Yes, Key_No_Backup_No, Key_Yes_Backup_Yes, Key_Yes_Backup_No) "
+					+ "VALUES ("+"'"+HMMR_Material_Num+"'"+","+"'"+Equipment+"'"+","+"'"+Drawing+"'"+","+"'"+Position_On_Drawing+"'"+","+"'"+Key_No_Backup_Yes+"'"+","+"'"+Key_No_Backup_No+"'"+","+"'"+Key_Yes_Backup_Yes+"'"+","+"'"+Key_Yes_Backup_No+"'"+");";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "ADD STRING TO DB");
+				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6990!");
+			}
+		   	finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+		}
+		/**
+		 * Апдейтим форму Parts Specification
+		 * @param id - id записи в Parts Specification
+		 * @return - Возвращаем набор данных
+		 */
+		@SuppressWarnings("static-access")
+		public String _select_for_update_parts(String id)
+		{
+			String total_rez_upd_parts = "NULL";
+			try {
+				String query = "select HMMR_Material_Num, Equipment, Drawing, Position_On_Drawing, Key_No_Backup_Yes, Key_No_Backup_No, Key_Yes_Backup_Yes, Key_Yes_Backup_No from hmmr_parts_spec where id = "+"'"+id+"'"+";";
+				
+				String HMMR_Material_Num = "NULL", Equipment = "NULL", Drawing = "NULL", Position_On_Drawing = "NULL", Key_No_Backup_Yes = "NULL", Key_No_Backup_No = "NULL", Key_Yes_Backup_Yes = "NULL", Key_Yes_Backup_No = "NULL"; 
+				
+				cn.ConToDb();
+				stmt9 = cn.con.createStatement();
+				rs9 = stmt9.executeQuery(query);
+				//log.log(Level.INFO, "CHANNEL WAS FOUND");
+		        while (rs9.next()) {
+		        	HMMR_Material_Num = rs9.getString(1);
+		        	Equipment = rs9.getString(2);
+		        	Drawing = rs9.getString(3);
+		        	Position_On_Drawing = rs9.getString(4);
+		        	Key_No_Backup_Yes = rs9.getString(5);
+		        	Key_No_Backup_No = rs9.getString(6);
+		        	Key_Yes_Backup_Yes = rs9.getString(7);
+		        	Key_Yes_Backup_No = rs9.getString(8);
+		        	
+		        }
+		        total_rez_upd_parts = HMMR_Material_Num+";"+Equipment+";"+Drawing+";"+Position_On_Drawing+";"+Key_No_Backup_Yes+";"+Key_No_Backup_No+";"+Key_Yes_Backup_Yes+";"+Key_Yes_Backup_No;
+//		        System.out.println("SELECT WORKED: "+total_rez);
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7019!");
+	        } finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt9.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs9.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+			return total_rez_upd_parts;
+		}
+		/**
+		 * Апдейтим запись в Parts Specification
+		 * @param Id
+		 */
+		@SuppressWarnings("static-access")
+		public void _update_parts(String Id, String HMMR_Material_Num, String Equipment, String Drawing, String Position_On_Drawing, String Key_No_Backup_Yes, String Key_No_Backup_No, String Key_Yes_Backup_Yes, String Key_Yes_Backup_No)
+		{
+			String query = "UPDATE hmmr_parts_spec SET HMMR_Material_Num = "+"'"+HMMR_Material_Num+"'"+",Equipment = "+"'"+Equipment+"'"+",Drawing = "+"'"+Drawing+"'"+",Position_On_Drawing = "+"'"+Position_On_Drawing+"'"+",Key_No_Backup_Yes = "+"'"+Key_No_Backup_Yes+"'"+",Key_No_Backup_No = "+"'"+Key_No_Backup_No+"'"+",Key_Yes_Backup_Yes = "+"'"+Key_Yes_Backup_Yes+"'"+",Key_Yes_Backup_No = "+"'"+Key_Yes_Backup_No+"'"+" where id = "+"'"+Id+"'"+";";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7058");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+		}
+		/**
+		 * Удаляем запись из таблицы БД hmmr_parts_spec
+		 * @param id
+		 */
+		@SuppressWarnings("static-access")
+		public void _update_deleterec_parts(String id)
+		{
+			String query = "UPDATE hmmr_parts_spec SET del_rec = 1 WHERE id = "+"'"+id+"'"+";";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7082!");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
 		}
 }

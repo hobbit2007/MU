@@ -28,16 +28,14 @@
             <TableView fx:id="table_partchar" layoutX="21.0" layoutY="50.0" prefHeight="452.0" prefWidth="1035.0">
               <columns>
                 <TableColumn fx:id="col_id_pc" prefWidth="51.0" text="№" />
-                <TableColumn fx:id="col_Part_Characteristic_Name" prefWidth="99.0" text="Part Char Name" />
-                  <TableColumn fx:id="col_Part_Characteristic_Name_ENG" prefWidth="159.0" text="Part Char Name ENG" />
                   <TableColumn fx:id="col_Part_Type" prefWidth="69.0" text="Part Type" />
                   <TableColumn fx:id="col_SP_KIND" prefWidth="34.0" text="Kind" />
                   <TableColumn fx:id="col_Part_Sub_Type" prefWidth="83.0" text="Part Sub Type" />
                   <TableColumn fx:id="col_Part_Sub_Type_ENG" prefWidth="113.0" text="Part Sub Type ENG" />
-                  <TableColumn fx:id="col_Part_Characteristic_Name_1" prefWidth="103.0" text="Part Char Name1" />
-                  <TableColumn fx:id="col_Part_Characteristic_Name_2" prefWidth="102.0" text="Part Char Name2" />
-                  <TableColumn fx:id="col_Part_Characteristic_Name_3" prefWidth="102.0" text="Part Char Name3" />
-                  <TableColumn fx:id="col_Part_Characteristic_Name_4" prefWidth="101.0" text="Part Char Name4" />
+                  <TableColumn fx:id="col_Part_Characteristic_Name_1" prefWidth="159.0" text="Part Char Name1" />
+                  <TableColumn fx:id="col_Part_Characteristic_Name_2" prefWidth="159.0" text="Part Char Name2" />
+                  <TableColumn fx:id="col_Part_Characteristic_Name_3" prefWidth="159.0" text="Part Char Name3" />
+                  <TableColumn fx:id="col_Part_Characteristic_Name_4" prefWidth="159.0" text="Part Char Name4" />
               </columns>
             </TableView>
             <HBox alignment="CENTER_LEFT" layoutX="21.0" layoutY="502.0" prefHeight="86.0" prefWidth="1035.0">

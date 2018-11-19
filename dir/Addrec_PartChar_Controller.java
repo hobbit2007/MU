@@ -18,7 +18,7 @@ import share_class.s_class;
 public class Addrec_PartChar_Controller {
 	
 	@FXML
-	TextField txt_pcn, txt_pcne, txt_pst, txt_pste, txt_pcn1, txt_pcn2, txt_pcn3, txt_pcn4;
+	TextField txt_pst, txt_pste, txt_pcn1, txt_pcn2, txt_pcn3, txt_pcn4;
 	
 	@FXML
 	ComboBox<String> list_pt, list_spk, list_pcn1, list_pcn2, list_pcn3, list_pcn4;
@@ -45,10 +45,10 @@ public class Addrec_PartChar_Controller {
 		
 		list_spk.setItems(qr._select_recArr("hmmr_activity_type", "Name", "Description", "del_rec", "ID_OT", 4));
 		list_pt.setItems(qr._select_list_str("hmmr_mu_part", "Part_Type"));
-		list_pcn1.setItems(qr._select_list_str("hmmr_part_characteristic", "Part_Characteristic_Name_1"));
-		list_pcn2.setItems(qr._select_list_str("hmmr_part_characteristic", "Part_Characteristic_Name_2"));
-		list_pcn3.setItems(qr._select_list_str("hmmr_part_characteristic", "Part_Characteristic_Name_3"));
-		list_pcn4.setItems(qr._select_list_str("hmmr_part_characteristic", "Part_Characteristic_Name_4"));
+		list_pcn1.setItems(qr._select_list_str("hmmr_partchar_dir", "Part_Char"));
+		list_pcn2.setItems(qr._select_list_str("hmmr_partchar_dir", "Part_Char"));
+		list_pcn3.setItems(qr._select_list_str("hmmr_partchar_dir", "Part_Char"));
+		list_pcn4.setItems(qr._select_list_str("hmmr_partchar_dir", "Part_Char"));
 		
 		if(!pcc._flag_window_pc)
 		{
@@ -56,34 +56,18 @@ public class Addrec_PartChar_Controller {
 			
 			String _sql_rez = qr._select_for_update_partchar(pcc._id_part_char);
 			
-			txt_pcn.setText(scl.parser_str_str_str(_sql_rez, 0));
-			txt_pcne.setText(scl.parser_str_str_str(_sql_rez, 1));
-			list_pt.getSelectionModel().select(scl.parser_str_str_str(_sql_rez, 2));
-			list_spk.getSelectionModel().select(scl.parser_str_str_str(_sql_rez, 3));
-			txt_pst.setText(scl.parser_str_str_str(_sql_rez, 4));
-			txt_pste.setText(scl.parser_str_str_str(_sql_rez, 5));
-			txt_pcn1.setText(scl.parser_str_str_str(_sql_rez, 6));
-			txt_pcn2.setText(scl.parser_str_str_str(_sql_rez, 7));
-			txt_pcn3.setText(scl.parser_str_str_str(_sql_rez, 8));
-			txt_pcn4.setText(scl.parser_str_str_str(_sql_rez, 9));
+			list_pt.getSelectionModel().select(scl.parser_str_str_str(_sql_rez, 0));
+			list_spk.getSelectionModel().select(scl.parser_str_str_str(_sql_rez, 1));
+			txt_pst.setText(scl.parser_str_str_str(_sql_rez, 2));
+			txt_pste.setText(scl.parser_str_str_str(_sql_rez, 3));
+			txt_pcn1.setText(scl.parser_str_str_str(_sql_rez, 4));
+			txt_pcn2.setText(scl.parser_str_str_str(_sql_rez, 5));
+			txt_pcn3.setText(scl.parser_str_str_str(_sql_rez, 6));
+			txt_pcn4.setText(scl.parser_str_str_str(_sql_rez, 7));
 		}
 		else
 			lbl_title_pc.setText("Добавление записи к Part Char");
 		
-		txt_pcn.setOnKeyReleased(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event arg0) {
-				chk_btn();
-			}
-		});
-		txt_pcne.setOnKeyReleased(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event arg0) {
-				chk_btn();
-			}
-		});
 		txt_pst.setOnKeyReleased(new EventHandler<Event>() {
 
 			@Override
@@ -179,9 +163,9 @@ public class Addrec_PartChar_Controller {
 			@Override
 			public void handle(ActionEvent arg0) {
 				if(pcc._flag_window_pc)
-					qr._insert_partchar(txt_pcn.getText(), txt_pcne.getText(), list_pt.getValue(), scl.parser_str(list_spk.getValue(), 0), txt_pst.getText(), txt_pste.getText(), txt_pcn1.getText(), txt_pcn2.getText(), txt_pcn3.getText(), txt_pcn4.getText());
+					qr._insert_partchar(list_pt.getValue(), scl.parser_str(list_spk.getValue(), 0), txt_pst.getText(), txt_pste.getText(), txt_pcn1.getText(), txt_pcn2.getText(), txt_pcn3.getText(), txt_pcn4.getText());
 				else
-					qr._update_partchar(pcc._id_part_char, txt_pcn.getText(), txt_pcne.getText(), list_pt.getValue(), scl.parser_str(list_spk.getValue(), 0), txt_pst.getText(), txt_pste.getText(), txt_pcn1.getText(), txt_pcn2.getText(), txt_pcn3.getText(), txt_pcn4.getText());
+					qr._update_partchar(pcc._id_part_char, list_pt.getValue(), scl.parser_str(list_spk.getValue(), 0), txt_pst.getText(), txt_pste.getText(), txt_pcn1.getText(), txt_pcn2.getText(), txt_pcn3.getText(), txt_pcn4.getText());
 				
 				pcc._table_update_partchar.addAll(qr._select_data_partchar());
 				
@@ -203,7 +187,7 @@ public class Addrec_PartChar_Controller {
 	private void chk_btn()
 	{
 		try {
-			if(txt_pcn.getText().length() != 0 && txt_pcne.getText().length() != 0 && txt_pst.getText().length() != 90 && txt_pste.getText().length() != 0 &&
+			if(txt_pst.getText().length() != 90 && txt_pste.getText().length() != 0 &&
 					txt_pcn1.getText().length() != 0 && txt_pcn2.getText().length() != 0 && txt_pcn3.getText().length() != 0 && txt_pcn4.getText().length() != 0)
 			{
 				btn_add_pc.setDisable(false);

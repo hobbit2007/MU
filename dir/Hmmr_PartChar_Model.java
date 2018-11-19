@@ -4,8 +4,6 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Hmmr_PartChar_Model {
 	public SimpleStringProperty Id = new SimpleStringProperty();
-	public SimpleStringProperty Part_Characteristic_Name = new SimpleStringProperty();
-	public SimpleStringProperty Part_Characteristic_Name_ENG = new SimpleStringProperty();
 	public SimpleStringProperty Part_Type = new SimpleStringProperty();
 	public SimpleStringProperty SP_KIND = new SimpleStringProperty();
 	public SimpleStringProperty Part_Sub_Type = new SimpleStringProperty();
@@ -19,11 +17,9 @@ public class Hmmr_PartChar_Model {
 		
 	}
 	
-	public void Hmmr_Part_Model(String Id, String Part_Characteristic_Name, String Part_Characteristic_Name_ENG, String Part_Type, String SP_KIND, String Part_Sub_Type,
+	public void Hmmr_Part_Model(String Id, String Part_Type, String SP_KIND, String Part_Sub_Type,
 			String Part_Sub_Type_ENG, String Part_Characteristic_Name_1, String Part_Characteristic_Name_2, String Part_Characteristic_Name_3, String Part_Characteristic_Name_4) {
 		this.Id.set(Id);
-		this.Part_Characteristic_Name.set(Part_Characteristic_Name);
-		this.Part_Characteristic_Name_ENG.set(Part_Sub_Type_ENG);
 		this.Part_Type.set(Part_Type);
 		this.SP_KIND.set(SP_KIND);
 		this.Part_Sub_Type.set(Part_Sub_Type);
@@ -40,22 +36,6 @@ public class Hmmr_PartChar_Model {
 
 	public void setId(SimpleStringProperty id) {
 		Id = id;
-	}
-
-	public SimpleStringProperty getPart_Characteristic_Name() {
-		return Part_Characteristic_Name;
-	}
-
-	public void setPart_Characteristic_Name(SimpleStringProperty part_Characteristic_Name) {
-		Part_Characteristic_Name = part_Characteristic_Name;
-	}
-
-	public SimpleStringProperty getPart_Characteristic_Name_ENG() {
-		return Part_Characteristic_Name_ENG;
-	}
-
-	public void setPart_Characteristic_Name_ENG(SimpleStringProperty part_Characteristic_Name_ENG) {
-		Part_Characteristic_Name_ENG = part_Characteristic_Name_ENG;
 	}
 
 	public SimpleStringProperty getPart_Type() {

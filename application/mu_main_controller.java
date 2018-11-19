@@ -37,7 +37,7 @@ public class mu_main_controller
 	VBox root1;
 	
 	@FXML
-	MenuItem pm_cyc, typepm, pm_inst, pm, psdb, about_program, apwr, pmplan, prior, gc, ot, staff, parttype, partchar, spdb;
+	MenuItem pm_cyc, typepm, pm_inst, pm, psdb, about_program, apwr, pmplan, prior, gc, ot, staff, parttype, partchar, spdb, partchardir, parts;
 	
 	@FXML
 	MenuBar menubar_id;
@@ -139,6 +139,7 @@ public class mu_main_controller
 			parttype.setText(lngBndl.getString("part_type"));
 			partchar.setText(lngBndl.getString("part_char"));
 			spdb.setText(lngBndl.getString("sp_db"));
+			parts.setText(lngBndl.getString("lbl_parts"));
 		}
 		
 		if(conn_connector.LANG_ID == 0)
@@ -168,6 +169,7 @@ public class mu_main_controller
 			parttype.setText(lngBndl.getString("part_type"));
 			partchar.setText(lngBndl.getString("part_char"));
 			spdb.setText(lngBndl.getString("sp_db"));
+			parts.setText(lngBndl.getString("lbl_parts"));
 		}
 		if(conn_connector.LANG_ID == 2)
 		{
@@ -196,6 +198,7 @@ public class mu_main_controller
 			parttype.setText(lngBndl.getString("part_type"));
 			partchar.setText(lngBndl.getString("part_char"));
 			spdb.setText(lngBndl.getString("sp_db"));
+			parts.setText(lngBndl.getString("lbl_parts"));
 		}
 		if(conn_connector.LANG_ID == -1)
 		{
@@ -224,6 +227,7 @@ public class mu_main_controller
 			parttype.setText(lngBndl.getString("part_type"));
 			partchar.setText(lngBndl.getString("part_char"));
 			spdb.setText(lngBndl.getString("sp_db"));
+			parts.setText(lngBndl.getString("lbl_parts"));
 		}
 		
 		//Автоматически вызываем окно Action Plan & Work Recording
@@ -465,6 +469,28 @@ public class mu_main_controller
 			}
 		}
 		
+		//Вызываем из меню Редактор справочника склада - Part Char Dir
+		@FXML
+		public void getPartCharDir() {
+			Stage stage = new Stage();
+		       try {
+				partchardir_start(stage);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//Вызываем из меню Редактор склада - Parts Specification
+		@FXML
+		public void getParts() {
+			Stage stage = new Stage();
+		       try {
+				parts_start(stage);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		protected void pmtype_start(Stage stage) throws IOException {
 			setPrimaryStage(stage);
 		    Parent root = FXMLLoader.load(getClass().getResource("type_pm.fxml"));
@@ -659,6 +685,30 @@ public class mu_main_controller
 	        stage.show();
 	        
 		}
+		
+		protected void partchardir_start(Stage stage) throws IOException {
+			setPrimaryStage(stage);
+			Parent root = FXMLLoader.load(getClass().getResource("PartChar_Dir.fxml"));
+		    
+	        Scene scene = new Scene(root);
+	        stage.setTitle("M&U - Part Char Dir Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
+	        stage.setResizable(false);
+	        stage.setScene(scene);
+	        	        
+	        stage.show();
+	        
+		}
+		protected void parts_start(Stage stage) throws IOException {
+			setPrimaryStage(stage);
+			Parent root = FXMLLoader.load(getClass().getResource("PartSpec.fxml"));
+		    
+	        Scene scene = new Scene(root);
+	        stage.setTitle("M&U - Parts Specification Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
+	        stage.setResizable(false);
+	        stage.setScene(scene);
+	        	        
+	        stage.show();
+	    }
 		
 		private void setPrimaryStage(Stage pStage) {
 	        mu_main_controller.pStage = pStage;
