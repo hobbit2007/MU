@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import action.Hmmr_CS_Model;
 import action.Hmmr_PartS_Model;
 import action.Hmmr_SP_Model;
 import action.Hmmr_Stuff_Model;
@@ -2745,7 +2746,7 @@ public class _query
 				{
 					ObservableList<String> list = FXCollections.observableArrayList();
 					try {
-						String query = "select ps.Pereodic, hgc.PM_StartDate, ps.end_date, hps.FL03_Shop_s, p.PM_Resp from hmmr_pm p INNER JOIN hmmr_group_cycle hgc ON hgc.PM_Group = p.PM_Group INNER JOIN hmmr_pm_cycle ps ON ps.Type = hgc.PM_Cycle INNER JOIN hmmr_plant_structure hps ON hps.id = p.Eq_ID where p.PM_Group = "+"'"+group+"'"+";";
+						String query = "select ps.Pereodic, hgc.PM_StartDate, ps.end_date, hps.FL03_Shop_s, p.PM_Resp from hmmr_pm p INNER JOIN hmmr_group_cycle hgc ON hgc.PM_Group = p.PM_Group INNER JOIN hmmr_pm_cycle ps ON ps.Type = hgc.PM_Cycle INNER JOIN hmmr_plant_structure hps ON hps.id = p.Eq_ID where record_del = 0 AND p.PM_Group = "+"'"+group+"'"+";";
 						
 						cn.ConToDb();
 						stmt9 = cn.con.createStatement();
@@ -6131,7 +6132,7 @@ public class _query
 			ObservableList<String> list = FXCollections.observableArrayList();
 			
 			try {
-				String query = "select "+str+" from "+tbl_name+" where "+del_name+" = 0 AND "+id_name+" = "+"'"+id+"'"+";";
+				String query = "select "+str+" from "+tbl_name+" where "+del_name+" = 0 AND "+id_name+" = "+"'"+id+"'"+" GROUP BY "+str+";";
 				
 				cn.ConToDb();
 				stmt6 = cn.con.createStatement();
@@ -7095,5 +7096,75 @@ public class _query
 	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
 	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
 	        }
+		}
+		/**
+		 * Получаем название материала по id 
+		 * @param id - id записи в CS
+		 * @return - возвращаем данные
+		 */
+		@SuppressWarnings({ "static-access"})
+		public String _select_fillcs(String field_name)
+		{
+			String list = "null";
+			
+			try {
+				String query = "select hsd.SP_MU_Description_RUS from hmmr_sp_db hsd INNER JOIN hmmr_comp_spec hcs ON hcs.del_rec = 0 AND hsd.HMMR_Material_Num = "+"'"+field_name+"'"+";"; // AND hsd.id = "+"'"+id+"'"+"
+				
+				cn.ConToDb();
+				stmt11 = cn.con.createStatement();
+				rs11 = stmt11.executeQuery(query);
+							
+		        while (rs11.next()) {
+		        	if(rs11.getString(1) != null) {
+		        		list = rs11.getString(1);
+		        	}    
+		        }
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7110!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt11.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs11.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+			return list;
+		}
+		/**
+		 * Заполняем данными таблицу формы CompSpec
+		 * @return
+		 */
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<Hmmr_CS_Model> _select_data_cs()
+		{
+			ObservableList<Hmmr_CS_Model> list = FXCollections.observableArrayList();
+			
+			try {
+				String query = "SELECT id, HMMR_Material_Num_Complex, HMMR_Material_Num_Sub FROM hmmr_comp_spec WHERE del_rec = 0;";
+							
+				cn.ConToDb();
+				stmt12 = cn.con.createStatement();
+				rs12 = stmt12.executeQuery(query);
+				 			
+		        while (rs12.next()) {
+		        	Hmmr_CS_Model hcsm = new Hmmr_CS_Model();
+		        	if(rs12.getString(1) != null) {
+		        		hcsm.Id.set(rs12.getString(1));
+		        		hcsm.HMMR_Material_Num_Complex.set(rs12.getString(2));
+		        		hcsm.HMMR_Material_Num_Sub.set(rs12.getString(3));
+		        				        				        				        						        				            
+			            list.add(hcsm);
+		        	}    
+		        }
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7143!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt12.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs12.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+			return list;
 		}
 }

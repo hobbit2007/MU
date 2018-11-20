@@ -248,6 +248,14 @@ public class AddRec_SP_Controller {
 				stage.close();
 			}
 		});
+		btn_cancel.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				stage = (Stage) btn_cancel.getScene().getWindow();
+				stage.close();
+			}
+		});
 	}
 	
 	void chk_btn()

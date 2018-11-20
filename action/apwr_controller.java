@@ -179,7 +179,7 @@ public class apwr_controller {
 	public String ID_WR, SHOP_NAME_A = "A";
 	public static String  SORT_SHOP, SORT_RESP;
 	ObservableList<String> filtre = FXCollections.observableArrayList();
-	
+		
 	@SuppressWarnings({ "unchecked" })
 	@FXML
 	public void initialize()
@@ -794,20 +794,26 @@ public class apwr_controller {
 			@Override
 			public void handle(CellEditEvent<hmmr_ap_model, String> event) {
 				try {
-					String tst = event.getTableView().getItems().get(event.getTablePosition().getRow()).getId().substring(2);
-					ID_WR = tst;
-					table_wr.setItems(qr._select_sort_apnum_wr(tst));
-					
-					table_wr.getColumns().get(0).setVisible(false);
-			        table_wr.getColumns().get(0).setVisible(true);
-			        clear_filter.setDisable(false);
-			        flag = 1;
+					System.out.println("POSITION = "+event.getTablePosition() + " OLD VALUE = "+ event.getOldValue() + " NEW VALUE =  "+ event.getNewValue());
+					if(event.getOldValue().equals(event.getRowValue().getId())) {
+						String tst = event.getTableView().getItems().get(event.getTablePosition().getRow()).getId().substring(2);
+						ID_WR = tst;
+						table_wr.setItems(qr._select_sort_apnum_wr(tst));
+						
+						table_wr.getColumns().get(0).setVisible(false);
+				        table_wr.getColumns().get(0).setVisible(true);
+				        
+				        clear_filter.setDisable(false);
+				        flag = 1;
+				     //   tb_pn.getSelectionModel().select(tab_wr);
+					}
 				}
 				catch (Exception e) {
 					
 				}
 			}
 		});
+	
 		//Вызываем окно обновления по двойному клику на строке table AP
 		table_ap.setOnMousePressed(new EventHandler<MouseEvent>() {
 

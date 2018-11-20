@@ -37,7 +37,7 @@ public class mu_main_controller
 	VBox root1;
 	
 	@FXML
-	MenuItem pm_cyc, typepm, pm_inst, pm, psdb, about_program, apwr, pmplan, prior, gc, ot, staff, parttype, partchar, spdb, partchardir, parts;
+	MenuItem pm_cyc, typepm, pm_inst, pm, psdb, about_program, apwr, pmplan, prior, gc, ot, staff, parttype, partchar, spdb, partchardir, parts, compspec;
 	
 	@FXML
 	MenuBar menubar_id;
@@ -140,6 +140,7 @@ public class mu_main_controller
 			partchar.setText(lngBndl.getString("part_char"));
 			spdb.setText(lngBndl.getString("sp_db"));
 			parts.setText(lngBndl.getString("lbl_parts"));
+			compspec.setText(lngBndl.getString("lbl_compspec"));
 		}
 		
 		if(conn_connector.LANG_ID == 0)
@@ -170,6 +171,7 @@ public class mu_main_controller
 			partchar.setText(lngBndl.getString("part_char"));
 			spdb.setText(lngBndl.getString("sp_db"));
 			parts.setText(lngBndl.getString("lbl_parts"));
+			compspec.setText(lngBndl.getString("lbl_compspec"));
 		}
 		if(conn_connector.LANG_ID == 2)
 		{
@@ -199,6 +201,7 @@ public class mu_main_controller
 			partchar.setText(lngBndl.getString("part_char"));
 			spdb.setText(lngBndl.getString("sp_db"));
 			parts.setText(lngBndl.getString("lbl_parts"));
+			compspec.setText(lngBndl.getString("lbl_compspec"));
 		}
 		if(conn_connector.LANG_ID == -1)
 		{
@@ -228,6 +231,7 @@ public class mu_main_controller
 			partchar.setText(lngBndl.getString("part_char"));
 			spdb.setText(lngBndl.getString("sp_db"));
 			parts.setText(lngBndl.getString("lbl_parts"));
+			compspec.setText(lngBndl.getString("lbl_compspec"));
 		}
 		
 		//Автоматически вызываем окно Action Plan & Work Recording
@@ -490,6 +494,16 @@ public class mu_main_controller
 				e.printStackTrace();
 			}
 		}
+		//Вызываем из меню Редактор склада - Components Specification
+		@FXML
+		public void getCompSpec() {
+			Stage stage = new Stage();
+		       try {
+				compspec_start(stage);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		protected void pmtype_start(Stage stage) throws IOException {
 			setPrimaryStage(stage);
@@ -701,6 +715,17 @@ public class mu_main_controller
 		protected void parts_start(Stage stage) throws IOException {
 			setPrimaryStage(stage);
 			Parent root = FXMLLoader.load(getClass().getResource("PartSpec.fxml"));
+		    
+	        Scene scene = new Scene(root);
+	        stage.setTitle("M&U - Parts Specification Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));
+	        stage.setResizable(false);
+	        stage.setScene(scene);
+	        	        
+	        stage.show();
+	    }
+		protected void compspec_start(Stage stage) throws IOException {
+			setPrimaryStage(stage);
+			Parent root = FXMLLoader.load(getClass().getResource("CompSpec.fxml"));
 		    
 	        Scene scene = new Scene(root);
 	        stage.setTitle("M&U - Parts Specification Window"+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 1)+"/"+scl.parser_str(qr._select_user(conn_connector.USER_ID), 2)+" "+scl.parser_str(qr._select_user(conn_connector.USER_ID), 3) +"  MU."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 4)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 5)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 6)+"."+scl.parser_str(qr._select_user(conn_connector.USER_ID), 0));

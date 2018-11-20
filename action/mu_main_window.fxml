@@ -34,6 +34,7 @@
                                 <items>
                                   <MenuItem fx:id="spdb" mnemonicParsing="false" onAction="#getSP" text="SP DB - Редактор" />
                                     <MenuItem fx:id="parts" mnemonicParsing="false" onAction="#getParts" text="Parts Specification - Редактор" />
+                                    <MenuItem fx:id="compspec" mnemonicParsing="false" onAction="#getCompSpec" text="Components Specification - Редактор" />
                                 </items>
                               </Menu>
                         </items>
