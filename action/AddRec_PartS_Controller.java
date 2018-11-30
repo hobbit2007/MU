@@ -193,13 +193,20 @@ public class AddRec_PartS_Controller {
 		{
 			String _sql_rez = qr._select_for_update_parts(psc._id_parts);
 			
-			num_parts.getSelectionModel().select(scl.parser_str_str_str(_sql_rez, 0));
+			if(scl.parser_str_str_str(_sql_rez, 0).equals("0")) {
+				num_parts.getSelectionModel().select("Введите номер");
+				num_parts.setDisable(false);
+			}
+			else	
+				num_parts.setDisable(true);
 			
-			shop_parts.getSelectionModel().select(scl.parser_str_str(scl.parser_str_str_str(_sql_rez, 1), 0));
-			group_parts.getSelectionModel().select(scl.parser_str_str(scl.parser_str_str_str(_sql_rez, 1), 1));
-			line_parts.getSelectionModel().select(scl.parser_str_str(scl.parser_str_str_str(_sql_rez, 1), 2));
-			os_parts.getSelectionModel().select(scl.parser_str_str(scl.parser_str_str_str(_sql_rez, 1), 3));
-			equip_parts.getSelectionModel().select(scl.parser_str_str(scl.parser_str_str_str(_sql_rez, 1), 4));
+			num_parts.getSelectionModel().select(qr._select_matnum(scl.parser_str_str_str(_sql_rez, 0), "HMMR_Material_Num", "hmmr_sp_db"));
+			
+			shop_parts.getSelectionModel().select(scl.parser_str_str(qr._select_fillpm_equip(scl.parser_str_str_str(_sql_rez, 1), "hmmr_parts_spec"), 0));
+			group_parts.getSelectionModel().select(scl.parser_str_str(qr._select_fillpm_equip(scl.parser_str_str_str(_sql_rez, 1), "hmmr_parts_spec"), 1));
+			line_parts.getSelectionModel().select(scl.parser_str_str(qr._select_fillpm_equip(scl.parser_str_str_str(_sql_rez, 1), "hmmr_parts_spec"), 2));
+			os_parts.getSelectionModel().select(scl.parser_str_str(qr._select_fillpm_equip(scl.parser_str_str_str(_sql_rez, 1), "hmmr_parts_spec"), 3));
+			equip_parts.getSelectionModel().select(scl.parser_str_str(qr._select_fillpm_equip(scl.parser_str_str_str(_sql_rez, 1), "hmmr_parts_spec"), 4));
 			draw_parts.setText(scl.parser_str_str_str(_sql_rez, 2));
 			pos_draw_parts.setText(scl.parser_str_str_str(_sql_rez, 3));
 			knby_parts.setText(scl.parser_str_str_str(_sql_rez, 4));
@@ -289,19 +296,29 @@ public class AddRec_PartS_Controller {
 				chk_btn();
 			}
 		});
+		num_parts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+				chk_btn();
+			}
+		});
 		
 		btn_accept.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
+				
+				String eq_id = qr._select_data_filter_ps_id(scl.parser_str(shop_parts.getValue(), 0), scl.parser_str(group_parts.getValue(), 0), scl.parser_str(line_parts.getValue(), 0), scl.parser_str(os_parts.getValue(), 0), scl.parser_str(equip_parts.getValue(), 0));
+				
 				if(psc._flag_window_parts) {
-					qr._insert_parts(scl.parser_str(num_parts.getValue(), 0), scl.parser_str(shop_parts.getValue(), 0)+"."+scl.parser_str(group_parts.getValue(), 0)+"."+scl.parser_str(line_parts.getValue(), 0)+"."+scl.parser_str(os_parts.getValue(), 0)+"."+scl.parser_str(equip_parts.getValue(), 0), draw_parts.getText(), pos_draw_parts.getText(), knby_parts.getText(), knbn_parts.getText(), kyby_parts.getText(), kybn_parts.getText());
+					qr._insert_parts(eq_id, draw_parts.getText(), pos_draw_parts.getText(), knby_parts.getText(), knbn_parts.getText(), kyby_parts.getText(), kybn_parts.getText(), qr._select_matnum_id(scl.parser_str(num_parts.getValue(), 0)));
 					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_parts_spec") + " в Parts Specification");
 				}
 				else
 				{
-					qr._update_parts(psc._id_parts, scl.parser_str(num_parts.getValue(), 0), scl.parser_str(shop_parts.getValue(), 0)+"."+scl.parser_str(group_parts.getValue(), 0)+"."+scl.parser_str(line_parts.getValue(), 0)+"."+scl.parser_str(os_parts.getValue(), 0)+"."+scl.parser_str(equip_parts.getValue(), 0), draw_parts.getText(), pos_draw_parts.getText(), knby_parts.getText(), knbn_parts.getText(), kyby_parts.getText(), kybn_parts.getText());
-					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + qr._select_last_id("hmmr_parts_spec") + " в Parts Specification");
+					qr._update_parts(psc._id_parts, eq_id, draw_parts.getText(), pos_draw_parts.getText(), knby_parts.getText(), knbn_parts.getText(), kyby_parts.getText(), kybn_parts.getText(), qr._select_matnum_id(scl.parser_str(num_parts.getValue(), 0)));
+					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + psc._id_parts + " в Parts Specification");
 				}
 					psc._table_update_parts.addAll(qr._select_data_parts());
 					
@@ -326,7 +343,8 @@ public class AddRec_PartS_Controller {
 		try { 
 			if(num_parts.getValue().length() != 0 && shop_parts.getValue().length() != 0 && group_parts.getValue().length() != 0 && line_parts.getValue().length() != 0 && 
 					os_parts.getValue().length() != 0 && equip_parts.getValue().length() != 0 && draw_parts.getText().length() != 0 && pos_draw_parts.getText().length() != 0 && 
-					knby_parts.getText().length() != 0 && knbn_parts.getText().length() != 0 && kyby_parts.getText().length() != 0 && kybn_parts.getText().length() != 0)
+					knby_parts.getText().length() != 0 && knbn_parts.getText().length() != 0 && kyby_parts.getText().length() != 0 && kybn_parts.getText().length() != 0 && 
+					!num_parts.getValue().equals("Введите номер"))
 				btn_accept.setDisable(false);
 			else
 				btn_accept.setDisable(true);

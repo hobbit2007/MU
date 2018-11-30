@@ -297,7 +297,7 @@ public class updrec_pm_controller {
 				ool_pm_upd.getSelectionModel().select(pc._ool_pm_upd);
 				otv_pm_upd.getSelectionModel().select(pc._otv);
 				num_pm_upd.setText(pc._id_pm);
-				equip_pm_upd.setText(qr._select_fillpm_equip(pc._eq_id_upd));
+				equip_pm_upd.setText(qr._select_fillpm_equip(pc._eq_id_upd, "hmmr_pm"));
 				group_eq_upd.getSelectionModel().select(pc._group_pm_upd);
 				list_otv_isp_upd.getSelectionModel().select(pc._pm_exec);
 				

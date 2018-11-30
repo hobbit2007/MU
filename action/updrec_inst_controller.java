@@ -53,7 +53,7 @@ public class updrec_inst_controller
 	s_class sclass = new s_class();
 	FxDatePickerConverter fx_dp = new FxDatePickerConverter();
 	Tooltip tip;	
-	private static String pathToPdf = "\\\\10.168.170.253\\MU\\Instruction_PDF", pathToPdf1 = "C://";//user.home
+	private static String pathToPdf = "\\\\192.168.100.245\\MU\\Instruction_PDF", pathToPdf1 = "C://";//user.home
 	
 	@SuppressWarnings("static-access")
 	@FXML

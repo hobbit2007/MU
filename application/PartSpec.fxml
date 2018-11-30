@@ -37,7 +37,7 @@
                         <TableView fx:id="table_parts" prefHeight="599.0" prefWidth="965.0">
                           <columns>
                             <TableColumn fx:id="col_id_ps" prefWidth="75.0" text="№" />
-                            <TableColumn fx:id="col_HMMR_Material_Num" prefWidth="140.0" text="Номер" />
+                            <TableColumn fx:id="col_HMMR_Material_Num" prefWidth="140.0" text="Наименование" />
                               <TableColumn fx:id="col_Equipment" prefWidth="161.0" text="Оборудование" />
                               <TableColumn fx:id="col_Drawing" prefWidth="143.0" text="№ чертежа" />
                               <TableColumn fx:id="col_Position_On_Drawing" prefWidth="91.0" text="№ на чертеже" />

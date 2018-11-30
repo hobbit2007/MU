@@ -81,6 +81,23 @@ public class PartSpec_Controller {
         table_parts.getSelectionModel().selectLast();
         table_parts.scrollTo(table_parts.getItems().size());
         
+       /* col_Equipment.setCellValueFactory(
+           new Callback<TableColumn.CellDataFeatures<Hmmr_PartS_Model, String>, ObservableValue<String>>() {
+               @Override
+               public ObservableValue<String> call(TableColumn.CellDataFeatures<Hmmr_PartS_Model, String> arg0) {
+                   Hmmr_PartS_Model data = arg0.getValue();
+                   return new SimpleObjectProperty<String>(qr._select_fillpm_equip(data.getEquip_id(), "hmmr_parts_spec"));
+               }
+          });
+        col_HMMR_Material_Num.setCellValueFactory(
+           new Callback<TableColumn.CellDataFeatures<Hmmr_PartS_Model, String>, ObservableValue<String>>() {
+               @Override
+               public ObservableValue<String> call(TableColumn.CellDataFeatures<Hmmr_PartS_Model, String> arg0) {
+                   Hmmr_PartS_Model data = arg0.getValue();
+                   return new SimpleObjectProperty<String>(qr._select_fillcs(data.getHMMR_Material_Id()));
+               }
+          }); */
+        
         btn_add_rec.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override

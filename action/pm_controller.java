@@ -245,7 +245,7 @@ public class pm_controller {
                     @Override
                     public ObservableValue<String> call(TableColumn.CellDataFeatures<hmmr_pm_model, String> arg0) {
                         hmmr_pm_model data = arg0.getValue();
-                        return new SimpleObjectProperty<String>(qr._select_fillpm_equip(data.geteq_id()));
+                        return new SimpleObjectProperty<String>(qr._select_fillpm_equip(data.geteq_id(), "hmmr_pm"));
                     }
 
                 });

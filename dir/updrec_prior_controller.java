@@ -40,7 +40,7 @@ public class updrec_prior_controller {
 	prior_controller pic = new prior_controller();
 	private Stage stage;
 	
-	private static String pathToPdf = "\\\\10.168.170.253\\MU\\Img";
+	private static String pathToPdf = "\\\\192.168.100.245\\MU\\Img";
 	
 	@SuppressWarnings("static-access")
 	@FXML

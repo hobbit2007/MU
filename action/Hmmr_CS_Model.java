@@ -5,18 +5,18 @@ import javafx.beans.property.SimpleStringProperty;
 public class Hmmr_CS_Model {
 	
 	public SimpleStringProperty Id = new SimpleStringProperty();
-	public SimpleStringProperty HMMR_Material_Num_Complex = new SimpleStringProperty();
-	public SimpleStringProperty HMMR_Material_Num_Sub = new SimpleStringProperty();
+	public SimpleStringProperty ID_HMMR_COMPLEX = new SimpleStringProperty();
+	public SimpleStringProperty ID_HMMR_SUB = new SimpleStringProperty();
 
 	public Hmmr_CS_Model()
 	{
 		
 	}
-	public Hmmr_CS_Model(String Id, String HMMR_Material_Num_Complex, String HMMR_Material_Num_Sub)
+	public Hmmr_CS_Model(String Id, String ID_HMMR_COMPLEX, String ID_HMMR_SUB)
 	{
 		this.Id.set(Id);
-		this.HMMR_Material_Num_Complex.set(HMMR_Material_Num_Complex);
-		this.HMMR_Material_Num_Sub.set(HMMR_Material_Num_Sub);
+		this.ID_HMMR_COMPLEX.set(ID_HMMR_COMPLEX);
+		this.ID_HMMR_SUB.set(ID_HMMR_SUB);
 	}
 	public SimpleStringProperty getId() {
 		return Id;
@@ -24,26 +24,26 @@ public class Hmmr_CS_Model {
 	public void setId(SimpleStringProperty id) {
 		Id = id;
 	}
-	public SimpleStringProperty getHMMR_Material_Num_Complex() {
-		return HMMR_Material_Num_Complex;
+	public SimpleStringProperty getID_HMMR_COMPLEX() {
+		return ID_HMMR_COMPLEX;
 	}
-	public void setHMMR_Material_Num_Complex(SimpleStringProperty hMMR_Material_Num_Complex) {
-		HMMR_Material_Num_Complex = hMMR_Material_Num_Complex;
+	public void setID_HMMR_COMPLEX(SimpleStringProperty id_HMMR_COMPLEX) {
+		ID_HMMR_COMPLEX = id_HMMR_COMPLEX;
 	}
-	public SimpleStringProperty getHMMR_Material_Num_Sub() {
-		return HMMR_Material_Num_Sub;
+	public SimpleStringProperty getID_HMMR_SUB() {
+		return ID_HMMR_SUB;
 	}
-	public void setHMMR_Material_Num_Sub(SimpleStringProperty hMMR_Material_Num_Sub) {
-		HMMR_Material_Num_Sub = hMMR_Material_Num_Sub;
+	public void setID_HMMR_SUB(SimpleStringProperty id_HMMR_SUB) {
+		ID_HMMR_SUB = id_HMMR_SUB;
 	}
 	
 	public String getIdStr() {
 		return Id.get();
 	}
-	public String getHMMR_Material_Num_ComplexStr() {
-		return HMMR_Material_Num_Complex.get();
+	public String getID_HMMR_COMPLEXStr() {
+		return ID_HMMR_COMPLEX.get();
 	}
-	public String getHMMR_Material_Num_SubStr() {
-		return HMMR_Material_Num_Sub.get();
+	public String getID_HMMR_SUBStr() {
+		return ID_HMMR_SUB.get();
 	}
 }

@@ -18,7 +18,7 @@
          <children>
             <TabPane prefHeight="556.0" prefWidth="879.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="Общие">
+                <Tab fx:id="general" text="Общие">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -46,9 +46,9 @@
                               <TextField fx:id="txt_Model" layoutX="123.0" layoutY="150.0" />
                               <ComboBox fx:id="list_Model" layoutX="283.0" layoutY="150.0" prefWidth="150.0" />
                               <TextField fx:id="txt_Article" layoutX="123.0" layoutY="200.0" />
-                              <TextArea fx:id="txt_SP_MU_Description_RUS" layoutX="123.0" layoutY="305.0" prefHeight="83.0" prefWidth="264.0" />
-                              <TextArea fx:id="txt_SP_FD_Description" layoutX="123.0" layoutY="421.0" prefHeight="90.0" prefWidth="264.0" />
-                              <TextArea fx:id="txt_SP_Supplier_Description" layoutX="605.0" layoutY="44.0" prefHeight="89.0" prefWidth="262.0" />
+                              <TextArea fx:id="txt_SP_MU_Description_RUS" layoutX="123.0" layoutY="305.0" prefHeight="83.0" prefWidth="211.0" wrapText="true" />
+                              <TextArea fx:id="txt_SP_FD_Description" layoutX="123.0" layoutY="421.0" prefHeight="90.0" prefWidth="264.0" wrapText="true" />
+                              <TextArea fx:id="txt_SP_Supplier_Description" layoutX="605.0" layoutY="44.0" prefHeight="89.0" prefWidth="262.0" wrapText="true" />
                               <TextField fx:id="txt_Risk_Breakage" layoutX="665.0" layoutY="165.0" />
                               <TextField fx:id="txt_Delivery_Time" layoutX="665.0" layoutY="215.0" />
                               <TextField fx:id="txt_Replacement_Model" layoutX="665.0" layoutY="265.0" text="-" />
@@ -67,11 +67,22 @@
                                  </font>
                               </JFXButton>
                               <ComboBox fx:id="list_Single_Complex_Sub" layoutX="123.0" layoutY="251.0" prefWidth="150.0" />
+                              <ComboBox fx:id="list_part_type" editable="true" layoutX="345.0" layoutY="328.0" prefWidth="150.0" />
+                              <JFXButton fx:id="btn_mtc" layoutX="283.0" layoutY="50.0" text="MTC" textFill="#b82e2e">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton fx:id="btn_mtcsp" layoutX="334.0" layoutY="50.0" text="MTCSP" textFill="#b82e2e">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
                            </children>
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="Информационные">
+                <Tab fx:id="info" text="Информационные">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>

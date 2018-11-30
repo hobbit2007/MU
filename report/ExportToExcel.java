@@ -32,7 +32,7 @@ public class ExportToExcel extends JFrame {
 		@SuppressWarnings("unchecked")
 		public void showReport(String str) throws JRException, ClassNotFoundException, SQLException {
 	 
-			location = "\\\\10.168.170.253\\MU\\Blank_Letter_xls.jrxml";
+			location = "\\\\192.168.100.245\\MU\\Blank_Letter_xls.jrxml";
 	        String reportSrcFile = location;
 	        
 	        // First, compile jrxml file.
@@ -46,16 +46,16 @@ public class ExportToExcel extends JFrame {
 	      	        
 	        JasperPrint print = JasperFillManager.fillReport(jasperReport, map, cn.ConToDb1());
 	        
-	        File outDir = new File("\\\\10.168.170.253\\MU\\jasperoutput");
+	        File outDir = new File("\\\\192.168.100.245\\MU\\jasperoutput");
 	        outDir.mkdirs();
 	  
 	        JRXlsExporter exporter = new JRXlsExporter();
 	        exporter.setExporterInput(new SimpleExporterInput(print));
-	        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("\\\\10.168.170.253\\MU\\jasperoutput\\Task_Report"+conn_connector.USER_ID+".xls"));
+	        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("\\\\192.168.100.245\\MU\\jasperoutput\\Task_Report"+conn_connector.USER_ID+".xls"));
             
             exporter.exportReport();
         	try {
-        		File excelFile = new File("\\\\10.168.170.253\\MU\\jasperoutput\\Task_Report"+conn_connector.USER_ID+".xls");
+        		File excelFile = new File("\\\\192.168.100.245\\MU\\jasperoutput\\Task_Report"+conn_connector.USER_ID+".xls");
         		mn._run_excel(excelFile);
 				
 			} catch (IOException e) {

@@ -1,9 +1,7 @@
 package action;
 
 import java.io.IOException;
-
 import com.jfoenix.controls.JFXButton;
-
 import application.mu_main_controller;
 import db._query;
 import javafx.collections.FXCollections;
@@ -37,10 +35,9 @@ public class SP_Controller {
 	
 	@FXML
 	TableColumn<Hmmr_SP_Model, String> col_id_sp, col_HMMR_Material_Num, col_Manufacturer, col_Model, col_Article, col_Single_Complex_Sub, col_SP_MU_Description_RUS,
-	col_SP_FD_Description, col_SP_Supplier_Description, col_Kind, col_SP_Part_Type, col_SP_Sub_Part_Type, col_Part_Characteristic_1, col_Part_Characteristic_2,
-	col_Part_Characteristic_3, col_Part_Characteristic_4, col_Qty_S, col_Qty_W, col_Qty_P, col_Qty_A, col_Price, col_Key_No_Backup_Yes, col_Key_No_Backup_No,
+	col_SP_FD_Description, col_SP_Supplier_Description, col_Qty_S, col_Qty_W, col_Qty_P, col_Qty_A, col_Price, col_Key_No_Backup_Yes, col_Key_No_Backup_No,
 	col_Key_Yes_Backup_Yes, col_Key_Yes_Backup_No, col_Risk_Breakage, col_Delivery_Time, col_Replacement_Model, col_Qty_Interchangeability, col_Identity_SP, 
-	col_Qty_Identify_SP, col_Coefficient, col_MIN, col_BATCH;
+	col_Qty_Identify_SP, col_Coefficient, col_MIN, col_BATCH; //col_Kind, col_SP_Part_Type, col_SP_Sub_Part_Type, col_Part_Characteristic_1, col_Part_Characteristic_2,	col_Part_Characteristic_3, col_Part_Characteristic_4, 
 	
 	@FXML
 	JFXButton btn_add_sp, btn_upd_sp, btn_del_sp, btn_upd_tbl_sp, btn_cancel_sp;
@@ -59,7 +56,7 @@ public class SP_Controller {
 	
 	@FXML
 	HBox hb_sp1, hb_sp2, hb_sp3;
-	
+		
 	public static ObservableList<Hmmr_SP_Model> _table_update_sp = FXCollections.observableArrayList();
 	
 	_query qr = new _query();
@@ -112,13 +109,13 @@ public class SP_Controller {
 		col_SP_MU_Description_RUS.setCellValueFactory(CellData -> CellData.getValue().getSP_MU_Description_RUS());
 		col_SP_FD_Description.setCellValueFactory(CellData -> CellData.getValue().getSP_FD_Description());
 		col_SP_Supplier_Description.setCellValueFactory(CellData -> CellData.getValue().getSP_Supplier_Description());
-		col_Kind.setCellValueFactory(CellData -> CellData.getValue().getKind());
-		col_SP_Part_Type.setCellValueFactory(CellData -> CellData.getValue().getSP_Part_Type());
-		col_SP_Sub_Part_Type.setCellValueFactory(CellData -> CellData.getValue().getSP_Sub_Part_Type());
-		col_Part_Characteristic_1.setCellValueFactory(CellData -> CellData.getValue().getPart_Characteristic_1());
-		col_Part_Characteristic_2.setCellValueFactory(CellData -> CellData.getValue().getPart_Characteristic_2());
-		col_Part_Characteristic_3.setCellValueFactory(CellData -> CellData.getValue().getPart_Characteristic_3());
-		col_Part_Characteristic_4.setCellValueFactory(CellData -> CellData.getValue().getPart_Characteristic_4());
+//		col_Kind.setCellValueFactory(CellData -> CellData.getValue().getKind());
+//		col_SP_Part_Type.setCellValueFactory(CellData -> CellData.getValue().getSP_Part_Type());
+//		col_SP_Sub_Part_Type.setCellValueFactory(CellData -> CellData.getValue().getSP_Sub_Part_Type());
+//		col_Part_Characteristic_1.setCellValueFactory(CellData -> CellData.getValue().getPart_Characteristic_1());
+//		col_Part_Characteristic_2.setCellValueFactory(CellData -> CellData.getValue().getPart_Characteristic_2());
+//		col_Part_Characteristic_3.setCellValueFactory(CellData -> CellData.getValue().getPart_Characteristic_3());
+//		col_Part_Characteristic_4.setCellValueFactory(CellData -> CellData.getValue().getPart_Characteristic_4());
 		col_Qty_S.setCellValueFactory(CellData -> CellData.getValue().getQty_S());
 		col_Qty_W.setCellValueFactory(CellData -> CellData.getValue().getQty_W());
 		col_Qty_P.setCellValueFactory(CellData -> CellData.getValue().getQty_P());
@@ -137,6 +134,14 @@ public class SP_Controller {
 		col_Coefficient.setCellValueFactory(CellData -> CellData.getValue().getCoefficient());
 		col_MIN.setCellValueFactory(CellData -> CellData.getValue().getMIN());
 		col_BATCH.setCellValueFactory(CellData -> CellData.getValue().getBATCH());
+		
+		/*test.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				qr._select_test1();
+			}
+		});*/
 		
 		table_sp.setOnMouseClicked(new EventHandler<Event>() {
 

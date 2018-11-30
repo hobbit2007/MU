@@ -17,6 +17,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert.AlertType;
 
@@ -42,7 +43,7 @@ public class s_class {
 			p_str = str.split(" - ");
 		return p_str[count];
 	}
-	public String parser_str_str(String str, int count)
+	public static String parser_str_str(String str, int count)
 	{
 		String[] p_str = null;
 		for(int i = 0; i < str.length(); i++)
@@ -84,6 +85,27 @@ public class s_class {
 			}
 		});
 	}
+	//Делаем стиль для кнопки
+		public void _style1(JFXButton btn)
+		{
+			btn.setStyle("-fx-background-color: #e7e7e7; -fx-border-width: 1; -fx-border-color: #1680c2;");
+			
+			btn.setOnMouseEntered(new EventHandler<Event>() {
+
+				@Override
+				public void handle(Event event) {
+					btn.setStyle("-fx-background-color: #e3faff; -fx-border-width: 1; -fx-border-color: #1680c2;");
+				}
+			});
+			
+			btn.setOnMouseExited(new EventHandler<Event>() {
+
+				@Override
+				public void handle(Event event) {
+					btn.setStyle("-fx-background-color: #e7e7e7; -fx-border-width: 1; -fx-border-color: #1680c2;");
+				}
+			});
+		}
 	
 	//Перевод моточасов прогрессивных ППР в дни
 	public JFXRadioButton _moto_to_days(JFXRadioButton rbtn)
@@ -201,6 +223,12 @@ public class s_class {
           pass += (char)((r.nextInt(range)) + next);
        }
 	   return pass;
+	}
+	//Функция необходимая при обновлении таблицы TableView
+	public <S> void _update_table(TableView<S> tv)
+	{
+		tv.getColumns().get(0).setVisible(false);
+        tv.getColumns().get(0).setVisible(true);
 	}
 
 }

@@ -89,4 +89,12 @@ public class Hmmr_PartS_Model {
 	public String getIdStr() {
 		return Id.get();
 	}
+	
+	public String getEquip_id() {
+		return Equipment.get();
+	}
+	
+	public String getHMMR_Material_Id() {
+		return HMMR_Material_Num.get();
+	}
 }

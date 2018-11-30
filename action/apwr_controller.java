@@ -54,6 +54,8 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -212,13 +214,13 @@ public class apwr_controller {
 			table_ap.setPrefHeight(screen_hight-200);
 			title_wo.setPrefWidth(830.0);
 			if(screen_width == 1920.0)
-				desc_ap.setPrefWidth(830.0);
+				desc_ap.setPrefWidth(810.0);
 			if(screen_width == 1768.0)
-				desc_ap.setPrefWidth(880.0);
+				desc_ap.setPrefWidth(860.0);
 			if(screen_width == 1600.0)
-				desc_ap.setPrefWidth(540.0);
+				desc_ap.setPrefWidth(520.0);
 			if(screen_width == 1440.0)
-				desc_ap.setPrefWidth(360.0);
+				desc_ap.setPrefWidth(340.0);
 			
 			an_pn_wr.setPrefWidth(screen_width - 20);
 			an_pn_wr.setPrefHeight(screen_hight - 20);
@@ -794,8 +796,6 @@ public class apwr_controller {
 			@Override
 			public void handle(CellEditEvent<hmmr_ap_model, String> event) {
 				try {
-					System.out.println("POSITION = "+event.getTablePosition() + " OLD VALUE = "+ event.getOldValue() + " NEW VALUE =  "+ event.getNewValue());
-					if(event.getOldValue().equals(event.getRowValue().getId())) {
 						String tst = event.getTableView().getItems().get(event.getTablePosition().getRow()).getId().substring(2);
 						ID_WR = tst;
 						table_wr.setItems(qr._select_sort_apnum_wr(tst));
@@ -805,8 +805,6 @@ public class apwr_controller {
 				        
 				        clear_filter.setDisable(false);
 				        flag = 1;
-				     //   tb_pn.getSelectionModel().select(tab_wr);
-					}
 				}
 				catch (Exception e) {
 					
@@ -832,6 +830,25 @@ public class apwr_controller {
 	            }
 			}
 		});
+		//Выделяем строку в WO нажимаем Enter и открывается WR отсортированный по этой задаче 
+		table_ap.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.ENTER){
+					ID_WR = table_ap.getSelectionModel().getSelectedItem().getId().substring(2);
+					table_wr.setItems(qr._select_sort_apnum_wr(ID_WR));
+					
+					table_wr.getColumns().get(0).setVisible(false);
+			        table_wr.getColumns().get(0).setVisible(true);
+			        
+			        clear_filter.setDisable(false);
+			        flag = 1;
+			        tb_pn.getSelectionModel().select(tab_wr);
+					}
+			}
+		});
+		
 		//Вызываем окно обновления по двойному клику на строке table WR
 		table_wr.setOnMousePressed(new EventHandler<MouseEvent>() {
 
@@ -848,7 +865,12 @@ public class apwr_controller {
 					@Override
 					public void handle(MouseEvent event) {
 						if (event.getClickCount() == 2 ){
-							_fill_rec_wp(table_wp.getSelectionModel().getSelectedItem().getId());
+							try {
+								_fill_rec_wp(table_wp.getSelectionModel().getSelectedItem().getId());
+							}
+							catch (Exception e) {
+								
+							}
 			            }
 					}
 				});

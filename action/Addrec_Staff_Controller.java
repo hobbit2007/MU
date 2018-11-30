@@ -217,7 +217,7 @@ public class Addrec_Staff_Controller {
 			@Override
 			public void handle(Event arg0) {
 				try {
-					txt_login_staff.setText(txt_gwm_staff.getText());
+					txt_login_staff.setText(txt_gwm_staff.getText().toLowerCase());
 				}
 				catch (Exception e) {
 					
