@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXRadioButton?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -8,9 +9,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="711.0" prefWidth="411.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="action.AddRec_PartS_Controller">
+<AnchorPane prefHeight="605.0" prefWidth="411.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="action.AddRec_PartS_Controller">
    <children>
-      <Pane prefHeight="711.0" prefWidth="411.0">
+      <Pane prefHeight="605.0" prefWidth="411.0">
          <children>
             <Label fx:id="lbl_title_addparts" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="20.0" prefWidth="399.0" text="Добавить запись к Parts Specification">
                <font>
@@ -24,10 +25,6 @@
             <Label layoutX="14.0" layoutY="300.0" text="Оборудование:" />
             <Label layoutX="14.0" layoutY="350.0" text="№ чертежа:" />
             <Label layoutX="14.0" layoutY="400.0" text="№ на чертеже:" />
-            <Label layoutX="14.0" layoutY="450.0" text="Не ключевое Backup Yes:" />
-            <Label layoutX="14.0" layoutY="500.0" text="Не ключевое Backup No:" />
-            <Label layoutX="14.0" layoutY="550.0" text="Ключевое Backup Yes:" />
-            <Label layoutX="14.0" layoutY="600.0" text="Ключевое Backup No:" />
             <ComboBox fx:id="shop_parts" layoutX="223.0" layoutY="96.0" prefWidth="150.0" />
             <ComboBox fx:id="group_parts" layoutX="223.0" layoutY="146.0" prefWidth="150.0" />
             <ComboBox fx:id="line_parts" layoutX="223.0" layoutY="196.0" prefWidth="150.0" />
@@ -35,22 +32,22 @@
             <ComboBox fx:id="equip_parts" layoutX="223.0" layoutY="296.0" prefWidth="150.0" />
             <TextField fx:id="draw_parts" layoutX="223.0" layoutY="346.0" />
             <TextField fx:id="pos_draw_parts" layoutX="223.0" layoutY="396.0" />
-            <TextField fx:id="knby_parts" layoutX="223.0" layoutY="446.0" prefHeight="25.0" prefWidth="73.0" />
-            <TextField fx:id="knbn_parts" layoutX="223.0" layoutY="496.0" prefWidth="73.0" />
-            <TextField fx:id="kyby_parts" layoutX="223.0" layoutY="546.0" prefWidth="73.0" />
-            <TextField fx:id="kybn_parts" layoutX="223.0" layoutY="596.0" prefWidth="73.0" />
-            <JFXButton fx:id="btn_accept" layoutX="14.0" layoutY="671.0" text="Применить">
+            <JFXButton fx:id="btn_accept" layoutX="13.0" layoutY="544.0" text="Применить">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_cancel" layoutX="125.0" layoutY="671.0" text="Отмена">
+            <JFXButton fx:id="btn_cancel" layoutX="124.0" layoutY="544.0" text="Отмена">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </JFXButton>
             <Label layoutX="14.0" layoutY="50.0" text="Номер материала:" />
             <ComboBox fx:id="num_parts" layoutX="223.0" layoutY="46.0" prefWidth="150.0" />
+            <JFXRadioButton fx:id="kyby_parts" layoutX="17.0" layoutY="450.0" text="Ключевое Backup Yes" />
+            <JFXRadioButton fx:id="kybn_parts" layoutX="216.0" layoutY="450.0" text="Ключевое Backup No" />
+            <JFXRadioButton fx:id="knby_parts" layoutX="17.0" layoutY="495.0" text="Не ключевое Backup Yes" />
+            <JFXRadioButton fx:id="knbn_parts" layoutX="216.0" layoutY="495.0" text="Не ключевое Backup No" />
          </children>
       </Pane>
    </children>

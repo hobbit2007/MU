@@ -39,7 +39,7 @@ public class PartSpec_Controller {
 	col_Key_Yes_Backup_Yes, col_Key_Yes_Backup_No;
 	
 	@FXML
-	JFXButton btn_add_rec, btn_upd_rec, btn_del_rec, btn_upd_tbl, btn_cancel;
+	JFXButton btn_add_rec, btn_upd_rec, btn_del_rec, btn_upd_tbl, btn_cancel, dub_ps;
 	
 	@FXML
 	Label lbl_title_ps;
@@ -59,8 +59,10 @@ public class PartSpec_Controller {
 		scl._style(btn_del_rec);
 		scl._style(btn_upd_tbl);
 		scl._style(btn_cancel);
+		scl._style(dub_ps);
 		btn_upd_rec.setDisable(true);
 		btn_del_rec.setDisable(true);
+		dub_ps.setDisable(true);
 		
 		initData();
 		
@@ -104,6 +106,7 @@ public class PartSpec_Controller {
 			public void handle(ActionEvent arg0) {
 				btn_upd_rec.setDisable(true);
 				btn_del_rec.setDisable(true);
+				dub_ps.setDisable(true);
 				
 				_flag_window_parts = true;
 			try {					
@@ -119,6 +122,7 @@ public class PartSpec_Controller {
 			public void handle(ActionEvent arg0) {
 				btn_upd_rec.setDisable(true);
 				btn_del_rec.setDisable(true);
+				dub_ps.setDisable(true);
 				
 				_flag_window_parts = false;
 			try {					
@@ -134,6 +138,7 @@ public class PartSpec_Controller {
 			public void handle(Event arg0) {
 				btn_upd_rec.setDisable(false);
 				btn_del_rec.setDisable(false);
+				dub_ps.setDisable(false);
 				try {
 					_id_parts = table_parts.getSelectionModel().getSelectedItem().getIdStr();
 				}
@@ -166,6 +171,7 @@ public class PartSpec_Controller {
 		        table_parts.getColumns().get(0).setVisible(true);
 		        btn_upd_rec.setDisable(true);
 				btn_del_rec.setDisable(true);
+				dub_ps.setDisable(true);
 			}
 			
     });
@@ -178,6 +184,7 @@ public class PartSpec_Controller {
 	        table_parts.getColumns().get(0).setVisible(true);
 	        btn_upd_rec.setDisable(true);
 			btn_del_rec.setDisable(true);
+			dub_ps.setDisable(true);
 		}
 	});
     btn_del_rec.setOnAction(new EventHandler<ActionEvent>() {
@@ -219,6 +226,17 @@ public class PartSpec_Controller {
 			stage.close();
 		}
 	});
+    dub_ps.setOnAction(new EventHandler<ActionEvent>() {
+		
+		@Override
+		public void handle(ActionEvent arg0) {
+			try {
+				ps_dup();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	});
 		
 	}
 
@@ -235,6 +253,19 @@ public class PartSpec_Controller {
 	    stage_set.setResizable(false);
 	    stage_set.initModality(Modality.WINDOW_MODAL);
 	    stage_set.initOwner(mu_main_controller.getPrimaryStage());
+	    stage_set.setScene(scene);
+	    stage_set.show();
+	}
+	
+	//Вызываем окно дублирования записи
+	protected void ps_dup() throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("duplicate_rec_pss.fxml"));
+		Scene scene = new Scene(root);
+	    Stage stage_set = new Stage();
+		stage_set.initModality(Modality.WINDOW_MODAL);	
+		stage_set.initOwner(mu_main_controller.getPrimaryStage());
+	    stage_set.setTitle("M&U - Duplicate Record Window");
+	    stage_set.setResizable(false);
 	    stage_set.setScene(scene);
 	    stage_set.show();
 	}

@@ -50,7 +50,7 @@ public class pm_controller {
 	@FXML
 	JFXButton add_ap_pm, add_pm, upd_pm, del_pm, close_pm, upd_table_pm, dup_rec_pm;
 	
-	public static String _id_pm, _ninst_pm_upd, _eq_id_upd,_group_pm_upd, _ool_pm_upd, _otv, _pm_exec;// _group_eq_upd, _lm_pm_upd, _os_pm_upd, _equip_pm_upd, _pmn_pm_upd, _pmc_pm_upd, _pmtype_pm_upd, 
+	public static String _id_pm, _ninst_pm_upd, _eq_id_upd,_group_pm_upd, _ool_pm_upd, _otv, _pm_exec, _shop_pm, _groupeq_pm, _lm_pm, _os_pm, _equip_pm;// _group_eq_upd, _lm_pm_upd, _os_pm_upd, _equip_pm_upd, _pmn_pm_upd, _pmc_pm_upd, _pmtype_pm_upd, 
 	
 	@FXML
 	ScrollPane sp_pm;
@@ -391,6 +391,7 @@ public class pm_controller {
 										qr._insert_pm_year(_ccl.getId(), pm_group, days, Otv_for_task);
 										_count = _cnt + _count;
 									}
+									qr._update_week_year(pm_group);
 								}
 								else
 									scl._AlertDialog("Пожалуйста, измените дату старта ППР в справочнике Группа-Период!", "Внимание!");
@@ -441,7 +442,6 @@ public class pm_controller {
 					try {
 						pm_dup();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -464,6 +464,11 @@ public class pm_controller {
 		_otv = scl.parser_sql_str(_sql_rez, 3);
 		_ool_pm_upd = scl.parser_sql_str(_sql_rez, 4);
 		_pm_exec = scl.parser_sql_str(_sql_rez, 5);
+		_shop_pm = scl.parser_sql_str(_sql_rez, 6);
+		_groupeq_pm = scl.parser_sql_str(_sql_rez, 7);
+		_lm_pm = scl.parser_sql_str(_sql_rez, 8);
+		_os_pm = scl.parser_sql_str(_sql_rez, 9);
+		_equip_pm = scl.parser_sql_str(_sql_rez, 10);
 				
 		try {
 			pm_upd(stage);
@@ -515,7 +520,7 @@ public class pm_controller {
 		 
 		col_ninst_pm.setText(lngBndl.getString("col_ninst_pm"));
 		//col_eq_id.setText(lngBndl.getString("col_shop_pm"));
-		col_group_pm.setText(lngBndl.getString("col_group_pm"));
+		col_group_pm.setText(lngBndl.getString("col_group_eq"));
 		col_ool_pm.setText(lngBndl.getString("col_ool_pm"));
 		col_otv_pm.setText(lngBndl.getString("lbl_otv_ap"));
 //		col_days_exp.setText(lngBndl.getString("col_days_exp"));

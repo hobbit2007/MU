@@ -455,6 +455,7 @@ public class addrec_pm_controller {
 				qr._insert_pm_year(_last_id, pm_group, days, Otv_for_task);
 				_count = _cnt + _count;
 			}
+			qr._update_week_year(pm_group);
 		}		
 					
 //				}

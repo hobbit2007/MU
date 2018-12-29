@@ -1,7 +1,7 @@
 package action;
 
 import com.jfoenix.controls.JFXButton;
-
+import com.jfoenix.controls.JFXRadioButton;
 import application.conn_connector;
 import db._query;
 import javafx.beans.value.ChangeListener;
@@ -24,13 +24,18 @@ public class AddRec_PartS_Controller {
 	ComboBox<String> num_parts, shop_parts, group_parts, line_parts, os_parts, equip_parts;
 	
 	@FXML
-	TextField draw_parts, pos_draw_parts, knby_parts, knbn_parts, kyby_parts, kybn_parts;
+	TextField draw_parts, pos_draw_parts, qty_parts;
+	
+	@FXML
+	JFXRadioButton knby_parts, knbn_parts, kyby_parts, kybn_parts;
 	
 	@FXML
 	JFXButton btn_accept, btn_cancel;
 	
 	@FXML
 	Label lbl_title_addparts;
+	
+	String knby_parts_add = "0", knbn_parts_add = "0", kyby_parts_add = "0", kybn_parts_add = "0";
 	
 	_query qr = new _query();
 	s_class scl = new s_class();
@@ -189,6 +194,63 @@ public class AddRec_PartS_Controller {
 			}
 		});
 		
+		knby_parts.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				knby_parts.setSelected(true);
+				knbn_parts.setSelected(false);
+				kyby_parts.setSelected(false);
+				kybn_parts.setSelected(false);
+				knby_parts_add = "1";
+				knbn_parts_add = "0";
+				kyby_parts_add = "0";
+				kybn_parts_add = "0";
+			}
+		});
+		knbn_parts.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				knby_parts.setSelected(false);
+				knbn_parts.setSelected(true);
+				kyby_parts.setSelected(false);
+				kybn_parts.setSelected(false);
+				knby_parts_add = "0";
+				knbn_parts_add = "1";
+				kyby_parts_add = "0";
+				kybn_parts_add = "0";
+			}
+		});
+		kyby_parts.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				kyby_parts.setSelected(true);
+				kybn_parts.setSelected(false);
+				knby_parts.setSelected(false);
+				knbn_parts.setSelected(false);
+				knby_parts_add = "0";
+				knbn_parts_add = "0";
+				kyby_parts_add = "1";
+				kybn_parts_add = "0";
+			}
+		});
+		kybn_parts.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				kyby_parts.setSelected(false);
+				kybn_parts.setSelected(true);
+				knby_parts.setSelected(false);
+				knbn_parts.setSelected(false);
+				knby_parts_add = "0";
+				knbn_parts_add = "0";
+				kyby_parts_add = "0";
+				kybn_parts_add = "1";
+			}
+		});
+		
 		if(!psc._flag_window_parts)
 		{
 			String _sql_rez = qr._select_for_update_parts(psc._id_parts);
@@ -209,10 +271,14 @@ public class AddRec_PartS_Controller {
 			equip_parts.getSelectionModel().select(scl.parser_str_str(qr._select_fillpm_equip(scl.parser_str_str_str(_sql_rez, 1), "hmmr_parts_spec"), 4));
 			draw_parts.setText(scl.parser_str_str_str(_sql_rez, 2));
 			pos_draw_parts.setText(scl.parser_str_str_str(_sql_rez, 3));
-			knby_parts.setText(scl.parser_str_str_str(_sql_rez, 4));
-			knbn_parts.setText(scl.parser_str_str_str(_sql_rez, 5));
-			kyby_parts.setText(scl.parser_str_str_str(_sql_rez, 6));
-			kybn_parts.setText(scl.parser_str_str_str(_sql_rez, 7));
+			if(Integer.parseInt(scl.parser_str_str_str(_sql_rez, 4)) == 1)
+				knby_parts.setSelected(true);
+			if(Integer.parseInt(scl.parser_str_str_str(_sql_rez, 5)) == 1)
+				knbn_parts.setSelected(true);
+			if(Integer.parseInt(scl.parser_str_str_str(_sql_rez, 6)) == 1)
+				kyby_parts.setSelected(true);
+			if(Integer.parseInt(scl.parser_str_str_str(_sql_rez, 7)) == 1)
+				kybn_parts.setSelected(true);
 			
 			lbl_title_addparts.setText("Обновить запись Parts Specification");
 		}
@@ -268,7 +334,7 @@ public class AddRec_PartS_Controller {
 				chk_btn();
 			}
 		});
-		knby_parts.setOnKeyReleased(new EventHandler<Event>() {
+		/*knby_parts.setOnKeyReleased(new EventHandler<Event>() {
 
 			@Override
 			public void handle(Event arg0) {
@@ -295,7 +361,7 @@ public class AddRec_PartS_Controller {
 			public void handle(Event arg0) {
 				chk_btn();
 			}
-		});
+		});*/
 		num_parts.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 
 			@Override
@@ -312,12 +378,12 @@ public class AddRec_PartS_Controller {
 				String eq_id = qr._select_data_filter_ps_id(scl.parser_str(shop_parts.getValue(), 0), scl.parser_str(group_parts.getValue(), 0), scl.parser_str(line_parts.getValue(), 0), scl.parser_str(os_parts.getValue(), 0), scl.parser_str(equip_parts.getValue(), 0));
 				
 				if(psc._flag_window_parts) {
-					qr._insert_parts(eq_id, draw_parts.getText(), pos_draw_parts.getText(), knby_parts.getText(), knbn_parts.getText(), kyby_parts.getText(), kybn_parts.getText(), qr._select_matnum_id(scl.parser_str(num_parts.getValue(), 0)));
+					qr._insert_parts(eq_id, draw_parts.getText(), pos_draw_parts.getText(), knby_parts_add, knbn_parts_add, kyby_parts_add, kybn_parts_add, qr._select_matnum_id(scl.parser_str(num_parts.getValue(), 0)));
 					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_parts_spec") + " в Parts Specification");
 				}
 				else
 				{
-					qr._update_parts(psc._id_parts, eq_id, draw_parts.getText(), pos_draw_parts.getText(), knby_parts.getText(), knbn_parts.getText(), kyby_parts.getText(), kybn_parts.getText(), qr._select_matnum_id(scl.parser_str(num_parts.getValue(), 0)));
+					qr._update_parts(psc._id_parts, eq_id, draw_parts.getText(), pos_draw_parts.getText(), knby_parts_add, knbn_parts_add, kyby_parts_add, kybn_parts_add, qr._select_matnum_id(scl.parser_str(num_parts.getValue(), 0)));
 					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + psc._id_parts + " в Parts Specification");
 				}
 					psc._table_update_parts.addAll(qr._select_data_parts());

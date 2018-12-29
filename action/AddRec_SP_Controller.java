@@ -86,6 +86,8 @@ public class AddRec_SP_Controller {
 		if(!spc._flag_sp_window) {
 			lbl_title_sp.setText("Обновление записи SP DB");
 			info.setDisable(false);
+			btn_mtc.setDisable(true);
+			btn_mtcsp.setDisable(true);
 			
 			String _sql_rez = qr._select_for_update_sp(spc._id_sp);
 			txt_HMMR_Material_Num.setText(scl.parser_str_str_str(_sql_rez, 0));
@@ -103,6 +105,14 @@ public class AddRec_SP_Controller {
 			txt_Identity_SP.setText(scl.parser_str_str_str(_sql_rez, 12));
 			txt_Coefficient.setText(scl.parser_str_str_str(_sql_rez, 13));
 			_id_pchar = scl.parser_str_str_str(_sql_rez, 14);
+			txt_Qty_S.setText(scl.parser_str_str_str(_sql_rez, 15));
+			txt_Qty_W.setText(scl.parser_str_str_str(_sql_rez, 16));
+			txt_Qty_P.setText(scl.parser_str_str_str(_sql_rez, 17));
+			txt_Qty_A.setText(scl.parser_str_str_str(_sql_rez, 18));
+			txt_Key_No_Backup_Yes.setText(scl.parser_str_str_str(_sql_rez, 19));
+			txt_Key_No_Backup_No.setText(scl.parser_str_str_str(_sql_rez, 20));
+			txt_Key_Yes_Backup_Yes.setText(scl.parser_str_str_str(_sql_rez, 21));
+			txt_Key_Yes_Backup_No.setText(scl.parser_str_str_str(_sql_rez, 22));
 			
 			if(!_id_pchar.equals("0")) {
 				String _sql_rez_rez = qr._select_for_update_partchar(_id_pchar);
@@ -143,6 +153,7 @@ public class AddRec_SP_Controller {
 				btn_mtc.setDisable(true);
 				btn_mtcsp.setDisable(false);
 				txt_HMMR_Material_Num.setText(num_sum(qr._select_last_matnum(11)));
+				qr._insert_sp(txt_HMMR_Material_Num.getText(), "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-");
 				
 			}
 		});
@@ -153,6 +164,7 @@ public class AddRec_SP_Controller {
 				btn_mtc.setDisable(false);
 				btn_mtcsp.setDisable(true);
 				txt_HMMR_Material_Num.setText(num_sum(qr._select_last_matnum(14)));
+				qr._insert_sp(txt_HMMR_Material_Num.getText(), "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-");
 			}
 		});
 				
@@ -284,6 +296,7 @@ public class AddRec_SP_Controller {
 			}
 		});
 		
+		
 		btn_add_rec.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -313,15 +326,17 @@ public class AddRec_SP_Controller {
 					
 				
 				if(spc._flag_sp_window) {
-					qr._insert_sp(txt_HMMR_Material_Num.getText(), txt_Manufacturer.getText(), txt_Model.getText(), txt_Article.getText(), list_Single_Complex_Sub.getValue(), txt_SP_MU_Description_RUS.getText(), txt_SP_FD_Description.getText(), txt_SP_Supplier_Description.getText(), _id_pchar, txt_Price.getText(), txt_Risk_Breakage.getText(), txt_Delivery_Time.getText(), Id_Intercangeable, Id_Identify, txt_Coefficient.getText());
+					qr._update_sp_ins(txt_HMMR_Material_Num.getText(), txt_Manufacturer.getText(), txt_Model.getText(), txt_Article.getText(), list_Single_Complex_Sub.getValue(), txt_SP_MU_Description_RUS.getText(), txt_SP_FD_Description.getText(), txt_SP_Supplier_Description.getText(), _id_pchar, txt_Price.getText(), txt_Risk_Breakage.getText(), txt_Delivery_Time.getText(), Id_Intercangeable, Id_Identify, txt_Coefficient.getText());
 					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Создал запись № = " + qr._select_last_id("hmmr_sp_db") + " в SP DB");
 				}
 				else {
 					qr._update_sp(spc._id_sp, txt_HMMR_Material_Num.getText(), txt_Manufacturer.getText(), txt_Model.getText(), txt_Article.getText(), list_Single_Complex_Sub.getValue(), txt_SP_MU_Description_RUS.getText(), txt_SP_FD_Description.getText(), txt_SP_Supplier_Description.getText(), txt_Price.getText(), txt_Risk_Breakage.getText(), txt_Delivery_Time.getText(), Id_Intercangeable, Id_Identify, txt_Coefficient.getText());
 					qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Обновил запись № = " + spc._id_sp + " в SP DB");
 				}
-				
-				spc._table_update_sp.addAll(qr._select_data_sp());
+				if(spc._flag_sort_spdb == 0)
+					spc._table_update_sp.addAll(qr._select_data_sp());
+				else if(spc._flag_sort_spdb == 1)
+					spc._table_update_sp.addAll(qr._select_data_sp_sort(spc._value_sort_manuf));
 				
 				stage = (Stage) btn_add_rec.getScene().getWindow();
 				stage.close();

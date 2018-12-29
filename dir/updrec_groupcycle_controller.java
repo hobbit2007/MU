@@ -269,7 +269,7 @@ public class updrec_groupcycle_controller {
 								qr._insert_pm_year(pm_id, pm_group, days, Otv_for_task);
 								_count = _cnt + _count;
 							}
-						
+							qr._update_week_year(pm_group);
 						
 					}
 					catch (Exception e) {

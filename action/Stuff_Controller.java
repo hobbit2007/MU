@@ -163,10 +163,15 @@ public class Stuff_Controller {
 
 			@Override
 			public void handle(Event arg0) {
+				try {
 				_id_staff = Integer.parseInt(table_staff.getSelectionModel().getSelectedItem().getIdStr());
 				upd_staff.setDisable(false);
 				if(!conn_connector.USER_ROLE.equals("Technics") || !conn_connector.USER_ROLE.equals("Engeneer"))
 					del_staff.setDisable(false);
+				}
+				catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 			}
 		});
 		upd_staff.setOnAction(new EventHandler<ActionEvent>() {

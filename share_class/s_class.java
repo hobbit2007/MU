@@ -57,6 +57,7 @@ public class s_class {
 			p_str = str.split(";");
 		return p_str[count];
 	}
+	
 	public String parser_double_dot(String str, int count)
 	{
 		String[] p_str = null;

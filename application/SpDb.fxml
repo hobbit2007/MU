@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -111,6 +112,14 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
+                        <HBox prefHeight="100.0" prefWidth="200.0" />
+                        <Label text="Сортировка:">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <HBox prefHeight="100.0" prefWidth="17.0" />
+                        <ComboBox fx:id="sort_manuf" prefWidth="150.0" />
                      </children>
                   </HBox>
                </children>

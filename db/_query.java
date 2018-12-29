@@ -40,7 +40,7 @@ public class _query
     			  weeks_inst, hours_inst, pereodic_inst, total_rez_upd_inst;
     private String ninst_inst, ver_inst, mtt_inst, pmn_inst, tpm_inst, pmc1_inst, pmc2_inst, ool_inst, oop_inst, pos_inst, sinfo_inst, s_doc_inst, qspec_inst,
     			   pwt_inst, wt_inst, adm2_inst, adm3_inst, ofit1_inst, ofit2_inst, date_create, date_change, inst_pdf;
-    private String total_rez_upd_pm, ninst_pm, eq_id, ool_pm, pm_resp, group_pm, pm_exec;
+    private String total_rez_upd_pm, ninst_pm, eq_id, ool_pm, pm_resp, group_pm, pm_exec, shop_pm, groupeq_pm, lm_pm, os_pm, equip_pm;
     private String total_rez_data, pereodic_pmplan, dbegin, dend, shop_pmplan, otv_plan;
     private String pmnum_ap, type_ap, description_ap, due_date_ap, equip_ap, oft_ap, otv_ap, total_rez_upd_ap, icon, icon_at;
 	private String shift_report, req_action, actual_time, actual_time1,actual_time2,actual_time3,actual_time4, data, equip, record_type, work_time, resp,resp2,resp3,resp4, status_wr, qty, ap_num, total_rez_upd_wr, actual_date,actual_date_2,actual_date_3,actual_date_4, actual_date1,actual_date2,actual_date3,actual_date4, user, hours1,hours1_2,hours1_3,hours1_4, min1, hours2,hours2_2,hours2_3,hours2_4, min2, user_number, activity_type; 
@@ -1604,7 +1604,7 @@ public class _query
 //				        System.out.println("SELECT WORKED DATA: "+list);
 					}
 					catch (SQLException e) {
-						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 1574!");
+						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 1607!");
 			        } finally {
 			            //close connection ,stmt and resultset here
 			        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -1639,7 +1639,7 @@ public class _query
 //				        System.out.println("SELECT WORKED DATA: "+list);
 					}
 					catch (SQLException e) {
-						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 1529!");
+						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 1625!");
 			        } finally {
 			            //close connection ,stmt and resultset here
 			        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -1673,7 +1673,7 @@ public class _query
 //				        System.out.println("SELECT WORKED DATA: "+list);
 					}
 					catch (SQLException e) {
-						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 1563!");
+						s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 1658!");
 			        } finally {
 			            //close connection ,stmt and resultset here
 			        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -2502,8 +2502,8 @@ public class _query
 				public String _select_for_update_pm(String id)
 				{
 					try {
-						String query = "select Instruction_num,Eq_ID,PM_Group,PM_Resp,OnOff_Line,PM_Executor from hmmr_pm where id = "+"'"+id+"'"+";";
-						
+						//String query = "select Instruction_num,Eq_ID,PM_Group,PM_Resp,OnOff_Line,PM_Executor from hmmr_pm where id = "+"'"+id+"'"+";";
+						String query = "select hp.Instruction_num,hp.Eq_ID,hp.PM_Group,hp.PM_Resp,hp.OnOff_Line,hp.PM_Executor,hps.FL03_Shop_s,hps.FL04_Group_s,hps.FL05_Line_s,hps.FL06_Station_s,hps.FL07_Equipment_s from hmmr_pm hp INNER JOIN hmmr_plant_structure hps ON hps.id = hp.Eq_ID where hp.id = "+"'"+id+"'"+";";
 						cn.ConToDb();
 						stmt9 = cn.con.createStatement();
 						rs9 = stmt9.executeQuery(query);
@@ -2515,8 +2515,13 @@ public class _query
 				        	pm_resp = rs9.getString(4);
 				        	ool_pm = rs9.getString(5); 
 				        	pm_exec = rs9.getString(6);
+				        	shop_pm = rs9.getString(7);
+				        	groupeq_pm = rs9.getString(8);
+				        	lm_pm = rs9.getString(9);
+				        	os_pm = rs9.getString(10);
+				        	equip_pm = rs9.getString(11);
 				        }
-				        total_rez_upd_pm = ninst_pm+","+eq_id+","+group_pm+","+pm_resp+","+ool_pm+","+pm_exec;
+				        total_rez_upd_pm = ninst_pm+","+eq_id+","+group_pm+","+pm_resp+","+ool_pm+","+pm_exec+","+shop_pm+","+groupeq_pm+","+lm_pm+","+os_pm+","+equip_pm;
 //				        System.out.println("SELECT WORKED: "+total_rez);
 					}
 					catch (SQLException e) {
@@ -2745,7 +2750,7 @@ public class _query
 				{
 					ObservableList<String> list = FXCollections.observableArrayList();
 					try {
-						String query = "select ps.Pereodic, hgc.PM_StartDate, ps.end_date, hps.FL03_Shop_s, p.PM_Resp from hmmr_pm p INNER JOIN hmmr_group_cycle hgc ON hgc.PM_Group = p.PM_Group INNER JOIN hmmr_pm_cycle ps ON ps.Type = hgc.PM_Cycle INNER JOIN hmmr_plant_structure hps ON hps.id = p.Eq_ID where record_del = 0 AND p.PM_Group = "+"'"+group+"'"+";";
+						String query = "select ps.Pereodic, hgc.PM_StartDate, ps.end_date, hps.FL03_Shop_s, p.PM_Resp from hmmr_pm p INNER JOIN hmmr_group_cycle hgc ON hgc.PM_Group = p.PM_Group INNER JOIN hmmr_pm_cycle ps ON ps.Type = hgc.PM_Cycle INNER JOIN hmmr_plant_structure hps ON hps.id = p.Eq_ID where hps.Status = 0 AND p.PM_Group = "+"'"+group+"'"+";";
 						
 						cn.ConToDb();
 						stmt9 = cn.con.createStatement();
@@ -3452,9 +3457,9 @@ public class _query
 		
 		//апдейтим запись в таблице PM
 				@SuppressWarnings("static-access")
-				public void _update_rec_pm(String id, String num_instruction, String Group_EQ, String Otv, String OnOff_Line, String pm_exec)
+				public void _update_rec_pm(String id, String num_instruction, String Eq_ID, String Group_EQ, String Otv, String OnOff_Line, String pm_exec)
 				{
-					String query = "UPDATE hmmr_pm SET Instruction_num = "+"'"+num_instruction+"'"+",PM_Group = "+"'"+Group_EQ+"'"+",PM_Resp = "+"'"+Otv+"'"+",OnOff_Line = "+"'"+OnOff_Line+"'"+" ,PM_Executor = "+"'"+pm_exec+"'"+" where id = "+"'"+id+"'"+";"; //"UPDATE pm_inst SET Type_PM = "+"'"+type+"'"+", Description = "+"'"+desc+"'"+" WHERE id = "+"'"+id+"'"+";";
+					String query = "UPDATE hmmr_pm SET Instruction_num = "+"'"+num_instruction+"'"+",Eq_ID = "+"'"+Eq_ID+"'"+",PM_Group = "+"'"+Group_EQ+"'"+",PM_Resp = "+"'"+Otv+"'"+",OnOff_Line = "+"'"+OnOff_Line+"'"+" ,PM_Executor = "+"'"+pm_exec+"'"+" where id = "+"'"+id+"'"+";"; //"UPDATE pm_inst SET Type_PM = "+"'"+type+"'"+", Description = "+"'"+desc+"'"+" WHERE id = "+"'"+id+"'"+";";
 					
 					try {
 						cn.ConToDb();
@@ -5815,7 +5820,7 @@ public class _query
 	        }
 		}
 		/**
-		 * Удаляем запись из БД в таблице
+		 * Удаляем запись из БД в ЛЮБОЙ таблице 
 		 * @param Id - id записи которую удаляем
 		 * @param tbl_name - Имя таблицу из которой удаляем запись
 		 * @param field_name - Имя поля в которое ставим признак 1 - означающий что данная запись удалена
@@ -6401,7 +6406,7 @@ public class _query
 		        }
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6338!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6380!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -6421,7 +6426,7 @@ public class _query
 				stmt.executeUpdate(query);
 				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6376!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6416!");
 			}
 	    	finally {
 	            //close connection ,stmt and resultset here
@@ -6447,7 +6452,7 @@ public class _query
 				//log.log(Level.INFO, "ADD STRING TO DB");
 				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6400!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6440!");
 			}
 	    	finally {
 	            //close connection ,stmt and resultset here
@@ -6480,7 +6485,7 @@ public class _query
 				//log.log(Level.INFO, "ADD STRING TO DB");
 				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6436!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6474!");
 			}
 	    	finally {
 	            //close connection ,stmt and resultset here
@@ -6522,7 +6527,7 @@ public class _query
 //		        System.out.println("SELECT WORKED: "+total_rez);
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6466!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6502!");
 	        } finally {
 	            //close connection ,stmt and resultset here
 	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -6550,7 +6555,7 @@ public class _query
 				stmt.executeUpdate(query);
 				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6509!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6545!");
 			}
 	    	finally {
 	            //close connection ,stmt and resultset here
@@ -6569,8 +6574,10 @@ public class _query
 			ObservableList<Hmmr_SP_Model> list = FXCollections.observableArrayList();
 			
 			try {
-				String query = "SELECT id, HMMR_Material_Num, Manufacturer, Model, Article, Single_Complex_Sub, SP_MU_Description_RUS, SP_FD_Description, SP_Supplier_Description, Qty_S, Qty_W, Qty_P, Qty_A, Price, Key_No_Backup_Yes, Key_No_Backup_No, Key_Yes_Backup_Yes, Key_Yes_Backup_No, Risk_Breakage, Delivery_Time, Replacement_Model, Qty_Interchangeability, Qty_Identify_SP, Identity_SP, Coefficient, MIN, BATCH FROM hmmr_sp_db WHERE del_rec = 0;"; //Kind, SP_Part_Type, SP_Sub_Part_Type, Part_Characteristic_1, Part_Characteristic_2, Part_Characteristic_3, Part_Characteristic_4, 
-							
+				//String query = "SELECT id, HMMR_Material_Num, Manufacturer, Model, Article, Single_Complex_Sub, SP_MU_Description_RUS, SP_FD_Description, SP_Supplier_Description, Qty_S, Qty_W, Qty_P, Qty_A, Price, Key_No_Backup_Yes, Key_No_Backup_No, Key_Yes_Backup_Yes, Key_Yes_Backup_No, Risk_Breakage, Delivery_Time, Replacement_Model, Qty_Interchangeability, Qty_Identify_SP, Identity_SP, Coefficient, MIN, BATCH FROM hmmr_sp_db hsd INNER JOIN hmmr_parts_spec hpc ON hpc.ID_HMMR = hsd.id WHERE hsd.del_rec = 0;"; //Kind, SP_Part_Type, SP_Sub_Part_Type, Part_Characteristic_1, Part_Characteristic_2, Part_Characteristic_3, Part_Characteristic_4, 
+				//String query = "SELECT hsd.id, hsd.HMMR_Material_Num, hsd.Manufacturer, hsd.Model, hsd.Article, hsd.Single_Complex_Sub, hsd.SP_MU_Description_RUS, hsd.SP_FD_Description, hsd.SP_Supplier_Description, hsd.Qty_S, hsd.Qty_W, hsd.Qty_P, hsd.Qty_A, hsd.Price, hps.Key_No_Backup_Yes, hps.Key_No_Backup_No, hps.Key_Yes_Backup_Yes, hps.Key_Yes_Backup_No, hsd.Risk_Breakage, hsd.Delivery_Time, hsd.Replacement_Model, hsd.Qty_Interchangeability, hsd.Qty_Identify_SP, hsd.Identity_SP, hsd.Coefficient, hsd.MIN, hsd.BATCH FROM hmmr_sp_db hsd INNER JOIN hmmr_parts_spec hps ON hps.ID_HMMR = hsd.id WHERE hsd.del_rec = 0 GROUP BY hps.ID_HMMR";
+				String query = "SELECT id, HMMR_Material_Num, Manufacturer, Model, Article, Single_Complex_Sub, SP_MU_Description_RUS, SP_FD_Description, SP_Supplier_Description, Qty_S, Qty_W, Qty_P, Qty_A, Price, Key_No_Backup_Yes, Key_No_Backup_No, Key_Yes_Backup_Yes, Key_Yes_Backup_No, Risk_Breakage, Delivery_Time, Replacement_Model, Qty_Interchangeability, Qty_Identify_SP, Identity_SP, Coefficient, MIN, BATCH FROM hmmr_sp_db WHERE del_rec = 0";
+				//String query = "SELECT hsd.id, hsd.HMMR_Material_Num, hsd.Manufacturer, hsd.Model, hsd.Article, hsd.Single_Complex_Sub, hsd.SP_MU_Description_RUS, hsd.SP_FD_Description, hsd.SP_Supplier_Description, hsd.Qty_S, hsd.Qty_W, hsd.Qty_P, hsd.Qty_A, hsd.Price, IF(hps.Key_No_Backup_Yes = 1,COUNT(hps.Key_No_Backup_Yes),0), IF(hps.Key_No_Backup_No = 1,COUNT(hps.Key_No_Backup_No), 0), IF(hps.Key_Yes_Backup_Yes = 1,COUNT(hps.Key_Yes_Backup_Yes),0), IF(hps.Key_Yes_Backup_No = 1,COUNT(hps.Key_Yes_Backup_No),0), hsd.Risk_Breakage, hsd.Delivery_Time, hsd.Replacement_Model, hsd.Qty_Interchangeability, hsd.Qty_Identify_SP, hsd.Identity_SP, hsd.Coefficient, hsd.MIN, hsd.BATCH FROM hmmr_sp_db hsd INNER JOIN hmmr_parts_spec hps ON hps.ID_HMMR = hsd.id WHERE hsd.del_rec = 0 GROUP BY hsd.HMMR_Material_Num";
 				cn.ConToDb();
 				stmt12 = cn.con.createStatement();
 				rs12 = stmt12.executeQuery(query);
@@ -6618,7 +6625,7 @@ public class _query
 		        }
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6537!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6574!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -6655,7 +6662,7 @@ public class _query
 		        }
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6606!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6641!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -6682,7 +6689,7 @@ public class _query
 				//log.log(Level.INFO, "ADD STRING TO DB");
 				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6641!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6676!");
 			}
 		   	finally {
 		           //close connection ,stmt and resultset here
@@ -6708,7 +6715,7 @@ public class _query
 				stmt.executeUpdate(query);
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6670!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6705!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -6727,7 +6734,7 @@ public class _query
 				stmt.executeUpdate(query);
 				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6310");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6723");
 			}
 	    	finally {
 	            //close connection ,stmt and resultset here
@@ -6763,7 +6770,7 @@ public class _query
 //		        System.out.println("SELECT WORKED: "+total_rez);
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6715!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6750!");
 	        } finally {
 	            //close connection ,stmt and resultset here
 	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -6785,7 +6792,7 @@ public class _query
 				//log.log(Level.INFO, "ADD STRING TO DB");
 				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6738!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6779!");
 			}
 		   	finally {
 		           //close connection ,stmt and resultset here
@@ -6825,7 +6832,7 @@ public class _query
 
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6195!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6815!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -6845,11 +6852,12 @@ public class _query
 		{
 			String total_rez_upd_part = "NULL";
 			try {
-				String query = "select HMMR_Material_Num, Manufacturer, Model, Article, Single_Complex_Sub, SP_MU_Description_RUS, SP_FD_Description, SP_Supplier_Description, Price, Risk_Breakage, Delivery_Time, Replacement_Model, Identity_SP, Coefficient, ID_Pchar from hmmr_sp_db where id = "+"'"+id+"'"+";";
+				String query = "select HMMR_Material_Num, Manufacturer, Model, Article, Single_Complex_Sub, SP_MU_Description_RUS, SP_FD_Description, SP_Supplier_Description, Price, Risk_Breakage, Delivery_Time, Replacement_Model, Identity_SP, Coefficient, ID_Pchar, Qty_S, Qty_W, Qty_P, Qty_A, Key_No_Backup_Yes, Key_No_Backup_No, Key_Yes_Backup_Yes, Key_Yes_Backup_No from hmmr_sp_db where id = "+"'"+id+"'"+";";
 				
 				String HMMR_Material_Num = "NULL", Manufacturer = "NULL", Model = "NULL", Article = "NULL", Single_Complex_Sub = "NULL", SP_MU_Description_RUS = "NULL", 
 						SP_FD_Description = "NULL", SP_Supplier_Description = "NULL", Price = "NULL", Risk_Breakage = "NULL", Delivery_Time = "NULL", Replacement_Model = "NULL", 
-						Identity_SP = "NULL", Coefficient = "NULL", ID_Pchar = "NULL"; 
+						Identity_SP = "NULL", Coefficient = "NULL", ID_Pchar = "NULL", Qty_S = "NULL", Qty_W = "NULL", Qty_P = "NULL", Qty_A = "NULL", Key_No_Backup_Yes = "NULL", 
+						Key_No_Backup_No = "NULL", 	Key_Yes_Backup_Yes = "NULL", Key_Yes_Backup_No = "NULL"; 
 				
 				cn.ConToDb();
 				stmt9 = cn.con.createStatement();
@@ -6871,13 +6879,20 @@ public class _query
 		        	Identity_SP = rs9.getString(13);
 		        	Coefficient = rs9.getString(14);
 		        	ID_Pchar = rs9.getString(15);
-		        	
+		        	Qty_S = rs9.getString(16);
+		        	Qty_W = rs9.getString(17);
+		        	Qty_P = rs9.getString(18);
+		        	Qty_A = rs9.getString(19);
+		        	Key_No_Backup_Yes = rs9.getString(20);
+		        	Key_No_Backup_No = rs9.getString(21);
+		        	Key_Yes_Backup_Yes = rs9.getString(22);
+		        	Key_Yes_Backup_No = rs9.getString(23);
 		        }
-		        total_rez_upd_part = HMMR_Material_Num+";"+Manufacturer+";"+Model+";"+Article+";"+Single_Complex_Sub+";"+SP_MU_Description_RUS+";"+SP_FD_Description+";"+SP_Supplier_Description+";"+Price+";"+Risk_Breakage+";"+Delivery_Time+";"+Replacement_Model+";"+Identity_SP+";"+Coefficient+";"+ID_Pchar;
+		        total_rez_upd_part = HMMR_Material_Num+";"+Manufacturer+";"+Model+";"+Article+";"+Single_Complex_Sub+";"+SP_MU_Description_RUS+";"+SP_FD_Description+";"+SP_Supplier_Description+";"+Price+";"+Risk_Breakage+";"+Delivery_Time+";"+Replacement_Model+";"+Identity_SP+";"+Coefficient+";"+ID_Pchar+";"+Qty_S+";"+Qty_W+";"+Qty_P+";"+Qty_A+";"+Key_No_Backup_Yes+";"+Key_No_Backup_No+";"+Key_Yes_Backup_Yes+";"+Key_Yes_Backup_No;
 //		        System.out.println("SELECT WORKED: "+total_rez);
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6466!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6849!");
 	        } finally {
 	            //close connection ,stmt and resultset here
 	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -6901,7 +6916,7 @@ public class _query
 				stmt.executeUpdate(query);
 				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6893");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6905");
 			}
 	    	finally {
 	            //close connection ,stmt and resultset here
@@ -6917,7 +6932,7 @@ public class _query
 			
 			try {
 				//String query = "SELECT id, ID_HMMR, ID_EQUIP, Drawing, Position_On_Drawing, Key_No_Backup_Yes, Key_No_Backup_No, Key_Yes_Backup_Yes, Key_Yes_Backup_No FROM hmmr_parts_spec WHERE del_rec = 0;";
-				String query = "SELECT hps.id, hsd.SP_MU_Description_RUS, concat(fl.FL03_Shop_s,'.',fl.FL04_Group_s,'.',fl.FL05_Line_s,'.',fl.FL06_Station_s,'.',fl.FL07_Equipment_s), hps.Drawing, hps.Position_On_Drawing, hps.Key_No_Backup_Yes, hps.Key_No_Backup_No, hps.Key_Yes_Backup_Yes, hps.Key_Yes_Backup_No FROM hmmr_parts_spec hps INNER JOIN hmmr_plant_structure fl ON fl.status = 0 AND fl.id = hps.ID_EQUIP INNER JOIN hmmr_sp_db hsd ON hsd.id = hps.ID_HMMR WHERE hps.del_rec = 0";			
+				String query = "SELECT hps.id, hsd.SP_MU_Description_RUS, concat(fl.FL03_Shop_s,'.',fl.FL04_Group_s,'.',fl.FL05_Line_s,'.',fl.FL06_Station_s,'.',fl.FL07_Equipment_s), hps.Drawing, hps.Position_On_Drawing, hps.Key_No_Backup_Yes, hps.Key_No_Backup_No, hps.Key_Yes_Backup_Yes, hps.Key_Yes_Backup_No FROM hmmr_parts_spec hps INNER JOIN hmmr_plant_structure fl ON fl.status = 0 AND fl.id = hps.ID_EQUIP INNER JOIN hmmr_sp_db hsd ON hsd.id = hps.ID_HMMR WHERE hps.del_rec = 0 GROUP BY hps.ID_EQUIP";			
 				cn.ConToDb();
 				stmt12 = cn.con.createStatement();
 				rs12 = stmt12.executeQuery(query);
@@ -6940,7 +6955,7 @@ public class _query
 		        }
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6917!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6929!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -6976,7 +6991,7 @@ public class _query
 //		        System.out.println("SELECT WORKED DATA: "+list);
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6960!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6971!");
 	        } finally {
 	            //close connection ,stmt and resultset here
 	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -6999,7 +7014,7 @@ public class _query
 				//log.log(Level.INFO, "ADD STRING TO DB");
 				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 6990!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7001!");
 			}
 		   	finally {
 		           //close connection ,stmt and resultset here
@@ -7042,7 +7057,7 @@ public class _query
 //		        System.out.println("SELECT WORKED: "+total_rez);
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7019!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7030!");
 	        } finally {
 	            //close connection ,stmt and resultset here
 	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7066,7 +7081,7 @@ public class _query
 				stmt.executeUpdate(query);
 				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7058");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7070");
 			}
 	    	finally {
 	            //close connection ,stmt and resultset here
@@ -7090,7 +7105,7 @@ public class _query
 				stmt.executeUpdate(query);
 				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7082!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7094!");
 			}
 	    	finally {
 	            //close connection ,stmt and resultset here
@@ -7123,7 +7138,7 @@ public class _query
 		        }
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7110!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7122!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7160,7 +7175,7 @@ public class _query
 		        }
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7143!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7155!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7199,7 +7214,7 @@ public class _query
 		        }
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7182!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7193!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7237,7 +7252,7 @@ public class _query
 		        }
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7220!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7231!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7259,7 +7274,7 @@ public class _query
 				//log.log(Level.INFO, "ADD STRING TO DB");
 				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7248!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7261!");
 			}
 		   	finally {
 		           //close connection ,stmt and resultset here
@@ -7283,7 +7298,7 @@ public class _query
 				stmt.executeUpdate(query);
 				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7276");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7287");
 			}
 	    	finally {
 	            //close connection ,stmt and resultset here
@@ -7333,7 +7348,7 @@ public class _query
 //		        System.out.println("SELECT WORKED: "+total_rez);
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7304!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7315!");
 	        } finally {
 	            //close connection ,stmt and resultset here
 	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7361,7 +7376,7 @@ public class _query
 				stmt.executeUpdate(query);
 				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
 			} catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7337!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7365!");
 			}
 	    	finally {
 	            //close connection ,stmt and resultset here
@@ -7393,7 +7408,7 @@ public class _query
 //		        System.out.println("SELECT WORKED: "+total_rez);
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7364!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7392!");
 	        } finally {
 	            //close connection ,stmt and resultset here
 	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7467,7 +7482,7 @@ public class _query
 //		        System.out.println("SELECT WORKED: "+total_rez);
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7412!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7420!");
 	        } finally {
 	            //close connection ,stmt and resultset here
 	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7511,7 +7526,7 @@ public class _query
 //		        System.out.println("SELECT WORKED: "+total_rez);
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7412!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7496!");
 	        } finally {
 	            //close connection ,stmt and resultset here
 	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7550,7 +7565,7 @@ public class _query
 //		        System.out.println("SELECT WORKED DATA: "+list);
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7517!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7545!");
 	        } finally {
 	            //close connection ,stmt and resultset here
 	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7587,7 +7602,7 @@ public class _query
 //		        System.out.println("SELECT WORKED DATA: "+list);
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7517!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7582!");
 	        } finally {
 	            //close connection ,stmt and resultset here
 	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7622,7 +7637,7 @@ public class _query
 //		        System.out.println("SELECT WORKED: "+total_rez);
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7608!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7621!");
 	        } finally {
 	            //close connection ,stmt and resultset here
 	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7659,7 +7674,7 @@ public class _query
 
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 5570!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7656!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7693,7 +7708,7 @@ public class _query
 		        }
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7682!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7692!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7726,7 +7741,7 @@ public class _query
 		        }
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7715!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7725!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7758,7 +7773,7 @@ public class _query
 		        }
 			}
 			catch (SQLException e) {
-				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7747!");
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7757!");
 		       } finally {
 		           //close connection ,stmt and resultset here
 		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -7766,5 +7781,238 @@ public class _query
 		        try { rs11.close(); } catch(SQLException se) { /*can't do anything */ }
 		       }
 			return list;
+		}
+		/**
+		 * Подсчитываем количество компонентов в комплексах по оборудованию
+		 * @return - возвращаем массив
+		 */
+		@SuppressWarnings("static-access")
+		public ObservableList<String> _select_qty_shop()
+		{
+			ObservableList<String> list = FXCollections.observableArrayList();
+			
+			try {
+				String query = "SELECT cs.ID_HMMR_SUB, fl.FL03_Shop_s FROM hmmr_comp_spec cs JOIN hmmr_parts_spec ps ON ps.ID_HMMR = cs.ID_HMMR_COMPLEX JOIN hmmr_plant_structure fl ON fl.id = ps.ID_EQUIP WHERE cs.ID_HMMR_COMPLEX <> 0 AND cs.ID_HMMR_SUB <> 0 GROUP BY ps.ID_HMMR ORDER BY ps.ID_EQUIP ASC;";
+				
+				cn.ConToDb();
+				stmt6 = cn.con.createStatement();
+				rs6 = stmt6.executeQuery(query);
+							
+		        while (rs6.next()) {
+		        	//typepm_model_inst tpm = new typepm_model_inst();
+		        	if(rs6.getString(1) != null) {
+		        		//tpm.settypepm(rs6.getString(1));
+		        		String instr = rs6.getString(1) + ";" + rs6.getString(2);			        					            
+			            list.add(instr);
+		        	}    
+		        }
+//		        System.out.println("SELECT WORKED DATA: "+list);
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7789!");
+	        } finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt6.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs6.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+//			System.out.println("ARRAYLIST: "+list);
+			return list;
+		}
+		/**
+		 * Апдейтим таблицу БД hmmr_sp_db, но только поля количества по цехам
+		 * @param id
+		 */
+		@SuppressWarnings("static-access")
+		public void _update_qty_shop(String id, String Qty_S_Field, String Qty_S_Value)
+		{
+			String query = "UPDATE hmmr_sp_db SET "+Qty_S_Field+" = "+"'"+Qty_S_Value+"'"+" WHERE id = "+"'"+id+"'"+";";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7823!");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+			
+		}
+		
+		/**
+		 * Вставляем запись в таблицу hmmr_pm
+		 * @param id - id строки которую надо продублировать
+		 */
+		@SuppressWarnings("static-access")
+		public void _insert_psc_dup(String id)
+		{
+			String query = "INSERT INTO hmmr_parts_spec (ID_EQUIP, Drawing, Position_On_Drawing, Key_No_Backup_Yes, Key_No_Backup_No, Key_Yes_Backup_Yes, Key_Yes_Backup_No, ID_HMMR) "
+					+ "SELECT ID_EQUIP, Drawing, Position_On_Drawing, Key_No_Backup_Yes, Key_No_Backup_No, Key_Yes_Backup_Yes, Key_Yes_Backup_No, ID_HMMR FROM hmmr_parts_spec WHERE id = "+"'"+id+"'"+";";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "ADD STRING TO DB");
+				//mgr.logger.log(Level.INFO, "ADD STRING TO DB");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7849!");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+		}
+		/**
+		 * Апдейтим таблицу БД hmmr_sp_db, но только поля количества по цехам
+		 * @param id
+		 */
+		@SuppressWarnings("static-access")
+		public void _update_key_backup()
+		{
+			//String query = "UPDATE hmmr_sp_db AS hsd, hmmr_parts_spec AS hps SET hsd.Key_No_Backup_Yes = hps.Key_No_Backup_Yes, hsd.Key_No_Backup_No = hps.Key_No_Backup_No, hsd.Key_Yes_Backup_Yes = hps.Key_Yes_Backup_Yes, hsd.Key_Yes_Backup_No = hps.Key_Yes_Backup_No WHERE hsd.id = hps.ID_HMMR;";
+			String query = "UPDATE hmmr_sp_db hsd SET hsd.Key_No_Backup_Yes = (SELECT IF(hps1.Key_No_Backup_Yes = 1,COUNT(hps1.Key_No_Backup_Yes),0) FROM hmmr_parts_spec hps1 WHERE hps1.ID_HMMR = hsd.id AND hsd.del_rec = 0 GROUP BY hsd.HMMR_Material_Num), hsd.Key_No_Backup_No = (SELECT IF(hps1.Key_No_Backup_No = 1,COUNT(hps1.Key_No_Backup_No),0) FROM hmmr_parts_spec hps1 WHERE hps1.ID_HMMR = hsd.id AND hsd.del_rec = 0 GROUP BY hsd.HMMR_Material_Num), hsd.Key_Yes_Backup_Yes = (SELECT IF(hps1.Key_Yes_Backup_Yes = 1,COUNT(hps1.Key_Yes_Backup_Yes),0) FROM hmmr_parts_spec hps1 WHERE hps1.ID_HMMR = hsd.id AND hsd.del_rec = 0 GROUP BY hsd.HMMR_Material_Num), hsd.Key_Yes_Backup_No = (SELECT IF(hps1.Key_Yes_Backup_No = 1,COUNT(hps1.Key_Yes_Backup_No),0) FROM hmmr_parts_spec hps1 WHERE hps1.ID_HMMR = hsd.id AND hsd.del_rec = 0 GROUP BY hsd.HMMR_Material_Num)";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7877!");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+			
+		}
+		/**
+		 * Заполняем данными таблицу при открытии окна из меню Действия->Склад->SP - Редактор
+		 * @return - возвращаем набор данных
+		 */
+		@SuppressWarnings({ "static-access"})
+		public ObservableList<Hmmr_SP_Model> _select_data_sp_sort(String manuf)
+		{
+			ObservableList<Hmmr_SP_Model> list = FXCollections.observableArrayList();
+			
+			try {
+				
+				String query = "SELECT id, HMMR_Material_Num, Manufacturer, Model, Article, Single_Complex_Sub, SP_MU_Description_RUS, SP_FD_Description, SP_Supplier_Description, Qty_S, Qty_W, Qty_P, Qty_A, Price, Key_No_Backup_Yes, Key_No_Backup_No, Key_Yes_Backup_Yes, Key_Yes_Backup_No, Risk_Breakage, Delivery_Time, Replacement_Model, Qty_Interchangeability, Qty_Identify_SP, Identity_SP, Coefficient, MIN, BATCH FROM hmmr_sp_db WHERE del_rec = 0 AND Manufacturer = "+"'"+manuf+"'"+";";
+				
+				cn.ConToDb();
+				stmt12 = cn.con.createStatement();
+				rs12 = stmt12.executeQuery(query);
+				 			
+		        while (rs12.next()) {
+		        	Hmmr_SP_Model hsm = new Hmmr_SP_Model();
+		        	if(rs12.getString(1) != null && rs12.getString(2) != null && rs12.getString(3) != null) {
+		        		hsm.Id.set(rs12.getString(1));
+		        		hsm.HMMR_Material_Num.set(rs12.getString(2));
+		        		hsm.Manufacturer.set(rs12.getString(3));
+		        		hsm.Model.set(rs12.getString(4));
+		        		hsm.Article.set(rs12.getString(5));
+		        		hsm.Single_Complex_Sub.set(rs12.getString(6));
+		        		hsm.SP_MU_Description_RUS.set(rs12.getString(7));
+		        		hsm.SP_FD_Description.set(rs12.getString(8));
+		        		hsm.SP_Supplier_Description.set(rs12.getString(9));
+		        		hsm.Qty_S.set(rs12.getString(10));
+		        		hsm.Qty_W.set(rs12.getString(11));
+		        		hsm.Qty_P.set(rs12.getString(12));
+		        		hsm.Qty_A.set(rs12.getString(13));
+		        		hsm.Price.set(rs12.getString(14));
+		        		hsm.Key_No_Backup_Yes.set(rs12.getString(15));
+		        		hsm.Key_No_Backup_No.set(rs12.getString(16));
+		        		hsm.Key_Yes_Backup_Yes.set(rs12.getString(17));
+		        		hsm.Key_Yes_Backup_No.set(rs12.getString(18));
+		        		hsm.Risk_Breakage.set(rs12.getString(19));
+		        		hsm.Delivery_Time.set(rs12.getString(20));
+		        		hsm.Replacement_Model.set(rs12.getString(21));
+		        		hsm.Qty_Interchangeability.set(rs12.getString(22));
+		        		hsm.Qty_Identify_SP.set(rs12.getString(23));
+		        		hsm.Identity_SP.set(rs12.getString(24));
+		        		hsm.Coefficient.set(rs12.getString(25));
+		        		hsm.MIN.set(rs12.getString(26));
+		        		hsm.BATCH.set(rs12.getString(27));
+		        				        						        				            
+			            list.add(hsm);
+		        	}    
+		        }
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7911!");
+		       } finally {
+		           //close connection ,stmt and resultset here
+		       	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { stmt12.close(); } catch(SQLException se) { /*can't do anything */ }
+		        try { rs12.close(); } catch(SQLException se) { /*can't do anything */ }
+		       }
+			return list;
+		}
+		/**
+		 * Апдейтим запись в SP DB после инсерта строки при нажатии кнопки получения номера(MTC или MTCSP), инсертим сразу чтоб не появилось двух одинаковых номеров в процессе
+		 * заполнения формы, если еще кто-то тоже начал заполнять эту же форму
+		 * @param Id
+		 */
+		@SuppressWarnings("static-access")
+		public void _update_sp_ins(String HMMR_Material_Num, String Manufacturer, String Model, String Article, String Single_Complex_Sub, String SP_MU_Description_RUS, String SP_FD_Description, String SP_Supplier_Description, String ID_Pchar, String Price, String Risk_Breakage, String Delivery_Time, String Replacement_Model, String Identity_SP, String Coefficient)
+		{
+			String query = "UPDATE hmmr_sp_db SET Manufacturer = "+"'"+Manufacturer+"'"+",Model = "+"'"+Model+"'"+",Article = "+"'"+Article+"'"+",Single_Complex_Sub = "+"'"+Single_Complex_Sub+"'"+",SP_MU_Description_RUS = "+"'"+SP_MU_Description_RUS+"'"+",SP_FD_Description = "+"'"+SP_FD_Description+"'"+",SP_Supplier_Description = "+"'"+SP_Supplier_Description+"'"+",ID_Pchar = "+"'"+ID_Pchar+"'"+",Price = "+"'"+Price+"'"+",Risk_Breakage = "+"'"+Risk_Breakage+"'"+",Delivery_Time = "+"'"+Delivery_Time+"'"+",Replacement_Model = "+"'"+Replacement_Model+"'"+",Identity_SP = "+"'"+Identity_SP+"'"+",Coefficient = "+"'"+Coefficient+"'"+" where HMMR_Material_Num = "+"'"+HMMR_Material_Num+"'"+";"; //"UPDATE pm_inst SET Type_PM = "+"'"+type+"'"+", Description = "+"'"+desc+"'"+" WHERE id = "+"'"+id+"'"+";";
+			
+			try {
+				cn.ConToDb();
+				stmt = cn.con.createStatement();
+				stmt.executeUpdate(query);
+				//log.log(Level.INFO, "STATUS RING WAS UPDATED");
+			} catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 7970");
+			}
+	    	finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+		}
+		/**
+		 * Получаем номер недели из даты и год
+		 */
+		@SuppressWarnings("static-access")
+		public void _update_week_year(int group)
+		{
+			try {
+				cn.ConToDb();
+				stmt9 = cn.con.createStatement();
+				stmt11 = cn.con.createStatement();
+				stmt12 = cn.con.createStatement();
+				stmt14 = cn.con.createStatement();
+				
+				String query = "UPDATE `hmmr_pm_year` SET `Week_Num` = WEEK(`data`, 1) WHERE `PM_Group` = "+group+";";
+				stmt9.executeUpdate(query);
+				String query1 = "UPDATE `hmmr_pm_year` SET `Year_Num` = YEAR(`data`) WHERE `PM_Group` = "+group+";";
+		        stmt11.executeUpdate(query1);
+			}
+			catch (SQLException e) {
+				s_class._AlertDialog(e.getMessage()+", "+ " ошибка в строке № 8001!");
+	        } finally {
+	            //close connection ,stmt and resultset here
+	        	try { cn.con.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt9.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt11.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt12.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { stmt14.close(); } catch(SQLException se) { /*can't do anything */ }
+	            try { rs9.close(); } catch(SQLException se) { /*can't do anything */ }
+	        }
+			
 		}
 }

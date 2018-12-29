@@ -1,9 +1,18 @@
 package action;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 import com.jfoenix.controls.JFXButton;
+
+import application.conn_connector;
 import application.mu_main_controller;
 import db._query;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -15,10 +24,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -56,8 +69,14 @@ public class SP_Controller {
 	
 	@FXML
 	HBox hb_sp1, hb_sp2, hb_sp3;
+	
+	@FXML
+	ComboBox<String> sort_manuf;
 		
 	public static ObservableList<Hmmr_SP_Model> _table_update_sp = FXCollections.observableArrayList();
+	ArrayList<String> _qty_shop = new ArrayList<>();
+	ObservableList<String> _temp_qty_shop = FXCollections.observableArrayList();
+	ObservableList<String> _temp_qty_shop_name = FXCollections.observableArrayList();
 	
 	_query qr = new _query();
 	s_class scl = new s_class();
@@ -65,6 +84,9 @@ public class SP_Controller {
 	
 	public static boolean _flag_sp_window = true;
 	public static String _id_sp = "0";
+	String _Short_Shop_Name;
+	public static int _flag_sort_spdb = 0;
+	public static String _value_sort_manuf = "-";
 	
 	@FXML
 	public void initialize()
@@ -97,6 +119,11 @@ public class SP_Controller {
 		
 		btn_upd_sp.setDisable(true);
 		btn_del_sp.setDisable(true);
+		
+		Qty_Shop();
+		qr._update_key_backup();
+		
+		sort_manuf.setItems(qr._select_list_str("hmmr_sp_db", "Manufacturer"));
 		
 		initData();
 		
@@ -206,6 +233,7 @@ public class SP_Controller {
 			
 			@Override
 			public void handle(ActionEvent arg0) {
+				_flag_sort_spdb = 0;
 				table_sp.setItems(qr._select_data_sp());
 			    table_sp.getColumns().get(0).setVisible(false);
 			    table_sp.getColumns().get(0).setVisible(true);
@@ -218,21 +246,126 @@ public class SP_Controller {
 
 			@Override
 			public void onChanged(Change<? extends Hmmr_SP_Model> arg0) {
-				table_sp.setItems(qr._select_data_sp());
-			    table_sp.getColumns().get(0).setVisible(false);
-			    table_sp.getColumns().get(0).setVisible(true);
+				if(_flag_sort_spdb == 0) {
+					table_sp.setItems(qr._select_data_sp());
+				    table_sp.getColumns().get(0).setVisible(false);
+				    table_sp.getColumns().get(0).setVisible(true);
+				}
+				else if(_flag_sort_spdb == 1)
+				{
+					table_sp.setItems(qr._select_data_sp_sort(sort_manuf.getValue()));
+				    table_sp.getColumns().get(0).setVisible(false);
+				    table_sp.getColumns().get(0).setVisible(true);
+				}
 			}
 		});
+		
 		//Ставим фокус и опускаемся на последнюю строку таблицы     
         table_sp.requestFocus();
         table_sp.getFocusModel().focus(0);
         table_sp.getSelectionModel().selectLast();
         table_sp.scrollTo(table_sp.getItems().size());
-	}
+        
+        btn_del_sp.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+			    alert.setTitle("M&U - Delete Record Window");
+			    Hmmr_SP_Model _ccl = table_sp.getSelectionModel().getSelectedItem();
+			    
+			    alert.setHeaderText("Вы действительно хотите удалить запись № = " + _ccl.getIdStr() + "?");
+			    //alert.setContentText("C:/MyFile.txt");
+			 
+			    // option != null.
+			    Optional<ButtonType> option = alert.showAndWait();
+			    if (option.get() == null) {
+			       //label.setText("No selection!");
+			    } else if (option.get() == ButtonType.OK) {
+			  	   _ccl = table_sp.getSelectionModel().getSelectedItem();
+			  	   try {
+			  	   qr._update_rec_del(_ccl.getIdStr(), "hmmr_sp_db", "del_rec", "id");
+			  	   qr._insert_history(conn_connector.USER_ID, apwr_controller.USER_S + " - Удалил запись № = " + _ccl.getIdStr() + " в таблице Components Specification");
+			  	   table_sp.setItems(qr._select_data_sp());
+				   table_sp.getColumns().get(0).setVisible(false);
+				   table_sp.getColumns().get(0).setVisible(true);
+			  	   } catch (Exception e) {
+					
+				}
+			    } else if (option.get() == ButtonType.CANCEL) {
+			       //label.setText("Cancelled!");
+			    } else {
+			       //label.setText("-");
+			    }
+			}
+		});
+        btn_cancel_sp.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				stage = (Stage) btn_cancel_sp.getScene().getWindow();
+				stage.close();
+			}
+		});
+        sort_manuf.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+				_flag_sort_spdb = 1;
+				table_sp.setItems(qr._select_data_sp_sort(sort_manuf.getValue()));
+				_value_sort_manuf = sort_manuf.getValue();
+			}
+		});
+    }
 	
 	void initData()
 	{
 		table_sp.setItems(qr._select_data_sp());
+	}
+	
+	void Qty_Shop()
+	{
+		_qty_shop.addAll(qr._select_qty_shop());
+        
+        Map<String, Integer> letters = new HashMap<String, Integer>();
+        
+        for (int i = 0; i < _qty_shop.size(); i++) {
+            String tempChar = _qty_shop.get(i);
+
+            if (!letters.containsKey(tempChar)) {
+              letters.put(tempChar, 1);
+            } else {
+              letters.put(tempChar, letters.get(tempChar) + 1);
+            }
+          }
+
+          for (Map.Entry<String, Integer> entry : letters.entrySet()) {
+        	  if(scl.parser_str_str_str(entry.getKey(), 1).equals("A"))
+        		  _Short_Shop_Name = "Qty_A";
+        	  else if(scl.parser_str_str_str(entry.getKey(), 1).equals("P"))
+        		  _Short_Shop_Name = "Qty_P";
+        	  else if(scl.parser_str_str_str(entry.getKey(), 1).equals("S"))
+        		  _Short_Shop_Name = "Qty_S";
+        	  else if(scl.parser_str_str_str(entry.getKey(), 1).equals("W"))
+        		  _Short_Shop_Name = "Qty_W";
+        	  else
+        		  _Short_Shop_Name = "UNKNOWN";
+        	  
+        	  if(!_Short_Shop_Name.equals("UNKNOWN"))
+        		  qr._update_qty_shop(scl.parser_str_str_str(entry.getKey(), 0), _Short_Shop_Name, String.valueOf(entry.getValue()));
+        	  //else
+        		  //scl._AlertDialog("Внимание! Поля для цеха " +scl.parser_str_str_str(entry.getKey(), 1) + " не существует!", "Внимание!!!");
+            //System.out.println("ID = " + scl.parser_str_str_str(entry.getKey(), 0) + " SHOP = " + scl.parser_str_str_str(entry.getKey(), 1) + " COUNT = " + entry.getValue());
+          }
+          /*for (String s : _qty_shop)
+          {
+             _temp_qty_shop.add(scl.parser_str_str_str(s, 0));
+             _temp_qty_shop_name.add(scl.parser_str_str_str(s, 1));
+          }
+          
+          
+          ArrayList<String> _temp_id = new ArrayList<>();
+          _temp_id.addAll(_temp_qty_shop);*/
 	}
 
 	//Вызываем окно добавления записи к SP
